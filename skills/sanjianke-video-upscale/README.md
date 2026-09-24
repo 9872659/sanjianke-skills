@@ -31,26 +31,26 @@
 
 **原片 854×480 → 超分 3840×2160**，同一条片、同一秒、同一区域，从源片和 4K 成片各裁一块 1:1 对比：
 
-![原片 vs 4K 清晰度对比](https://vr.a7w.cn/demo/moments/compare-before-after.png)
+![原片 vs 4K 清晰度对比](https://vr.a7w.cn/demo/moments/compare-before-after.webp)
 
 差距集中在两个地方：
 
 - **面部特写**：原片睫毛糊成一片、瞳仁发灰、牙齿粘连 → 超分后睫毛根根分离、瞳仁有高光、齿缝清楚
 - **珠饰与缎面**：原片金纹消失、花瓣糊成一坨 → 超分后纹理清晰、层次分明
 
-**对比视频**（逐帧对照，看动态下是否稳定）：
+**对比视频**（逐帧对照，看动态下是否稳定；压缩版 1.6 MB，原画版 6.9 MB）：
 
-https://vr.a7w.cn/demo/moments/compare-before-after.mp4
+https://vr.a7w.cn/demo/moments/compare-before-after.web.mp4
 
 ### 「超分」和「放大」不是一回事
 
 放大只是让马赛克跟着一起变大；超分是**逐帧推断并重建细节**，把丢掉的像素补回来。
 
-![超分不是放大，是重画](https://vr.a7w.cn/demo/moments/moments-01.png)
+![超分不是放大，是重画](https://vr.a7w.cn/demo/moments/moments-01.webp)
 
-> 这套科普图共 10 张，同目录下 `moments-01.png` ~ `moments-10.png`，逐条讲清楚超分能做什么、不能做什么。
+> 这套科普图共 10 张，同目录下 `moments-01.webp` ~ `moments-10.webp`，逐条讲清楚超分能做什么、不能做什么。
 >
-> 合并版对比视频：`https://vr.a7w.cn/demo/moments/moments-merged.mp4`
+> 合并版对比视频：`https://vr.a7w.cn/demo/moments/moments-merged.web.mp4`
 
 ---
 
