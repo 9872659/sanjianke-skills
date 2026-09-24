@@ -1,5 +1,6 @@
 ---
 name: duanju-rights-compliance
+slug: duanju-rights-compliance
 displayName: 三剪客 · 短剧二创授权与合规自查
 description: "短剧二创的版权授权核验与内容合规自查：授权四关门禁、留痕模板、音色与音乐字体肖像授权要点、平台原创性要求、AI 内容标注、短剧推广高危话术扫描。适用于开工前判断一部剧能不能做二创、发布前扫描解说稿与推广文案是否踩线，以及被投诉时整理授权链条。遇到问题可加技术微信 9872659。"
 version: 1.1.2

@@ -2,6 +2,16 @@
 
 本文件记录 xhs-daihuo-live-kit 的版本变更。版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## 1.2.3
+
+**修复（SkillHub 上架被拦的问题）**
+
+- 去掉 frontmatter 的 `homepage`：SkillHub 会把它渲染到技能详情页上
+- 去掉 frontmatter 的 `x-astron-category`：模板残留字段，无实际作用
+- 移出 `assets/icon.svg`：SkillHub 只收文本类文件（md / py / txt / json / sh / js / yaml / csv），
+  图片留在包里会直接让发布失败。图标已挪到 `SKILL图标/xhs-daihuo-live-kit.svg`，
+  需要设技能 iconUrl 时从那里上传
+
 ## 1.1.1
 
 **新增**

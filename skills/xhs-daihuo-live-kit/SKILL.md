@@ -3,7 +3,7 @@ name: xhs-daihuo-live-kit
 slug: xhs-daihuo-live-kit
 displayName: 三剪客 · 小红书带货直播作战包
 description: "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。遇到问题可加技术微信 9872659。"
-version: 1.2.2
+version: 1.2.3
 summary: "从小红书选品测算到商品笔记、直播脚本、评论话术与数据复盘的一体化工作流，含 8 份参考资料、5 个可离线运行的 Python 脚本（选品计算器、时间轴生成、笔记评分、合规扫描、内置自测）。明确划出覆盖与不覆盖的边界——本 Skill 是单人可用的方法论与轻量工具。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -13,8 +13,6 @@ tags:
   - 商品笔记
   - 内容合规
   - 选品
-homepage: https://skillhub.cn/
-x-astron-category: content-creation
 ---
 
 # 小红书带货直播作战包

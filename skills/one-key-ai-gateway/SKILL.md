@@ -1,10 +1,10 @@
 ---
 name: one-key-ai-gateway
 slug: one-key-ai-gateway
-displayName: 三剪客 · 算力集市接入总纲
-description: "一个 Key 调用全部 AI 算力：OpenAI 兼容的模型网关 + 应用异步任务，含鉴权、计费、回调、错误码与零依赖客户端。 遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "把 api.a7w.cn（算力集市）当统一 AI 网关接入：换 base_url 用 OpenAI 协议调主流大模型（实测在架 75 个），同一套 Key 提交图像/视频/语音/数字人异步任务，先冻结后结算。附零依赖 client.py，实时发现模型与应用、提交任务并轮询到出结果。 遇到问题可加技术微信 9872659。"
+displayName: 三剪客 · 国产大模型一键调用统一路由
+description: "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。 遇到问题可加技术微信 9872659。"
+version: 1.1.0
+summary: "把 api.a7w.cn（算力集市）当统一 AI 网关：DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元、百度文心、MiniMax、小米 MiMo 等国产大模型，与 OpenAI GPT、Google nano-banana、xAI Grok 等国际模型，连同视频/图像/语音/数字人/音乐 21 个生成应用，全部收敛成一个入口。换 base_url 即可用，先冻结后结算、失败全额退回。 遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -12,9 +12,11 @@ tags:
   - openai-compatible
   - ai-gateway
   - llm
+  - 国产大模型
+  - 统一路由
 ---
 
-# 三剪客 · 算力集市接入总纲
+# 三剪客 · 国产大模型一键调用统一路由
 
 你要接的不是一个模型，而是一整排模型——文本、图像、视频、语音、数字人、音乐，每家一个 SDK、一套 Key、一份账单。
 `api.a7w.cn`（算力集市）把这些收成**一个 base_url、一个 Key、一份账单**：模型侧兼容 OpenAI 协议，换 `model` 就是换模型；生成类应用侧走统一的「提交任务 → 拿 `task_id` → 轮询或收回调」。
@@ -49,6 +51,41 @@ tags:
 | 子进程 / 后台常驻 | 不申请 | 脚本执行完即退出，不注册服务、不常驻 |
 
 **不内嵌任何密钥。** 脚本只把 Key 发往 `api.a7w.cn`，不发送到其他任何地址。
+
+## 模型矩阵（国内外主流大模型，实测在架）
+
+统一路由的价值就在这一屏。**实测 `/api/v1/models` 返回 75 个模型 / 23 家厂商**（文本 58 · 图片 12 · 视频 5）。
+
+### 国产大模型
+
+| 厂商 | 在架代表模型（`model` 编码） |
+|---|---|
+| **DeepSeek 深度求索** | `DeepSeek-V4-Pro`、`DeepSeek-V4-Flash`、`DeepSeek-V3.2`、`DeepSeek-R1-Distill-Qwen-32B` |
+| **通义千问 Qwen** | `Qwen3.7-Max`、`Qwen3.7-Plus`、`Qwen3.6-Plus`、`Qwen3.6-Flash`、`Qwen3.6-35B-A3B`、`Qwen3.6-27B`、`Qwen3.5-122B-A10B`、`Qwen3.5-35B-A3B`、`Qwen3.5-27B`、`Qwen3.5-Flash`、`Qwen3-Coder-Next`、`Qwen3-Coder-30B-A3B-Instruct`、`Qwen3-Next-80B-A3B-Instruct`、`Qwen3-VL-30B-A3B-Instruct`、`Qwen3-32B`、`Qwen2.5-7B-Instruct`、`QwQ-32B` |
+| **智谱 GLM** | `GLM-5.2`、`GLM-5.1`、`GLM-5`、`GLM-4.7`、`GLM-4-32B`、`AutoGLM-Phone-9B-Multilingual` |
+| **月之暗面 Kimi** | `Kimi-K2.7-Code`、`Kimi-K2.6`、`Kimi-K2.5`、`kimi-k3` |
+| **百度文心 ERNIE** | `ERNIE-5.0-Thinking`、`ERNIE-4.5-Turbo`、`ERNIE-4.5-Turbo-VL` |
+| **腾讯混元** | `Hy-MT2-30B-A3B`、`HY-MT2-7B`、`HY-MT1.5-7B`、`Hunyuan-MT-Chimera-7B` |
+| **MiniMax** | `MiniMax-M3`、`MiniMax-M2.7`、`MiniMax-M2.5`、`MiniMax-M2.1`、`h3-video` |
+| **阿里云百炼** | `qwen-image-3.0`、`qwen-image-3.0-pro`、`qwen3.6-plus`、`wan3.0-video` |
+| **小米 MiMo** | `MiMo-V2.5-Pro` |
+| **通义 MAI** | `MAI-UI-8B` |
+| **飞桨 PaddlePaddle** | `PaddleOCR-VL-1.5` |
+| **垂类专业模型** | `Fin-R1`、`DianJin-R1-32B`（金融）、`LegalOne-8B`（法律）、`Sinong1.0-32B`（农学）、`KAT-Dev`（开发） |
+
+### 国际主流大模型
+
+| 厂商 | 在架代表模型 |
+|---|---|
+| **OpenAI（文本）** | `gpt-5.6-sol`、`gpt-5.6-luna`、`gpt-5.6-terra`、`gpt-5.5`、`gpt-5.4`、`gpt-5.4-mini` |
+| **OpenAI（图像）** | `gpt-image-2.5-sunburst`、`gpt-image-2.5-flare`、`gpt-image-2.5`、`gpt-image-2-vip`、`gpt-image-2-pro`、`gpt-image-2-fast`、`gpt-image-2` |
+| **Google** | `nano-banana-pro`、`nano-banana-2`、`gemma-4-26B-A4B-it` |
+| **xAI** | `grok-video`、`veo3.1-pro`、`veo3.1-fast` |
+
+**能力标记**：支持视觉 `qwen3.6-plus`、`Qwen3-VL-30B-A3B-Instruct`、`ERNIE-4.5-Turbo-VL`、`PaddleOCR-VL-1.5`；支持深度推理 `qwen3.6-plus`、`ERNIE-5.0-Thinking`。
+
+> ⚠️ 平台的 `vendor_name` 字段有**标注串味**（`veo3.1` 系与个别 `gpt-image` 条目落在 `xAI` 分组；`Google`/`google`、`OpenAI`/`openai`、`MiniMaxAI`/`MiniMax` 并存）。**以 `model` 编码为准**，不要用厂商字段做精确匹配。
+> 清单会变，**调用前先跑 `python3 scripts/client.py models`**。
 
 ## 两条调用入口
 

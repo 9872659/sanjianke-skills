@@ -382,7 +382,7 @@ npx clawhub install <slug>
 
 ### ai-api（1）
 
-- **`one-key-ai-gateway`** 三剪客 · 算力集市接入总纲
+- **`one-key-ai-gateway`** 三剪客 · 国产大模型一键调用统一路由
 
 ### xiaohongshu（1）
 
