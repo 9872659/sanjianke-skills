@@ -6,6 +6,25 @@
 
 ---
 
+## ⚠️ 用之前先拿 Key
+
+**不填 Key 跑不起来。** 必须有一个 [api.a7w.cn](https://api.a7w.cn/) 的 API Key。
+
+**第一步 · 注册**：到 https://api.a7w.cn/ 注册 → 控制台创建 Key（形如 `sk-xxx...`）→ 完整复制保存。
+
+**第二步 · 填进你在用的地方**：
+
+| 你在哪用 | 怎么填 |
+|---|---|
+| **AI 工具 / Agent 平台**（Kimi、扣子等） | 平台的**环境变量 / 凭证 / 插件配置**里加 `A7W_API_KEY=sk-你的key` |
+| **本机命令行** | `export A7W_API_KEY=sk-你的key`（Windows 用 `$env:A7W_API_KEY="..."`） |
+| **跑一次** | 命令加 `--key sk-你的key` |
+| **长期本机** | `python3 scripts/a7w.py login --key sk-你的key` |
+
+读取顺序：`--key` → `A7W_API_KEY` → `~/.a7w/config.json`。不填会有明确报错，不会静默失败。
+
+---
+
 ## 内容
 
 ```

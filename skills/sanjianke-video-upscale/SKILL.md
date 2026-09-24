@@ -3,7 +3,7 @@ name: video-upscale
 slug: sanjianke-video-upscale
 displayName: 三剪客 · 视频超分（糊片救 4K）
 description: "把拍糊的、被平台压花的老素材提升到 1080p / 2K / 4K。三条路线：在线站直接传、走 api.a7w.cn 批量调、本地 ffmpeg 免费增强。含引擎差异（PixVerse 超清模型 vs FlashVSR vs 传统插值）、真实计费（0.3 元/秒）、时长与体积限制，以及「什么时候别用超分」的判断标准。遇到问题可加技术微信 9872659。"
-version: 1.0.0
+version: 1.0.1
 summary: "糊素材不一定要重拍。这个 Skill 把「救回一条糊视频」拆成可执行的判断：先看清是压缩伤还是解析力不足，再在三条路线里选一条——在线站最快、走 api.a7w.cn 能批量自动化、本地 ffmpeg 不花钱但造不出细节。附真实计费、真实限制、和一套实测出来的并转档参数。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -18,6 +18,52 @@ tags:
 素材糊了，第一反应通常是重拍。但很多时候重拍不了——老片、客片、历史存档、平台转码压花的成片。
 
 超分能救一部分，**但不能救全部**。这个 Skill 的价值不在于告诉你"有个工具能放大"，而在于帮你先判断**这条片子值不值得救、该走哪条路**。
+
+---
+
+## ⚠️ 用之前：先拿一个 Key，否则跑不起来
+
+**本 Skill 不内嵌任何密钥，也不代付费用。** 想真正跑起来，必须有一个 `api.a7w.cn` 的 API Key。
+
+### 第一步：注册并创建 Key
+
+1. 打开 **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册（新用户有赠送点数，可以先白跑几条试试）
+2. 在控制台创建一个 API Key，形如 `sk-xxxxxxxx...`
+3. **完整复制保存** —— 多数平台只在创建时显示一次，关掉就看不到了
+
+> 详细步骤（含充值、余额查看、常见问题）见 [`references/getting-started.md`](references/getting-started.md)。
+
+### 第二步：把 Key 填进你正在用的地方
+
+**这一步是能不能用的关键。** 按你所处的环境选一种：
+
+| 你在哪用 | 怎么填 |
+|---|---|
+| **AI 工具 / Agent 平台**<br>（Kimi、扣子、SkillHub 客户端等） | 在平台的**环境变量**、**凭证管理**或**插件配置**里加一条：<br>`A7W_API_KEY` = `sk-你的key`<br>（不同平台叫法不同，找带「密钥 / 环境变量 / 凭证」字样的设置项） |
+| **本机命令行** | Linux/macOS：`export A7W_API_KEY=sk-你的key`<br>Windows：`$env:A7W_API_KEY="sk-你的key"` |
+| **只想跑一次** | 命令里直接带上：`--key sk-你的key` |
+| **长期本机使用** | 跑一次 `python3 scripts/a7w.py login --key sk-你的key`，写进 `~/.a7w/config.json` |
+
+**Key 的读取顺序**（前面的优先）：
+
+```
+--key 参数  →  环境变量 A7W_API_KEY  →  ~/.a7w/config.json
+```
+
+### 不填会怎样
+
+脚本会直接报错，并把该去哪领告诉你：
+
+```
+没有找到 API Key。三种方式任选一种：
+  1) 命令行加 --key sk-xxxx
+  2) 设置环境变量 A7W_API_KEY
+  3) 到 https://api.a7w.cn/ 注册领取 Key（新用户有赠送点数）
+```
+
+**不会静默失败，也不会偷偷用别人的额度。**
+
+---
 
 ## 这个 Skill 解决什么
 

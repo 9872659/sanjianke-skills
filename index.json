@@ -195,7 +195,7 @@
   "slug": "sanjianke-video-upscale",
   "displayName": "三剪客 · 视频超分（糊片救 4K）",
   "description": "把拍糊的、被平台压花的老素材提升到 1080p / 2K / 4K。三条路线：在线站直接传、走 api.a7w.cn 批量调、本地 ffmpeg 免费增强。含引擎差异（PixVerse 超清模型 vs FlashVSR vs 传统插值）、真实计费（0.3 元/秒）、时长与体积限制，以及「什么时候别用超分」的判断标准。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
