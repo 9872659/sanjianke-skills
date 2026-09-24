@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**281 个技能包**：26 个三剪客原创，255 个为第三方开源项目编写的原创使用指南。
+**283 个技能包**：28 个三剪客原创，255 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -375,6 +375,14 @@ npx clawhub install <slug>
 
 - **`sanjianke-paddleocr`** 三剪客 · 中文 OCR 与版面分析 · 衍生指南
 - **`sanjianke-rapidocr`** 三剪客 · 轻量多语言 OCR · 衍生指南
+
+### AI插件市场（1）
+
+- **`aigc-market`** AI图片视频音乐语音配音数字人口播换装超分剪辑全能创作插件市场
+
+### ai-api（1）
+
+- **`one-key-ai-gateway`** 三剪客 · 算力集市接入总纲
 
 ### xiaohongshu（1）
 

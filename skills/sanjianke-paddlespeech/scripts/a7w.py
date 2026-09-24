@@ -232,3 +232,167 @@ def dig(obj, *keys):
         if cur is None:
             return None
     return cur
+
+
+# --------------------------------------------------------------------------
+# 命令行入口
+#
+# 这份客户端既能当库用（`import a7w; a7w.call(...)`），也能直接跑命令行：
+#
+#   python3 a7w.py login --key sk-xxx     验证并保存 Key
+#   python3 a7w.py whoami                 看这把 Key 能用的插件数
+#   python3 a7w.py apps                   列出全部插件
+#   python3 a7w.py schema <app>           看某插件的接口与参数
+#   python3 a7w.py call <app> <api> --json '{...}' [--no-wait] [--out 文件]
+#   python3 a7w.py task <task_id>         查异步任务
+#   python3 a7w.py points                 看最近的用量
+# --------------------------------------------------------------------------
+
+def _fmt_params(ps):
+    if not isinstance(ps, dict):
+        return {}
+    if isinstance(ps.get("properties"), dict):
+        return ps["properties"]
+    meta = {"required", "properties", "type", "title", "description", "$schema"}
+    return {k: v for k, v in ps.items() if k not in meta and isinstance(v, dict)}
+
+
+def cmd_apps(as_json=False):
+    d = _unwrap(_request("GET", HOST + "/api/v1/apps", load_key()))
+    lst = d.get("data") if isinstance(d, dict) and "data" in d else d
+    if isinstance(lst, dict):
+        lst = lst.get("list") or lst.get("apps") or []
+    if as_json:
+        print(json.dumps(lst, ensure_ascii=False, indent=1))
+        return
+    print("共 %d 个插件：\n" % len(lst))
+    for a in lst:
+        if not isinstance(a, dict):
+            continue
+        n = len(a.get("apis") or [])
+        print("  %-22s %-24s %2d 接口  %s"
+              % (a.get("code"), a.get("name"), n,
+                 (a.get("description") or "")[:38]))
+
+
+def cmd_schema(app, as_json=False):
+    d = _unwrap(_request("GET", HOST + "/api/v1/apps/" + app, load_key()))
+    data = d.get("data") if isinstance(d, dict) and "data" in d else d
+    if as_json:
+        print(json.dumps(data, ensure_ascii=False, indent=1))
+        return
+    print("插件 %s（%s）" % (app, data.get("name") or ""))
+    if data.get("description"):
+        print("  " + str(data["description"]).strip())
+    print()
+    for a in (data.get("apis") or []):
+        mode = "异步" if a.get("call_type") == 2 else "同步"
+        print("  %-14s %-18s %-4s  POST /api/v1/apps/%s/%s"
+              % (a.get("code"), a.get("name"), mode, app, a.get("code")))
+        ps = _fmt_params(a.get("params_schema"))
+        for k, v in ps.items():
+            req = str((v or {}).get("required")) in ("True", "1", "true")
+            print("      %s %-18s %-8s %s"
+                  % ("*" if req else " ", k, (v or {}).get("type") or "-",
+                     ((v or {}).get("description") or "")[:56]))
+        if ps:
+            print()
+
+
+def cmd_login(key):
+    _request("GET", HOST + "/api/v1/apps", key)          # 验一下 Key 能不能用
+    CONFIG.parent.mkdir(parents=True, exist_ok=True)
+    CONFIG.write_text(json.dumps({"key": key}, ensure_ascii=False), encoding="utf-8")
+    try:
+        os.chmod(CONFIG, 0o600)
+    except OSError:
+        pass
+    print("✓ Key 已验证并保存到 %s" % CONFIG)
+
+
+def cmd_points():
+    d = _unwrap(_request("GET", HOST + "/api/v1/tasks", load_key()))
+    lst = d.get("data") if isinstance(d, dict) and "data" in d else d
+    if isinstance(lst, dict):
+        lst = lst.get("list") or []
+    print("最近 %d 条任务：" % len(lst))
+    for t in (lst[:20] if isinstance(lst, list) else []):
+        if isinstance(t, dict):
+            print("  %-14s %-12s %s"
+                  % (t.get("task_id"), t.get("status"), (t.get("app") or "")))
+
+
+def _cli(argv=None):
+    import argparse
+    ap = argparse.ArgumentParser(
+        prog="a7w.py", description="api.a7w.cn 算力网关 · 零依赖客户端")
+    ap.add_argument("--json", action="store_true", help="原始 JSON 输出")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    p = sub.add_parser("login", help="验证并保存 API Key")
+    p.add_argument("--key", required=True)
+
+    sub.add_parser("whoami", help="看当前 Key 能用的插件数")
+    sub.add_parser("apps", help="列出全部插件")
+    sub.add_parser("points", help="看最近的用量")
+
+    p = sub.add_parser("schema", help="看某插件的接口与参数")
+    p.add_argument("app")
+
+    p = sub.add_parser("call", help="调用接口（异步自动轮询）")
+    p.add_argument("app")
+    p.add_argument("api")
+    p.add_argument("--body", dest="body", default=None, help="请求体 JSON")
+    # 兼容旧文档写法 `--json '{...}'`。父命令的 --json 是「原始输出」开关，
+    # 两者 dest 不同，子命令里的 --json 按位置解析到 body_json。
+    p.add_argument("--json", dest="body_json", default=None,
+                   help="--body 的别名（兼容旧文档）")
+    p.add_argument("--no-wait", action="store_true", help="只提交，不等结果")
+    p.add_argument("--out", help="把结果 URL 下载到这个文件")
+    p.add_argument("--key", help="临时指定 Key")
+
+    p = sub.add_parser("task", help="查异步任务")
+    p.add_argument("task_id")
+
+    args = ap.parse_args(argv)
+
+    if args.cmd == "login":
+        cmd_login(args.key)
+    elif args.cmd == "apps":
+        cmd_apps(args.json)
+    elif args.cmd == "schema":
+        cmd_schema(args.app, args.json)
+    elif args.cmd == "points":
+        cmd_points()
+    elif args.cmd == "whoami":
+        d = _unwrap(_request("GET", HOST + "/api/v1/apps", load_key()))
+        lst = d.get("data") if isinstance(d, dict) and "data" in d else d
+        if isinstance(lst, dict):
+            lst = lst.get("list") or lst.get("apps") or []
+        print("✓ Key 有效，可用插件 %d 个" % len(lst))
+    elif args.cmd == "task":
+        t = _unwrap(_request("GET", "%s/api/v1/tasks/%s" % (HOST, args.task_id), load_key()))
+        print(json.dumps(t, ensure_ascii=False, indent=1))
+    elif args.cmd == "call":
+        raw_body = args.body if args.body is not None else (args.body_json or "{}")
+        try:
+            body = json.loads(raw_body)
+        except ValueError as e:
+            raise SystemExit("请求体不是合法 JSON：%s" % e)
+        res = call(args.app, args.api, body, key=getattr(args, "key", None),
+                   wait=not args.no_wait)
+        print(json.dumps(res, ensure_ascii=False, indent=1))
+        if getattr(args, "out", None):
+            url = None
+            for k in ("video_url", "audio_url", "image_url", "url", "output_url"):
+                url = dig(res, "result", k) or url
+            if url:
+                save(url, args.out)
+                print("已保存：%s" % args.out)
+            else:
+                sys.stderr.write("返回里没找到可下载地址，未保存\n")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_cli())
