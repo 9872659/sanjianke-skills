@@ -3,8 +3,8 @@ name: video-upscale
 slug: sanjianke-video-upscale
 displayName: 三剪客 · 视频超分（糊片救 4K）
 description: "把 480P 老片、被平台压花的成片救成 4K——原片放大 4.5 倍，差距肉眼可见。含效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。需要自备 api.a7w.cn 的 API Key。"
-version: 1.0.2
-summary: "糊素材不一定要重拍。这个 Skill 把「救回一条糊视频」拆成可执行的判断：先看清是压缩伤还是解析力不足，再在三条路线里选一条——在线站最快、走 api.a7w.cn 能批量自动化、本地 ffmpeg 不花钱但造不出细节。附真实计费、真实限制、和一套实测出来的并转档参数。遇到问题可加技术微信 9872659。"
+version: 1.0.4
+summary: "糊素材不一定要重拍。含原片 480P vs 超分 4K 的效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。需要自备 api.a7w.cn 的 API Key。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
