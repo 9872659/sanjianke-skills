@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**301 个技能包**：46 个三剪客原创，255 个为第三方开源项目编写的原创使用指南。
+**318 个技能包**：63 个三剪客原创，255 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -44,6 +44,47 @@ npx clawhub install <slug>
 正文里凡是指向本包文件的引用，都会写成 `references/…` 或本包 `scripts/…` 并能对上号。
 
 ## 技能分类
+
+### 设计多媒体（38）
+
+- **`a7w-action-transfer`** 三剪客 · 动作迁移
+- **`a7w-dressing-diffusion`** 三剪客 · AI换装
+- **`a7w-flashvsr`** 三剪客 · 视频超分
+- **`a7w-full-video`** 三剪客 · 全能视频生成
+- **`a7w-grok-video`** 三剪客 · Grok 视频生成
+- **`a7w-happy-horse`** 三剪客 · Happy Horse
+- **`a7w-image-human`** AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清
+- **`a7w-lipsync`** 三剪客 · 数字人对口型
+- **`a7w-mmaudio`** 三剪客 · 音效生成、视频配音
+- **`a7w-music-generation`** 三剪客 · 音乐生成
+- **`a7w-nano-banana`** 三剪客 · nano-banana
+- **`a7w-person-replacement`** 三剪客 · 人物替换
+- **`a7w-seedance`** 三剪客 · Seedance 2.0
+- **`a7w-seedsvc`** 三剪客 · 音色修改、AI翻唱
+- **`a7w-smart-clip`** 三剪客 · 智能剪辑
+- **`a7w-voice-tts`** 三剪客 · 语音TTS
+- **`a7w-wan`** 三剪客 · Wan 视频生成
+- **`action-transfer`** 三剪客 · 动作迁移
+- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
+- **`dressing-diffusion`** 三剪客 · AI换装
+- **`flashvsr`** 三剪客 · 视频超分
+- **`full-video`** 三剪客 · 全能视频生成
+- **`grok-video`** 三剪客 · Grok 视频生成
+- **`happy-horse-video`** 三剪客 · Happy Horse
+- **`image-human`** AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清
+- **`lipsync`** 三剪客 · 数字人对口型
+- **`mmaudio`** 三剪客 · 音效生成、视频配音
+- **`music-generation-kit`** 三剪客 · 音乐生成
+- **`nano-banana-image`** 三剪客 · nano-banana
+- **`person-replacement`** 三剪客 · 人物替换
+- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
+- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
+- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
+- **`seedance-video`** 三剪客 · Seedance 2.0
+- **`seedsvc`** 三剪客 · 音色修改、AI翻唱
+- **`smart-clip`** 三剪客 · 智能剪辑
+- **`voice-tts-studio`** 三剪客 · 语音TTS
+- **`wan-video`** 三剪客 · Wan 视频生成
 
 ### AI（36）
 
@@ -206,30 +247,6 @@ npx clawhub install <slug>
 - **`sanjianke-trufflehog`** 三剪客 · trufflehog 密钥与凭证扫描 · 衍生指南
 - **`sanjianke-yq`** 三剪客 · YAML 命令行处理 · 衍生指南
 - **`sanjianke-zoxide`** 三剪客 · 智能目录跳转 · 衍生指南
-
-### 设计多媒体（21）
-
-- **`action-transfer`** 三剪客 · 动作迁移
-- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
-- **`dressing-diffusion`** 三剪客 · AI换装
-- **`flashvsr`** 三剪客 · 视频超分
-- **`full-video`** 三剪客 · 全能视频生成
-- **`grok-video`** 三剪客 · Grok 视频生成
-- **`happy-horse-video`** 三剪客 · Happy Horse
-- **`image-human`** AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清
-- **`lipsync`** 三剪客 · 数字人对口型
-- **`mmaudio`** 三剪客 · 音效生成、视频配音
-- **`music-generation-kit`** 三剪客 · 音乐生成
-- **`nano-banana-image`** 三剪客 · nano-banana
-- **`person-replacement`** 三剪客 · 人物替换
-- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
-- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
-- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
-- **`seedance-video`** 三剪客 · Seedance 2.0
-- **`seedsvc`** 三剪客 · 音色修改、AI翻唱
-- **`smart-clip`** 三剪客 · 智能剪辑
-- **`voice-tts-studio`** 三剪客 · 语音TTS
-- **`wan-video`** 三剪客 · Wan 视频生成
 
 ### 电商（16）
 

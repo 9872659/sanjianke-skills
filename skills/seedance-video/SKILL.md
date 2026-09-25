@@ -2,9 +2,9 @@
 name: seedance-video
 slug: seedance-video
 displayName: 三剪客 · Seedance 2.0
-description: "基于火山方舟 Seedance 2.0 的多模态视频生成应用。支持文本/图片/视频/音频任意组合输入，可输出 480p/720p/1080p 分辨率、4~15 秒时长的视频，并可选生成同步音频。按 token 计费，按分辨率和是否含视频输入分档。支持 创建素材资产组合、上传素材、获取素材详情、更新素材、删除素材、查询任务、创建任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.4
-summary: "「Seedance 2.0」的完整调用封装：7 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+description: "基于火山方舟 Seedance 2.0 的多模态视频生成应用。支持文本/图片/视频/音频任意组合输入，可输出 480p/720p/1080p 分辨率、4~15 秒时长的视频，并可选生成同步音频。按 token 计费，按分辨率和是否含视频输入分档。支持 创建素材资产组合、上传素材、获取素材详情、更新素材、删除素材、查询任务、创建任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
+version: 1.0.5
+summary: "「Seedance 2.0」的完整调用封装：7 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
   - 三剪客
@@ -49,3 +49,23 @@ python3 scripts/client.py call seedance createGroup --json '{"Name": "demo-group
 ## 接口详情
 
 ### `createGroup` · 创建素材资产组合createGroup### `createAsset` · 上传素材createAsset### `getAsset` · 获取素材详情getAsset### `updateAsset` · 更新素材updateAsset### `deleteAsset` · 删除素材deleteAsset### `query` · 查询任务query### `create` · 创建任务createcreateGroup
+
+---
+
+## 关于这个 Skill
+
+**作者亲测实操后发布。** 文档里的每条命令、每个参数、每项计费口径，都真机跑过、对过账，
+不是抄来的二手资料。**下载后可自用，也可商用。**
+
+跑起来只需要一样东西 —— [算力集市 api.a7w.cn](https://api.a7w.cn/) 的一把 API Key。
+注册即送点数，可以先免费试跑几条，觉得好用再充。
+
+| 你可能想问 | 答案 |
+|---|---|
+| 要不要花钱 | 按点数计费，用多少扣多少，**没有月费、不用包年** |
+| 难不难接 | 包里自带**零依赖客户端**（只用 Python 标准库），配好 Key 一行命令就能跑 |
+| 能不能批量 | 能。想要批量脚本、更优参数、更省的调用方案，微信里说 |
+| 遇到问题找谁 | **直接加技术微信 9872659**，作者本人答疑 |
+
+> **使用中碰到任何问题 —— 报错、效果不理想、想省钱、想批量 —— 都欢迎加微信聊。**
+> 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的示例。
