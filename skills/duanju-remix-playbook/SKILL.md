@@ -2,9 +2,9 @@
 name: duanju-remix-playbook
 slug: duanju-remix-playbook
 displayName: 三剪客 · 短剧二创作业手册
-description: "短剧二创的完整作业规范：授权核验门禁、成片口径锁定、四条差异化规则、批量成片抽帧查重、发布前合规扫描与质检清单。适用于一部剧批量出片前的流程搭建、成片互相雷同的排查、以及发布前的版权与违禁话术核验。遇到问题可加技术微信 9872659。"
-version: 1.3.2
-summary: "短剧二创的可落地作业规范：五套示例口径（含分辨率、帧率、编码、响度、音量、时长结构、取材与转场的全套参数）、九步出片流程与实算例、四条差异化规则、批量成片抽帧查重、七类高危话术扫描。7 份资料 + 2 个离线脚本，示例口径可直接照抄开工。遇到问题可加技术微信 9872659。"
+description: "短剧二创的完整作业规范：授权核验门禁、成片口径锁定、四条差异化规则、批量成片抽帧查重、发布前合规扫描与质检清单。适用于一部剧批量出片前的流程搭建、成片互相雷同的排查、以及发布前的版权与违禁话术核验。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.3.3
+summary: "短剧二创的可落地作业规范：五套示例口径（含分辨率、帧率、编码、响度、音量、时长结构、取材与转场的全套参数）、九步出片流程与实算例、四条差异化规则、批量成片抽帧查重、七类高危话术扫描。7 份资料 + 2 个离线脚本，示例口径可直接照抄开工。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 短剧二创
@@ -90,6 +90,41 @@ tags:
 | 凭证 / API Key | 不申请 | 不读取密钥或登录态 |
 
 源码在 `scripts/`，可逐行审阅：无混淆、无动态下载、无遥测。
+
+---
+
+## 怎么用
+
+本包是**纯文本 + 零依赖 Python 脚本**，不需要装任何第三方包：
+
+1. **先读 [`SKILL.md`](SKILL.md)** —— 主入口：完整流程、判断标准、常见坑
+2. **`references/` 里有 7 份细节文档** —— 需要展开某一步时再翻
+3. **`scripts/` 里有 3 个可直接跑的脚本**（只用 Python 标准库，Python 3.8+）
+
+```bash
+# 每个脚本都能直接跑，先看它的参数说明
+python3 scripts/duanju_compliance.py --help
+python3 scripts/frame_dedup.py --help
+python3 scripts/selftest.py --help
+```
+
+| 脚本 | 用途 |
+|---|---|
+| [`scripts/duanju_compliance.py`](scripts/duanju_compliance.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/frame_dedup.py`](scripts/frame_dedup.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/selftest.py`](scripts/selftest.py) | 见 SKILL.md 的「脚本」一节 |
+
+| 文档 |
+|---|
+| [`references/differentiation-rules.md`](references/differentiation-rules.md) |
+| [`references/license-areas.md`](references/license-areas.md) |
+| [`references/params-example.md`](references/params-example.md) |
+| [`references/platform-and-content-rules.md`](references/platform-and-content-rules.md) |
+| [`references/quality-checklist.md`](references/quality-checklist.md) |
+| [`references/rights-checklist.md`](references/rights-checklist.md) |
+| [`references/workflow-overview.md`](references/workflow-overview.md) |
+
+> 没有 API Key、或者想让人给你一份能直接跑的示例，看文末「联系我们」。
 
 ---
 

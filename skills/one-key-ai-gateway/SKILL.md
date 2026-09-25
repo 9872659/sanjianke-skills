@@ -2,9 +2,9 @@
 name: one-key-ai-gateway
 slug: one-key-ai-gateway
 displayName: 三剪客 · 国产大模型一键调用统一路由
-description: "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。 遇到问题可加技术微信 9872659。"
-version: 1.1.0
-summary: "把 api.a7w.cn（算力集市）当统一 AI 网关：DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元、百度文心、MiniMax、小米 MiMo 等国产大模型，与 OpenAI GPT、Google nano-banana、xAI Grok 等国际模型，连同视频/图像/语音/数字人/音乐 21 个生成应用，全部收敛成一个入口。换 base_url 即可用，先冻结后结算、失败全额退回。 遇到问题可加技术微信 9872659。"
+description: "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.1.1
+summary: "把 api.a7w.cn（算力集市）当统一 AI 网关：DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元、百度文心、MiniMax、小米 MiMo 等国产大模型，与 OpenAI GPT、Google nano-banana、xAI Grok 等国际模型，连同视频/图像/语音/数字人/音乐 21 个生成应用，全部收敛成一个入口。换 base_url 即可用，先冻结后结算、失败全额退回。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -328,6 +328,35 @@ python3 scripts/client.py task tsk_xxxxxxxx
 | `references/client-cli.md` | `client.py` 全部子命令、参数与退出码 |
 | `scripts/client.py` | 零依赖客户端（不内嵌任何密钥） |
 | `openapi.json` | OpenAPI 3.0.3 定义（9 个操作），用于导入 Coze / Dify / ChatGPT Actions |
+
+## 怎么用
+
+本包是**纯文本 + 零依赖 Python 脚本**，不需要装任何第三方包：
+
+1. **先读 [`SKILL.md`](SKILL.md)** —— 主入口：完整流程、判断标准、常见坑
+2. **`references/` 里有 5 份细节文档** —— 需要展开某一步时再翻
+3. **`scripts/` 里有 1 个可直接跑的脚本**（只用 Python 标准库，Python 3.8+）
+
+```bash
+# 每个脚本都能直接跑，先看它的参数说明
+python3 scripts/client.py --help
+```
+
+| 脚本 | 用途 |
+|---|---|
+| [`scripts/client.py`](scripts/client.py) | 见 SKILL.md 的「脚本」一节 |
+
+| 文档 |
+|---|
+| [`references/api-apps-tasks.md`](references/api-apps-tasks.md) |
+| [`references/api-billing-errors.md`](references/api-billing-errors.md) |
+| [`references/api-openai-compat.md`](references/api-openai-compat.md) |
+| [`references/client-cli.md`](references/client-cli.md) |
+| [`references/getting-started.md`](references/getting-started.md) |
+
+> 没有 API Key、或者想让人给你一份能直接跑的示例，看文末「联系我们」。
+
+---
 
 ## 联系我们
 

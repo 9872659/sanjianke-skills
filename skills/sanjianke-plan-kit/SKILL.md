@@ -2,9 +2,9 @@
 name: sanjianke-plan-kit
 slug: sanjianke-plan-kit
 displayName: 三剪客 · 执行计划拆解
-description: "把复杂目标拆成有顺序、有检查点、每步都能独立验证的执行计划。 遇到问题可加技术微信 9872659。"
-version: 1.0.2
-summary: "一套原创的计划拆解方法：先钉死目标与成功判据，再按可验证性切步骤，排依赖、认并行、定关键路径，为每步写清产出物与唯一的验证动作，最后埋风险与回退点。含拆解方法、模板与填写示例、自检与常见错误三份资料。 遇到问题可加技术微信 9872659。"
+description: "把复杂目标拆成有顺序、有检查点、每步都能独立验证的执行计划。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.3
+summary: "一套原创的计划拆解方法：先钉死目标与成功判据，再按可验证性切步骤，排依赖、认并行、定关键路径，为每步写清产出物与唯一的验证动作，最后埋风险与回退点。含拆解方法、模板与填写示例、自检与常见错误三份资料。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 categories: [dev-programming]
 tags:

@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/asr`
+`POST /api/v1/apps/voice_tts/stt`
 
 ## 语音转文字
 

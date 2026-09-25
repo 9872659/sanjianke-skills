@@ -2,9 +2,9 @@
 name: sanjianke-drama-studio-kit
 slug: sanjianke-drama-studio-kit
 displayName: 三剪客 · AI 短剧创作台
-description: "短剧创作台的选型评估与私有化搭建指南。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "面向要自建 AI 短剧创作台的技术负责人：先做五维选型打分与自建/采购决策，再按 B/S 全栈架构完成环境准备、依赖安装、AI 供应商与对象存储配置、前端构建与联调，最后给出上线检查、成本构成与故障排查路径。附 Python 离线测算脚本。 遇到问题可加技术微信 9872659。"
+description: "短剧创作台的选型评估与私有化搭建指南。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "面向要自建 AI 短剧创作台的技术负责人：先做五维选型打分与自建/采购决策，再按 B/S 全栈架构完成环境准备、依赖安装、AI 供应商与对象存储配置、前端构建与联调，最后给出上线检查、成本构成与故障排查路径。附 Python 离线测算脚本。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

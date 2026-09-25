@@ -2,9 +2,9 @@
 name: sanjianke-ai-research-kit
 slug: sanjianke-ai-research-kit
 displayName: 三剪客 · AI 科研全流程
-description: "把选题、查文献、做实验、写论文串成一条可执行流水线。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "覆盖科研四个阶段：选题与头脑风暴、文献检索与综述、实验设计与复现、论文写作与投稿；每阶段给可执行步骤、模板与检查清单，并明确 AI 能做与不能做的事，最终结论由人负责。 遇到问题可加技术微信 9872659。"
+description: "把选题、查文献、做实验、写论文串成一条可执行流水线。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "覆盖科研四个阶段：选题与头脑风暴、文献检索与综述、实验设计与复现、论文写作与投稿；每阶段给可执行步骤、模板与检查清单，并明确 AI 能做与不能做的事，最终结论由人负责。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

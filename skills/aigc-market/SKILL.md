@@ -2,9 +2,9 @@
 name: aigc-market
 slug: aigc-market
 displayName: AI图片视频音乐语音配音数字人口播换装超分剪辑全能创作插件市场
-description: "通过一个 Key 调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场 aigc.a7w.cn 把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索收在一个 Key 之下。含 21 个插件的接口清单、参数表、真实计费口径与选型建议。遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "通过同一个算力网关调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索等能力收在一个 Key 之下；支持同步与异步两种调用方式，异步任务自动轮询，按点数计费，无需自己部署 GPU。适用于短视频批量生产、短剧二创、电商带货素材、企业宣传片、课程与播客制作、口播矩阵号运营等场景；一个 Key 调用全部 AI 算力，不用同时管理多家的账单与配额。遇到问题可加技术微信 9872659。"
+description: "通过一个 Key 调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场 aigc.a7w.cn 把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索收在一个 Key 之下。含 21 个插件的接口清单、参数表、真实计费口径与选型建议。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.1
+summary: "通过同一个算力网关调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索等能力收在一个 Key 之下；支持同步与异步两种调用方式，异步任务自动轮询，按点数计费，无需自己部署 GPU。适用于短视频批量生产、短剧二创、电商带货素材、企业宣传片、课程与播客制作、口播矩阵号运营等场景；一个 Key 调用全部 AI 算力，不用同时管理多家的账单与配额。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -78,13 +78,13 @@ python3 scripts/market.py list
 python3 scripts/market.py schema nano_banana
 
 # 4. 调用（异步任务自动轮询到结束）
-python3 scripts/a7w.py call nano_banana create --json '{"prompt":"一只戴墨镜的柴犬"}'
+python3 scripts/a7w.py call nano_banana submit --json '{"prompt":"一只戴墨镜的柴犬"}'
 ```
 
 ### 直接 curl
 
 ```bash
-curl -sS -X POST "https://api.a7w.cn/api/v1/apps/nano_banana/create" \
+curl -sS -X POST "https://api.a7w.cn/api/v1/apps/nano_banana/submit" \
   -H "Authorization: Bearer $A7W_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"prompt":"一只戴墨镜的柴犬"}'

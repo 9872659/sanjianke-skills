@@ -2,9 +2,9 @@
 name: sanjianke-article-shape-kit
 slug: sanjianke-article-shape-kit
 displayName: 三剪客 · 文章结构设计
-description: "动笔前先把论点、章节和顺序定下来，别写到一半才发现结构不对。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "一套原创的文章骨架搭建方法：核心主张收敛、论据盘点、四种叙述顺序的选择、每节任务定义，外加结构模式库、自检清单和一份真实的改写前后对照。 遇到问题可加技术微信 9872659。"
+description: "动笔前先把论点、章节和顺序定下来，别写到一半才发现结构不对。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "一套原创的文章骨架搭建方法：核心主张收敛、论据盘点、四种叙述顺序的选择、每节任务定义，外加结构模式库、自检清单和一份真实的改写前后对照。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

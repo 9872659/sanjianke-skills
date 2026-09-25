@@ -2,9 +2,9 @@
 name: sanjianke-skills-catalog-kit
 slug: sanjianke-skills-catalog-kit
 displayName: 三剪客 · 技能生态实战
-description: "在公开技能目录里读懂、挑对、装稳，并自己写出能被触发的技能。 遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "技能生态的实操方法论：目录怎么分层怎么读、一份可打分的选型判据、技能从想法到可用的六步流程、触发不稳定的排查路径，以及装第三方技能前的安全审查清单。 遇到问题可加技术微信 9872659。"
+description: "在公开技能目录里读懂、挑对、装稳，并自己写出能被触发的技能。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.1
+summary: "技能生态的实操方法论：目录怎么分层怎么读、一份可打分的选型判据、技能从想法到可用的六步流程、触发不稳定的排查路径，以及装第三方技能前的安全审查清单。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

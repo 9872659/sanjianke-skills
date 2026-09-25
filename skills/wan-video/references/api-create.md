@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/videos/generations`
+`POST /api/v1/apps/wan/create`
 
 # Wan 视频生成 · 创建任务
 

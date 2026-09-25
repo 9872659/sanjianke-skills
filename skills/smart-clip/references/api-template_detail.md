@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/clip/template/detail/{id}`
+`POST /api/v1/apps/smart_clip/template_detail`
 
 # 智能剪辑 · 模板详情
 

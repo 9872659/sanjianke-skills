@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/createTask`
+`POST /api/v1/apps/seedance/create`
 
 ## Seedance 2.0 创建任务
 

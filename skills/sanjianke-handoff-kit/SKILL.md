@@ -2,9 +2,9 @@
 name: sanjianke-handoff-kit
 slug: sanjianke-handoff-kit
 displayName: 三剪客 · 任务交接文档
-description: "把进行中的任务整理成一份交接文档，让另一个 Agent 或另一个人能无损接手。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "一套自研的任务交接规范：交接文档八字段标准、什么必须写什么可以不写的判据、交接质量自检清单，以及可直接套用的填写模板与示例，解决换对话、换人、多人协作时的上下文丢失。 遇到问题可加技术微信 9872659。"
+description: "把进行中的任务整理成一份交接文档，让另一个 Agent 或另一个人能无损接手。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "一套自研的任务交接规范：交接文档八字段标准、什么必须写什么可以不写的判据、交接质量自检清单，以及可直接套用的填写模板与示例，解决换对话、换人、多人协作时的上下文丢失。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

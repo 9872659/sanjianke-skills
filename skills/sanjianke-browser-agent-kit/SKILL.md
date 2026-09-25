@@ -2,9 +2,9 @@
 name: sanjianke-browser-agent-kit
 slug: sanjianke-browser-agent-kit
 displayName: 三剪客 · 浏览器自动化
-description: "让 AI Agent 真正操作浏览器：打开页面、点按、填表、翻页、抓取、截图、下载，并保持稳定可控。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "从会话/页面/元素定位/等待策略的地基讲起，给出定位器优先级与降级链、等待与重试的量化参数、截图与 DOM 取值的分工，并明确登录态管理、验证码与反爬的合规边界；附三份资料覆盖选型、稳定性写法与安全排错。 遇到问题可加技术微信 9872659。"
+description: "让 AI Agent 真正操作浏览器：打开页面、点按、填表、翻页、抓取、截图、下载，并保持稳定可控。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "从会话/页面/元素定位/等待策略的地基讲起，给出定位器优先级与降级链、等待与重试的量化参数、截图与 DOM 取值的分工，并明确登录态管理、验证码与反爬的合规边界；附三份资料覆盖选型、稳定性写法与安全排错。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

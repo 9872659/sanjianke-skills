@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/tts/live`
+`POST /api/v1/apps/voice_tts/tts_live`
 
 ## 文字转语音（WebSocket Live · 异步）
 

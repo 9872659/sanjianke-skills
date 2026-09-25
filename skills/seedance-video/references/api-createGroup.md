@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/createAssetGroup`
+`POST /api/v1/apps/seedance/createGroup`
 
 ## 创建素材资产组合（Asset Group）
 

@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/model`
+`POST /api/v1/apps/voice_tts/list_voices`
 
 ## 音色列表
 

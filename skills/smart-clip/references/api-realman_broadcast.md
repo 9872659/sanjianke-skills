@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/clip/video/realman_broadcast`
+`POST /api/v1/apps/smart_clip/realman_broadcast`
 
 # 智能剪辑 · 真人口播混剪
 

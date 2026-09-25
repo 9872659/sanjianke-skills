@@ -2,9 +2,9 @@
 name: sanjianke-im-server-kit
 slug: sanjianke-im-server-kit
 displayName: 三剪客 · 即时通讯服务端
-description: "自建 IM 服务端的协议选型、部署、消息可靠性与集群扩展实战。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "面向自建即时通讯服务端的工程实践包：从 MQTT/Protobuf 协议选型、单机与 Docker 部署、消息可靠性与离线补偿、水平扩展到集群运维与安全加固，给出可执行的配置清单与排错路径。 遇到问题可加技术微信 9872659。"
+description: "自建 IM 服务端的协议选型、部署、消息可靠性与集群扩展实战。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "面向自建即时通讯服务端的工程实践包：从 MQTT/Protobuf 协议选型、单机与 Docker 部署、消息可靠性与离线补偿、水平扩展到集群运维与安全加固，给出可执行的配置清单与排错路径。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

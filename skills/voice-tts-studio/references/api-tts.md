@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/tts`
+`POST /api/v1/apps/voice_tts/tts`
 
 ## 文字转语音（同步）
 

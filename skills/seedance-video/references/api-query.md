@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/query`
+`POST /api/v1/apps/seedance/query`
 
 ## 查询服务任务（可选）
 

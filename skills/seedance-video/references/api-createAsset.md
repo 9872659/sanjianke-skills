@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/createAsset`
+`POST /api/v1/apps/seedance/createAsset`
 
 ## 上传素材（CreateAsset）
 

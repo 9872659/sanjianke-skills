@@ -2,9 +2,9 @@
 name: sanjianke-plan-exec-kit
 slug: sanjianke-plan-exec-kit
 displayName: 三剪客 · 计划执行与检查点
-description: "把写好的计划一段段执行下去并在关键处停下核对，解决计划完整却跑偏。 遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "一套计划落地执行协议：每段的进入条件、执行动作、退出检查，四类检查点与偏离信号清单，继续/回退/改计划的分流决策，以及让第三方能独立核验的进度留痕格式。 遇到问题可加技术微信 9872659。"
+description: "把写好的计划一段段执行下去并在关键处停下核对，解决计划完整却跑偏。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.1
+summary: "一套计划落地执行协议：每段的进入条件、执行动作、退出检查，四类检查点与偏离信号清单，继续/回退/改计划的分流决策，以及让第三方能独立核验的进度留痕格式。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

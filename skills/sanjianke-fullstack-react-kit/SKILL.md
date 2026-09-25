@@ -2,9 +2,9 @@
 name: sanjianke-fullstack-react-kit
 slug: sanjianke-fullstack-react-kit
 displayName: 三剪客 · React 全栈框架
-description: "让 AI Agent 在 Next.js 项目里少犯错的协作规范。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "面向 Agent 协作的 Next.js 实战规范：项目结构与渲染模式选型、服务端与客户端边界划法、缓存与预渲染取舍、构建部署排错，附 Agent 高频错误清单与自检门禁。 遇到问题可加技术微信 9872659。"
+description: "让 AI Agent 在 Next.js 项目里少犯错的协作规范。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "面向 Agent 协作的 Next.js 实战规范：项目结构与渲染模式选型、服务端与客户端边界划法、缓存与预渲染取舍、构建部署排错，附 Agent 高频错误清单与自检门禁。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

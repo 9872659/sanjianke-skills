@@ -2,9 +2,9 @@
 name: duanju-rights-compliance
 slug: duanju-rights-compliance
 displayName: 三剪客 · 短剧二创授权与合规自查
-description: "短剧二创的版权授权核验与内容合规自查：授权四关门禁、留痕模板、音色与音乐字体肖像授权要点、平台原创性要求、AI 内容标注、短剧推广高危话术扫描。适用于开工前判断一部剧能不能做二创、发布前扫描解说稿与推广文案是否踩线，以及被投诉时整理授权链条。遇到问题可加技术微信 9872659。"
-version: 1.1.2
-summary: "短剧二创开工前的授权门禁与发布前的合规自检工具：3 份作业规范 + 1 个可离线运行的违禁话术扫描脚本（覆盖全集承诺、独家宣称、擦边引流、暴力血腥、盗版导流、收益诱导、极限词七类）。遇到问题可加技术微信 9872659。"
+description: "短剧二创的版权授权核验与内容合规自查：授权四关门禁、留痕模板、音色与音乐字体肖像授权要点、平台原创性要求、AI 内容标注、短剧推广高危话术扫描。适用于开工前判断一部剧能不能做二创、发布前扫描解说稿与推广文案是否踩线，以及被投诉时整理授权链条。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.1.3
+summary: "短剧二创开工前的授权门禁与发布前的合规自检工具：3 份作业规范 + 1 个可离线运行的违禁话术扫描脚本（覆盖全集承诺、独家宣称、擦边引流、暴力血腥、盗版导流、收益诱导、极限词七类）。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 短剧二创
@@ -113,6 +113,35 @@ AI 内容一旦被识别，处理通常比普通违规更重**——它同时涉
 代码透明度：全部 Python 源码位于 `scripts/`，可逐行审阅；无混淆、无压缩、无动态下载、无遥测，依赖仅
 Python 标准库；源码中不含 subprocess / os.system 调用，不设后台常驻或定时任务。正文、参考资料与脚本
 均为独立编写。
+
+---
+
+## 怎么用
+
+本包是**纯文本 + 零依赖 Python 脚本**，不需要装任何第三方包：
+
+1. **先读 [`SKILL.md`](SKILL.md)** —— 主入口：完整流程、判断标准、常见坑
+2. **`references/` 里有 3 份细节文档** —— 需要展开某一步时再翻
+3. **`scripts/` 里有 2 个可直接跑的脚本**（只用 Python 标准库，Python 3.8+）
+
+```bash
+# 每个脚本都能直接跑，先看它的参数说明
+python3 scripts/duanju_compliance.py --help
+python3 scripts/selftest.py --help
+```
+
+| 脚本 | 用途 |
+|---|---|
+| [`scripts/duanju_compliance.py`](scripts/duanju_compliance.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/selftest.py`](scripts/selftest.py) | 见 SKILL.md 的「脚本」一节 |
+
+| 文档 |
+|---|
+| [`references/license-areas.md`](references/license-areas.md) |
+| [`references/platform-and-content-rules.md`](references/platform-and-content-rules.md) |
+| [`references/rights-checklist.md`](references/rights-checklist.md) |
+
+> 没有 API Key、或者想让人给你一份能直接跑的示例，看文末「联系我们」。
 
 ---
 

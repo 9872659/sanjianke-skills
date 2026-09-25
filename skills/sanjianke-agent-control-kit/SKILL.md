@@ -2,9 +2,9 @@
 name: sanjianke-agent-control-kit
 slug: sanjianke-agent-control-kit
 displayName: 三剪客 · 长任务 Agent 控制平面
-description: "为长周期 Agent 任务提供可持久、可治理的本地控制平面，跨 harness 续跑。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "把 loopx 的长任务控制平面讲清并落地：目标、待办、闸门、证据、配额五件持久状态，quota should-run 决定这一轮跑不跑，todo claim 定归属，refresh-state 与证据留痕，跨 Codex / Claude Code 等 harness 续跑。含安装接入、每日巡检与故障排查。 遇到问题可加技术微信 9872659。"
+description: "为长周期 Agent 任务提供可持久、可治理的本地控制平面，跨 harness 续跑。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "把 loopx 的长任务控制平面讲清并落地：目标、待办、闸门、证据、配额五件持久状态，quota should-run 决定这一轮跑不跑，todo claim 定归属，refresh-state 与证据留痕，跨 Codex / Claude Code 等 harness 续跑。含安装接入、每日巡检与故障排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

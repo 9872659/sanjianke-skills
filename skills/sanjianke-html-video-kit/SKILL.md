@@ -2,9 +2,9 @@
 name: sanjianke-html-video-kit
 slug: sanjianke-html-video-kit
 displayName: 三剪客 · HTML 转视频引擎
-description: "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "Hyperframes 用 data-* 属性给 DOM 标时间，用 GSAP 等可寻址动画驱动画面，无头 Chrome 逐帧截取后交给 FFmpeg 编码。本包覆盖项目结构、时间轴写法、registry 组件复用、批量出片与渲染排错。 遇到问题可加技术微信 9872659。"
+description: "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "Hyperframes 用 data-* 属性给 DOM 标时间，用 GSAP 等可寻址动画驱动画面，无头 Chrome 逐帧截取后交给 FFmpeg 编码。本包覆盖项目结构、时间轴写法、registry 组件复用、批量出片与渲染排错。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

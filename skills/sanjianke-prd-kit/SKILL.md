@@ -2,9 +2,9 @@
 name: sanjianke-prd-kit
 slug: sanjianke-prd-kit
 displayName: 三剪客 · 需求文档 PRD
-description: "把讨论记录、背景资料和零散想法整理成一份真正能用的 PRD。 遇到问题可加技术微信 9872659。"
-version: 1.0.2
-summary: "一套原创的 PRD 写作方法：先钉死问题与范围，再记录关键决定和理由，最后用验收标准收口。含结构模板、合格判据、三种废稿形态、完整填写示例与评审自检清单。 遇到问题可加技术微信 9872659。"
+description: "把讨论记录、背景资料和零散想法整理成一份真正能用的 PRD。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.3
+summary: "一套原创的 PRD 写作方法：先钉死问题与范围，再记录关键决定和理由，最后用验收标准收口。含结构模板、合格判据、三种废稿形态、完整填写示例与评审自检清单。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

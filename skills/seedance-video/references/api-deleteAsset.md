@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/deleteAsset`
+`POST /api/v1/apps/seedance/deleteAsset`
 
 ## 删除素材（DeleteAsset）
 

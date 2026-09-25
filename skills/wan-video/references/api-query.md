@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/tasks/{task_id}`
+`POST /api/v1/apps/wan/query`
 
 # Wan 视频生成 · 查询任务
 

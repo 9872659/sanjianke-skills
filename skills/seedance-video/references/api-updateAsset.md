@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/updateAsset`
+`POST /api/v1/apps/seedance/updateAsset`
 
 ## 更新素材（UpdateAsset）
 

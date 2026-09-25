@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/ant/getAsset`
+`POST /api/v1/apps/seedance/getAsset`
 
 ## 获取素材详情（GetAsset）
 

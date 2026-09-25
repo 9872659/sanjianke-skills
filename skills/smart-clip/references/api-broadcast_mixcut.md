@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/clip/video/broadcast_mixcut`
+`POST /api/v1/apps/smart_clip/broadcast_mixcut`
 
 # 智能剪辑 · 素材混剪
 

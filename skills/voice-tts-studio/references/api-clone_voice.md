@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/model`
+`POST /api/v1/apps/voice_tts/clone_voice`
 
 ## 克隆音色
 

@@ -2,9 +2,9 @@
 name: sanjianke-skill-forge-kit
 slug: sanjianke-skill-forge-kit
 displayName: 三剪客 · 技能工程
-description: "把一个重复流程写成能被正确触发的 Agent Skill：触发面、结构拆分、触发测试、故障排查。 遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "从想法到可用技能的动手方法论：description 正反例改写、SKILL.md 与 references 的拆分判据、脚本与非脚本的取舍、20 条触发测试集的构造与跑法，以及不触发 / 触发了不动作 / 动作了结果不对三类故障的排查路径。 遇到问题可加技术微信 9872659。"
+description: "把一个重复流程写成能被正确触发的 Agent Skill：触发面、结构拆分、触发测试、故障排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.1
+summary: "从想法到可用技能的动手方法论：description 正反例改写、SKILL.md 与 references 的拆分判据、脚本与非脚本的取舍、20 条触发测试集的构造与跑法，以及不触发 / 触发了不动作 / 动作了结果不对三类故障的排查路径。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

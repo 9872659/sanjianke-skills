@@ -2,9 +2,9 @@
 name: sanjianke-engineer-skills-kit
 slug: sanjianke-engineer-skills-kit
 displayName: 三剪客 · 工程师技能体系
-description: "把工程经验沉淀成可复用 Agent Skill：怎么切分、怎么写、怎么在团队里落地。遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "团队自建 Agent Skill 体系的作业规范：沉淀判据、按触发面切分的四种切法、技能正文模板与写作规则、Code Review 式评审门禁、四周落地排期，以及 10 条真实反模式。遇到问题可加技术微信 9872659。"
+description: "把工程经验沉淀成可复用 Agent Skill：怎么切分、怎么写、怎么在团队里落地。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "团队自建 Agent Skill 体系的作业规范：沉淀判据、按触发面切分的四种切法、技能正文模板与写作规则、Code Review 式评审门禁、四周落地排期，以及 10 条真实反模式。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

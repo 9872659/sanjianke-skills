@@ -2,9 +2,9 @@
 name: sanjianke-direct-output-kit
 slug: sanjianke-direct-output-kit
 displayName: 三剪客 · 直给结论输出规范
-description: "让 AI 把结论放第一行、步骤编号、不写废话，只留一个下一步。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "一套可执行的输出规范：首行给动作、多步编号、每轮复述进度、同类信息不超过五条、结尾只留一个下一步。含十条规则、六类破例场景、模板与正反例、发前删减自检。 遇到问题可加技术微信 9872659。"
+description: "让 AI 把结论放第一行、步骤编号、不写废话，只留一个下一步。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "一套可执行的输出规范：首行给动作、多步编号、每轮复述进度、同类信息不超过五条、结尾只留一个下一步。含十条规则、六类破例场景、模板与正反例、发前删减自检。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

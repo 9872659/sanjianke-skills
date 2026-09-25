@@ -2,9 +2,9 @@
 name: sanjianke-agents-flex-kit
 slug: sanjianke-agents-flex-kit
 displayName: 三剪客 · Java Agent 框架
-description: "Java 生态 AI Agent 框架接入、选型与踩坑排查。 遇到问题可加技术微信 9872659。"
-version: 1.0.1
-summary: "Java 团队的 AI Agent 框架落地包：模块分层、工具调用、拦截器 order、运行时审批与恢复、RAG、MCP 与 Skills、模型路由与可观测；附 Spring AI/LangChain4j 对比与排错清单。 遇到问题可加技术微信 9872659。"
+description: "Java 生态 AI Agent 框架接入、选型与踩坑排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "Java 团队的 AI Agent 框架落地包：模块分层、工具调用、拦截器 order、运行时审批与恢复、RAG、MCP 与 Skills、模型路由与可观测；附 Spring AI/LangChain4j 对比与排错清单。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

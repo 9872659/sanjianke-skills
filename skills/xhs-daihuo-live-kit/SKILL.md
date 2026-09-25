@@ -2,9 +2,9 @@
 name: xhs-daihuo-live-kit
 slug: xhs-daihuo-live-kit
 displayName: 三剪客 · 小红书带货直播作战包
-description: "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。遇到问题可加技术微信 9872659。"
-version: 1.2.3
-summary: "从小红书选品测算到商品笔记、直播脚本、评论话术与数据复盘的一体化工作流，含 8 份参考资料、5 个可离线运行的 Python 脚本（选品计算器、时间轴生成、笔记评分、合规扫描、内置自测）。明确划出覆盖与不覆盖的边界——本 Skill 是单人可用的方法论与轻量工具。遇到问题可加技术微信 9872659。"
+description: "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.2.4
+summary: "从小红书选品测算到商品笔记、直播脚本、评论话术与数据复盘的一体化工作流，含 8 份参考资料、5 个可离线运行的 Python 脚本（选品计算器、时间轴生成、笔记评分、合规扫描、内置自测）。明确划出覆盖与不覆盖的边界——本 Skill 是单人可用的方法论与轻量工具。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - xiaohongshu
@@ -111,6 +111,46 @@ appliance）。`high` 必须改、不允许发布，`medium` 建议改或补真�
 | 凭证 / API Key | 不申请 | 不读取任何密钥、环境变量或登录态 |
 
 本技能不抓取任何平台数据，指标需由用户从创作者后台导出或提供。
+
+---
+
+## 怎么用
+
+本包是**纯文本 + 零依赖 Python 脚本**，不需要装任何第三方包：
+
+1. **先读 [`SKILL.md`](SKILL.md)** —— 主入口：完整流程、判断标准、常见坑
+2. **`references/` 里有 8 份细节文档** —— 需要展开某一步时再翻
+3. **`scripts/` 里有 5 个可直接跑的脚本**（只用 Python 标准库，Python 3.8+）
+
+```bash
+# 每个脚本都能直接跑，先看它的参数说明
+python3 scripts/compliance_check.py --help
+python3 scripts/live_timer.py --help
+python3 scripts/note_score.py --help
+python3 scripts/selection_calc.py --help
+python3 scripts/selftest.py --help
+```
+
+| 脚本 | 用途 |
+|---|---|
+| [`scripts/compliance_check.py`](scripts/compliance_check.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/live_timer.py`](scripts/live_timer.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/note_score.py`](scripts/note_score.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/selection_calc.py`](scripts/selection_calc.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/selftest.py`](scripts/selftest.py) | 见 SKILL.md 的「脚本」一节 |
+
+| 文档 |
+|---|
+| [`references/account-positioning.md`](references/account-positioning.md) |
+| [`references/category-playbooks.md`](references/category-playbooks.md) |
+| [`references/comment-and-dm-scripts.md`](references/comment-and-dm-scripts.md) |
+| [`references/compliance-rules.md`](references/compliance-rules.md) |
+| [`references/data-review.md`](references/data-review.md) |
+| [`references/live-script-playbook.md`](references/live-script-playbook.md) |
+| [`references/note-formulas.md`](references/note-formulas.md) |
+| [`references/selection-scorecard.md`](references/selection-scorecard.md) |
+
+> 没有 API Key、或者想让人给你一份能直接跑的示例，看文末「联系我们」。
 
 ---
 

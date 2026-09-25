@@ -4,7 +4,7 @@
 
 ---
 
-`POST /api/v1/apps/v1/clip/video/news_mixcut`
+`POST /api/v1/apps/smart_clip/news_mixcut`
 
 # 智能剪辑 · 新闻体视频
 

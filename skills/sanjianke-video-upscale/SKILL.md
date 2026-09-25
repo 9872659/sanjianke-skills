@@ -2,9 +2,9 @@
 name: video-upscale
 slug: sanjianke-video-upscale
 displayName: 三剪客 · 视频超分（糊片救 4K）
-description: "把 480P 老片、被平台压花的成片救成 4K——原片放大 4.5 倍，差距肉眼可见。含效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。需要自备 api.a7w.cn 的 API Key。"
-version: 1.0.6
-summary: "糊素材不一定要重拍。含原片 480P vs 超分 4K 的效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。需要自备 api.a7w.cn 的 API Key。遇到问题可加技术微信 9872659。"
+description: "把 480P 老片、被平台压花的成片救成 4K——原片放大 4.5 倍，差距肉眼可见。含效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.7
+summary: "糊素材不一定要重拍。含原片 480P vs 超分 4K 的效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

@@ -2,368 +2,368 @@
  {
   "slug": "ai-music-studio",
   "displayName": "AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌",
-  "description": "输入一句话，AI 帮你写词、作曲、编曲、演唱，一首完整的歌只要 0.65 元。支持人声克隆与专属歌手风格，让 AI 用你的音色唱；支持 AI 翻唱、续写、混音、采样、母带重制、伴奏分离与分轨导出。含 17 种生成操作、13 个接口的完整参数表与真实计费口径。需要自备 api.a7w.cn 的 API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "输入一句话，AI 帮你写词、作曲、编曲、演唱，一首完整的歌只要 0.65 元。支持人声克隆与专属歌手风格，让 AI 用你的音色唱；支持 AI 翻唱、续写、混音、采样、母带重制、伴奏分离与分轨导出。含 17 种生成操作、13 个接口的完整参数表与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "aigc-market",
   "displayName": "AI图片视频音乐语音配音数字人口播换装超分剪辑全能创作插件市场",
-  "description": "通过一个 Key 调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场 aigc.a7w.cn 把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索收在一个 Key 之下。含 21 个插件的接口清单、参数表、真实计费口径与选型建议。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "通过一个 Key 调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场 aigc.a7w.cn 把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索收在一个 Key 之下。含 21 个插件的接口清单、参数表、真实计费口径与选型建议。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "duanju-remix-playbook",
   "displayName": "三剪客 · 短剧二创作业手册",
-  "description": "短剧二创的完整作业规范：授权核验门禁、成片口径锁定、四条差异化规则、批量成片抽帧查重、发布前合规扫描与质检清单。适用于一部剧批量出片前的流程搭建、成片互相雷同的排查、以及发布前的版权与违禁话术核验。遇到问题可加技术微信 9872659。",
-  "version": "1.3.2",
+  "description": "短剧二创的完整作业规范：授权核验门禁、成片口径锁定、四条差异化规则、批量成片抽帧查重、发布前合规扫描与质检清单。适用于一部剧批量出片前的流程搭建、成片互相雷同的排查、以及发布前的版权与违禁话术核验。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.3.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "duanju-rights-compliance",
   "displayName": "三剪客 · 短剧二创授权与合规自查",
-  "description": "短剧二创的版权授权核验与内容合规自查：授权四关门禁、留痕模板、音色与音乐字体肖像授权要点、平台原创性要求、AI 内容标注、短剧推广高危话术扫描。适用于开工前判断一部剧能不能做二创、发布前扫描解说稿与推广文案是否踩线，以及被投诉时整理授权链条。遇到问题可加技术微信 9872659。",
-  "version": "1.1.2",
+  "description": "短剧二创的版权授权核验与内容合规自查：授权四关门禁、留痕模板、音色与音乐字体肖像授权要点、平台原创性要求、AI 内容标注、短剧推广高危话术扫描。适用于开工前判断一部剧能不能做二创、发布前扫描解说稿与推广文案是否踩线，以及被投诉时整理授权链条。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.1.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "one-key-ai-gateway",
   "displayName": "三剪客 · 国产大模型一键调用统一路由",
-  "description": "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。 遇到问题可加技术微信 9872659。",
-  "version": "1.1.0",
+  "description": "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.1.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-agent-control-kit",
   "displayName": "三剪客 · 长任务 Agent 控制平面",
-  "description": "为长周期 Agent 任务提供可持久、可治理的本地控制平面，跨 harness 续跑。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "为长周期 Agent 任务提供可持久、可治理的本地控制平面，跨 harness 续跑。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-agents-flex-kit",
   "displayName": "三剪客 · Java Agent 框架",
-  "description": "Java 生态 AI Agent 框架接入、选型与踩坑排查。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "Java 生态 AI Agent 框架接入、选型与踩坑排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-ai-research-kit",
   "displayName": "三剪客 · AI 科研全流程",
-  "description": "把选题、查文献、做实验、写论文串成一条可执行流水线。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "把选题、查文献、做实验、写论文串成一条可执行流水线。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-article-shape-kit",
   "displayName": "三剪客 · 文章结构设计",
-  "description": "动笔前先把论点、章节和顺序定下来，别写到一半才发现结构不对。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "动笔前先把论点、章节和顺序定下来，别写到一半才发现结构不对。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-brainstorm-kit",
   "displayName": "三剪客 · 发散与收敛",
-  "description": "先用多个方向把方案铺开，再按统一标尺收敛成一个，专治想到第一个方案就开干。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "先用多个方向把方案铺开，再按统一标尺收敛成一个，专治想到第一个方案就开干。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-browser-agent-kit",
   "displayName": "三剪客 · 浏览器自动化",
-  "description": "让 AI Agent 真正操作浏览器：打开页面、点按、填表、翻页、抓取、截图、下载，并保持稳定可控。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "让 AI Agent 真正操作浏览器：打开页面、点按、填表、翻页、抓取、截图、下载，并保持稳定可控。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-direct-output-kit",
   "displayName": "三剪客 · 直给结论输出规范",
-  "description": "让 AI 把结论放第一行、步骤编号、不写废话，只留一个下一步。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "让 AI 把结论放第一行、步骤编号、不写废话，只留一个下一步。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-doc-grill-kit",
   "displayName": "三剪客 · 带资料追问",
-  "description": "先把资料读成事实索引，再基于索引逐条追问，标出矛盾与缺口。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "先把资料读成事实索引，再基于索引逐条追问，标出矛盾与缺口。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-drama-studio-kit",
   "displayName": "三剪客 · AI 短剧创作台",
-  "description": "短剧创作台的选型评估与私有化搭建指南。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "短剧创作台的选型评估与私有化搭建指南。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-engineer-skills-kit",
   "displayName": "三剪客 · 工程师技能体系",
-  "description": "把工程经验沉淀成可复用 Agent Skill：怎么切分、怎么写、怎么在团队里落地。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "把工程经验沉淀成可复用 Agent Skill：怎么切分、怎么写、怎么在团队里落地。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-fullstack-react-kit",
   "displayName": "三剪客 · React 全栈框架",
-  "description": "让 AI Agent 在 Next.js 项目里少犯错的协作规范。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "让 AI Agent 在 Next.js 项目里少犯错的协作规范。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-handoff-kit",
   "displayName": "三剪客 · 任务交接文档",
-  "description": "把进行中的任务整理成一份交接文档，让另一个 Agent 或另一个人能无损接手。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "把进行中的任务整理成一份交接文档，让另一个 Agent 或另一个人能无损接手。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-html-video-kit",
   "displayName": "三剪客 · HTML 转视频引擎",
-  "description": "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-idea-grill-kit",
   "displayName": "三剪客 · 想法压力测试",
-  "description": "一套原创的深度追问方法，围绕用户的想法连续追问，把隐藏假设、遗漏前提和内在矛盾一层层问出来。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "一套原创的深度追问方法，围绕用户的想法连续追问，把隐藏假设、遗漏前提和内在矛盾一层层问出来。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-im-server-kit",
   "displayName": "三剪客 · 即时通讯服务端",
-  "description": "自建 IM 服务端的协议选型、部署、消息可靠性与集群扩展实战。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
+  "description": "自建 IM 服务端的协议选型、部署、消息可靠性与集群扩展实战。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-plan-exec-kit",
   "displayName": "三剪客 · 计划执行与检查点",
-  "description": "把写好的计划一段段执行下去并在关键处停下核对，解决计划完整却跑偏。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "把写好的计划一段段执行下去并在关键处停下核对，解决计划完整却跑偏。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-plan-kit",
   "displayName": "三剪客 · 执行计划拆解",
-  "description": "把复杂目标拆成有顺序、有检查点、每步都能独立验证的执行计划。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "description": "把复杂目标拆成有顺序、有检查点、每步都能独立验证的执行计划。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-prd-kit",
   "displayName": "三剪客 · 需求文档 PRD",
-  "description": "把讨论记录、背景资料和零散想法整理成一份真正能用的 PRD。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "description": "把讨论记录、背景资料和零散想法整理成一份真正能用的 PRD。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-prototype-kit",
   "displayName": "三剪客 · 想法快速原型",
-  "description": "把一个还模糊的想法快速做成能看、能点、能反馈的原型，先验证方向再决定是否投入。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "把一个还模糊的想法快速做成能看、能点、能反馈的原型，先验证方向再决定是否投入。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-skill-forge-kit",
   "displayName": "三剪客 · 技能工程",
-  "description": "把一个重复流程写成能被正确触发的 Agent Skill：触发面、结构拆分、触发测试、故障排查。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "把一个重复流程写成能被正确触发的 Agent Skill：触发面、结构拆分、触发测试、故障排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-skills-catalog-kit",
   "displayName": "三剪客 · 技能生态实战",
-  "description": "在公开技能目录里读懂、挑对、装稳，并自己写出能被触发的技能。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "在公开技能目录里读懂、挑对、装稳，并自己写出能被触发的技能。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-ticket-kit",
   "displayName": "三剪客 · 任务票据拆分",
-  "description": "把需求或方案拆成一张张可跟踪、可独立交付的任务票据，写清边界、依赖与验收条件。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "description": "把需求或方案拆成一张张可跟踪、可独立交付的任务票据，写清边界、依赖与验收条件。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-video-upscale",
   "displayName": "三剪客 · 视频超分（糊片救 4K）",
-  "description": "把 480P 老片、被平台压花的成片救成 4K——原片放大 4.5 倍，差距肉眼可见。含效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。需要自备 api.a7w.cn 的 API Key。",
-  "version": "1.0.6",
+  "description": "把 480P 老片、被平台压花的成片救成 4K——原片放大 4.5 倍，差距肉眼可见。含效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.7",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "xhs-daihuo-live-kit",
   "displayName": "三剪客 · 小红书带货直播作战包",
-  "description": "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。遇到问题可加技术微信 9872659。",
-  "version": "1.2.3",
+  "description": "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.2.4",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "action-transfer",
   "displayName": "三剪客 · 动作迁移",
-  "description": "动作迁移，基于参考图片和输入视频生成动作迁移后的视频结果。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "动作迁移，基于参考图片和输入视频生成动作迁移后的视频结果。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "dressing-diffusion",
   "displayName": "三剪客 · AI换装",
-  "description": "智能图片换装，上传模特图和服装图，AI 自动完成试穿效果生成。支持上衣、下装、全身换装。模型可在后台 extra_config 中切换。支持 提交换装任务、查询换装结果。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "智能图片换装，上传模特图和服装图，AI 自动完成试穿效果生成。支持上衣、下装、全身换装。模型可在后台 extra_config 中切换。支持 提交换装任务、查询换装结果。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "flashvsr",
   "displayName": "三剪客 · 视频超分",
-  "description": "视频超分，任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "视频超分，任务由平台弹性部署调度。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "full-video",
   "displayName": "三剪客 · 全能视频生成",
-  "description": "支持文生视频、首尾帧视频生成及多模态参考视频生成。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "支持文生视频、首尾帧视频生成及多模态参考视频生成。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "grok-video",
   "displayName": "三剪客 · Grok 视频生成",
-  "description": "Grok 视频生成应用，支持快速视频生成和标准生成视频。支持 创建视频任务、查询视频任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "Grok 视频生成应用，支持快速视频生成和标准生成视频。支持 创建视频任务、查询视频任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "happy-horse-video",
   "displayName": "三剪客 · Happy Horse",
-  "description": "Happy Horse（HappyHorse-1.1 系列）面向文生/图生高质量短视频，采用统一多模态建模，可一阶段生成声画、支持多语言对白与多镜头场景衔接。计费按目标分辨率与生成秒数对应的参数档位计点。本能力为内测邀请制，正式调用前需完成内测申请。支持 提交任务、创建任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.3",
+  "description": "Happy Horse（HappyHorse-1.1 系列）面向文生/图生高质量短视频，采用统一多模态建模，可一阶段生成声画、支持多语言对白与多镜头场景衔接。计费按目标分辨率与生成秒数对应的参数档位计点。本能力为内测邀请制，正式调用前需完成内测申请。支持 提交任务、创建任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.4",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "image-human",
   "displayName": "AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清",
-  "description": "一张照片 + 一段录音，生成自然稳定的数字人口播视频——不用架机位、不用出镜、不用后期剪辑。四档清晰度可选，最低 0.015 元/秒，一条 60 秒口播视频最低 0.90 元。含完整参数表、分档计费口径与常见坑。需要自备 api.a7w.cn 的 API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.1.0",
+  "description": "一张照片 + 一段录音，生成自然稳定的数字人口播视频——不用架机位、不用出镜、不用后期剪辑。四档清晰度可选，最低 0.015 元/秒，一条 60 秒口播视频最低 0.90 元。含完整参数表、分档计费口径与常见坑。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.1.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "lipsync",
   "displayName": "三剪客 · 数字人对口型",
-  "description": "数字人对口型（Lipsync），任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.3",
+  "description": "数字人对口型（Lipsync），任务由平台弹性部署调度。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.4",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "mmaudio",
   "displayName": "三剪客 · 音效生成、视频配音",
-  "description": "音效生成、视频配音，任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "音效生成、视频配音，任务由平台弹性部署调度。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "music-generation-kit",
   "displayName": "三剪客 · 音乐生成",
-  "description": "音乐生成应用，支持歌曲生成、歌词生成、参考音频、声音克隆、音频导出和分轨处理。支持 歌词混合、人声处理、优化音乐风格、导出 MIDI、歌词时间轴、导出 MP4、导出 WAV、声音克隆。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "音乐生成应用，支持歌曲生成、歌词生成、参考音频、声音克隆、音频导出和分轨处理。支持 歌词混合、人声处理、优化音乐风格、导出 MIDI、歌词时间轴、导出 MP4、导出 WAV、声音克隆。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "nano-banana-image",
   "displayName": "三剪客 · nano-banana",
-  "description": "图片生成与编辑应用，支持文生图、图生图和多规格模型选择。支持 创建图片任务、查询图片任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "图片生成与编辑应用，支持文生图、图生图和多规格模型选择。支持 创建图片任务、查询图片任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "person-replacement",
   "displayName": "三剪客 · 人物替换",
-  "description": "人物替换，基于参考图片和输入视频生成替换后的视频结果。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "人物替换，基于参考图片和输入视频生成替换后的视频结果。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "seedance-video",
   "displayName": "三剪客 · Seedance 2.0",
-  "description": "基于火山方舟 Seedance 2.0 的多模态视频生成应用。支持文本/图片/视频/音频任意组合输入，可输出 480p/720p/1080p 分辨率、4~15 秒时长的视频，并可选生成同步音频。按 token 计费，按分辨率和是否含视频输入分档。支持 创建素材资产组合、上传素材、获取素材详情、更新素材、删除素材、查询任务、创建任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.3",
+  "description": "基于火山方舟 Seedance 2.0 的多模态视频生成应用。支持文本/图片/视频/音频任意组合输入，可输出 480p/720p/1080p 分辨率、4~15 秒时长的视频，并可选生成同步音频。按 token 计费，按分辨率和是否含视频输入分档。支持 创建素材资产组合、上传素材、获取素材详情、更新素材、删除素材、查询任务、创建任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.4",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "seedsvc",
   "displayName": "三剪客 · 音色修改、AI翻唱",
-  "description": "音色修改、AI翻唱，任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "音色修改、AI翻唱，任务由平台弹性部署调度。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "smart-clip",
   "displayName": "三剪客 · 智能剪辑",
-  "description": "智能剪辑应用，支持模板查询、真人口播混剪、素材混剪和新闻体视频制作。支持 模板列表、模板详情、真人口播混剪、素材混剪、新闻体视频。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.3",
+  "description": "智能剪辑应用，支持模板查询、真人口播混剪、素材混剪和新闻体视频制作。支持 模板列表、模板详情、真人口播混剪、素材混剪、新闻体视频。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.4",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "voice-tts-studio",
   "displayName": "三剪客 · 语音TTS",
-  "description": "语音克隆、文字转语音（同步/异步）、语音识别等多端点 AI 语音能力。支持 文字转语音（Live·异步）、克隆音色、文字转语音、文字转语音（异步）、语音转文字、音色列表。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "语音克隆、文字转语音（同步/异步）、语音识别等多端点 AI 语音能力。支持 文字转语音（Live·异步）、克隆音色、文字转语音、文字转语音（异步）、语音转文字、音色列表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "wan-video",
   "displayName": "三剪客 · Wan 视频生成",
-  "description": "Wan 模型族视频生成应用。版本通过 model 参数选择，支持文生视频、角色参考生视频与视频编辑。支持 查询视频任务、创建视频任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "description": "Wan 模型族视频生成应用。版本通过 model 参数选择，支持文生视频、角色参考生视频与视频编辑。支持 查询视频任务、创建视频任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.6",
   "license": "MIT",
   "origin": "sanjianke"
  },
