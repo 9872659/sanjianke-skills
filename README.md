@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**318 个技能包**：63 个三剪客原创，255 个为第三方开源项目编写的原创使用指南。
+**318 个技能包**：91 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -44,6 +44,48 @@ npx clawhub install <slug>
 正文里凡是指向本包文件的引用，都会写成 `references/…` 或本包 `scripts/…` 并能对上号。
 
 ## 技能分类
+
+### 内容创作（39）
+
+- **`sanjianke-ai-workflow`** 可视化AI工作流编排·OpenAI兼容网关接21个生成应用
+- **`sanjianke-article-shape-kit`** 三剪客 · 文章结构设计
+- **`sanjianke-bg-remover`** 图片一键去背景换白底·商品图抠图透明底批量在线工具
+- **`sanjianke-coqui-tts`** 三剪客 · 开源语音合成与音色克隆 · 衍生指南
+- **`sanjianke-doc-to-markdown`** 文档转Markdown·PDF Word表格结构保留在线工具
+- **`sanjianke-drama-factory`** AI短剧量产工厂·小说改编剧本分镜图视频配音全流程一键出片
+- **`sanjianke-drama-workbench`** AI短剧制作工作台·多应用组合配方单镜头SOP与批量排产
+- **`sanjianke-faster-whisper`** 三剪客 · 语音转文字与字幕生成 · 衍生指南
+- **`sanjianke-ffmpeg-python`** 三剪客 · FFmpeg 的 Python 绑定 · 衍生指南
+- **`sanjianke-ffsubsync`** 三剪客 · 字幕与视频自动对齐 · 衍生指南
+- **`sanjianke-funasr`** 三剪客 · 语音识别与说话人分离工具箱 · 衍生指南
+- **`sanjianke-funclip`** 三剪客 · 识别文字自动剪视频 · 衍生指南
+- **`sanjianke-graph-rag`** 图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙
+- **`sanjianke-image-to-text`** 图片文档一键转文字·截图海报表格文字提取在线OCR工具
+- **`sanjianke-insanely-fast-whisper`** 三剪客 · 极速语音转写 · 衍生指南
+- **`sanjianke-light-rag`** 轻量图谱知识库搭建·实体关系抽取双层级检索跨文档问答零部署
+- **`sanjianke-llm-flow-builder`** 拖拽式LLM流程编排·画布搭Agent接OpenAI兼容模型网关
+- **`sanjianke-moviepy`** 三剪客 · Python 视频剪辑库 · 衍生指南
+- **`sanjianke-paddlespeech`** 三剪客 · 语音识别与合成工具箱 · 衍生指南
+- **`sanjianke-pyannote-audio`** 三剪客 · 说话人分离与日志化 · 衍生指南
+- **`sanjianke-pydub`** 三剪客 · 音频切片与格式转换 · 衍生指南
+- **`sanjianke-rag-pipeline`** RAG知识库流水线搭建·文档切分向量检索大模型问答一条龙零部署
+- **`sanjianke-remotion`** 三剪客 · 用 React 写代码生成视频 · 衍生指南
+- **`sanjianke-sensevoice`** 三剪客 · 多语言语音理解（识别 / 语种 / 情感 / 事件） · 衍生指南
+- **`sanjianke-short-video-maker`** AI短视频一键生成·选题脚本配音画面字幕全流程批量出片
+- **`sanjianke-shortgpt`** 三剪客 · AI 短视频自动化生产框架 · 衍生指南
+- **`sanjianke-spleeter`** 三剪客 · 人声伴奏分离 · 衍生指南
+- **`sanjianke-stem-split`** 歌曲伴奏人声分离·一键提取鼓点贝斯四轨拆解在线工具
+- **`sanjianke-subtitle-edit`** 三剪客 · 字幕编辑与时间轴校对工具 · 衍生指南
+- **`sanjianke-subtitle-maker`** 音视频一键转字幕·语音转文字自动生成SRT时间轴批量出稿
+- **`sanjianke-vector-store`** 轻量向量库检索搭建·文档向量化语义搜索元数据过滤知识库零显卡
+- **`sanjianke-video-subtitle-extractor`** 三剪客 · 视频硬字幕提取成 SRT · 衍生指南
+- **`sanjianke-video2x`** 三剪客 · 视频超分与补帧 · 衍生指南
+- **`sanjianke-whisper`** 三剪客 · 语音识别与转写 · 衍生指南
+- **`sanjianke-whisper-cpp`** 三剪客 · 本地语音转文字与字幕 · 衍生指南
+- **`sanjianke-whisper-diarization`** 三剪客 · 说话人分离转写 · 衍生指南
+- **`sanjianke-whisperx`** 三剪客 · 音视频转写与逐词对轴 · 衍生指南
+- **`sanjianke-youtube-transcript-api`** 三剪客 · YouTube 字幕与转写抓取 · 衍生指南
+- **`sanjianke-yt-dlp`** 三剪客 · 全网视频音频下载器 · 衍生指南
 
 ### 设计多媒体（38）
 
@@ -86,46 +128,7 @@ npx clawhub install <slug>
 - **`voice-tts-studio`** 三剪客 · 语音TTS
 - **`wan-video`** 三剪客 · Wan 视频生成
 
-### AI（36）
-
-- **`sanjianke-autogen`** 三剪客 · 多智能体对话框架 · 衍生指南
-- **`sanjianke-browser-use`** 三剪客 · 让 Agent 操控浏览器 · 衍生指南
-- **`sanjianke-chroma`** 三剪客 · 轻量向量库 · 衍生指南
-- **`sanjianke-colossalai`** 三剪客 · 大规模并行训练 · 衍生指南
-- **`sanjianke-crewai`** 三剪客 · 角色化 Agent 协作 · 衍生指南
-- **`sanjianke-db-gpt`** 三剪客 · 数据库智能问答 · 衍生指南
-- **`sanjianke-deepseek-v3`** 三剪客 · DeepSeek 开源大模型 · 衍生指南
-- **`sanjianke-deepspeed`** 三剪客 · 大模型训练加速 · 衍生指南
-- **`sanjianke-dify`** 三剪客 · 可视化 Agent 工作流 · 衍生指南
-- **`sanjianke-fastgpt`** 三剪客 · 知识库问答平台 · 衍生指南
-- **`sanjianke-flowise`** 三剪客 · 拖拽式 LLM 编排 · 衍生指南
-- **`sanjianke-graphrag`** 三剪客 · 图谱增强检索 · 衍生指南
-- **`sanjianke-haystack`** 三剪客 · RAG 流水线框架 · 衍生指南
-- **`sanjianke-langchain`** 三剪客 · LLM 应用开发框架 · 衍生指南
-- **`sanjianke-langchain-chatchat`** 三剪客 · 本地知识库问答 · 衍生指南
-- **`sanjianke-langgraph`** 三剪客 · 有状态 Agent 编排 · 衍生指南
-- **`sanjianke-lightrag`** 三剪客 · 轻量图谱 RAG · 衍生指南
-- **`sanjianke-litellm`** 三剪客 · 百模型统一调用 · 衍生指南
-- **`sanjianke-llama-cpp`** 三剪客 · 本地 LLM 推理引擎 · 衍生指南
-- **`sanjianke-llama-factory`** 三剪客 · 一站式模型微调 · 衍生指南
-- **`sanjianke-llamaindex`** 三剪客 · 数据接入与索引 · 衍生指南
-- **`sanjianke-lmdeploy`** 三剪客 · 模型部署与量化 · 衍生指南
-- **`sanjianke-lobehub-lobechat`** 三剪客 · 现代 AI 聊天界面 · 衍生指南
-- **`sanjianke-mem0`** 三剪客 · Agent 长期记忆层 · 衍生指南
-- **`sanjianke-metagpt`** 三剪客 · 多智能体软件公司 · 衍生指南
-- **`sanjianke-milvus`** 三剪客 · 分布式向量数据库 · 衍生指南
-- **`sanjianke-ollama`** 三剪客 · 本地跑大模型 · 衍生指南
-- **`sanjianke-one-api`** 三剪客 · 多模型网关聚合 · 衍生指南
-- **`sanjianke-open-webui`** 三剪客 · 自托管 AI 对话界面 · 衍生指南
-- **`sanjianke-qanything`** 三剪客 · 本地知识库问答 · 衍生指南
-- **`sanjianke-qdrant`** 三剪客 · 向量相似度检索 · 衍生指南
-- **`sanjianke-qwen`** 三剪客 · 通义千问开源模型 · 衍生指南
-- **`sanjianke-sglang`** 三剪客 · 结构化 LLM 推理 · 衍生指南
-- **`sanjianke-transformers`** 三剪客 · 模型加载与推理 · 衍生指南
-- **`sanjianke-unsloth`** 三剪客 · 低显存微调加速 · 衍生指南
-- **`sanjianke-vllm`** 三剪客 · 高吞吐 LLM 推理服务 · 衍生指南
-
-### 办公（34）
+### 办公（33）
 
 - **`sanjianke-affine`** 三剪客 · 知识库与协作白板 · 衍生指南
 - **`sanjianke-apitable`** 三剪客 · 开源可视化数据库与多维表格 · 衍生指南
@@ -146,7 +149,6 @@ npx clawhub install <slug>
 - **`sanjianke-mattermost`** 三剪客 · 自托管团队协作沟通平台 · 衍生指南
 - **`sanjianke-memos`** 三剪客 · 碎片笔记速记 · 衍生指南
 - **`sanjianke-mindoc`** 三剪客 · 团队文档管理系统 · 衍生指南
-- **`sanjianke-nonebot2`** 三剪客 · 多平台聊天机器人框架 · 衍生指南
 - **`sanjianke-openim`** 三剪客 · 自建 IM 服务端与消息中台 · 衍生指南
 - **`sanjianke-outline`** 三剪客 · Outline 团队知识库 · 衍生指南
 - **`sanjianke-plane`** 三剪客 · 开源项目管理 · 衍生指南
@@ -161,40 +163,6 @@ npx clawhub install <slug>
 - **`sanjianke-wiki-js`** 三剪客 · 自托管团队知识库 · 衍生指南
 - **`sanjianke-wxjava`** 三剪客 · 微信生态 Java 服务端开发包 · 衍生指南
 - **`sanjianke-zulip`** 三剪客 · 话题制团队聊天服务器 · 衍生指南
-
-### 内容创作（31）
-
-- **`sanjianke-article-shape-kit`** 三剪客 · 文章结构设计
-- **`sanjianke-backgroundremover`** 三剪客 · 图片与视频一键去背景 · 衍生指南
-- **`sanjianke-buzz`** 三剪客 · 离线音视频转字幕 · 衍生指南
-- **`sanjianke-coqui-tts`** 三剪客 · 开源语音合成与音色克隆 · 衍生指南
-- **`sanjianke-demucs`** 三剪客 · 音乐分轨与人声提取 · 衍生指南
-- **`sanjianke-drama-engine`** 三剪客 · AI 短剧量产引擎 · 衍生指南
-- **`sanjianke-drama-studio-kit`** 三剪客 · AI 短剧创作台
-- **`sanjianke-faster-whisper`** 三剪客 · 语音转文字与字幕生成 · 衍生指南
-- **`sanjianke-ffmpeg-python`** 三剪客 · FFmpeg 的 Python 绑定 · 衍生指南
-- **`sanjianke-ffsubsync`** 三剪客 · 字幕与视频自动对齐 · 衍生指南
-- **`sanjianke-funasr`** 三剪客 · 语音识别与说话人分离工具箱 · 衍生指南
-- **`sanjianke-funclip`** 三剪客 · 识别文字自动剪视频 · 衍生指南
-- **`sanjianke-insanely-fast-whisper`** 三剪客 · 极速语音转写 · 衍生指南
-- **`sanjianke-moneyprinterturbo`** 三剪客 · 一句话生成AI短视频 · 衍生指南
-- **`sanjianke-moviepy`** 三剪客 · Python 视频剪辑库 · 衍生指南
-- **`sanjianke-paddlespeech`** 三剪客 · 语音识别与合成工具箱 · 衍生指南
-- **`sanjianke-pyannote-audio`** 三剪客 · 说话人分离与日志化 · 衍生指南
-- **`sanjianke-pydub`** 三剪客 · 音频切片与格式转换 · 衍生指南
-- **`sanjianke-remotion`** 三剪客 · 用 React 写代码生成视频 · 衍生指南
-- **`sanjianke-sensevoice`** 三剪客 · 多语言语音理解（识别 / 语种 / 情感 / 事件） · 衍生指南
-- **`sanjianke-shortgpt`** 三剪客 · AI 短视频自动化生产框架 · 衍生指南
-- **`sanjianke-spleeter`** 三剪客 · 人声伴奏分离 · 衍生指南
-- **`sanjianke-subtitle-edit`** 三剪客 · 字幕编辑与时间轴校对工具 · 衍生指南
-- **`sanjianke-video-subtitle-extractor`** 三剪客 · 视频硬字幕提取成 SRT · 衍生指南
-- **`sanjianke-video2x`** 三剪客 · 视频超分与补帧 · 衍生指南
-- **`sanjianke-whisper`** 三剪客 · 语音识别与转写 · 衍生指南
-- **`sanjianke-whisper-cpp`** 三剪客 · 本地语音转文字与字幕 · 衍生指南
-- **`sanjianke-whisper-diarization`** 三剪客 · 说话人分离转写 · 衍生指南
-- **`sanjianke-whisperx`** 三剪客 · 音视频转写与逐词对轴 · 衍生指南
-- **`sanjianke-youtube-transcript-api`** 三剪客 · YouTube 字幕与转写抓取 · 衍生指南
-- **`sanjianke-yt-dlp`** 三剪客 · 全网视频音频下载器 · 衍生指南
 
 ### 数据分析（24）
 
@@ -248,6 +216,46 @@ npx clawhub install <slug>
 - **`sanjianke-yq`** 三剪客 · YAML 命令行处理 · 衍生指南
 - **`sanjianke-zoxide`** 三剪客 · 智能目录跳转 · 衍生指南
 
+### AI（18）
+
+- **`sanjianke-colossalai`** 三剪客 · 大规模并行训练 · 衍生指南
+- **`sanjianke-db-gpt`** 三剪客 · 数据库智能问答 · 衍生指南
+- **`sanjianke-deepspeed`** 三剪客 · 大模型训练加速 · 衍生指南
+- **`sanjianke-langchain-chatchat`** 三剪客 · 本地知识库问答 · 衍生指南
+- **`sanjianke-litellm`** 三剪客 · 百模型统一调用 · 衍生指南
+- **`sanjianke-llama-cpp`** 三剪客 · 本地 LLM 推理引擎 · 衍生指南
+- **`sanjianke-llama-factory`** 三剪客 · 一站式模型微调 · 衍生指南
+- **`sanjianke-lmdeploy`** 三剪客 · 模型部署与量化 · 衍生指南
+- **`sanjianke-ollama`** 三剪客 · 本地跑大模型 · 衍生指南
+- **`sanjianke-one-api`** 三剪客 · 多模型网关聚合 · 衍生指南
+- **`sanjianke-open-webui`** 三剪客 · 自托管 AI 对话界面 · 衍生指南
+- **`sanjianke-qanything`** 三剪客 · 本地知识库问答 · 衍生指南
+- **`sanjianke-qdrant`** 三剪客 · 向量相似度检索 · 衍生指南
+- **`sanjianke-qwen`** 三剪客 · 通义千问开源模型 · 衍生指南
+- **`sanjianke-sglang`** 三剪客 · 结构化 LLM 推理 · 衍生指南
+- **`sanjianke-transformers`** 三剪客 · 模型加载与推理 · 衍生指南
+- **`sanjianke-unsloth`** 三剪客 · 低显存微调加速 · 衍生指南
+- **`sanjianke-vllm`** 三剪客 · 高吞吐 LLM 推理服务 · 衍生指南
+
+### 开发编程（16）
+
+- **`sanjianke-agent-orchestrator`** 有状态Agent编排·状态图断点续跑与人工审批接统一模型网关
+- **`sanjianke-app-backend-kit`** 三剪客 · Postgres 应用后端 · 衍生指南
+- **`sanjianke-brainstorm-kit`** 三剪客 · 发散与收敛
+- **`sanjianke-direct-output-kit`** 三剪客 · 直给结论输出规范
+- **`sanjianke-doc-grill-kit`** 三剪客 · 带资料追问
+- **`sanjianke-engineer-skills-kit`** 三剪客 · 工程师技能体系
+- **`sanjianke-fullstack-react-kit`** 三剪客 · React 全栈框架
+- **`sanjianke-handoff-kit`** 三剪客 · 任务交接文档
+- **`sanjianke-idea-grill-kit`** 三剪客 · 想法压力测试
+- **`sanjianke-im-server-kit`** 三剪客 · 即时通讯服务端
+- **`sanjianke-llm-app-kit`** LLM应用开发套件·统一接口接OpenAI兼容网关换模型只改一行
+- **`sanjianke-plan-kit`** 三剪客 · 执行计划拆解
+- **`sanjianke-prd-kit`** 三剪客 · 需求文档 PRD
+- **`sanjianke-prototype-kit`** 三剪客 · 想法快速原型
+- **`sanjianke-ticket-kit`** 三剪客 · 任务票据拆分
+- **`sanjianke-vector-db`** 分布式向量数据库检索·亿级向量相似度搜索元数据过滤混合检索
+
 ### 电商（16）
 
 - **`sanjianke-aimeos-laravel`** 三剪客 · Laravel 电商套件 · 衍生指南
@@ -286,13 +294,28 @@ npx clawhub install <slug>
 - **`sanjianke-snownlp`** 三剪客 · 中文文本处理与情感分析 · 衍生指南
 - **`sanjianke-wenet`** 三剪客 · 端到端语音识别工具包 · 衍生指南
 
-### 文档转换（15）
+### AI Agent（14）
+
+- **`sanjianke-agent-app-kit`** 三剪客 · 跨平台 AI Agent 应用 · 衍生指南
+- **`sanjianke-agent-control-kit`** 三剪客 · 长任务 Agent 控制平面
+- **`sanjianke-agent-crew`** 多角色Agent协作编排·角色分工与流程控制接入指南
+- **`sanjianke-agent-memory`** Agent长期记忆库·跨会话用户偏好事实检索接入指南
+- **`sanjianke-agent-platform`** 自建本地AI Agent平台·网关常驻多Agent沙箱落地指南
+- **`sanjianke-agent-team`** 多智能体软件开发团队·一句话需求生成项目文档与代码骨架
+- **`sanjianke-browser-agent-kit`** 三剪客 · 浏览器自动化
+- **`sanjianke-browser-operator`** 浏览器自动化操作员·一句话任务让Agent自己点填翻页抓取
+- **`sanjianke-cross-app-kit`** 三剪客 · 跨端 App 开发 · 衍生指南
+- **`sanjianke-multi-agent-chat`** 多智能体群聊协作·多角色轮流发言与终止条件接入指南
+- **`sanjianke-phone-agent-kit`** 三剪客 · 手机自动化控制 · 衍生指南
+- **`sanjianke-plan-exec-kit`** 三剪客 · 计划执行与检查点
+- **`sanjianke-skill-forge-kit`** 三剪客 · 技能工程
+- **`sanjianke-skills-catalog-kit`** 三剪客 · 技能生态实战
+
+### 文档转换（13）
 
 - **`sanjianke-calibre`** 三剪客 · 电子书管理与转换 · 衍生指南
-- **`sanjianke-easyocr`** 三剪客 · 多语言即用 OCR · 衍生指南
 - **`sanjianke-excelize`** 三剪客 · Go 操作 Excel · 衍生指南
 - **`sanjianke-marker`** 三剪客 · PDF 转 Markdown · 衍生指南
-- **`sanjianke-markitdown`** 三剪客 · 任意文档转 Markdown · 衍生指南
 - **`sanjianke-mineru`** 三剪客 · PDF 高精度转 Markdown · 衍生指南
 - **`sanjianke-ocrmypdf`** 三剪客 · 扫描件叠加 OCR 层 · 衍生指南
 - **`sanjianke-pandoc`** 三剪客 · 万能格式转换 · 衍生指南
@@ -303,22 +326,6 @@ npx clawhub install <slug>
 - **`sanjianke-umi-ocr`** 三剪客 · 离线批量 OCR · 衍生指南
 - **`sanjianke-unstructured`** 三剪客 · 多格式文档解析 · 衍生指南
 - **`sanjianke-wkhtmltopdf`** 三剪客 · HTML 转 PDF · 衍生指南
-
-### 开发编程（13）
-
-- **`sanjianke-app-backend-kit`** 三剪客 · Postgres 应用后端 · 衍生指南
-- **`sanjianke-brainstorm-kit`** 三剪客 · 发散与收敛
-- **`sanjianke-direct-output-kit`** 三剪客 · 直给结论输出规范
-- **`sanjianke-doc-grill-kit`** 三剪客 · 带资料追问
-- **`sanjianke-engineer-skills-kit`** 三剪客 · 工程师技能体系
-- **`sanjianke-fullstack-react-kit`** 三剪客 · React 全栈框架
-- **`sanjianke-handoff-kit`** 三剪客 · 任务交接文档
-- **`sanjianke-idea-grill-kit`** 三剪客 · 想法压力测试
-- **`sanjianke-im-server-kit`** 三剪客 · 即时通讯服务端
-- **`sanjianke-plan-kit`** 三剪客 · 执行计划拆解
-- **`sanjianke-prd-kit`** 三剪客 · 需求文档 PRD
-- **`sanjianke-prototype-kit`** 三剪客 · 想法快速原型
-- **`sanjianke-ticket-kit`** 三剪客 · 任务票据拆分
 
 ### 文件管理（12）
 
@@ -348,19 +355,6 @@ npx clawhub install <slug>
 - **`sanjianke-tabula`** 三剪客 · PDF 表格抽取 · 衍生指南
 - **`sanjianke-turndown`** 三剪客 · HTML 转 Markdown · 衍生指南
 - **`sanjianke-weasyprint`** 三剪客 · HTML/CSS 转 PDF · 衍生指南
-
-### AI Agent（10）
-
-- **`sanjianke-agent-app-kit`** 三剪客 · 跨平台 AI Agent 应用 · 衍生指南
-- **`sanjianke-agent-control-kit`** 三剪客 · 长任务 Agent 控制平面
-- **`sanjianke-agent-platform-kit`** 三剪客 · 全能 AI Agent 平台 · 衍生指南
-- **`sanjianke-agents-flex-kit`** 三剪客 · Java Agent 框架
-- **`sanjianke-browser-agent-kit`** 三剪客 · 浏览器自动化
-- **`sanjianke-cross-app-kit`** 三剪客 · 跨端 App 开发 · 衍生指南
-- **`sanjianke-phone-agent-kit`** 三剪客 · 手机自动化控制 · 衍生指南
-- **`sanjianke-plan-exec-kit`** 三剪客 · 计划执行与检查点
-- **`sanjianke-skill-forge-kit`** 三剪客 · 技能工程
-- **`sanjianke-skills-catalog-kit`** 三剪客 · 技能生态实战
 
 ### 文档处理（10）
 
@@ -396,6 +390,11 @@ npx clawhub install <slug>
 - **`sanjianke-wechat-chatgpt`** 三剪客 · 微信接入 ChatGPT 自动回复 · 衍生指南
 - **`sanjianke-xiaohongshu-mcp`** 三剪客 · 小红书 MCP 服务 · 衍生指南
 
+### 知识管理（2）
+
+- **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
+- **`sanjianke-knowledge-qa`** 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
+
 ### 短剧二创（2）
 
 - **`duanju-remix-playbook`** 三剪客 · 短剧二创作业手册
@@ -410,6 +409,22 @@ npx clawhub install <slug>
 
 - **`sanjianke-paddleocr`** 三剪客 · 中文 OCR 与版面分析 · 衍生指南
 - **`sanjianke-rapidocr`** 三剪客 · 轻量多语言 OCR · 衍生指南
+
+### AI 客户端（1）
+
+- **`sanjianke-ai-chat-ui`** AI聊天客户端接国产大模型·一个Key换75个模型接入配置
+
+### Java（1）
+
+- **`sanjianke-java-agent-kit`** Java接大模型与Agent·OpenAI兼容网关直连75模型包
+
+### 大模型（1）
+
+- **`sanjianke-deepseek-cloud`** DeepSeek全系云端直连·免部署一个Key切换调用大模型
+
+### 聊天机器人（1）
+
+- **`sanjianke-chatbot-builder`** 聊天机器人接大模型·多平台机器人用国产模型回话方案
 
 ### AI插件市场（1）
 

@@ -8,7 +8,6 @@
 |---|---|---|---|
 | `sanjianke-affine` | AFFiNE | [github.com/toeverything/AFFiNE](https://github.com/toeverything/AFFiNE) | 原创指南 |
 | `sanjianke-agent-app-kit` | OpenMinis.git | [github.com/OpenMinis/OpenMinis.git](https://github.com/OpenMinis/OpenMinis.git) | 原创指南 |
-| `sanjianke-agent-platform-kit` | openclaw | [github.com/openclaw/openclaw](https://github.com/openclaw/openclaw) | 原创指南 |
 | `sanjianke-ai-classroom-kit` | OpenMAIC.git | [github.com/THU-MAIC/OpenMAIC.git](https://github.com/THU-MAIC/OpenMAIC.git) | 原创指南 |
 | `sanjianke-aimeos-laravel` | aimeos-laravel | [github.com/aimeos/aimeos-laravel](https://github.com/aimeos/aimeos-laravel) | 原创指南 |
 | `sanjianke-apache-echarts` | Apache ECharts | [github.com/apache/echarts](https://github.com/apache/echarts) | 原创指南 |
@@ -16,19 +15,14 @@
 | `sanjianke-app-backend-kit` | supabase | [github.com/supabase/supabase](https://github.com/supabase/supabase) | 原创指南 |
 | `sanjianke-appflowy` | AppFlowy | [github.com/AppFlowy-IO/AppFlowy](https://github.com/AppFlowy-IO/AppFlowy) | 原创指南 |
 | `sanjianke-asdf` | asdf | [github.com/asdf-vm/asdf](https://github.com/asdf-vm/asdf) | 原创指南 |
-| `sanjianke-autogen` | AutoGen | [github.com/microsoft/autogen](https://github.com/microsoft/autogen) | 原创指南 |
-| `sanjianke-backgroundremover` | backgroundremover | [github.com/nadermx/backgroundremover](https://github.com/nadermx/backgroundremover) | 原创指南 |
 | `sanjianke-bagisto` | bagisto | [github.com/bagisto/bagisto](https://github.com/bagisto/bagisto) | 原创指南 |
 | `sanjianke-bilingual-book-maker` | bilingual_book_maker | [github.com/yihong0618/bilingual_book_maker](https://github.com/yihong0618/bilingual_book_maker) | 原创指南 |
-| `sanjianke-browser-use` | Browser Use | [github.com/browser-use/browser-use](https://github.com/browser-use/browser-use) | 原创指南 |
-| `sanjianke-buzz` | Buzz | [github.com/chidiwilliams/buzz](https://github.com/chidiwilliams/buzz) | 原创指南 |
 | `sanjianke-cal-com` | Cal.com | [github.com/calcom/cal.diy](https://github.com/calcom/cal.diy) | 原创指南 |
 | `sanjianke-calibre` | calibre | [github.com/kovidgoyal/calibre](https://github.com/kovidgoyal/calibre) | 原创指南 |
 | `sanjianke-chatglm-6b` | ChatGLM-6B | [github.com/zai-org/ChatGLM-6B](https://github.com/zai-org/ChatGLM-6B) | 原创指南 |
 | `sanjianke-chatgpt-on-wechat` | chatgpt-on-wechat | [github.com/zhayujie/chatgpt-on-wechat](https://github.com/zhayujie/chatgpt-on-wechat) | 原创指南 |
 | `sanjianke-chatwoot` | Chatwoot | [github.com/chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) | 原创指南 |
 | `sanjianke-chineseocr-lite` | chineseocr_lite | [github.com/DayBreak-u/chineseocr_lite](https://github.com/DayBreak-u/chineseocr_lite) | 原创指南 |
-| `sanjianke-chroma` | Chroma | [github.com/chroma-core/chroma](https://github.com/chroma-core/chroma) | 原创指南 |
 | `sanjianke-code-video-kit` | remotion | [github.com/remotion-dev/remotion](https://github.com/remotion-dev/remotion) | 原创指南 |
 | `sanjianke-colossalai` | ColossalAI | [github.com/hpcaitech/ColossalAI](https://github.com/hpcaitech/ColossalAI) | 原创指南 |
 | `sanjianke-comfyui` | ComfyUI | [github.com/comfyanonymous/ComfyUI](https://github.com/comfyanonymous/ComfyUI) | 原创指南 |
@@ -37,30 +31,23 @@
 | `sanjianke-cowagent-chatgpt-on-wechat` | CowAgent（原 chatgpt-on-wechat） | [github.com/zhayujie/CowAgent](https://github.com/zhayujie/CowAgent) | 原创指南 |
 | `sanjianke-crawlab` | crawlab | [github.com/crawlab-team/crawlab](https://github.com/crawlab-team/crawlab) | 原创指南 |
 | `sanjianke-crawlee-python` | crawlee-python | [github.com/apify/crawlee-python](https://github.com/apify/crawlee-python) | 原创指南 |
-| `sanjianke-crewai` | CrewAI | [github.com/crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) | 原创指南 |
 | `sanjianke-cross-app-kit` | expo | [github.com/expo/expo](https://github.com/expo/expo) | 原创指南 |
 | `sanjianke-csvkit` | csvkit | [github.com/wireservice/csvkit](https://github.com/wireservice/csvkit) | 原创指南 |
 | `sanjianke-dataease` | dataease | [github.com/dataease/dataease](https://github.com/dataease/dataease) | 原创指南 |
 | `sanjianke-db-gpt` | DB-GPT | [github.com/eosphoros-ai/DB-GPT](https://github.com/eosphoros-ai/DB-GPT) | 原创指南 |
-| `sanjianke-deepseek-v3` | DeepSeek-V3 | [github.com/deepseek-ai/DeepSeek-V3](https://github.com/deepseek-ai/DeepSeek-V3) | 原创指南 |
 | `sanjianke-deepspeed` | DeepSpeed | [github.com/deepspeedai/DeepSpeed](https://github.com/deepspeedai/DeepSpeed) | 原创指南 |
-| `sanjianke-demucs` | Demucs | [github.com/facebookresearch/demucs](https://github.com/facebookresearch/demucs) | 原创指南 |
-| `sanjianke-dify` | Dify | [github.com/langgenius/dify](https://github.com/langgenius/dify) | 原创指南 |
 | `sanjianke-direnv` | direnv | [github.com/direnv/direnv](https://github.com/direnv/direnv) | 原创指南 |
 | `sanjianke-docling` | docling | [github.com/docling-project/docling](https://github.com/docling-project/docling) | 原创指南 |
 | `sanjianke-docmost` | Docmost | [github.com/docmost/docmost](https://github.com/docmost/docmost) | 原创指南 |
 | `sanjianke-dolibarr` | Dolibarr | [github.com/Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | 原创指南 |
 | `sanjianke-doris` | doris | [github.com/apache/doris](https://github.com/apache/doris) | 原创指南 |
-| `sanjianke-drama-engine` | Toonflow-app | [github.com/HBAI-Ltd/Toonflow-app](https://github.com/HBAI-Ltd/Toonflow-app) | 原创指南 |
 | `sanjianke-duckdb` | duckdb | [github.com/duckdb/duckdb](https://github.com/duckdb/duckdb) | 原创指南 |
 | `sanjianke-dust` | dust | [github.com/bootandy/dust](https://github.com/bootandy/dust) | 原创指南 |
-| `sanjianke-easyocr` | EasyOCR | [github.com/JaidedAI/EasyOCR](https://github.com/JaidedAI/EasyOCR) | 原创指南 |
 | `sanjianke-easyspider` | EasySpider | [github.com/NaiboWang/EasySpider](https://github.com/NaiboWang/EasySpider) | 原创指南 |
 | `sanjianke-emotivoice` | EmotiVoice | [github.com/netease-youdao/EmotiVoice](https://github.com/netease-youdao/EmotiVoice) | 原创指南 |
 | `sanjianke-excelize` | excelize | [github.com/qax-os/excelize](https://github.com/qax-os/excelize) | 原创指南 |
 | `sanjianke-faster-whisper` | faster-whisper | [github.com/SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper) | 原创指南 |
 | `sanjianke-fastfetch` | fastfetch | [github.com/fastfetch-cli/fastfetch](https://github.com/fastfetch-cli/fastfetch) | 原创指南 |
-| `sanjianke-fastgpt` | FastGPT | [github.com/labring/FastGPT](https://github.com/labring/FastGPT) | 原创指南 |
 | `sanjianke-fd` | fd | [github.com/sharkdp/fd](https://github.com/sharkdp/fd) | 原创指南 |
 | `sanjianke-ffmpeg` | FFmpeg | [github.com/FFmpeg/FFmpeg](https://github.com/FFmpeg/FFmpeg) | 原创指南 |
 | `sanjianke-ffmpeg-python` | ffmpeg-python | [github.com/kkroening/ffmpeg-python](https://github.com/kkroening/ffmpeg-python) | 原创指南 |
@@ -68,7 +55,6 @@
 | `sanjianke-fg-data-profiling` | fg-data-profiling | [github.com/Data-Centric-AI-Community/fg-data-profiling](https://github.com/Data-Centric-AI-Community/fg-data-profiling) | 原创指南 |
 | `sanjianke-filebrowser` | filebrowser | [github.com/filebrowser/filebrowser](https://github.com/filebrowser/filebrowser) | 原创指南 |
 | `sanjianke-flagembedding` | FlagEmbedding | [github.com/FlagOpen/FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding) | 原创指南 |
-| `sanjianke-flowise` | Flowise | [github.com/FlowiseAI/Flowise](https://github.com/FlowiseAI/Flowise) | 原创指南 |
 | `sanjianke-funasr` | FunASR | [github.com/modelscope/FunASR](https://github.com/modelscope/FunASR) | 原创指南 |
 | `sanjianke-funclip` | FunClip | [github.com/modelscope/FunClip](https://github.com/modelscope/FunClip) | 原创指南 |
 | `sanjianke-g2` | G2 | [github.com/antvis/G2](https://github.com/antvis/G2) | 原创指南 |
@@ -78,11 +64,9 @@
 | `sanjianke-gitleaks` | gitleaks | [github.com/gitleaks/gitleaks](https://github.com/gitleaks/gitleaks) | 原创指南 |
 | `sanjianke-go-cqhttp` | go-cqhttp | [github.com/Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | 原创指南 |
 | `sanjianke-gotenberg` | Gotenberg | [github.com/gotenberg/gotenberg](https://github.com/gotenberg/gotenberg) | 原创指南 |
-| `sanjianke-graphrag` | GraphRAG | [github.com/microsoft/graphrag](https://github.com/microsoft/graphrag) | 原创指南 |
 | `sanjianke-gum` | gum | [github.com/charmbracelet/gum](https://github.com/charmbracelet/gum) | 原创指南 |
 | `sanjianke-halo` | Halo | [github.com/halo-dev/halo](https://github.com/halo-dev/halo) | 原创指南 |
 | `sanjianke-hanlp` | HanLP | [github.com/hankcs/HanLP](https://github.com/hankcs/HanLP) | 原创指南 |
-| `sanjianke-haystack` | Haystack | [github.com/deepset-ai/haystack](https://github.com/deepset-ai/haystack) | 原创指南 |
 | `sanjianke-httpie` | httpie | [github.com/httpie/cli](https://github.com/httpie/cli) | 原创指南 |
 | `sanjianke-hyperfine` | hyperfine | [github.com/sharkdp/hyperfine](https://github.com/sharkdp/hyperfine) | 原创指南 |
 | `sanjianke-immersive-translate` | immersive-translate | [github.com/immersive-translate/immersive-translate](https://github.com/immersive-translate/immersive-translate) | 原创指南 |
@@ -98,21 +82,16 @@
 | `sanjianke-koishi` | Koishi | [github.com/koishijs/koishi](https://github.com/koishijs/koishi) | 原创指南 |
 | `sanjianke-labuladong` | labuladong 的算法小抄 | [github.com/labuladong/fucking-algorithm](https://github.com/labuladong/fucking-algorithm) | 原创指南 |
 | `sanjianke-langbot-qchatgpt` | LangBot（原 QChatGPT） | [github.com/langbot-app/LangBot](https://github.com/langbot-app/LangBot) | 原创指南 |
-| `sanjianke-langchain` | LangChain | [github.com/langchain-ai/langchain](https://github.com/langchain-ai/langchain) | 原创指南 |
 | `sanjianke-langchain-chatchat` | Langchain-Chatchat | [github.com/chatchat-space/Langchain-Chatchat](https://github.com/chatchat-space/Langchain-Chatchat) | 原创指南 |
-| `sanjianke-langgraph` | LangGraph | [github.com/langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) | 原创指南 |
 | `sanjianke-lazydocker` | lazydocker | [github.com/jesseduffield/lazydocker](https://github.com/jesseduffield/lazydocker) | 原创指南 |
 | `sanjianke-leantime` | Leantime | [github.com/Leantime/leantime](https://github.com/Leantime/leantime) | 原创指南 |
 | `sanjianke-lf` | lf | [github.com/gokcehan/lf](https://github.com/gokcehan/lf) | 原创指南 |
 | `sanjianke-lightdash` | lightdash | [github.com/lightdash/lightdash](https://github.com/lightdash/lightdash) | 原创指南 |
-| `sanjianke-lightrag` | LightRAG | [github.com/HKUDS/LightRAG](https://github.com/HKUDS/LightRAG) | 原创指南 |
 | `sanjianke-litellm` | LiteLLM | [github.com/BerriAI/litellm](https://github.com/BerriAI/litellm) | 原创指南 |
 | `sanjianke-litemall` | litemall | [github.com/linlinjava/litemall](https://github.com/linlinjava/litemall) | 原创指南 |
 | `sanjianke-llama-cpp` | llama.cpp | [github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | 原创指南 |
 | `sanjianke-llama-factory` | LLaMA-Factory | [github.com/hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) | 原创指南 |
-| `sanjianke-llamaindex` | LlamaIndex | [github.com/run-llama/llama_index](https://github.com/run-llama/llama_index) | 原创指南 |
 | `sanjianke-lmdeploy` | LMDeploy | [github.com/InternLM/lmdeploy](https://github.com/InternLM/lmdeploy) | 原创指南 |
-| `sanjianke-lobehub-lobechat` | LobeHub (LobeChat) | [github.com/lobehub/lobehub](https://github.com/lobehub/lobehub) | 原创指南 |
 | `sanjianke-logseq` | Logseq | [github.com/logseq/logseq](https://github.com/logseq/logseq) | 原创指南 |
 | `sanjianke-lsd` | lsd | [github.com/lsd-rs/lsd](https://github.com/lsd-rs/lsd) | 原创指南 |
 | `sanjianke-lz4` | lz4 | [github.com/lz4/lz4](https://github.com/lz4/lz4) | 原创指南 |
@@ -122,25 +101,19 @@
 | `sanjianke-mall4j` | mall4j | [github.com/gz-yami/mall4j](https://github.com/gz-yami/mall4j) | 原创指南 |
 | `sanjianke-mammoth-js` | mammoth.js | [github.com/mwilliamson/mammoth.js](https://github.com/mwilliamson/mammoth.js) | 原创指南 |
 | `sanjianke-marker` | marker | [github.com/datalab-to/marker](https://github.com/datalab-to/marker) | 原创指南 |
-| `sanjianke-markitdown` | markitdown | [github.com/microsoft/markitdown](https://github.com/microsoft/markitdown) | 原创指南 |
 | `sanjianke-matplotlib` | matplotlib | [github.com/matplotlib/matplotlib](https://github.com/matplotlib/matplotlib) | 原创指南 |
 | `sanjianke-mattermost` | Mattermost | [github.com/mattermost/mattermost](https://github.com/mattermost/mattermost) | 原创指南 |
 | `sanjianke-mautic` | Mautic | [github.com/mautic/mautic](https://github.com/mautic/mautic) | 原创指南 |
 | `sanjianke-mcp-servers` | MCP Servers | [github.com/modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | 原创指南 |
-| `sanjianke-mem0` | Mem0 | [github.com/mem0ai/mem0](https://github.com/mem0ai/mem0) | 原创指南 |
 | `sanjianke-memos` | Memos | [github.com/usememos/memos](https://github.com/usememos/memos) | 原创指南 |
 | `sanjianke-metabase` | metabase | [github.com/metabase/metabase](https://github.com/metabase/metabase) | 原创指南 |
-| `sanjianke-metagpt` | MetaGPT | [github.com/FoundationAgents/MetaGPT](https://github.com/FoundationAgents/MetaGPT) | 原创指南 |
-| `sanjianke-milvus` | Milvus | [github.com/milvus-io/milvus](https://github.com/milvus-io/milvus) | 原创指南 |
 | `sanjianke-mindoc` | MinDoc | [github.com/mindoc-org/mindoc](https://github.com/mindoc-org/mindoc) | 原创指南 |
 | `sanjianke-mineru` | MinerU | [github.com/opendatalab/MinerU](https://github.com/opendatalab/MinerU) | 原创指南 |
 | `sanjianke-minio` | MinIO | [github.com/minio/minio](https://github.com/minio/minio) | 原创指南 |
-| `sanjianke-moneyprinterturbo` | MoneyPrinterTurbo | [github.com/harry0703/MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo) | 原创指南 |
 | `sanjianke-moviepy` | MoviePy | [github.com/Zulko/moviepy](https://github.com/Zulko/moviepy) | 原创指南 |
 | `sanjianke-newbee-mall-vue3-app` | newbee-mall-vue3-app | [github.com/newbee-ltd/newbee-mall-vue3-app](https://github.com/newbee-ltd/newbee-mall-vue3-app) | 原创指南 |
 | `sanjianke-nextai-translator` | nextai-translator | [github.com/nextai-translator/nextai-translator](https://github.com/nextai-translator/nextai-translator) | 原创指南 |
 | `sanjianke-nextcloud-server` | Nextcloud Server | [github.com/nextcloud/server](https://github.com/nextcloud/server) | 原创指南 |
-| `sanjianke-nonebot2` | NoneBot2 | [github.com/nonebot/nonebot2](https://github.com/nonebot/nonebot2) | 原创指南 |
 | `sanjianke-ocrmypdf` | OCRmyPDF | [github.com/ocrmypdf/OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) | 原创指南 |
 | `sanjianke-oh-my-posh` | oh-my-posh | [github.com/JanDeDobbeleer/oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) | 原创指南 |
 | `sanjianke-ollama` | Ollama | [github.com/ollama/ollama](https://github.com/ollama/ollama) | 原创指南 |
@@ -273,17 +246,14 @@
 
 | Skill | 上游提示 |
 |---|---|
-| `sanjianke-agent-platform-kit` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-apitable` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-appflowy` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-cal-com` | 商用需单独取得授权 |
 | `sanjianke-calibre` | 商用需单独取得授权 |
 | `sanjianke-code-video-kit` | 商用需单独取得授权 |
 | `sanjianke-dataease` | 商用需单独取得授权 |
-| `sanjianke-deepseek-v3` | 商用需单独取得授权；上游许可禁止对外提供 SaaS |
 | `sanjianke-docmost` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-dolibarr` | 上游许可禁止对外提供 SaaS |
-| `sanjianke-fastgpt` | 上游许可禁止对外提供 SaaS；商用需单独取得授权 |
 | `sanjianke-flagembedding` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-go-cqhttp` | 上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-hanlp` | 上游禁止商业使用；上游为研究/非商业许可；商用需单独取得授权 |
@@ -291,7 +261,6 @@
 | `sanjianke-jimureport` | 商用需单独取得授权 |
 | `sanjianke-labuladong` | 商用需单独取得授权 |
 | `sanjianke-leantime` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
-| `sanjianke-lobehub-lobechat` | 商用需单独取得授权 |
 | `sanjianke-mall4cloud` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-mall4j` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-marker` | 商用需单独取得授权 |

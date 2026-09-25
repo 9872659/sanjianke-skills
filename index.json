@@ -1,5 +1,237 @@
 [
  {
+  "slug": "sanjianke-stem-split",
+  "displayName": "歌曲伴奏人声分离·一键提取鼓点贝斯四轨拆解在线工具",
+  "description": "把一首歌拆成人声、鼓、贝斯、伴奏四条独立音轨——上传音频链接，约 1 分钟拿到可下载的分轨文件。做剪辑要干净伴奏、做二创要单人声、做混音要单独鼓轨，一条接口全解决。单次 0.65 元，无需自己部署模型或买显卡。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-subtitle-maker",
+  "displayName": "音视频一键转字幕·语音转文字自动生成SRT时间轴批量出稿",
+  "description": "音频、视频、播客、会议录音丢进去，直接拿回带时间轴的字幕文件（SRT / VTT / 纯文本）。支持多语言识别与自动判定，长音频一次提交，不用自己装模型、不用显卡。一条接口按音频时长计费，查询免费。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-ai-workflow",
+  "displayName": "可视化AI工作流编排·OpenAI兼容网关接21个生成应用",
+  "description": "不写编排代码，用画布把「输入 → 检索 → 模型 → 工具 → 输出」串成一条可调试、可发布的 AI 工作流，再一键接上 21 个生成应用（出图 / 视频 / 数字人 / 配音 / 音乐 / 文档问答）。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ 就能调 75 个在架模型，一把 Key 通吃、换 model 即换模型；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-llm-flow-builder",
+  "displayName": "拖拽式LLM流程编排·画布搭Agent接OpenAI兼容模型网关",
+  "description": "把「模型 + 提示词 + 检索 + 工具」画成流程图，连好线点运行就得到一个带界面的流程应用，同时对外暴露一套 HTTP 接口供程序调用。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ 就能用同一把 Key 调 75 个在架模型，换 model 即换模型；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-knowledge-qa",
+  "displayName": "知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入",
+  "description": "把公司文档变成一个能带出处回答的知识库问答服务：文档接入、切分、向量检索一条链，对话模型与检索链路统一走 https://api.a7w.cn/ —— 一把 Key 同时管住模型与检索，不用逐家注册、逐家充值、逐家对账。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。生成内容的使用与合规责任由使用者承担。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-llm-app-kit",
+  "displayName": "LLM应用开发套件·统一接口接OpenAI兼容网关换模型只改一行",
+  "description": "用一套统一接口把模型、工具、记忆、检索串成能跑完的 LLM 应用：把模型提供方的 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调用 75 个在架模型，换 model 字符串就是换模型，业务代码不用动；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。生成内容的使用与合规责任由使用者承担。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-agent-orchestrator",
+  "displayName": "有状态Agent编排·状态图断点续跑与人工审批接统一模型网关",
+  "description": "把 Agent 写成显式的状态图：每一步是一个节点、跳转关系是边，于是「暂停、恢复、回放到某一步、换一条分支重跑」都成了框架能力。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调 75 个在架模型，工具调用与结构化输出都用同一条链路；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-doc-index-qa",
+  "displayName": "文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费",
+  "description": "模型本身不认识你的文件。这个 Skill 讲的是中间缺的那一层：把 PDF、Word、表格、接口返回的数据接成可检索、可问答的知识库，并把模型侧整排指向 https://api.a7w.cn/ ——一个 base_url、一把 Key，现场可查 75 个在架模型与 21 个生成应用（含文档问答 file_qa）；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-rag-pipeline",
+  "displayName": "RAG知识库流水线搭建·文档切分向量检索大模型问答一条龙零部署",
+  "description": "把一堆文档变成能问答的知识库：切分、召回、拼 prompt 每一步都看得见、换得掉。模型这一层全部走 api.a7w.cn 的 OpenAI 兼容网关，一个 base_url、一把 Key 调 75 个在架大模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-light-rag",
+  "displayName": "轻量图谱知识库搭建·实体关系抽取双层级检索跨文档问答零部署",
+  "description": "在向量检索之外再建一层知识图谱：用 api.a7w.cn 的兼容网关从文档里抽实体与关系，检索时既看具体实体也看全局关系链，跨文档的关系型问题答得上来，本地零显卡、不用部署模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-graph-rag",
+  "displayName": "图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙",
+  "description": "先把整批文档读成一张实体关系图，再切成多级社区并逐层写摘要，让「主题、趋势、概览」这类全局性问题有答案——普通向量检索答不上来的问题它能答。抽图与回答都走 api.a7w.cn 网关。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vector-store",
+  "displayName": "轻量向量库检索搭建·文档向量化语义搜索元数据过滤知识库零显卡",
+  "description": "像用 SQLite 一样用一个向量库：进程内就能做语义检索，不用先起一套分布式基础设施；集合增删改查、元数据过滤、按内容包含检索一应俱全。向量化交给 api.a7w.cn 的兼容网关，本地零显卡。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vector-db",
+  "displayName": "分布式向量数据库检索·亿级向量相似度搜索元数据过滤混合检索",
+  "description": "把文本与多模态数据算成的向量存起来，并在毫秒内找出「和这句话最像的 N 条」：向量与标量一起存，支持元数据过滤、范围检索与稠密叠加全文的混合检索。embedding 走 api.a7w.cn 兼容网关，本地零显卡。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-agent-memory",
+  "displayName": "Agent长期记忆库·跨会话用户偏好事实检索接入指南",
+  "description": "给 Agent 接一层跨会话长期记忆：对话里的偏好、事实、决定抽成条目存好，下一轮按用户/会话维度搜回来拼进提示词。含完整操作文档、作用域与检索参数表、向量模型配置与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-agent-crew",
+  "displayName": "多角色Agent协作编排·角色分工与流程控制接入指南",
+  "description": "把一段活儿拆成几个有岗位、有目标、有背景故事的角色，让它们按顺序或按层级协作完成多步骤任务；需要精确控制时再用事件驱动流程把角色串起来。含角色建模与流程参数表、数据流声明写法与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型、每个角色可分别指定。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-multi-agent-chat",
+  "displayName": "多智能体群聊协作·多角色轮流发言与终止条件接入指南",
+  "description": "用对话的方式组织多个 Agent 协作：给每个 Agent 一个名字、一段人设、一个模型客户端，再放进群聊里轮流发言或按需发言，靠终止条件收口。含发言策略与终止条件参数表、状态管理写法、工具轮数上限与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-agent-team",
+  "displayName": "多智能体软件开发团队·一句话需求生成项目文档与代码骨架",
+  "description": "一句话需求进去，一整套东西出来：用户故事、需求拆解、数据结构、接口设计、文档，最后落到一个能打开的项目仓库。含角色分工与产出清单、模型接入配置、需求写法与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型、按角色分档指定。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-browser-operator",
+  "displayName": "浏览器自动化操作员·一句话任务让Agent自己点填翻页抓取",
+  "description": "一句话任务描述，让 Agent 自己开着浏览器把网页上的活干完：点按钮、填表单、翻页、把结果取回来。写的是任务，不是选择器，页面改版也不容易整条断掉。含任务描述写法、模型挑选依据、真实浏览器与无头环境说明、步数上限与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型，含支持视觉的模型可直接看截图决策。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-ai-chat-ui",
+  "displayName": "AI聊天客户端接国产大模型·一个Key换75个模型接入配置",
+  "description": "让 AI 聊天客户端用上 75 个在架大模型：填一个 base_url、一把 api.a7w.cn 的 Key，DeepSeek、通义千问、智谱 GLM、Kimi、混元、MiniMax 与 GPT 全部进同一个模型下拉框，换 model 就是换模型，不用逐家注册、不用改代码。另附出图、配音、视频、数字人等 21 个生成应用的接入口径、base_url 层数判断法与全套排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-agent-platform",
+  "displayName": "自建本地AI Agent平台·网关常驻多Agent沙箱落地指南",
+  "description": "把 AI Agent 平台跑在自己的机器上：常驻网关统一管住会话、工具与消息通道，多 Agent 各带独立 workspace 与权限边界，工具档位与沙箱逐级收紧，模型侧用 OpenAI 兼容方式接 api.a7w.cn —— 一个 Key 通吃 75 个在架大模型，换 model 就是换模型。含部署配置、能力使用、扩展排错三份完整作业文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-java-agent-kit",
+  "displayName": "Java接大模型与Agent·OpenAI兼容网关直连75模型包",
+  "description": "把大模型与 Agent 能力接进你自己的 Java 工程：一个 Key、一个 base_url 统一调用 75 个在架模型，兼容 OpenAI 协议，换 model 就是换模型。从模块分层、工具声明两条路径、拦截器 order 语义、Agent 运行时到 RAG、MCP 全链路，一次配齐。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-deepseek-cloud",
+  "displayName": "DeepSeek全系云端直连·免部署一个Key切换调用大模型",
+  "description": "直接用 api.a7w.cn 在架的 DeepSeek 全系大模型，不用自己部署、不用显卡、不用下模型文件。四款在架型号随任务切换，兼容 OpenAI 协议，只换 base_url 与 model。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。注册领 Key 见 https://api.a7w.cn/ 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-chatbot-builder",
+  "displayName": "聊天机器人接大模型·多平台机器人用国产模型回话方案",
+  "description": "让聊天机器人真正会说话：群里收到消息，用 api.a7w.cn 的 OpenAI 兼容接口让 DeepSeek、通义千问、智谱 GLM、Kimi、混元等 75 个在架大模型回话，同一把 Key 还能发图、发语音、转写群里的语音。含多轮上下文裁剪、并发与 429 处理、消息去重、超时降级、模型选型与控成本口径，以及零依赖客户端与排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-bg-remover",
+  "displayName": "图片一键去背景换白底·商品图抠图透明底批量在线工具",
+  "description": "把图片的主体从背景里干净分离：商品图换纯白底、人像抠成透明底、把主体换到另一张背景图上，一条接口全解决。上传一张公网图片 URL，说明你要什么底，约半分钟拿回可直接用的成图。整套操作文档（接口参数表、提示词模板、批量做法、计费口径、常见坑）+ 零依赖客户端都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-image-to-text",
+  "displayName": "图片文档一键转文字·截图海报表格文字提取在线OCR工具",
+  "description": "把图片和文档里的文字变成可复制的文本：截图、海报、票据、商品标签、扫描件走视觉大模型直读；PDF、Word、TXT、Markdown 走平台的文档解析问答接口。票据要字段、表格要 Markdown、长文档要摘要，都能一次问出来。整套操作文档（两条调用路径、视觉模型清单、提示词模板、批量做法、计费口径、常见坑）+ 零依赖客户端都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-doc-to-markdown",
+  "displayName": "文档转Markdown·PDF Word表格结构保留在线工具",
+  "description": "把 PDF、Word、TXT、Markdown 等文档统一转成一份能直接喂给大模型和知识库的 Markdown：标题层级、有序无序列表、表格、链接全部保留，不是抓成一坨无结构字符。上传一个公网文档地址，说明要什么结构，几十秒拿回干净 Markdown；一次最多能同时处理 8 份文档做合并或对比。整套操作文档（三步跑通、指令模板、转换清单、批量做法、计费口径、常见坑）+ 零依赖客户端都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-drama-factory",
+  "displayName": "AI短剧量产工厂·小说改编剧本分镜图视频配音全流程一键出片",
+  "description": "把一本小说变成能投放的短剧：策划 → 编剧 → 分镜 → 出图 → 出片 → 配音 → 混音 → 超分，八道工序全部走 api.a7w.cn 的生成应用，一条 Base URL、一把 Key 跑完。含三道质量门禁（改编可行性、故事骨架、分镜铁律）与一份出片成本测算脚本，批量出片不靠手感靠口径。整套操作文档（工序-应用-接口对照表、每道工序的真实调用、成本测算、批量排产、常见坑）+ 零依赖客户端都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-drama-workbench",
+  "displayName": "AI短剧制作工作台·多应用组合配方单镜头SOP与批量排产",
+  "description": "把 api.a7w.cn 上的生成应用搭成一张短剧制作工作台：哪个应用擅长什么、什么输入该配哪个、一个镜头从首帧到成片的六步 SOP、六套现成的组合配方（静态对话戏/动作戏/旁白戏/快剪混剪/老片修复/数字人口播）、多项目并行排产与按应用对账，全部写清「传什么、调哪个接口、拿回什么」。含零依赖客户端与成本测算脚本，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-short-video-maker",
+  "displayName": "AI短视频一键生成·选题脚本配音画面字幕全流程批量出片",
+  "description": "给一个选题就能出片：大模型写脚本 → TTS 出配音 → 出图定画面 → 图生视频补动感 → 时间轴压字幕 → 配 BGM → 本地合成，七道工序全部走 api.a7w.cn，一把 Key 跑完。支持 9:16 竖屏 / 16:9 横屏 / 1:1 方形，字幕时间轴两种做法都写清了怎么落地。含选题清单批量跑法、成本测算口径与常见坑，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "a7w-action-transfer",
   "displayName": "三剪客 · 动作迁移",
   "description": "动作迁移，基于参考图片和输入视频生成动作迁移后的视频结果。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。",
@@ -184,14 +416,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-agents-flex-kit",
-  "displayName": "三剪客 · Java Agent 框架",
-  "description": "Java 生态 AI Agent 框架接入、选型与踩坑排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-ai-research-kit",
   "displayName": "三剪客 · AI 科研全流程",
   "description": "把选题、查文献、做实验、写论文串成一条可执行流水线。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -235,14 +459,6 @@
   "slug": "sanjianke-doc-grill-kit",
   "displayName": "三剪客 · 带资料追问",
   "description": "先把资料读成事实索引，再基于索引逐条追问，标出矛盾与缺口。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-drama-studio-kit",
-  "displayName": "三剪客 · AI 短剧创作台",
-  "description": "短剧创作台的选型评估与私有化搭建指南。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
@@ -530,22 +746,6 @@
   }
  },
  {
-  "slug": "sanjianke-agent-platform-kit",
-  "displayName": "三剪客 · 全能 AI Agent 平台",
-  "description": "把 AI 助手跑在自己设备上的开源 Agent 平台。 遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "openclaw",
-   "repo": "https://github.com/openclaw/openclaw",
-   "what": "只提供原创使用指南，不含上游源码"
-  },
-  "licenseNote": [
-   "上游许可禁止对外提供 SaaS"
-  ]
- },
- {
   "slug": "sanjianke-ai-classroom-kit",
   "displayName": "三剪客 · 多智能体互动课堂",
   "description": "把主题或文档一键变成多智能体互动课堂。 遇到问题可加技术微信 9872659。",
@@ -644,32 +844,6 @@
   }
  },
  {
-  "slug": "sanjianke-autogen",
-  "displayName": "三剪客 · 多智能体对话框架",
-  "description": "用对话的方式组织多个 Agent 协作：给每个 Agent 一个名字、一段人设和一个模型客户端，再放进群聊里轮流发言或按需发言，靠终止条件收口。含 AgentChat 三层 API、团队预设、工具与 MCP 接入、AutoGen Studio 与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "AutoGen",
-   "repo": "https://github.com/microsoft/autogen",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-backgroundremover",
-  "displayName": "三剪客 · 图片与视频一键去背景",
-  "description": "图片和视频抠像去背景的命令行工具：支持人像 / 通用 / 轻量三种模型、边缘细化、纯蒙版输出、换纯色或图片背景、透明视频与 GIF、文件夹批量、管道模式、HTTP 接口和 Python 库调用。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "backgroundremover",
-   "repo": "https://github.com/nadermx/backgroundremover",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-bagisto",
   "displayName": "三剪客 · 开源跨境电商独立站系统",
   "description": "bagisto：开源跨境电商独立站系统 的安装、常用命令与避坑要点。遇到问题可加技术微信 9872659。",
@@ -692,32 +866,6 @@
   "upstream": {
    "project": "bilingual_book_maker",
    "repo": "https://github.com/yihong0618/bilingual_book_maker",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-browser-use",
-  "displayName": "三剪客 · 让 Agent 操控浏览器",
-  "description": "让大模型自己开浏览器完成任务：一句话任务描述，Agent 自己点、填、翻页、抽取结果。含 uv/pip 安装、Chromium 下载、Agent 最小示例、模型选择、真实 Chrome 复用登录态、云端浏览器与代理、自定义工具与结构化输出。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Browser Use",
-   "repo": "https://github.com/browser-use/browser-use",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-buzz",
-  "displayName": "三剪客 · 离线音视频转字幕",
-  "description": "Buzz：在本机离线把音频、视频甚至视频链接转成字幕，可导出 TXT/SRT/VTT，支持多种推理后端与 GPU 加速。含图形界面与命令行两种用法与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Buzz",
-   "repo": "https://github.com/chidiwilliams/buzz",
    "what": "只提供原创使用指南，不含上游源码"
   }
  },
@@ -802,19 +950,6 @@
   "upstream": {
    "project": "chineseocr_lite",
    "repo": "https://github.com/DayBreak-u/chineseocr_lite",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-chroma",
-  "displayName": "三剪客 · 轻量向量库",
-  "description": "Chroma 向量库的上手与运维：pip/npm 安装、内存/持久化/服务端/云四种客户端、集合与增删改查、元数据过滤、embedding function 接入，以及默认 embedding 与 sqlite 版本这两个高频坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Chroma",
-   "repo": "https://github.com/chroma-core/chroma",
    "what": "只提供原创使用指南，不含上游源码"
   }
  },
@@ -926,19 +1061,6 @@
   }
  },
  {
-  "slug": "sanjianke-crewai",
-  "displayName": "三剪客 · 角色化 Agent 协作",
-  "description": "把一支活拆成几个有岗位、有目标、有背景故事的角色，让它们按顺序或按层级协作完成一段多步骤工作；需要精确控制时再用事件驱动 Flow 把 Crew 串起来。含 CLI 脚手架、Crew/Flow 两种范式、模型接入与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "CrewAI",
-   "repo": "https://github.com/crewAIInc/crewAI",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-cross-app-kit",
   "displayName": "三剪客 · 跨端 App 开发",
   "description": "一套代码同时出 iOS、Android、Web，含原生能力与上架发布。 遇到问题可加技术微信 9872659。",
@@ -994,23 +1116,6 @@
   }
  },
  {
-  "slug": "sanjianke-deepseek-v3",
-  "displayName": "三剪客 · DeepSeek 开源大模型",
-  "description": "DeepSeek-V3 是 671B 总参数 / 37B 激活的 MoE 模型权重，不是命令行工具。这里讲清楚怎么拿到权重、自建服务要多少显存、官方给的几条部署路径（SGLang / vLLM / LMDeploy / TRT-LLM / LightLLM / 官方 Demo）、FP8 与 BF16 的取舍，以及换版本、跑不动、许可证这几类现实问题。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "DeepSeek-V3",
-   "repo": "https://github.com/deepseek-ai/DeepSeek-V3",
-   "what": "只提供原创使用指南，不含上游源码"
-  },
-  "licenseNote": [
-   "商用需单独取得授权",
-   "上游许可禁止对外提供 SaaS"
-  ]
- },
- {
   "slug": "sanjianke-deepspeed",
   "displayName": "三剪客 · 大模型训练加速",
   "description": "DeepSpeed：单卡塞不下、多卡跑不快的训练加速层。含 pip 安装前置条件、ds_report 自检、deepspeed.initialize 接入训练循环、JSON 配置、单机与多机启动命令（含免密 SSH 模式）、HuggingFace 的 --deepspeed 用法与常见坑。遇到问题可加技术微信 9872659。",
@@ -1020,32 +1125,6 @@
   "upstream": {
    "project": "DeepSpeed",
    "repo": "https://github.com/deepspeedai/DeepSpeed",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-demucs",
-  "displayName": "三剪客 · 音乐分轨与人声提取",
-  "description": "Demucs：音乐分轨与人声提取 的安装、常用命令与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Demucs",
-   "repo": "https://github.com/facebookresearch/demucs",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-dify",
-  "displayName": "三剪客 · 可视化 Agent 工作流",
-  "description": "在可视化画布上把大模型应用搭出来：节点式工作流、RAG 知识库、Agent 工具调用、Prompt 调试，再通过内置 API 接进自己的业务系统。含 Docker Compose 自托管、升级与备份、模型供应商接入、常见运维坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Dify",
-   "repo": "https://github.com/langgenius/dify",
    "what": "只提供原创使用指南，不含上游源码"
   }
  },
@@ -1122,19 +1201,6 @@
   }
  },
  {
-  "slug": "sanjianke-drama-engine",
-  "displayName": "三剪客 · AI 短剧量产引擎",
-  "description": "三剪客 · AI 短剧量产引擎：把一本小说变成能投放的短剧，一整套跑通「策划 → 编剧 → 分镜 → 出片」的工业化流程。覆盖本地 / Docker / 云服务器三种部署、文本图像视频三类模型接入、章节事件图谱、故事骨架与付费卡点设计、分镜表十三铁律与片段过渡四类桥梁、11 个画风包与 12 个题材包的选用和自定义、出片成本估算与全链路排错。适用于批量出片、小说改编可行性评估、自建画风或题材技能包。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Toonflow-app",
-   "repo": "https://github.com/HBAI-Ltd/Toonflow-app",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-duckdb",
   "displayName": "三剪客 · 单机分析型 SQL 引擎",
   "description": "duckdb：把 CSV / Parquet / 多份表格文件当数据库查，用 SQL 做单机分析、清洗与导出，不用起服务、不用导入。遇到问题可加技术微信 9872659。",
@@ -1157,19 +1223,6 @@
   "upstream": {
    "project": "dust",
    "repo": "https://github.com/bootandy/dust",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-easyocr",
-  "displayName": "三剪客 · 多语言即用 OCR",
-  "description": "EasyOCR：多语言即用 OCR 的安装、常用命令与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "EasyOCR",
-   "repo": "https://github.com/JaidedAI/EasyOCR",
    "what": "只提供原创使用指南，不含上游源码"
   }
  },
@@ -1237,23 +1290,6 @@
    "repo": "https://github.com/fastfetch-cli/fastfetch",
    "what": "只提供原创使用指南，不含上游源码"
   }
- },
- {
-  "slug": "sanjianke-fastgpt",
-  "displayName": "三剪客 · 知识库问答平台",
-  "description": "FastGPT 私有化部署与使用：Docker Compose 起服务、默认账号与必改密钥、模型与向量库接入、知识库建库与混合检索、工作流编排、OpenAPI 调用，以及许可证红线与升级避坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "FastGPT",
-   "repo": "https://github.com/labring/FastGPT",
-   "what": "只提供原创使用指南，不含上游源码"
-  },
-  "licenseNote": [
-   "上游许可禁止对外提供 SaaS",
-   "商用需单独取得授权"
-  ]
  },
  {
   "slug": "sanjianke-fd",
@@ -1348,19 +1384,6 @@
   "licenseNote": [
    "上游许可禁止对外提供 SaaS"
   ]
- },
- {
-  "slug": "sanjianke-flowise",
-  "displayName": "三剪客 · 拖拽式 LLM 编排",
-  "description": "Flowise：可视化拖拽搭建 LLM 应用与 Agent 流程。含 npm 全局安装、Docker 镜像与 Docker Compose 三种部署、服务与 worker 两种进程、账号与鉴权开关、流程导出导入、卷持久化等真实命令与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Flowise",
-   "repo": "https://github.com/FlowiseAI/Flowise",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
  },
  {
   "slug": "sanjianke-funasr",
@@ -1483,19 +1506,6 @@
   }
  },
  {
-  "slug": "sanjianke-graphrag",
-  "displayName": "三剪客 · 图谱增强检索",
-  "description": "GraphRAG：图谱增强检索 的安装、常用命令与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "GraphRAG",
-   "repo": "https://github.com/microsoft/graphrag",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-gum",
   "displayName": "三剪客 · Shell 脚本交互组件",
   "description": "gum：Shell 脚本交互组件 的安装、常用命令与避坑要点。遇到问题可加技术微信 9872659。",
@@ -1538,19 +1548,6 @@
    "上游为研究/非商业许可",
    "商用需单独取得授权"
   ]
- },
- {
-  "slug": "sanjianke-haystack",
-  "displayName": "三剪客 · RAG 流水线框架",
-  "description": "用 Python 搭可控的 RAG 与 Agent 流水线：pip/uv/conda 安装、Pipeline 组件与连线、检索与生成最小可运行示例、换模型换向量库、异步与流式、序列化部署，以及装错包名这个头号坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Haystack",
-   "repo": "https://github.com/deepset-ai/haystack",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
  },
  {
   "slug": "sanjianke-httpie",
@@ -1757,19 +1754,6 @@
   }
  },
  {
-  "slug": "sanjianke-langchain",
-  "displayName": "三剪客 · LLM 应用开发框架",
-  "description": "用一套统一接口把模型、工具、记忆、检索串成能跑完的 LLM 应用与 Agent 的 Python 框架。含 uv/pip 安装、create_agent 与 init_chat_model 用法、消息与工具定义、RAG 接线、1.x 拆包与版本坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "LangChain",
-   "repo": "https://github.com/langchain-ai/langchain",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-langchain-chatchat",
   "displayName": "三剪客 · 本地知识库问答",
   "description": "全程用开源模型、可离线私有部署的知识库问答应用：文件入库、向量检索、Agent 调工具、WebUI 与 FastAPI 双入口。含 pip / 源码 / Docker 三种部署、YAML 配置体系、知识库初始化与常见卡死排查。遇到问题可加技术微信 9872659。",
@@ -1779,19 +1763,6 @@
   "upstream": {
    "project": "Langchain-Chatchat",
    "repo": "https://github.com/chatchat-space/Langchain-Chatchat",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-langgraph",
-  "displayName": "三剪客 · 有状态 Agent 编排",
-  "description": "把 Agent 写成显式的状态图：节点、边、共享 State、条件路由，配上 checkpointer 做断点续跑、人工审批和时间旅行。含安装、Graph API 与 Functional API 两种写法、本地服务与 CLI、以及中断重跑等关键坑位。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "LangGraph",
-   "repo": "https://github.com/langchain-ai/langgraph",
    "what": "只提供原创使用指南，不含上游源码"
   }
  },
@@ -1852,19 +1823,6 @@
   }
  },
  {
-  "slug": "sanjianke-lightrag",
-  "displayName": "三剪客 · 轻量图谱 RAG",
-  "description": "在向量检索之外再建一层知识图谱：从文档里抽实体和关系，用 local / global / hybrid / naive / mix 五种模式做双层级检索。含 SDK 与服务器两种用法、存储后端选型、嵌入模型不可更换等关键约束和排错清单。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "LightRAG",
-   "repo": "https://github.com/HKUDS/LightRAG",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-litellm",
   "displayName": "三剪客 · 百模型统一调用",
   "description": "把 100+ 家模型的调用方式统一成 OpenAI 格式：写代码时当 Python 库直接换模型名，做平台时起一个网关把密钥、额度、限流、用量统计收在一处。含 SDK 与 Proxy 两条路径、config.yaml、虚拟密钥与避坑要点。遇到问题可加技术微信 9872659。",
@@ -1917,19 +1875,6 @@
   }
  },
  {
-  "slug": "sanjianke-llamaindex",
-  "displayName": "三剪客 · 数据接入与索引",
-  "description": "LlamaIndex：把散落的文档、数据库、API 接成可检索、可问答的知识库。含 llama-index 与 llama-index-core 两种装法、集成包命名规律、Settings 配置、索引构建与持久化、换 Ollama 等本地模型、检索与查询引擎的避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "LlamaIndex",
-   "repo": "https://github.com/run-llama/llama_index",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-lmdeploy",
   "displayName": "三剪客 · 模型部署与量化",
   "description": "把大模型跑起来并压下去：LMDeploy 一台机器上跑离线批量推理、开 OpenAI 兼容接口、做 AWQ 4bit 量化与 KV Cache 量化。含 pip / conda / Docker 三类真实安装命令、TurboMind 与 PyTorch 双引擎选型、量化与量化后推理命令，以及显存比例、引擎差异、鉴权与模板匹配等真实坑。遇到问题可加技术微信 9872659。",
@@ -1941,22 +1886,6 @@
    "repo": "https://github.com/InternLM/lmdeploy",
    "what": "只提供原创使用指南，不含上游源码"
   }
- },
- {
-  "slug": "sanjianke-lobehub-lobechat",
-  "displayName": "三剪客 · 现代 AI 聊天界面",
-  "description": "LobeHub（原 LobeChat）的部署与使用：Docker、Vercel 一键、本地开发三种落地方式，环境变量与多模型接入配置，插件与 MCP 工具链，以及自托管常见坑。适合自建私有 AI 聊天前端与 Agent 工作台。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "LobeHub (LobeChat)",
-   "repo": "https://github.com/lobehub/lobehub",
-   "what": "只提供原创使用指南，不含上游源码"
-  },
-  "licenseNote": [
-   "商用需单独取得授权"
-  ]
  },
  {
   "slug": "sanjianke-logseq",
@@ -2087,19 +2016,6 @@
   ]
  },
  {
-  "slug": "sanjianke-markitdown",
-  "displayName": "三剪客 · 任意文档转 Markdown",
-  "description": "把 PDF/Word/PPT/Excel/EPUB/HTML/音频等各类文件转成保留标题、列表、表格结构的 Markdown，供大模型与 RAG 流水线消费。含 CLI、Python API、Docker 三种用法、可选依赖选择与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "markitdown",
-   "repo": "https://github.com/microsoft/markitdown",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-matplotlib",
   "displayName": "三剪客 · Python 数据可视化绘图库",
   "description": "matplotlib：Python 数据可视化绘图库 的安装、常用命令与避坑要点。遇到问题可加技术微信 9872659。",
@@ -2158,19 +2074,6 @@
   }
  },
  {
-  "slug": "sanjianke-mem0",
-  "displayName": "三剪客 · Agent 长期记忆层",
-  "description": "给 AI 助手和 Agent 装一层可检索的长期记忆：把对话里的事实、偏好、决定抽出来存好，下次对话按用户/会话/Agent 维度搜回来。含 pip 库、自托管服务端、云平台、CLI 四种用法与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Mem0",
-   "repo": "https://github.com/mem0ai/mem0",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
   "slug": "sanjianke-memos",
   "displayName": "三剪客 · 碎片笔记速记",
   "description": "Memos 碎片笔记速记的部署与用法整理：单容器 Docker 起服务、MEMOS_* 环境变量、SQLite 与外部数据库切换、四级可见性与分享策略、个人访问令牌调用 API、内置 MCP 接入 AI 助手及常见坑。遇到问题可加技术微信 9872659。",
@@ -2198,32 +2101,6 @@
   "licenseNote": [
    "上游为 AGPL，网络服务有源码开放义务"
   ]
- },
- {
-  "slug": "sanjianke-metagpt",
-  "displayName": "三剪客 · 多智能体软件公司",
-  "description": "MetaGPT 的安装与使用：Python 版本区间与 node/pnpm 前置、pip 与 Docker 两种安装、config2.yaml 模型配置、metagpt 一条命令从需求生成项目仓库、当库调用与 Data Interpreter 用法，以及版本、配置路径、生成质量与成本等避坑要点。适合搭多智能体协作流水线与快速生成项目原型。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "MetaGPT",
-   "repo": "https://github.com/FoundationAgents/MetaGPT",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-milvus",
-  "displayName": "三剪客 · 分布式向量数据库",
-  "description": "Milvus：为 AI 应用准备的向量数据库。含 pip 装 pymilvus、Milvus Lite 本地库、standalone_embed 一键脚本、Docker Compose 与集群三种部署，创建集合、插入、向量检索、混合检索的最小代码，以及 dimension 不匹配、集合未加载等高频坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "Milvus",
-   "repo": "https://github.com/milvus-io/milvus",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
  },
  {
   "slug": "sanjianke-mindoc",
@@ -2266,19 +2143,6 @@
   "licenseNote": [
    "上游为 AGPL，网络服务有源码开放义务"
   ]
- },
- {
-  "slug": "sanjianke-moneyprinterturbo",
-  "displayName": "三剪客 · 一句话生成AI短视频",
-  "description": "MoneyPrinterTurbo：给一个主题或关键词，自动生成脚本、配音、字幕、素材匹配与背景音乐，合成 9:16 / 16:9 / 1:1 竖横方短视频。含本地与 Docker 部署、WebUI / API / 命令行三种入口、批量任务与避坑要点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "MoneyPrinterTurbo",
-   "repo": "https://github.com/harry0703/MoneyPrinterTurbo",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
  },
  {
   "slug": "sanjianke-moviepy",
@@ -2329,19 +2193,6 @@
   "upstream": {
    "project": "Nextcloud Server",
    "repo": "https://github.com/nextcloud/server",
-   "what": "只提供原创使用指南，不含上游源码"
-  }
- },
- {
-  "slug": "sanjianke-nonebot2",
-  "displayName": "三剪客 · 多平台聊天机器人框架",
-  "description": "NoneBot2：Python 异步聊天机器人框架，用适配器 + 驱动器把同一套插件跑到 QQ、Telegram、飞书、Discord 等多个平台。本文讲清脚手架建项目、手动最小实例、.env 与 pyproject.toml 配置、插件加载与部署方式，以及版本、驱动、Pydantic 等高频坑。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
-  "license": "MIT",
-  "origin": "derived",
-  "upstream": {
-   "project": "NoneBot2",
-   "repo": "https://github.com/nonebot/nonebot2",
    "what": "只提供原创使用指南，不含上游源码"
   }
  },
