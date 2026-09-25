@@ -3,7 +3,7 @@ name: sanjianke-video2x
 slug: sanjianke-video2x
 displayName: 三剪客 · 视频超分与补帧
 description: "video2x：把低清视频用机器学习模型放大到高清，或用补帧把帧率提上去，支持 Anime4K、Real-ESRGAN、Real-CUGAN、RIFE。含命令行用法、硬件门槛与容器部署避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.1
+version: 1.0.2
 summary: "video2x：把低清视频用机器学习模型放大到高清，或用补帧把帧率提上去，支持 Anime4K、Real-ESRGAN、Real-CUGAN、RIFE。含命令行用法、硬件门槛与容器部署避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -13,6 +13,16 @@ tags:
 ---
 
 # 三剪客 · 视频超分与补帧
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 手里有一段画质不够的素材——老片、录屏、压缩过度的下载源——想让它在剪辑时间线上更扛放大，或者觉得 24/30 帧的动作太顿、想让画面顺一点。video2x 把这两件常用的事做成了命令行工具：一是超分放大，用 Anime4K 的 GLSL 着色器或者 Real-ESRGAN、Real-CUGAN 这类模型把分辨率提上去；二是补帧，用 RIFE 在原有帧之间插出中间帧来抬高帧率。它 6.x 版本用 C/C++ 重写，帧全程在内存里流转，不再像早期版本那样把几十万张图写到硬盘上。
 

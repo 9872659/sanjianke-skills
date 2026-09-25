@@ -3,7 +3,7 @@ name: a7w-happy-horse
 slug: a7w-happy-horse
 displayName: 三剪客 · Happy Horse
 description: "Happy Horse（HappyHorse-1.1 系列）面向文生/图生高质量短视频，采用统一多模态建模，可一阶段生成声画、支持多语言对白与多镜头场景衔接。计费按目标分辨率与生成秒数对应的参数档位计点。本能力为内测邀请制，正式调用前需完成内测申请。支持 提交任务、创建任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.6
+version: 1.0.7
 summary: "「Happy Horse」的完整调用封装：3 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -14,6 +14,16 @@ tags:
 ---
 
 # Happy Horse
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 `api.a7w.cn` 插件 **`happy_horse`**，共 **3 个接口**。提交文生/图生视频任务（矩阵点数/秒 × 目标时长，内测中）
 

@@ -3,7 +3,7 @@ name: sanjianke-faster-whisper
 slug: sanjianke-faster-whisper
 displayName: 三剪客 · 语音转文字与字幕生成
 description: "faster-whisper：把音频/视频转成带时间轴的文字，出 SRT 字幕、做批量转写与本地离线识别的 Python 库，含安装、真实调用方式与避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.2
+version: 1.0.3
 summary: "faster-whisper：把音频/视频转成带时间轴的文字，出 SRT 字幕、做批量转写与本地离线识别的 Python 库，含安装、真实调用方式与避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -13,6 +13,16 @@ tags:
 ---
 
 # 三剪客 · 语音转文字与字幕生成
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 拿到一条视频或一段录音，要把它变成文字稿、字幕文件、或者后续做解说的底稿——faster-whisper 就是干这件事的本地识别引擎。它把 Whisper 模型搬到 CTranslate2 这个推理引擎上重写了一遍，官方 README 给的口径是：同等精度下比原版 OpenAI Whisper 快最多约 4 倍，占用内存更低，还能在 CPU 和 GPU 上开 8 位量化再压一截。
 

@@ -3,7 +3,7 @@ name: nano-banana-image
 slug: nano-banana-image
 displayName: 三剪客 · nano-banana
 description: "图片生成与编辑应用，支持文生图、图生图和多规格模型选择。支持 创建图片任务、查询图片任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.7
+version: 1.0.8
 summary: "「nano-banana」的完整调用封装：2 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -14,6 +14,16 @@ tags:
 ---
 
 # nano-banana
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 `api.a7w.cn` 插件 **`nano_banana`**，共 **2 个接口**。提交图片生成或编辑任务，返回平台任务 ID。
 

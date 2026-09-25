@@ -3,7 +3,7 @@ name: wan-video
 slug: wan-video
 displayName: 三剪客 · Wan 视频生成
 description: "Wan 模型族视频生成应用。版本通过 model 参数选择，支持文生视频、角色参考生视频与视频编辑。支持 查询视频任务、创建视频任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.7
+version: 1.0.8
 summary: "「Wan 视频生成」的完整调用封装：2 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -14,6 +14,16 @@ tags:
 ---
 
 # Wan 视频生成
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 `api.a7w.cn` 插件 **`wan`**，共 **2 个接口**。按平台 task_id 查询 Wan 任务状态与结果。
 

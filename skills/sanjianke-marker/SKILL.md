@@ -3,7 +3,7 @@ name: sanjianke-marker
 slug: sanjianke-marker
 displayName: 三剪客 · PDF 转 Markdown
 description: "marker：PDF 转 Markdown 的安装、常用命令与避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.2
+version: 1.0.3
 summary: "marker：PDF 转 Markdown 的安装、常用命令与避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -12,6 +12,16 @@ tags:
 ---
 
 # 三剪客 · PDF 转 Markdown
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 marker 把 PDF 转成结构干净的 Markdown / JSON / HTML：保留标题层级、表格、公式（LaTeX）、代码块、图片，还顺手去掉页眉页脚。它是给「要拿文档内容做后续处理」的场景准备的——喂给 RAG、进 Git 管、批量清洗资料库。
 

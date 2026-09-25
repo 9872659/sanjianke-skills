@@ -3,7 +3,7 @@ name: sanjianke-mineru
 slug: sanjianke-mineru
 displayName: 三剪客 · PDF 高精度转 Markdown
 description: "把 PDF、图片、DOCX、PPTX、XLSX 高精度解析成 Markdown / JSON：公式转 LaTeX、表格转 HTML、自动去页眉页脚、按人类阅读顺序输出，扫描件自动走 OCR 且支持 109 种语言。含 pip / uv / Docker 安装、三种解析后端选择、CLI 与 API 用法、坑与边界。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.2
+version: 1.0.3
 summary: "论文、研报、合同、试卷这类复杂 PDF 的解析利器：不是简单抽文本，而是重建标题层级、表格、公式和阅读顺序，输出能直接进 RAG 的 Markdown / JSON。纯 CPU 也能跑。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -13,6 +13,16 @@ tags:
 ---
 
 # 三剪客 · PDF 高精度转 Markdown
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 把一份带公式、表格、多栏排版的论文 PDF 丢给普通文本抽取工具，拿回来的往往是一锅粥：标题混进正文、表格散成单字、公式变成乱码。MinerU 要解决的就是这个「符号转换」问题——它**重建结构**，而不是简单抽字符。
 

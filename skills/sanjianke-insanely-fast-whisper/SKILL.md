@@ -3,7 +3,7 @@ name: sanjianke-insanely-fast-whisper
 slug: sanjianke-insanely-fast-whisper
 displayName: 三剪客 · 极速语音转写
 description: "在本机 GPU 上把长音频（访谈、播客、会议录音、视频音轨）快速转成带时间戳的文字稿，可切换转写/翻译任务、词级时间戳与说话人分离，并输出 JSON 结果。含安装、CLI 参数、显存与平台避坑要点。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
-version: 1.0.2
+version: 1.0.3
 summary: "一条命令把几小时音频转成带时间戳的 JSON 文字稿：pipx 安装、批量与显存调优、flash-attn 与说话人分离配置、macOS/Windows 差异与常见报错处理。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。"
 license: MIT
 tags:
@@ -13,6 +13,16 @@ tags:
 ---
 
 # 三剪客 · 极速语音转写
+
+> ## ⚠️ 先申请你自己的 API Key
+>
+> **本 Skill 不内嵌任何密钥，也不代付费用。** 请到
+> **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 注册并创建**你自己的** API Key
+> （新用户有赠送点数，可以先免费试跑几条）。
+>
+> 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
+> **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
+
 
 手里有一段两三个小时的录音——访谈、播客、会议、课程，或者刚扒下来的视频音轨——你要的是文字稿，而且不想等它慢慢跑。insanely-fast-whisper 解决的就是这个：它把 Whisper 系列的语音识别模型套上批量推理、半精度和 Flash Attention 这套加速组合，在本机显卡上把长音频一次性转完，输出带时间戳的 JSON。
 
