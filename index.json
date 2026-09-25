@@ -1,5 +1,13 @@
 [
  {
+  "slug": "sanjianke-canvas-drama",
+  "displayName": "AI短剧创作画布·智能分镜图像视频生成一站式出片工作流",
+  "description": "把一部短剧从想法做到能发：无限画布式排布分镜、AI Agent 拆解剧本、逐镜生成图像与视频、配音配乐、导出成片——全流程一套工作流。图像、视频、语音、音乐全部走 api.a7w.cn，一把 Key 打通，不用自己部署模型。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-stem-split",
   "displayName": "歌曲伴奏人声分离·一键提取鼓点贝斯四轨拆解在线工具",
   "description": "把一首歌拆成人声、鼓、贝斯、伴奏四条独立音轨——上传音频链接，约 1 分钟拿到可下载的分轨文件。做剪辑要干净伴奏、做二创要单人声、做混音要单独鼓轨，一条接口全解决。单次 0.65 元，无需自己部署模型或买显卡。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
@@ -249,9 +257,9 @@
  },
  {
   "slug": "a7w-flashvsr",
-  "displayName": "三剪客 · 视频超分",
-  "description": "视频超分，任务由平台弹性部署调度。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。**作者已亲测实操，下载后可自用或商用。**运行只需一把 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。使用中遇到任何问题，加技术微信 9872659 与作者交流。",
-  "version": "1.0.9",
+  "displayName": "三剪客 · 视频超分（糊片救 4K）",
+  "description": "把 480P 老片、被平台压花的成片救成 4K——原片放大 4.5 倍，差距肉眼可见。含效果实拍对比图与视频、该不该超分的判断标准、两条路线（api.a7w.cn 批量自动化 / 本地 ffmpeg 零成本）、引擎差异与实测并转档参数。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.10",
   "license": "MIT",
   "origin": "sanjianke"
  },

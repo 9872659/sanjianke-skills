@@ -1,0 +1,136 @@
+# 开始使用：注册、领 Key、配置
+
+本 Skill 的所有能力都通过 **[算力集市 api.a7w.cn](https://api.a7w.cn/)** 调用。
+你需要一个 api.a7w.cn 账号和一把 API Key —— **本 Skill 不提供、也不内嵌任何 Key**。
+
+---
+
+## 一、注册账号
+
+1. 打开 **[https://api.a7w.cn/](https://api.a7w.cn/)**
+2. 点「**登录 / 注册**」
+3. 用**手机号 + 短信验证码**完成注册（首次登录即自动注册）
+4. **新用户有赠送点数**，可以先免费试跑几条，不用先充值
+
+---
+
+## 二、充值 / 兑换算力
+
+平台的计费单位是**点数**，**1 元 = 100 点**，按调用量扣，**没有月费**。
+
+1. 进入「**算力中心**」
+2. 两种方式获取点数：
+   - **在线充值**：选套餐直接支付
+   - **激活码兑换**：有激活码就在算力中心兑换
+
+> 余额不足时调用会返回 `402`，错误信息里会写明**本次需要多少点、当前有多少点**，
+> 可以据此判断该充多少。
+
+---
+
+## 三、领取 API Key
+
+1. 在「**用户中心 → API 密钥**」创建 Key
+2. Key 形如 `sk-xxxxxxxx...`
+3. **完整复制保存** —— 多数平台只在创建时显示一次完整 Key
+4. 每个 Key 可以单独设**消费上限（quota）**；打满后这个 Key 就调不动了，
+   这跟账号余额是两回事，报错码也不同
+
+> **批量出片前，把 Key 的 quota 设成预算的 1.2 倍。** 参数写错时这是最有效的止损。
+
+---
+
+## 四、配置到客户端
+
+本 Skill 自带零依赖客户端 [`scripts/a7w.py`](../scripts/a7w.py)，只用 Python 标准库。
+
+### 方式一：登录保存（推荐）
+
+```bash
+python3 scripts/a7w.py login --key sk-你的key
+```
+
+验证通过后会写入 `~/.a7w/config.json`（权限 600），之后所有命令都不再需要带 Key。
+
+### 方式二：环境变量
+
+```bash
+export A7W_API_KEY=sk-你的key      # Windows: $env:A7W_API_KEY="sk-你的key"
+```
+
+### 方式三：临时指定
+
+```bash
+python3 scripts/a7w.py call nano_banana submit --key sk-你的key \
+  --body '{"prompt":"…"}'
+```
+
+> 优先级：`--key` 参数 > 环境变量 `A7W_API_KEY` > `~/.a7w/config.json`。
+
+### 验证是否配好
+
+```bash
+python3 scripts/a7w.py whoami     # 应返回「Key 有效，可用插件 N 个」
+python3 scripts/a7w.py apps       # 列出这把 Key 能用的全部插件
+```
+
+---
+
+## 五、跑通第一条
+
+三条命令确认整条链路可用：
+
+```bash
+export A7W_API_KEY=sk-你的key
+
+# 1) 看一个应用的接口与参数（不花钱）
+python3 scripts/a7w.py schema nano_banana
+
+# 2) 出一张图（约 24 点 = 0.24 元）
+python3 scripts/a7w.py call nano_banana submit \
+  --body '{"prompt":"雨夜街头，女主撑伞站在路灯下，中景，冷色调，写实电影感","aspect_ratio":"9:16"}' \
+  --out test.png
+
+# 3) 看这把 Key 最近的用量
+python3 scripts/a7w.py points
+```
+
+出图成功即代表 Key、网络、计费全链路都通了。**接下来先读
+[`分镜方法.md`](分镜方法.md) 把分镜表做出来，再逐镜铺开。**
+
+---
+
+## 六、ffmpeg（合成阶段需要）
+
+```bash
+ffmpeg -version
+ffprobe -version
+```
+
+两个命令都能输出版本号即可。合成与导出的完整命令见 [`合成与导出.md`](合成与导出.md)。
+**Windows 用户**：把 `ffmpeg.exe` 所在目录加进 `PATH`，或在命令里写全路径。
+
+---
+
+## 七、常见错误对照
+
+| 现象 | 原因 | 处理 |
+|---|---|---|
+| `401` / 鉴权失败 | Key 无效或已过期 | 重新创建 Key 并 `login` |
+| `402 insufficient_points` | **账号**余额不够本次调用 | 去算力中心充值；错误信息里有本次所需点数 |
+| `402 key_quota_exceeded` | **该 Key** 自己的消费上限打满 | 去用户中心调高或重置该 Key 的 quota，**不用充值** |
+| `403 permission_denied` | Key 所属账号没有该应用权限 | 与余额无关，确认应用是否需单独申请 |
+| `404` | 应用或接口代号拼错 | 用 `apps` 与 `schema <app>` 拿真名；代号用**下划线** |
+| `429 queue_limit_exceeded` | 并发任务太多 | 降并发（视频 2~4 路），退避后重试 |
+| 「没有找到 API Key」 | 客户端没读到 Key | 执行 `login` 或设置 `A7W_API_KEY` |
+| HTTP 200 但结果不对 | 只看状态码没看响应体 | 平台成功码是 **`1`**，必须看 `code` |
+
+---
+
+## 八、安全提示
+
+- **不要把 Key 写进代码、截图或提交到仓库**；用 `login` 存本机或环境变量
+- Key 泄露等于余额泄露，发现异常立即在用户中心**吊销重建**
+- 本 Skill 的脚本**不会**把 Key 发送到 `api.a7w.cn` 以外的任何地址
+- **版权与授权**：剧本、素材、形象与音色的使用授权由使用者自行取得
+- **内容合规**：生成内容的使用与合规责任由使用者承担

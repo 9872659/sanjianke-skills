@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**318 个技能包**：91 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**319 个技能包**：92 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -45,11 +45,12 @@ npx clawhub install <slug>
 
 ## 技能分类
 
-### 内容创作（39）
+### 内容创作（40）
 
 - **`sanjianke-ai-workflow`** 可视化AI工作流编排·OpenAI兼容网关接21个生成应用
 - **`sanjianke-article-shape-kit`** 三剪客 · 文章结构设计
 - **`sanjianke-bg-remover`** 图片一键去背景换白底·商品图抠图透明底批量在线工具
+- **`sanjianke-canvas-drama`** AI短剧创作画布·智能分镜图像视频生成一站式出片工作流
 - **`sanjianke-coqui-tts`** 三剪客 · 开源语音合成与音色克隆 · 衍生指南
 - **`sanjianke-doc-to-markdown`** 文档转Markdown·PDF Word表格结构保留在线工具
 - **`sanjianke-drama-factory`** AI短剧量产工厂·小说改编剧本分镜图视频配音全流程一键出片
@@ -91,7 +92,7 @@ npx clawhub install <slug>
 
 - **`a7w-action-transfer`** 三剪客 · 动作迁移
 - **`a7w-dressing-diffusion`** 三剪客 · AI换装
-- **`a7w-flashvsr`** 三剪客 · 视频超分
+- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
 - **`a7w-full-video`** 三剪客 · 全能视频生成
 - **`a7w-grok-video`** 三剪客 · Grok 视频生成
 - **`a7w-happy-horse`** 三剪客 · Happy Horse
