@@ -232,6 +232,142 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "action-transfer",
+  "displayName": "三剪客 · 动作迁移",
+  "description": "动作迁移，基于参考图片和输入视频生成动作迁移后的视频结果。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "dressing-diffusion",
+  "displayName": "三剪客 · AI换装",
+  "description": "智能图片换装，上传模特图和服装图，AI 自动完成试穿效果生成。支持上衣、下装、全身换装。模型可在后台 extra_config 中切换。支持 提交换装任务、查询换装结果。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "flashvsr",
+  "displayName": "三剪客 · 视频超分",
+  "description": "视频超分，任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "full-video",
+  "displayName": "三剪客 · 全能视频生成",
+  "description": "支持文生视频、首尾帧视频生成及多模态参考视频生成。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "grok-video",
+  "displayName": "三剪客 · Grok 视频生成",
+  "description": "Grok 视频生成应用，支持快速视频生成和标准生成视频。支持 创建视频任务、查询视频任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "happy-horse-video",
+  "displayName": "三剪客 · Happy Horse",
+  "description": "Happy Horse（HappyHorse-1.1 系列）面向文生/图生高质量短视频，采用统一多模态建模，可一阶段生成声画、支持多语言对白与多镜头场景衔接。计费按目标分辨率与生成秒数对应的参数档位计点。本能力为内测邀请制，正式调用前需完成内测申请。支持 提交任务、创建任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "image-human",
+  "displayName": "AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清",
+  "description": "一张照片 + 一段录音，生成自然稳定的数字人口播视频——不用架机位、不用出镜、不用后期剪辑。四档清晰度可选，最低 0.015 元/秒，一条 60 秒口播视频最低 0.90 元。含完整参数表、分档计费口径与常见坑。需要自备 api.a7w.cn 的 API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.1.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "lipsync",
+  "displayName": "三剪客 · 数字人对口型",
+  "description": "数字人对口型（Lipsync），任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "mmaudio",
+  "displayName": "三剪客 · 音效生成、视频配音",
+  "description": "音效生成、视频配音，任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "music-generation-kit",
+  "displayName": "三剪客 · 音乐生成",
+  "description": "音乐生成应用，支持歌曲生成、歌词生成、参考音频、声音克隆、音频导出和分轨处理。支持 歌词混合、人声处理、优化音乐风格、导出 MIDI、歌词时间轴、导出 MP4、导出 WAV、声音克隆。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "nano-banana-image",
+  "displayName": "三剪客 · nano-banana",
+  "description": "图片生成与编辑应用，支持文生图、图生图和多规格模型选择。支持 创建图片任务、查询图片任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "person-replacement",
+  "displayName": "三剪客 · 人物替换",
+  "description": "人物替换，基于参考图片和输入视频生成替换后的视频结果。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "seedance-video",
+  "displayName": "三剪客 · Seedance 2.0",
+  "description": "基于火山方舟 Seedance 2.0 的多模态视频生成应用。支持文本/图片/视频/音频任意组合输入，可输出 480p/720p/1080p 分辨率、4~15 秒时长的视频，并可选生成同步音频。按 token 计费，按分辨率和是否含视频输入分档。支持 创建素材资产组合、上传素材、获取素材详情、更新素材、删除素材、查询任务、创建任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "seedsvc",
+  "displayName": "三剪客 · 音色修改、AI翻唱",
+  "description": "音色修改、AI翻唱，任务由平台弹性部署调度。支持 提交任务、查询任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "smart-clip",
+  "displayName": "三剪客 · 智能剪辑",
+  "description": "智能剪辑应用，支持模板查询、真人口播混剪、素材混剪和新闻体视频制作。支持 模板列表、模板详情、真人口播混剪、素材混剪、新闻体视频。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "voice-tts-studio",
+  "displayName": "三剪客 · 语音TTS",
+  "description": "语音克隆、文字转语音（同步/异步）、语音识别等多端点 AI 语音能力。支持 文字转语音（Live·异步）、克隆音色、文字转语音、文字转语音（异步）、语音转文字、音色列表。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "wan-video",
+  "displayName": "三剪客 · Wan 视频生成",
+  "description": "Wan 模型族视频生成应用。版本通过 model 参数选择，支持文生视频、角色参考生视频与视频编辑。支持 查询视频任务、创建视频任务。使用时需要你自己的 api.a7w.cn API Key。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-affine",
   "displayName": "三剪客 · 知识库与协作白板",
   "description": "AFFiNE 知识库与协作白板的落地整理：Docker Compose 自托管、config.json 与外部访问地址配置、Postgres/Redis/对象存储与备份恢复、本地优先协作原理，以及部署与升级常见坑。遇到问题可加技术微信 9872659。",
