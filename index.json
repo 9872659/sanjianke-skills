@@ -1,5 +1,13 @@
 [
  {
+  "slug": "short-drama-factory",
+  "displayName": "三剪客 · AI 短剧工厂出片全流程",
+  "description": "把一本小说跑成一部成片的工业化流程：把 api.a7w.cn 的文本/图像/视频/语音四类能力按十个阶段串成流水线，用「多参考图 + 硬约束双锁」和「跨镜头状态快照」把人物一致性压住。含分镜九铁律、模型参数差异表、真实单价与成本台账。 遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-canvas-drama",
   "displayName": "AI短剧创作画布·智能分镜图像视频生成一站式出片工作流",
   "description": "把一部短剧从想法做到能发：无限画布式排布分镜、AI Agent 拆解剧本、逐镜生成图像与视频、配音配乐、导出成片——全流程一套工作流。图像、视频、语音、音乐全部走 api.a7w.cn，一把 Key 打通，不用自己部署模型。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。",
