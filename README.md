@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**320 个技能包**：92 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**326 个技能包**：98 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -45,15 +45,17 @@ npx clawhub install <slug>
 
 ## 技能分类
 
-### 内容创作（46）
+### 内容创作（49）
 
 - **`sanjianke-ai-workflow`** 可视化AI工作流编排·OpenAI兼容网关接21个生成应用
 - **`sanjianke-article-shape-kit`** 三剪客 · 文章结构设计
 - **`sanjianke-bg-remover`** 图片一键去背景换白底·商品图抠图透明底批量在线工具
 - **`sanjianke-canvas-drama`** AI短剧创作画布·智能分镜图像视频生成一站式出片工作流
 - **`sanjianke-content-qc`** 三剪客 · 内容质量闭环
+- **`sanjianke-content-team`** 三剪客 · 内容团队
 - **`sanjianke-coqui-tts`** 三剪客 · 开源语音合成与音色克隆 · 衍生指南
 - **`sanjianke-doc-to-markdown`** 文档转Markdown·PDF Word表格结构保留在线工具
+- **`sanjianke-drama-crew`** 三剪客 · 短剧剧组
 - **`sanjianke-drama-factory`** AI短剧量产工厂·小说改编剧本分镜图视频配音全流程一键出片
 - **`sanjianke-drama-workbench`** AI短剧制作工作台·多应用组合配方单镜头SOP与批量排产
 - **`sanjianke-faster-whisper`** 三剪客 · 语音转文字与字幕生成 · 衍生指南
@@ -74,6 +76,7 @@ npx clawhub install <slug>
 - **`sanjianke-pydub`** 三剪客 · 音频切片与格式转换 · 衍生指南
 - **`sanjianke-rag-pipeline`** RAG知识库流水线搭建·文档切分向量检索大模型问答一条龙零部署
 - **`sanjianke-remotion`** 三剪客 · 用 React 写代码生成视频 · 衍生指南
+- **`sanjianke-review-board`** 三剪客 · 评审委员会
 - **`sanjianke-sensevoice`** 三剪客 · 多语言语音理解（识别 / 语种 / 情感 / 事件） · 衍生指南
 - **`sanjianke-short-video-maker`** AI短视频一键生成·选题脚本配音画面字幕全流程批量出片
 - **`sanjianke-shortgpt`** 三剪客 · AI 短视频自动化生产框架 · 衍生指南
@@ -388,9 +391,10 @@ npx clawhub install <slug>
 - **`sanjianke-wechat-chatgpt`** 三剪客 · 微信接入 ChatGPT 自动回复 · 衍生指南
 - **`sanjianke-xiaohongshu-mcp`** 三剪客 · 小红书 MCP 服务 · 衍生指南
 
-### 教育学习（3）
+### 教育学习（4）
 
 - **`sanjianke-ai-classroom-kit`** 三剪客 · 多智能体互动课堂 · 衍生指南
+- **`sanjianke-course-crew`** 三剪客 · 课程教研组
 - **`sanjianke-course-outline`** 三剪客 · 课程生产线
 - **`sanjianke-slide-kit`** 三剪客 · 课件配图与排版
 
@@ -403,6 +407,11 @@ npx clawhub install <slug>
 
 - **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
 - **`sanjianke-knowledge-qa`** 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
+
+### 商业运营（2）
+
+- **`sanjianke-ecom-crew`** 三剪客 · 电商上新小组
+- **`sanjianke-localize-crew`** 三剪客 · 出海本地化小组
 
 ### 设计（2）
 
