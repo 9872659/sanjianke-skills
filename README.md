@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**326 个技能包**：98 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**329 个技能包**：101 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -165,7 +165,7 @@ npx clawhub install <slug>
 - **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
 - **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
 
-### 数据分析（24）
+### 数据分析（25）
 
 - **`sanjianke-ai-research-kit`** 三剪客 · AI 科研全流程
 - **`sanjianke-apache-echarts`** 三剪客 · 数据可视化图表库 · 衍生指南
@@ -184,6 +184,7 @@ npx clawhub install <slug>
 - **`sanjianke-polars`** 三剪客 · 高性能 DataFrame 计算库 · 衍生指南
 - **`sanjianke-pyecharts`** 三剪客 · Python 图表生成 · 衍生指南
 - **`sanjianke-pygwalker`** 三剪客 · 数据可视化探索 · 衍生指南
+- **`sanjianke-research-crew`** 三剪客 · 调研取证小组
 - **`sanjianke-seaborn`** 三剪客 · 统计数据可视化 · 衍生指南
 - **`sanjianke-sqlalchemy`** 三剪客 · Python SQL 工具包与 ORM · 衍生指南
 - **`sanjianke-stock`** 三剪客 · A股量化选股与数据采集 · 衍生指南
@@ -391,6 +392,13 @@ npx clawhub install <slug>
 - **`sanjianke-wechat-chatgpt`** 三剪客 · 微信接入 ChatGPT 自动回复 · 衍生指南
 - **`sanjianke-xiaohongshu-mcp`** 三剪客 · 小红书 MCP 服务 · 衍生指南
 
+### 商业运营（4）
+
+- **`sanjianke-bid-crew`** 三剪客 · 方案竞标小组
+- **`sanjianke-ecom-crew`** 三剪客 · 电商上新小组
+- **`sanjianke-localize-crew`** 三剪客 · 出海本地化小组
+- **`sanjianke-support-crew`** 三剪客 · 客诉处置小组
+
 ### 教育学习（4）
 
 - **`sanjianke-ai-classroom-kit`** 三剪客 · 多智能体互动课堂 · 衍生指南
@@ -407,11 +415,6 @@ npx clawhub install <slug>
 
 - **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
 - **`sanjianke-knowledge-qa`** 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
-
-### 商业运营（2）
-
-- **`sanjianke-ecom-crew`** 三剪客 · 电商上新小组
-- **`sanjianke-localize-crew`** 三剪客 · 出海本地化小组
 
 ### 设计（2）
 

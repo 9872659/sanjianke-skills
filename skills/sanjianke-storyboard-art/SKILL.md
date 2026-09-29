@@ -3,7 +3,7 @@ name: sanjianke-storyboard-art
 slug: sanjianke-storyboard-art
 displayName: 三剪客 · 漫画分镜出图
 description: "把剧本变成**漫画分镜序列**：抽角色设定卡（外貌/服装/配色/特征词）→ 出分镜表（景别/机位/画面/对白）→ 逐格出图 → 跨格一致性自检 → 本地拼页。难点：**同一角色在 N 格里长得一样**：用「设定卡 + 硬约束提示词 + 多参考图（action=edit 传上一格/锚点）」三道一起压，且不替你补词——哪格漏了哪条特征词就报出来。走 api.a7w.cn 的 nano_banana，零依赖。七道硬闸门：合规、占位符、照抄示例、比例真伪（--snap-exact 裁准）、分镜结构、角色一致性、成本与位置。断点 key 含八维，改一维就重出。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.0
+version: 1.0.2
 summary: "「每格长得不一样」最翻车：同一个主角在第 1 格和第 12 格是两张脸。本包六个子命令：`characters` 抽角色设定卡（features 是跨格复述凭据）、`shots` 出分镜表、`images` 逐格出图（先报价）、`consistency` 零成本跨格自检、`sheet` 本地拼页。压一致性三道一起上：设定卡写死可视觉特征、每格提示词逐字复述这些特征、再用 action=edit 加 image_urls 把上一格或锚点图当参考。一致性闸门**不替你补词**：逐字核对每格提示词，报出「第几格 · 哪个角色 · 漏了哪个词」。实测：nano_banana 1K = 24 点/张，冻结 31.2 点、实扣 24 点，只信 usage.points_cost；上游按 32 对齐，3:4 实测给 864x1184（偏差 2.70%），要精确就 --snap-exact 裁到 864x1152。拼页内置纯标准库 PNG 解码/缩放/合成；图上不渲染文字（零依赖做不了字形光栅化，AI 出的文字也必错），对白另出 dialogue.md。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -612,7 +612,9 @@ sanjianke-storyboard-art/
 
 ## 联系我们
 
-遇到问题可加技术微信 9872659。
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
 
 ## 相关链接
 

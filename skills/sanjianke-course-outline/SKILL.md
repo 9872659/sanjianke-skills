@@ -3,7 +3,7 @@ name: sanjianke-course-outline
 slug: sanjianke-course-outline
 displayName: 三剪客 · 课程生产线
 description: "给一个主题和受众水平，一条流水线跑完课程三件套：大纲（章节 / 小节 / 学习目标 / 时长）、逐节讲义（1500~3000 字）、分层习题与解析。面向知识付费、企业内训与录课老师，纯大模型产出，零第三方依赖。走 api.a7w.cn 的 OpenAI 兼容端点，模型名现查，带退避重试。五道本地硬闸门都是拦截不是警告：合规、占位符残留、prompt_echo 照抄示例、大纲结构校验、成本上限。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.5
+version: 1.0.7
 summary: "备课最耗时的从来不是写，而是「先想清楚讲什么」。本包把这条链路做成一串命令：`plan` 出大纲并逐层校验结构，`lesson` 按大纲逐节写 1500~3000 字讲义，`quiz` 出基础 / 应用 / 进阶三档习题，每题都要有答案与解析；`all` 串起全流程并支持断点续跑，已完成的节不会重复扣费；`cost` 只算钱不出网。受众水平分三档，决定术语解释密度。接入走 api.a7w.cn：POST /api/v1/chat/completions，GET /api/v1/models；成功响应不带 code 字段。五道硬闸门都是拦截：广告法违禁词（教育类另有「保过 / 包学会 / 提分保证」一档）、占位符残留、prompt_echo（模型会照抄提示词示例）、大纲结构校验、成本上限（超 --budget 在发起调用前就停）。真机实测：4 章 8 节大纲 1952 token，一节讲义 2480 token，一节 6 道题 2280 token。账单以 api.a7w.cn 控制台为准。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -479,7 +479,9 @@ sanjianke-course-outline/
 
 ## 联系我们
 
-遇到问题可加技术微信 9872659。
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
 
 ## 相关链接
 

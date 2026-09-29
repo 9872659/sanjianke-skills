@@ -3,7 +3,7 @@ name: sanjianke-longform-factory
 slug: sanjianke-longform-factory
 displayName: 三剪客 · 长文自动生产线
 description: "给一个主题，一条链路产出**可发布的长文**：选题角度 → 大纲 → 正文（3000 字级）→ 配图（自动决定画什么、几张）→ 平台适配（公众号 / 头条 / 知乎）。不是单点生成，是**多步流水线**：`outline` 出角度与大纲，`write` 写正文，`images` 先报价再出图，`adapt` 改平台版，`all` 串全链路并**断点续跑**。走 api.a7w.cn 的 OpenAI 兼容端点，零依赖。八道本地闸门都是**拦截**：违禁词、占位符、照抄示例、字数区间、结构、比例真伪、成本、包内 outdir。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.4
+version: 1.0.6
 summary: "单点生成一段文字容易，难的是「一条链路跑完还能直接发」。本包把长文生产拆成可单独交付的步骤，每步都做**本地闸门**。链路：`outline` 给 4 个不重叠的选题角度并展开成带计划字数的分节大纲；`write` 写 2500~4500 字正文（标题 + 摘要 + 正文 + 结尾引导）；`images` 读正文决定画什么、几张、什么比例，先报价再出图；`adapt` 改写成公众号 / 头条 / 知乎版；`all` 串全链路并**断点续跑**。接入走 api.a7w.cn 的 OpenAI 兼容端点；出图走 `POST /api/v1/apps/nano_banana/submit` 加 `GET /api/v1/tasks/<task_id>` 轮询。实测口径：文本成功响应**不带 `code`**；出图 `status` 在 **`data` 顶层**（文档写错）；上游按 32 对齐，只认**真实像素**、容差 3%。成本：出图实测 1K = 24 点/张；文本**只出 token**，金额要你自己传 `--yuan-per-ktok`。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -532,7 +532,9 @@ sanjianke-longform-factory/
 
 ## 联系我们
 
-遇到问题可加技术微信 9872659。
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
 
 ## 相关链接
 

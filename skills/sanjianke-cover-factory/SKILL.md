@@ -2,7 +2,7 @@
 name: sanjianke-cover-factory
 slug: sanjianke-cover-factory
 displayName: 三剪客 · 封面图批量生成
-version: 1.0.0
+version: 1.0.2
 license: MIT
 tags:
   - 三剪客
@@ -570,7 +570,9 @@ sanjianke-cover-factory/
 
 ## 联系我们
 
-遇到问题可加技术微信 9872659。
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
 
 ## 相关链接
 
