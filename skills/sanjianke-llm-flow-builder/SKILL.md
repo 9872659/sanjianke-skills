@@ -2,9 +2,9 @@
 name: sanjianke-llm-flow-builder
 slug: sanjianke-llm-flow-builder
 displayName: 拖拽式LLM流程编排·画布搭Agent接OpenAI兼容模型网关
-description: "把「模型 + 提示词 + 检索 + 工具」画成流程图，连好线点运行就得到一个带界面的流程应用，同时对外暴露一套 HTTP 接口供程序调用。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ 就能用同一把 Key 调 75 个在架模型，换 model 即换模型；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "把「模型、提示词、知识库检索、工具调用」做成画布上的节点：连好线、点运行，立刻得到一个带界面的服务，同时对外暴露 HTTP 接口供程序调用——改流程不用改代码，业务同学在画布上调整分支和提示词，后端同学只负责调接口。模型提供方不再逐家注册：把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，换 model 字符串就是换模型。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) ，注册即送点数、按量计费、失败全额退回。含 OpenAI 兼容接入写法、多语言 SDK 对照、异步任务生命周期、点数计费口径、错误码排查手册与零依赖客户端。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
+description: "把「模型 + 提示词 + 检索 + 工具」画成流程图，连好线点运行就得到一个带界面的流程应用，同时对外暴露一套 HTTP 接口供程序调用。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ 就能用同一把 Key 调 75 个在架模型，换 model 即换模型；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "把「模型、提示词、知识库检索、工具调用」做成画布上的节点：连好线、点运行，立刻得到一个带界面的服务，同时对外暴露 HTTP 接口供程序调用——改流程不用改代码，业务同学在画布上调整分支和提示词，后端同学只负责调接口。模型提供方不再逐家注册：把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，换 model 字符串就是换模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -207,7 +207,7 @@ const client = new OpenAI({ baseURL: "https://api.a7w.cn/api/v1", apiKey: proces
 | **推理模型 `max_tokens` 给小了** | `content` 返回 `null` | 推理模型先花思维链 token，给足 `max_tokens` |
 | **思维链字段读不到** | 拿不到推理过程 | 字段名在不同线路上是 `reasoning` 与 `reasoning_content`，两个都读 |
 | **流程 JSON 里带明文 Key** | 凭证随导出文件外泄 | 凭证走环境变量，导出前检查一遍 |
-| **做预算用公示标准价** | 预算算错 | 一律用 `tenant_*`（实际结算价） |
+| **做预算用公示标准价** | 预算算错 | 用返回里的 `data.usage.points_cost`；`tenant_*` 是**租户价字段**，未必等于实际结算价 |
 
 ---
 
@@ -224,9 +224,9 @@ const client = new OpenAI({ baseURL: "https://api.a7w.cn/api/v1", apiKey: proces
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | **标准价**，对外公示用 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` | **租户价字段**（平台侧报价） —— **未必等于实际结算价** |
 
-做预算一律用 `tenant_*`。每次返回的 `data.usage.points_cost` 就是本次真实扣费，可以直接对账。
+**做预算一律以返回里的 `data.usage.points_cost` 为准**（它才是本次真实扣费，可以直接对账）；`tenant_*` 是**租户价字段**（平台侧报价），**未必等于实际结算价**。
 
 ---
 

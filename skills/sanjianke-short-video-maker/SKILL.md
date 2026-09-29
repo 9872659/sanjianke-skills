@@ -2,9 +2,9 @@
 name: sanjianke-short-video-maker
 slug: sanjianke-short-video-maker
 displayName: AI短视频一键生成·选题脚本配音画面字幕全流程批量出片
-description: "给一个选题就能出片：大模型写脚本 → TTS 出配音 → 出图定画面 → 图生视频补动感 → 时间轴压字幕 → 配 BGM → 本地合成，七道工序全部走 api.a7w.cn，一把 Key 跑完。支持 9:16 竖屏 / 16:9 横屏 / 1:1 方形，字幕时间轴两种做法都写清了怎么落地。含选题清单批量跑法、成本测算口径与常见坑，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "AI 短视频量产的成品 Skill：一个选题进，一条能发的短视频出。七道工序全部走 api.a7w.cn —— 选题与脚本走 OpenAI 兼容模型网关（75 个在架模型换 model 即换），配音走 `voice_tts`，画面走 `nano_banana` 出图，动感走 `full_video` / `happy_horse` 图生视频，字幕时间轴给出「分段合成累计时长」与「`stt` 精确时间戳」两种可落地做法，BGM 走 `music_generation` / `music_search`，成片超分走 `flashvsr`，口播号另有 `image_human` 一条路。支持竖屏 9:16 / 横屏 16:9 / 方形 1:1，含选题清单批量跑法、真实计费口径（1 元 = 100 点）、成本结构与常见坑。整套操作文档 + 零依赖客户端都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。"
+description: "给一个选题就能出片：大模型写脚本 → TTS 出配音 → 出图定画面 → 图生视频补动感 → 时间轴压字幕 → 配 BGM → 本地合成，七道工序全部走 api.a7w.cn，一把 Key 跑完。支持 9:16 竖屏 / 16:9 横屏 / 1:1 方形，字幕时间轴两种做法都写清了怎么落地。含选题清单批量跑法、成本测算口径与常见坑，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "AI 短视频量产的成品 Skill：一个选题进，一条能发的短视频出。七道工序全部走 api.a7w.cn —— 选题与脚本走 OpenAI 兼容模型网关（75 个在架模型换 model 即换），配音走 `voice_tts`，画面走 `nano_banana` 出图，动感走 `full_video` / `happy_horse` 图生视频，字幕时间轴给出「分段合成累计时长」与「`stt` 精确时间戳」两种可落地做法，BGM 走 `music_generation` / `music_search`，成片超分走 `flashvsr`，口播号另有 `image_human` 一条路。支持竖屏 9:16 / 横屏 16:9 / 方形 1:1，含选题清单批量跑法、真实计费口径（1 元 = 100 点）、成本结构与常见坑。整套操作文档 + 零依赖客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -313,12 +313,12 @@ python3 scripts/a7w.py task <task_id>
 | 工序 | 口径 | 参考价 |
 |---|---|---|
 | 脚本撰写（模型网关） | 按点数/百万 Token | 一条 60 秒口播稿约几角钱 |
-| 配音 `voice_tts/tts` | 输入 50 点/千 Token | 200 字台词约 10 点 = 0.10 元 |
+| 配音 `voice_tts/tts` | 输入 50 点/千字（实测） | 200 字台词约 10 点 = 0.10 元 |
 | 克隆音色 `clone_voice` | 按次 | 200 点/次（租户价，**做一次长期用**） |
 | 出图 `nano_banana` | 按张 | 24 点/张（1K） |
 | 图生视频 `full_video` | 按分辨率 × 秒 | 参考 20 点/秒（1080P）；720P 更省 |
-| 口播数字人 `image_human` | 按驱动音频秒 | `fast` 1.5 / `standard` 2 / `2k` 4 / `4k` 8 点每秒 |
-| 字幕 `voice_tts/stt` | 按次 | 30 点/次 |
+| 口播数字人 `image_human` | 按驱动音频秒 | **`fast` 2 / `standard` 3 / `2k` 6 / `4k` 12 点每秒**（实测） |
+| 字幕 `voice_tts/stt` | 按次 | **40 点/次**（实测 3 次一致；租户字段写的是 30） |
 | BGM `music_generation/create` | 按次 | 65 点/次 |
 | 搜曲 `music_search/search` | 按次 | 10 点/次 |
 | 超分 `flashvsr` | 按秒 | 见 `schema flashvsr` 的 `tenant_*` |
@@ -333,7 +333,7 @@ python3 scripts/a7w.py task <task_id>
 > 3. **分辨率锁够用档** —— 竖屏短剧平台会二次压缩，720P 通常够；
 > 4. **音色克隆只做一次** —— 之后所有片子复用同一个 `reference_id`。
 
-> 平台同时给出标准价与租户实际结算价，**以你账号里实际扣费为准**。
+> 平台同时给出**标准价**与**租户价字段**（`tenant_*`，平台侧报价），两者都未必等于实际结算价；**以返回里的 `data.usage.points_cost` 为准**。
 > 每次返回的 `data.usage.points_cost` 就是本次真实扣费。
 
 ---

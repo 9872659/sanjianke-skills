@@ -11,6 +11,8 @@
 - 需要检索时有网络；不检索、只做发散整理和写作时，可完全离线
 - 要核对文献，需要你自己具备打开原文的权限（预印本站点、机构订阅等）
 - 文献管理工具可选，任意引用管理器或纯文本清单都行，没有也能跑完整条流程
+- **可选**：要用命令行做抽取 / 摘要 / 对比 / 审稿预演 / 公网文档问答，需要
+  Python 3.8+（零第三方依赖）与一把 `api.a7w.cn` 的 API Key
 
 ---
 
@@ -30,9 +32,52 @@
 
 ---
 
+## 真实算力（走 api.a7w.cn）
+
+四段里那些「要动手做」的动作已经做成命令，零第三方依赖：
+
+```bash
+# 0. 配 Key（到 https://api.a7w.cn/ 注册领取，1 元 = 100 点，失败全额退回）
+python scripts/a7w.py login --key sk-xxxx
+
+# 0.1 先查模型名，别猜（GET /api/v1/models）
+python scripts/run.py models --filter deepseek
+
+# 1. 文献卡：抽结构化字段 → JSON（POST /api/v1/chat/completions）
+python scripts/run.py extract --file 01-文献卡/paper-2024-x.md --out card.json
+
+# 2. 带出处的摘要
+python scripts/run.py summarize --file 长综述.md --length medium --out 摘要.md
+
+# 3. 综述矩阵：多份材料横向对比，标出空白点与冲突
+python scripts/run.py matrix --dir 01-文献卡/ --out 02-综述矩阵.md
+
+# 4. 审稿人视角预演
+python scripts/run.py review --file 04-草稿/正文.md --venue "目标会议" --out 预演.md
+
+# 5. 公网文档问答（POST /api/v1/apps/file_qa/chat，只吃公网地址）
+python scripts/run.py doc-qa --url "https://arxiv.org/pdf/1706.03762" "核心主张是什么？"
+
+# 6. 裸调大模型
+python scripts/run.py chat --system "只输出 JSON" --prompt "给我 3 个字段名" --json
+```
+
+实测口径：大模型按**点 / 百万 Token** 计（输入输出分别计价）；
+`file_qa/chat` 输入 2,600 点/百万 Token、输出 13,000 点/百万 Token
+（实测 124 输入 + 70 输出 = 1.2324 点 ≈ 0.012 元）。
+
+**纪律**：抽取 / 摘要 / 对比的 system prompt 已写明——
+只使用给定材料里的信息，材料里没有的字段写「未提供(需回原文核对)」，
+**不生成、不补全、不猜测**参考文献、作者、年份、DOI 与数字。
+但这只是降低风险，**不能替代你回原文核对**。
+
+---
+
 ## 依赖
 
-- 无第三方 Python / Node 依赖，本 Skill 不含脚本
+- 方法论部分：无第三方 Python / Node 依赖
+- 命令行部分（`scripts/run.py` / `scripts/a7w.py`）：Python 3.8+，只用标准库，无需 pip 安装
+- 可选：一把 `api.a7w.cn` 的 API Key（只在调用算力时需要）
 - 可选的文献管理工具（Zotero、BibTeX 或纯文本清单）
 - 可选的版本管理工具，用于管理草稿与实验配置的变更历史
 
@@ -40,9 +85,11 @@
 
 ## 安全
 
-- 不内嵌任何密钥
-- 不索取、不读取、不存储任何账号、密钥或 API Key
-- 不向任何外部站点上传你的稿件、数据或实验配置
+- 不内嵌任何密钥；Key 只从 `--key`、环境变量 `A7W_API_KEY` 或 `~/.a7w/config.json` 读取
+- 不跑 `scripts/run.py` 时全程离线，不发任何网络请求
+- 调用算力时，发给平台的是你**主动用 `--file/--text` 指定**的那部分材料；
+  不整目录偷偷上传
+- 不向任何外部站点上传你的稿件、数据或实验配置（除上述主动指定的材料外）
 - 写入范围限定在你的项目目录内；不覆盖已有文件，除非你明确要求
 - 不启动常驻进程或后台服务
 - 涉及人类受试者、隐私数据或其他受监管材料时，合规与伦理判断请走你所在机构的正式流程

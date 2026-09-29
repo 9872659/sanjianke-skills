@@ -2,9 +2,9 @@
 name: sanjianke-doc-index-qa
 slug: sanjianke-doc-index-qa
 displayName: 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
-description: "模型本身不认识你的文件。这个 Skill 讲的是中间缺的那一层：把 PDF、Word、表格、接口返回的数据接成可检索、可问答的知识库，并把模型侧整排指向 https://api.a7w.cn/ ——一个 base_url、一把 Key，现场可查 75 个在架模型与 21 个生成应用（含文档问答 file_qa）；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "模型本身不认识你的文件。想让它回答「我们公司这份规范里怎么写的」，中间缺的就是一层：把文档切成片、算成向量、存起来，提问时先捞出相关片段再交给模型。这个 Skill 讲的就是这一层的落地：加载、切分、索引、检索、问答，每一段都可替换。模型侧同样收成一处——把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，文档问答走 file_qa、语音转写走 voice_tts，账单只有一份。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) ，注册即送点数、按量计费、失败全额退回。含最小可用接法、多语言 SDK 对照、素材要求、点数计费口径、错误码排查手册与零依赖客户端。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
+description: "模型本身不认识你的文件。这个 Skill 讲的是中间缺的那一层：把 PDF、Word、表格、接口返回的数据接成可检索、可问答的知识库，并把模型侧整排指向 https://api.a7w.cn/ ——一个 base_url、一把 Key，现场可查 75 个在架模型与 21 个生成应用（含文档问答 file_qa）；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "模型本身不认识你的文件。想让它回答「我们公司这份规范里怎么写的」，中间缺的就是一层：把文档切成片、算成向量、存起来，提问时先捞出相关片段再交给模型。这个 Skill 讲的就是这一层的落地：加载、切分、索引、检索、问答，每一段都可替换。模型侧同样收成一处——把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，文档问答走 file_qa、语音转写走 voice_tts，账单只有一份。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -215,7 +215,7 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好世界"}'
 | **扫描件检索不到内容** | 提问答不出来 | 扫描件先确认有文本层；需要版面理解时换视觉类模型 |
 | **检索到的内容答不准** | 回答跑偏 | 把问题问具体、把块切成语义完整的，再考虑换更大的模型 |
 | **整篇文档每次都重跑** | 又慢又贵 | 索引建好后持久化；新增文档走增量，不要全量重跑 |
-| **做预算用公示标准价** | 预算算错 | 一律用 `tenant_*`（实际结算价） |
+| **做预算用公示标准价** | 预算算错 | 用返回里的 `data.usage.points_cost`；`tenant_*` 是**租户价字段**，未必等于实际结算价 |
 
 ---
 
@@ -232,9 +232,9 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好世界"}'
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | **标准价**，对外公示用 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` | **租户价字段**（平台侧报价） —— **未必等于实际结算价** |
 
-做预算一律用 `tenant_*`。每次返回的 `data.usage.points_cost` 就是本次真实扣费，可以直接对账。
+**做预算一律以返回里的 `data.usage.points_cost` 为准**（它才是本次真实扣费，可以直接对账）；`tenant_*` 是**租户价字段**（平台侧报价），**未必等于实际结算价**。
 
 ---
 

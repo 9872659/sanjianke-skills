@@ -9,7 +9,7 @@
       出图   24 点/张        应用 nano_banana 的 nano-banana · 1K
       视频   20 点/秒        应用 full_video 的 1080P 档（参考口径）
       配音   50 点/千 Token  应用 voice_tts 的 tts / tts_async（租户价）
-      口型    2 点/秒        应用 lipsync / image_human（参考口径）
+      口型    2 点/秒        应用 image_human 的 fast 档（实测 2 点/秒；standard 为 3 点/秒）
       BGM    65 点/首        应用 music_generation 的 create
 
 用法

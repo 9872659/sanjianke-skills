@@ -41,6 +41,6 @@
 
 ## 计费
 
-- 结算口径：按用量 3 点/单位；另有固定 0.1 点
+- 平台字段价（**未必等于实际结算价**；真实扣费只看返回里的 `data.usage.points_cost`）：按用量 3 点/单位；另有固定 0.1 点
 - 标准价：`fixed_price=0.0000` / `input_price=3.000000`
 - 租户价：`tenant_fixed_points=0.10` / `tenant_points_per_1k_input=0.0000`

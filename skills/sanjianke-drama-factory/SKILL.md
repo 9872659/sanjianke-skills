@@ -2,9 +2,9 @@
 name: sanjianke-drama-factory
 slug: sanjianke-drama-factory
 displayName: AI短剧量产工厂·小说改编剧本分镜图视频配音全流程一键出片
-description: "把一本小说变成能投放的短剧：策划 → 编剧 → 分镜 → 出图 → 出片 → 配音 → 混音 → 超分，八道工序全部走 api.a7w.cn 的生成应用，一条 Base URL、一把 Key 跑完。含三道质量门禁（改编可行性、故事骨架、分镜铁律）与一份出片成本测算脚本，批量出片不靠手感靠口径。整套操作文档（工序-应用-接口对照表、每道工序的真实调用、成本测算、批量排产、常见坑）+ 零依赖客户端都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "AI 短剧量产的成品 Skill：一本小说进，能投放的短剧出。八道工序各自对应 api.a7w.cn 上的一个生成应用 —— 策划与编剧走 OpenAI 兼容模型网关（DeepSeek / 千问 / 智谱等 75 个在架模型换 model 即换），出图走 `nano_banana`，出片走 `full_video` / `happy_horse` / `seedance`，角色配音走 `voice_tts` 的 `clone_voice` + `tts_async`，口型走 `lipsync` / `image_human`，背景音乐与音效走 `music_generation` / `music_search` / `mmaudio`，成片超分走 `flashvsr`。含三道质量门禁（小说改编可行性评估、故事骨架十二项审查、分镜表铁律与片段过渡桥梁）与一份零依赖出片成本测算脚本，批量出片不靠手感靠口径。整套操作文档 + 客户端 + 测算脚本都在包里，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。"
+description: "把一本小说变成能投放的短剧：策划 → 编剧 → 分镜 → 出图 → 出片 → 配音 → 混音 → 超分，八道工序全部走 api.a7w.cn 的生成应用，一条 Base URL、一把 Key 跑完。含三道质量门禁（改编可行性、故事骨架、分镜铁律）与一份出片成本测算脚本，批量出片不靠手感靠口径。整套操作文档（工序-应用-接口对照表、每道工序的真实调用、成本测算、批量排产、常见坑）+ 零依赖客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "AI 短剧量产的成品 Skill：一本小说进，能投放的短剧出。八道工序各自对应 api.a7w.cn 上的一个生成应用 —— 策划与编剧走 OpenAI 兼容模型网关（DeepSeek / 千问 / 智谱等 75 个在架模型换 model 即换），出图走 `nano_banana`，出片走 `full_video` / `happy_horse` / `seedance`，角色配音走 `voice_tts` 的 `clone_voice` + `tts_async`，口型走 `lipsync` / `image_human`，背景音乐与音效走 `music_generation` / `music_search` / `mmaudio`，成片超分走 `flashvsr`。含三道质量门禁（小说改编可行性评估、故事骨架十二项审查、分镜表铁律与片段过渡桥梁）与一份零依赖出片成本测算脚本，批量出片不靠手感靠口径。整套操作文档 + 客户端 + 测算脚本都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -320,7 +320,7 @@ python3 scripts/cost_estimate.py --episodes 30 --minutes 2 --json
 
 > 脚本里的单价是**参考默认值**，不是报价。请把当期真实单价传进来再采信结论。
 
-1 元 = 100 点。平台同时给出标准价与租户实际结算价，**以你账号里实际扣费为准**。
+1 元 = 100 点。平台同时给出**标准价**与**租户价字段**（`tenant_*`，平台侧报价）；**以返回里的 `data.usage.points_cost` 为准**（`tenant_*` 未必等于实际结算价）。
 
 ---
 

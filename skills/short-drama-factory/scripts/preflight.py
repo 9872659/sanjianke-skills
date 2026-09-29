@@ -80,7 +80,7 @@ def _force_utf8():
 _force_utf8()
 
 # ---------------------------------------------------------------- 实测单价
-# 来源：真实扣费记录。平台会调价，且租户实收价可能与公示价不同 —— 只用于估算。
+# 来源：真实扣费记录。平台会调价，且实际扣费与公示价、与 tenant_* 字段价都可能不同 —— 只用于估算。
 PRICE_PER_IMAGE = 20          # 点/张（gpt-image-2-pro 实测）
 PRICE_VIDEO = {               # 点/秒
     "h3-video":     {"768P": 50, "2K": 50},
@@ -493,8 +493,10 @@ def cmd_budget(args):
     print("-" * 60)
     print("合计 ≈ %d 点  ≈ %.2f 元" % (e["total"], e["total"] / 100.0))
     print("")
-    warn("这是**估算**。平台会调价，且你所在租户的实收价可能与公示价不同。")
-    info("做预算一律用接口里的 tenant_* 字段，最终以实际扣费为准。")
+    warn("这是**估算**。平台会调价，且实际扣费可能与公示价、也可能与 tenant_* 字段价不一致。")
+    info("做预算以接口返回的 data.usage.points_cost（真实扣费）为准 —— 实测 image_human 字段写 2.0 / standard 档实扣 3 点/秒，")
+    info("voice_tts·stt 字段写 30 / 实扣 40 点/次。")
+    info("另：平台侧 duration 可能比本地实测时长高约 10%（14.16s vs 12.75s），按秒计费的项请留 10% 余量。")
     if args.avg_seconds > 8:
         print("")
         warn("平均单镜 %ss > 8s —— 同一角色超过 8 秒脸会开始漂移。" % args.avg_seconds)

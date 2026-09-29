@@ -197,7 +197,7 @@
         "tags": ["应用任务"],
         "operationId": "getAppSchema",
         "summary": "查询某个应用的接口与参数定义",
-        "description": "返回该应用下所有接口的代码、endpoint_path、参数定义（params_schema）与价格。params_schema 有两种形态：带 properties 包装的，以及扁平字典（如 action_transfer）。价格字段中 tenant_fixed_points / tenant_points_per_1k_input 是实际结算价，fixed_price / input_price 是公示标准价，两者可能相差很大，做预算请用 tenant_* 字段。",
+        "description": "返回该应用下所有接口的代码、endpoint_path、参数定义（params_schema）与价格。params_schema 有两种形态：带 properties 包装的，以及扁平字典（如 action_transfer）。价格字段中 tenant_fixed_points / tenant_points_per_1k_input 是租户价字段（平台侧报价，未必等于实际结算价），fixed_price / input_price 是公示标准价，两者可能相差很大；真实扣费只看返回里的 data.usage.points_cost，做预算以它为准。",
         "parameters": [
           {
             "name": "app",
@@ -398,7 +398,7 @@
         "tags": ["账单"],
         "operationId": "getPricing",
         "summary": "查询当前价格规则",
-        "description": "实时查询平台的**计费规则表**。注意：实测该端点只返回 6 条规则——一条全局默认规则（键为 `*`，含 markupPercent）加少量特例（full_video 按分辨率、asr 按分钟、flashvsr、action_transfer、person_replacement），**并不覆盖全部接口**（例如 voice_tts 就不在其中）。要查某个接口到底多少钱，请用 getAppSchema 读 tenant_fixed_points / tenant_points_per_1k_input 等字段。响应是裸对象，没有 code/msg 外壳。",
+        "description": "实时查询平台的**计费规则表**。注意：实测该端点只返回 6 条规则——一条全局默认规则（键为 `*`，含 markupPercent）加少量特例（full_video 按分辨率、asr 按分钟、flashvsr、action_transfer、person_replacement），**并不覆盖全部接口**（例如 voice_tts 就不在其中）。要查某个接口的平台字段价，请用 getAppSchema 读 tenant_fixed_points / tenant_points_per_1k_input 等字段（字段价未必等于实际结算价，真实扣费看返回里的 data.usage.points_cost）。响应是裸对象，没有 code/msg 外壳。",
         "responses": {
           "200": {
             "description": "成功",

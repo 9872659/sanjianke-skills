@@ -112,7 +112,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/apps/music_generation/create" \
 
 ## 计费
 
-按**点数**计费，**1 元 = 100 点**。租户实际结算价：
+按**点数**计费，**1 元 = 100 点**。**平台租户价字段**（平台侧报价，**未必等于实际结算价**；真实扣费只看返回里的 `data.usage.points_cost`）：
 
 | 典型做法 | 走了哪些接口 | 总价 |
 |---|---|---|
@@ -124,7 +124,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/apps/music_generation/create" \
 
 - 异步任务**提交时预冻结点数**，完成后按实际用量结算
 - **`query` 和 `timing` 免费**，可以放心轮询
-- 平台同时给出标准价与租户实际结算价，**以实际扣费为准**
+- 平台同时给出**标准价**与**租户价字段**（`tenant_*`，平台侧报价），两者都未必等于实际结算价；**以返回里的 `data.usage.points_cost` 为准**
   （返回里的 `data.usage.points_cost` 就是本次真实扣费）
 - **不要重复提交**同一个任务 —— 每次提交都会扣 65 点
 

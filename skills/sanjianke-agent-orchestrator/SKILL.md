@@ -2,9 +2,9 @@
 name: sanjianke-agent-orchestrator
 slug: sanjianke-agent-orchestrator
 displayName: 有状态Agent编排·状态图断点续跑与人工审批接统一模型网关
-description: "把 Agent 写成显式的状态图：每一步是一个节点、跳转关系是边，于是「暂停、恢复、回放到某一步、换一条分支重跑」都成了框架能力。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调 75 个在架模型，工具调用与结构化输出都用同一条链路；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "普通的 Agent 循环是一个 while：调模型、看有没有工具调用、执行工具、再调模型。写起来快，但进程一挂整轮对话白跑，想在第 5 步插个人工确认就得自己造一套状态机。把那个隐式循环变成显式的图之后，暂停、恢复、回放、换分支重跑都成了框架能力。模型这一头同样收成一处：base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商）与 21 个生成应用，工具调用与结构化输出走同一条链路，换 model 字符串就是换模型。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) ，注册即送点数、按量计费、失败全额退回。含最小可用接法、多语言 SDK 对照、异步任务生命周期、点数计费口径、错误码排查手册与零依赖客户端。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
+description: "把 Agent 写成显式的状态图：每一步是一个节点、跳转关系是边，于是「暂停、恢复、回放到某一步、换一条分支重跑」都成了框架能力。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调 75 个在架模型，工具调用与结构化输出都用同一条链路；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "普通的 Agent 循环是一个 while：调模型、看有没有工具调用、执行工具、再调模型。写起来快，但进程一挂整轮对话白跑，想在第 5 步插个人工确认就得自己造一套状态机。把那个隐式循环变成显式的图之后，暂停、恢复、回放、换分支重跑都成了框架能力。模型这一头同样收成一处：base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商）与 21 个生成应用，工具调用与结构化输出走同一条链路，换 model 字符串就是换模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -207,7 +207,7 @@ const client = new OpenAI({ baseURL: "https://api.a7w.cn/api/v1", apiKey: proces
 | **推理模型 `max_tokens` 给小了** | `content` 返回 `null` | 推理模型先花思维链 token，给足 `max_tokens` |
 | **思维链字段读不到** | 拿不到推理过程 | `reasoning` 与 `reasoning_content` 两个名字都读 |
 | **重复提交异步任务** | 扣两次钱 | 先记 `task_id`，用任务查询（免费）确认状态；网络超时也一样 |
-| **做预算用公示标准价** | 预算算错 | 一律用 `tenant_*`（实际结算价） |
+| **做预算用公示标准价** | 预算算错 | 用返回里的 `data.usage.points_cost`；`tenant_*` 是**租户价字段**，未必等于实际结算价 |
 
 ---
 
@@ -224,9 +224,9 @@ const client = new OpenAI({ baseURL: "https://api.a7w.cn/api/v1", apiKey: proces
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | **标准价**，对外公示用 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` | **租户价字段**（平台侧报价） —— **未必等于实际结算价** |
 
-做预算一律用 `tenant_*`。每次返回的 `data.usage.points_cost` 就是本次真实扣费，可以直接对账。
+**做预算一律以返回里的 `data.usage.points_cost` 为准**（它才是本次真实扣费，可以直接对账）；`tenant_*` 是**租户价字段**（平台侧报价），**未必等于实际结算价**。
 
 ---
 

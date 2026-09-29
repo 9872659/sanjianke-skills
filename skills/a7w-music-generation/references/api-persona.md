@@ -110,6 +110,6 @@ Content-Type: application/json
 
 ## 计费
 
-- 结算口径：按次固定价 12 点（租户价）
+- 平台字段价（**未必等于实际结算价**；真实扣费只看返回里的 `data.usage.points_cost`）：按次固定价 12 点（租户价）
 - 标准价：`fixed_price=12.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=12.00` / `tenant_points_per_1k_input=0.0000`

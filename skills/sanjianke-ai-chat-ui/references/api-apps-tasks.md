@@ -88,11 +88,11 @@ curl -sS "https://api.a7w.cn/api/v1/apps/voice_tts" -H "Authorization: Bearer $A
 | `call_type` | `1` = 同步，`2` = 异步 |
 | `endpoint_path` | 平台内部路径（**形态不统一，见 3.2，不要拿来拼 URL**） |
 | `params_schema` | **参数定义**（注意不是 `schema`） |
-| `tenant_fixed_points` | **你的实际按次结算价**（点数） |
-| `tenant_points_per_1k_input` / `tenant_points_per_1k_output` | **你的实际按千字 / 千 token 结算价**（点数） |
+| `tenant_fixed_points` | **租户价字段**：平台侧给你的按次报价（点数），**未必等于实际结算价** |
+| `tenant_points_per_1k_input` / `tenant_points_per_1k_output` | **租户价字段**：平台侧给你的按千字 / 千 token 报价（点数），**未必等于实际结算价** |
 | `fixed_price` / `input_price` | 公示标准价 |
 
-**做预算一律读 `tenant_*`。** 两套价格可能差一个数量级，公示价只适合对外展示与横向比价。
+**做预算一律以返回里的 `data.usage.points_cost` 为准。** `tenant_*` 只是平台侧租户价字段，两套价格还可能差一个数量级，公示价只适合对外展示与横向比价。
 
 ## 三、三个真实存在的坑
 
@@ -282,5 +282,5 @@ python3 scripts/a7w.py task tsk_xxxxxxxx
 - [ ] 解析参数时 `params_schema` 的两种形态都认了
 - [ ] 提交前落盘记录了 `task_id`，没有盲目重提
 - [ ] 用回调的话，消费端按 `task_id` 幂等了，且会返回 2xx
-- [ ] 预算按 `tenant_*` 算，不是按 `fixed_price` 算
+- [ ] 预算以返回里的 `data.usage.points_cost` 为准（`tenant_*` 只是租户价字段），不是按 `fixed_price` 算
 - [ ] 批量提交做了有限并发，不是一次性全发出去

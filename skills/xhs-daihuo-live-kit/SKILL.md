@@ -3,8 +3,8 @@ name: xhs-daihuo-live-kit
 slug: xhs-daihuo-live-kit
 displayName: 三剪客 · 小红书带货直播作战包
 description: "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.2.4
-summary: "从小红书选品测算到商品笔记、直播脚本、评论话术与数据复盘的一体化工作流，含 8 份参考资料、5 个可离线运行的 Python 脚本（选品计算器、时间轴生成、笔记评分、合规扫描、内置自测）。明确划出覆盖与不覆盖的边界——本 Skill 是单人可用的方法论与轻量工具。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.2.6
+summary: "从小红书选品测算到商品笔记、直播脚本、评论话术与数据复盘的一体化工作流，含 8 份参考资料、5 个可离线运行的 Python 脚本（选品计算器、时间轴生成、笔记评分、合规扫描、内置自测），外加 1 个接 api.a7w.cn 的出稿与语义预检脚本 `scripts/run.py`（商品笔记 / 直播脚本 / 违禁词预检三件事真调大模型）。明确划出覆盖与不覆盖的边界——本 Skill 是单人可用的方法论与轻量工具。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - xiaohongshu
@@ -100,15 +100,17 @@ appliance）。`high` 必须改、不允许发布，`medium` 建议改或补真�
 | `note_score.py` | 按交付格式解析笔记，五维打分（0–100）并给改进项 | `python3 scripts/note_score.py --file note.md`<br>选项 `--json`、`--min-score 80`（低于分数线退出码 1） |
 | `compliance_check.py` | 离线违禁词扫描：五类基础 + 七类目 + 自定义词表，支持 text/json/csv 与 CI 退出码 | `python3 scripts/compliance_check.py --file note.md -c cosmetics --strict`<br>另有 `--text` `--format json\|csv` `--rules` `--min-level` `--out` `--list-rules` `--explain` |
 | `selftest.py` | 内置自测，验证全部脚本核心行为；不联网、不写盘 | `python3 scripts/selftest.py`（`-v` 打印用例；退出码 0 全通过） |
+| `run.py` | **接算力**：商品笔记出稿、直播脚本出稿、违禁词/广告法语义预检；真请求 `api.a7w.cn` | `python3 scripts/run.py note --product "便携榨汁杯" --price 89 --out note.md`<br>`python3 scripts/run.py live --minutes 30 --products "A,B" --out live.md`<br>`python3 scripts/run.py compliance --file note.md -c appliance` |
+| `a7w.py` | api.a7w.cn 零依赖客户端，七个子命令 `login / whoami / apps / points / schema / call / task` | `python3 scripts/a7w.py login --key sk-xxxx`<br>`python3 scripts/a7w.py schema voice_tts` |
 
 ## 权限与用途说明
 
 | 能力 | 是否申请 | 用途 |
 |---|---|---|
-| 网络访问 | 不申请 | 全部脚本纯离线，仅用 Python 标准库 |
-| 读取文件 | 申请（仅用户传入的路径） | 读取待评分/待扫描文案、批量 CSV 与自定义规则 JSON |
-| 写入文件 | 仅在传入 `--out` 时 | 写测算结果、时间轴或扫描报告；不传则不写盘 |
-| 凭证 / API Key | 不申请 | 不读取任何密钥、环境变量或登录态 |
+| 网络访问 | 仅在跑 `scripts/run.py` 时 | 选品测算 / 时间轴 / 笔记评分 / 合规扫描四个脚本**纯离线**；`run.py` 的出稿与预检会请求 `api.a7w.cn`（只用标准库），不跑它就不产生任何网络请求 |
+| 读取文件 | 申请（仅用户传入的路径） | 读取待评分/待扫描文案、批量 CSV 与自定义规则 JSON；`run.py` 读取你传入的文案或商品资料文件 |
+| 写入文件 | 仅在传入 `--out` 时 | 写测算结果、时间轴或扫描报告；不传则不写盘（`run.py` 同理，只在 `--out` 时落盘） |
+| 凭证 / API Key | 仅在跑 `run.py` 时 | 离线脚本不读取任何密钥；`run.py` 需要**你自己的** api.a7w.cn API Key（`--key` / `A7W_API_KEY` / `~/.a7w/config.json`），包里没有也不该有任何密钥 |
 
 本技能不抓取任何平台数据，指标需由用户从创作者后台导出或提供。
 
@@ -120,7 +122,8 @@ appliance）。`high` 必须改、不允许发布，`medium` 建议改或补真�
 
 1. **先读 [`SKILL.md`](SKILL.md)** —— 主入口：完整流程、判断标准、常见坑
 2. **`references/` 里有 8 份细节文档** —— 需要展开某一步时再翻
-3. **`scripts/` 里有 5 个可直接跑的脚本**（只用 Python 标准库，Python 3.8+）
+3. **`scripts/` 里有 5 个可直接跑的离线脚本**（只用 Python 标准库，Python 3.8+）—— 选品测算、时间轴、笔记评分、合规扫描、内置自测
+4. **要出稿时用 `scripts/run.py`** —— 商品笔记 / 直播脚本 / 违禁词预检三件事真调 `api.a7w.cn` 的大模型，细节见下节「怎么用（命令行）」
 
 ```bash
 # 每个脚本都能直接跑，先看它的参数说明
@@ -129,6 +132,8 @@ python3 scripts/live_timer.py --help
 python3 scripts/note_score.py --help
 python3 scripts/selection_calc.py --help
 python3 scripts/selftest.py --help
+python3 scripts/run.py --help            # 接算力的那一个
+python3 scripts/a7w.py --help            # api.a7w.cn 客户端
 ```
 
 | 脚本 | 用途 |
@@ -138,6 +143,8 @@ python3 scripts/selftest.py --help
 | [`scripts/note_score.py`](scripts/note_score.py) | 见 SKILL.md 的「脚本」一节 |
 | [`scripts/selection_calc.py`](scripts/selection_calc.py) | 见 SKILL.md 的「脚本」一节 |
 | [`scripts/selftest.py`](scripts/selftest.py) | 见 SKILL.md 的「脚本」一节 |
+| [`scripts/run.py`](scripts/run.py) | 接 api.a7w.cn 出稿与预检，见下节「怎么用（命令行）」 |
+| [`scripts/a7w.py`](scripts/a7w.py) | api.a7w.cn 零依赖客户端，见下节「怎么用（命令行）」 |
 
 | 文档 |
 |---|
@@ -151,6 +158,123 @@ python3 scripts/selftest.py --help
 | [`references/selection-scorecard.md`](references/selection-scorecard.md) |
 
 > 没有 API Key、或者想让人给你一份能直接跑的示例，看文末「联系我们」。
+
+---
+
+## 怎么用（命令行）
+
+前面四个脚本负责「算账」和「卡规则」，全是离线的确定性工具；`scripts/run.py` 补上另一半：**出稿**。
+它真请求 `api.a7w.cn` 的大模型（OpenAI 兼容协议），只用 Python 标准库。
+
+### 一、配 Key
+
+包里**不内嵌任何密钥**，Key 由你自己提供，三种方式任选一种：
+
+```bash
+python3 scripts/a7w.py login --key sk-xxxx     # 验证并写入 ~/.a7w/config.json
+export A7W_API_KEY=sk-xxxx                     # Windows: set A7W_API_KEY=sk-xxxx
+python3 scripts/run.py note ... --key sk-xxxx  # 单次传参
+python3 scripts/a7w.py whoami                  # 验一下：✓ Key 有效，可用插件 21 个
+```
+
+Key 到 [算力集市](https://api.a7w.cn/) 注册领取（新用户有赠送点数）。
+
+### 二、商品笔记出稿
+
+```bash
+python3 scripts/run.py note \
+    --product "便携榨汁杯" --price 89 --cost 32 \
+    --usp "一杯一袋、USB充电、6叶刀头" \
+    --evidence "自有实拍视频 + 3C 检测报告" \
+    --out note.md
+```
+
+出稿严格套本包 `references/note-formulas.md` 的交付契约（`## 标题候选` / `## 正文` / `## 标签` / `## 封面大字`），
+所以能直接喂给 `note_score.py` 打分：
+
+```bash
+python3 scripts/note_score.py --file note.md --min-score 80
+python3 scripts/compliance_check.py --file note.md -c appliance --strict
+```
+
+走的是 OpenAI 兼容的 `POST /api/v1/chat/completions`，`--model` 默认 `deepseek-chat`，可换：
+
+```python
+import json, os, urllib.request
+req = urllib.request.Request(
+    "https://api.a7w.cn/api/v1/chat/completions",
+    data=json.dumps({"model": "deepseek-chat",
+                     "messages": [{"role": "user", "content": prompt}]}).encode("utf-8"),
+    headers={"Authorization": "Bearer " + os.environ["A7W_API_KEY"],
+             "Content-Type": "application/json"})
+with urllib.request.urlopen(req, timeout=120) as r:
+    data = json.loads(r.read().decode("utf-8"))
+```
+
+### 三、直播脚本出稿
+
+```bash
+python3 scripts/run.py live \
+    --minutes 30 --products "便携榨汁杯,收纳盒" \
+    --audience "通勤租房党" --usp "一杯一袋、USB充电" \
+    --out live.md
+```
+
+按本包五段式比例（开场留人 10% ｜ 痛点共鸣 17% ｜ 产品引入 23% ｜ 信任建立 23% ｜ 逼单转化 27%）
+生成分钟级时间轴与七步讲解口播。要和离线的 `live_timer.py` 对齐时，用同一组 `--minutes` / `--products` 参数。
+
+### 四、违禁词 / 广告法语义预检
+
+离线 `compliance_check.py` 是**第一道闸**：按子串匹配、零成本、可进 CI。大模型预检是**第二道**，能读懂语义与谐音：
+
+```bash
+python3 scripts/run.py compliance --text "全网最低价，7天见效" --format md
+python3 scripts/run.py compliance --file note.md -c cosmetics --format json
+python3 scripts/run.py compliance --file note.md --strict    # 有 high 就退出码 1，CI 卡门禁
+```
+
+实测一次输出（`deepseek-chat`）：
+
+```text
+预检结论：**blocked**
+命中 4 条：
+- [high] 全网最低价 —— 「最低价」属于绝对化用语，无法自证…；改法：改为「活动价」并注明比较范围与时间。
+- [high] 7天见效 —— 暗示功效承诺…；改法：删除「见效」或补真实依据与资质。
+```
+
+> 口径要讲清楚：这是**语义预检**，会花钱、也会误判，**不等于平台官方审核规则，也不构成法律意见**；
+> 高风险类目仍需人工复核。两道闸都过不代表平台一定放行。
+
+### 五、封面图出图（可选）
+
+`note` 已经给出符合 3:4 构图的「封面大字」，但底图得你自己出。同一把 Key 可以直接掉应用端点，
+参数名用 `scripts/a7w.py schema` 查实（不要凭记忆写）：
+
+```bash
+python3 scripts/a7w.py schema nano_banana        # 先看真实参数
+python3 scripts/a7w.py call nano_banana submit \
+  --json '{"action":"generate","prompt":"<画面描述>","aspect_ratio":"3:4","resolution":"2K"}'
+```
+
+- `POST /api/v1/apps/nano_banana/submit` —— 异步创建图片任务（`action=generate` 文生图，`action=edit` 图生图）
+- `POST /api/v1/apps/nano_banana/query` —— 同步查询任务
+- 返回里图片地址可能是列表，**不保证**能靠 `--out` 自动落盘；拿不准就先加 `--no-wait` 取 `task_id`，
+  再用 `python3 scripts/a7w.py task <task_id>` 看地址
+
+平台的应用端点统一形如 `/api/v1/apps/<app_code>/<api_code>`；同一把 Key 能用的全部 21 个插件用
+`python3 scripts/a7w.py apps` 列出来。`run.py` 本身只用大模型端点，图上这一段是给你按需手工调的。
+
+### 六、与本包离线脚本的关系
+
+| 环节 | 离线脚本（零成本、确定性） | `run.py`（接算力、语义） |
+|---|---|---|
+| 选品 | `selection_calc.py` | 不涉及 |
+| 笔记 | `note_score.py` 打分 | `note` 出稿 |
+| 直播 | `live_timer.py` 时间轴 | `live` 出稿 |
+| 合规 | `compliance_check.py` 子串匹配 | `compliance` 语义预检 |
+
+**归因纪律不变**：一次只改一个变量，比点击率与互动率而非绝对曝光数。脚本只负责出稿，
+发不发、改不改，还是人的判断。
 
 ---
 

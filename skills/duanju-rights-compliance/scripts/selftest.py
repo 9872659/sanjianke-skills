@@ -19,6 +19,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import duanju_compliance as dc   # noqa: E402
+import run as rp                 # noqa: E402  导入不联网：网络调用只在 run.main() 里
 
 CHECKS = []
 
@@ -171,6 +172,80 @@ def _():
 def _():
     text = dc.render_text(dc.scan("第一行\n第二行有大尺度"), "test")
     assert "第 2 行" in text, text
+
+
+# ------------------------------------------------- 算力版脚本的纯逻辑（离线）
+# `run.py` 里只有「把这一批文案 POST 出去」那一步需要网络；解析、合并、输入读取、
+# 渲染都是纯函数，这里全部离线验证（自定义规则/CSV 用例用临时目录）。
+@check("算力版：模型输出能解析成 JSON 数组")
+def _():
+    # 实测踩坑：模型会在合法 JSON 后面多吐一两个字符；也可能包在对象里
+    assert rp.parse_json_array('[{"index": 1}]"') == [{"index": 1}]
+    assert rp.parse_json_array('```json\n[{"index": 2}]\n```') == [{"index": 2}]
+    assert rp.parse_json_array('好的：{"items": [{"index": 3}]} 以上') == [{"index": 3}]
+    assert rp.parse_json_array('[{"index": 3}') is None      # 截断时不得抛异常、不得瞎猜
+    assert rp.parse_json_array("完全不是 JSON") is None
+
+
+@check("算力版：等级归一化与兜底")
+def _():
+    ok = rp.normalize_judgment({"index": 1, "level": "HIGH", "categories": "擦边",
+                                "reason": "理由", "rewrite": "改写"}, 1)
+    assert ok["level"] == "high" and ok["level_ok"] is True, ok
+    assert ok["categories"] == ["擦边"], ok
+    bad = rp.normalize_judgment({"index": 2, "level": "critical"}, 2)
+    assert bad["level"] == "low" and bad["level_ok"] is False, bad
+    clean = rp.normalize_judgment({"index": 3, "level": "pass", "rewrite": "不该有"}, 3)
+    assert clean["rewrite"] == "", clean
+    assert rp.normalize_judgment("不是对象", 4) is None
+
+
+@check("算力版：本地命中与模型判定取更高等级")
+def _():
+    high = {"level": "high", "terms": [], "advice": [], "categories": []}
+    pass_ = {"level": "pass", "terms": [], "advice": [], "categories": []}
+    med = {"level": "medium", "terms": [], "advice": [], "categories": []}
+    assert rp.merge(high, {"level": "pass"})[0] == "high"
+    assert rp.merge(pass_, {"level": "medium"})[0] == "medium"
+    assert rp.merge(pass_, {"level": "medium"})[1] == ["大模型"]
+    assert rp.merge(pass_, None)[0] == "pass"
+    assert rp.merge(med, None)[1] == ["本地正则"]
+
+
+@check("算力版：离线粗筛能给出等级与命中词")
+def _():
+    local = rp.local_scan("全集免费未删减", None, [], [])
+    assert local["level"] == "high", local
+    assert "全集免费" in [t for t, _lv in local["terms"]], local
+    assert rp.local_scan("一句干净的话", None, [], [])["level"] == "pass"
+
+
+@check("算力版：verdict 分级与 CSV 表头")
+def _():
+    items = [{"index": 1, "text": "x", "local": {"level": "high", "terms": [("全集免费", "high")],
+                                                 "advice": [], "categories": []},
+              "llm": None, "final_level": "high", "sources": ["本地正则"]}]
+    s = rp.summarize(items, [])
+    assert s["verdict"] == "blocked" and s["high"] == 1, s
+    csv_text = rp.render_csv(items)
+    assert csv_text.splitlines()[0] == ",".join(rp.CSV_COLUMNS), csv_text
+
+
+@check("算力版：CSV --column 与 txt 输入都能读")
+def _():
+    with tempfile.TemporaryDirectory() as tmp:
+        csv_path = Path(tmp) / "a.csv"
+        csv_path.write_text("id,title,text\n1,反转,她推开门\n2,独家,全网独播\n", encoding="utf-8")
+        args = rp.build_parser().parse_args(["screen", "--file", str(csv_path), "--column", "text"])
+        items, sources = rp.read_items(args)
+        assert items == ["她推开门", "全网独播"], items
+        assert sources and sources[0].endswith("a.csv"), sources
+
+        txt_path = Path(tmp) / "b.txt"
+        txt_path.write_text("# 注释\n干净的一句\n\n全集免费\n", encoding="utf-8")
+        args2 = rp.build_parser().parse_args(["screen", "--file", str(txt_path)])
+        items2, _ = rp.read_items(args2)
+        assert items2 == ["干净的一句", "全集免费"], items2
 
 
 def main(argv):

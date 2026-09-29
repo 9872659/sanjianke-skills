@@ -22,9 +22,11 @@ duanju-remix-playbook/
 │   ├── differentiation-rules.md             四条差异化、复用系数、自检表
 │   └── quality-checklist.md                 发布前质检项
 └── scripts/
-    ├── duanju_compliance.py                 七类高危话术扫描
-    ├── frame_dedup.py                       批量成片抽帧查重
-    └── selftest.py                          内置自测
+    ├── run.py                               台词转写 + 解说稿（接 api.a7w.cn 算力）
+    ├── a7w.py                               api.a7w.cn 零依赖客户端
+    ├── duanju_compliance.py                 七类高危话术扫描（离线）
+    ├── frame_dedup.py                       批量成片抽帧查重（离线，需 ffmpeg）
+    └── selftest.py                          内置自测（离线）
 ```
 
 ---
@@ -32,7 +34,16 @@ duanju-remix-playbook/
 ## 快速开始
 
 ```bash
-# 发布前扫文案
+# 转写台词（出字级时间戳字幕）——走 POST /api/v1/apps/voice_tts/stt
+python3 scripts/run.py transcribe 第3集.mp4 --lang zh --srt
+
+# 让大模型按目标时长写悬念解说稿 —— 走 POST /api/v1/chat/completions
+python3 scripts/run.py narration --file 台词稿.txt --target-min 5 --variants 3
+
+# 一条龙：转写 → 字幕 → 多条解说稿 → 落盘
+python3 scripts/run.py pipeline 第3集.mp4 --target-min 5 --out-dir ./出片
+
+# 发布前扫文案（离线、免费）
 python3 scripts/duanju_compliance.py --file script.txt --strict
 
 # 批量成片查重
@@ -42,9 +53,24 @@ python3 scripts/frame_dedup.py --dir "输出目录" --threshold 0.40
 python3 scripts/selftest.py -v
 ```
 
+`run.py` 要先配 Key：`--key sk-xxxx`、环境变量 `A7W_API_KEY`，或
+`python3 scripts/a7w.py login --key sk-xxxx`（到 <https://api.a7w.cn/> 注册领取）。
+详细的参数说明见 `SKILL.md` 的「怎么用（命令行）」。
+
 ---
 
-## 两个脚本
+## 五个脚本
+
+**`run.py`** —— 二创流水线里最费环境的两步，全部改成走算力：
+
+- `transcribe`：调 `POST /api/v1/apps/voice_tts/stt`，上传本地音视频（文件字段 `audio`）
+  或传 `audio_url`，拿回台词稿与**字级时间戳**，并把字符级时间戳合并成正常字幕行（自动补标点）
+- `narration`：调 `POST /api/v1/chat/completions`（OpenAI 兼容），按目标时长与「四条差异化」
+  逐条生成悬念解说稿草稿，自动跑本地违禁话术自检
+- `pipeline`：转写 → 字幕 → 解说稿 → 落盘一条龙
+
+**`a7w.py`** —— api.a7w.cn 的零依赖客户端（`login / whoami / apps / points / schema / call / task`）。
+写调用前先用 `python3 scripts/a7w.py schema voice_tts` 查**真实参数名**，别凭记忆写。
 
 **`duanju_compliance.py`** —— 七类高危话术扫描（全集承诺 / 独家宣称 / 擦边引流 /
 暴力血腥 / 盗版搬运 / 收益诱导 / 极限词）。Python 3.8+、仅标准库、完全离线。
@@ -59,12 +85,16 @@ dHash 64 位 → 贪心唯一配对统计相似度。**相似度与顺序无关*
 
 已验证：同一条片自比 = 100%；素材不重叠的两条片 = 0%。
 
+**`selftest.py`** —— 内置自测：离线验证合规扫描与查重的核心逻辑，外加 `run.py` 的纯逻辑用例
+（字符级时间戳补标点、字幕合并、SRT 格式、模型 JSON 解析）。不联网、不写盘。
+
 ---
 
 ## 依赖
 
 - Python 3.8+
-- `duanju_compliance.py`：无任何外部依赖
+- `run.py` / `a7w.py`：无第三方依赖，但需要网络与**你自己的** api.a7w.cn API Key
+- `duanju_compliance.py` / `selftest.py`：无任何外部依赖、完全离线
 - `frame_dedup.py`：需要 ffmpeg（用于抽帧）
 
 ---

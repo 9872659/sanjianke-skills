@@ -58,9 +58,12 @@ python3 scripts/client.py schema voice_tts
 | `call_type` | `1` = 同步，`2` = 异步 |
 | `endpoint_path` | 该接口在平台内的真实路径（**形态不统一，见 3.2**） |
 | `params_schema` | **参数定义**（注意不是 `schema`） |
-| `tenant_fixed_points` | **你的实际按次结算价**（点数） |
-| `tenant_points_per_1k_input` / `tenant_points_per_1k_output` | **你的实际按千字 / 千 token 结算价**（点数） |
+| `tenant_fixed_points` | **租户价字段**：平台侧给你的按次报价（点数），**未必等于实际结算价** |
+| `tenant_points_per_1k_input` / `tenant_points_per_1k_output` | **租户价字段**：平台侧给你的按千字 / 千 token 报价（点数），**未必等于实际结算价** |
 | `fixed_price` / `input_price` | 公示标准价 |
+
+> ⚠️ **`tenant_*` 是租户价字段，不是你的实际结算价，别拿它做预算。** 实测 `image_human` 的 `tenant_points_per_1k_input` 写 `2.0`、`standard` 档实扣 **3 点/秒**；`voice_tts`/`stt` 的 `tenant_fixed_points` 写 `30`、实扣 **40 点/次**。
+> **真实扣费只看返回里的 `data.usage.points_cost`**（任务详情 / 响应 `usage`），做预算以它为准；平台调价后需重新核对。
 
 > **两个最容易踩的字段名**：接口代码是 `code`（不是 `api`）；参数定义是 `params_schema`（不是 `schema`）。
 > 实测 `voice_tts` 的 6 个接口：`tts_live`(异步) / `clone_voice`(同步) / `tts`(同步) / `tts_async`(异步) / `stt`(同步) / `list_voices`(GET)。

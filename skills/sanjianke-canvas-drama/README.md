@@ -135,20 +135,25 @@ python3 scripts/a7w.py schema voice_tts
 | 出片 | `full_video` / `submit` | 点 / 秒（按分辨率分档） | 480P 10 · 768P 20 · 1080P/2K/4K 40 |
 | 出片 | `happy_horse` / `submit` | 点 / 秒 | 720P 0.9 · 1080P 1.6 |
 | 出片 | `wan` / `seedance` | 按秒或按 tokens 分档 | `schema` 现查 |
-| 数字人 | `image_human` / `submit` | 点 / 秒（按 `mode` 档） | fast 1.5 · standard 2 · 2k 4 · 4k 8 |
+| 数字人 | `image_human` / `submit` | 点 / 秒（按 `mode` 档） | **fast 2 · standard 3 · 2k 6 · 4k 12**（实测） |
 | 对口型 | `lipsync` / `submit` | 以站内计费为准 | `schema lipsync` 现查 |
 | 音色克隆 | `voice_tts` / `clone_voice` | 点 / 次 | 200 点 |
-| 台词合成 | `voice_tts` / `tts` · `tts_async` | 点 / 千 tokens | 50 点 / 1k |
+| 台词合成 | `voice_tts` / `tts` · `tts_async` | 点 / 千字 | 50 点 / 1k（实测 137 字 = 6.85 点） |
+| 语音转文字 | `voice_tts` / `stt` | 点 / 次 | **40 点 / 次**（实测；字段写 30） |
 | BGM | `music_generation` / `create` | 点 / 次 | 65 点 |
 | 音效 | `mmaudio` / `submit` | 点 / 次 | 0.1 点 |
 | 超分 | `flashvsr` / `submit` | 固定 + 按用量 | 0.1 + 3 点/单位 |
 | 查询 | 各应用的 `query` | **免费** | — |
 
+> ⚠️ **上表价格来自实测，不是平台字段价。** `image_human` 的四档实测 2 / 3 / 6 / 12 点每秒
+> （平台 `pricing_matrix` 写的是 1.5 / 2 / 4 / 8），`voice_tts/stt` 实测 40 点/次（字段写 30）。
+> **预算一律以返回里的 `usage.points_cost` 为准**；平台调价后请重新核对。
+
 一集 2 分钟（约 25 镜）的完整测算与省钱顺序见
 [`references/成本估算.md`](references/成本估算.md)。
 
 > 平台同时给出**标准价**（`fixed_price` / `input_price`）与
-> **租户实际结算价**（`tenant_*`）。**做预算一律用 `tenant_*`，最终以实际扣费为准** ——
+> **租户价字段**（`tenant_*`，平台侧报价，**未必等于实际结算价**）。**做预算以返回里的 `data.usage.points_cost` 为准** ——
 > 上表是某次快照，你自己的真实价用 `python3 scripts/a7w.py schema <app>` 现场读。
 
 ---

@@ -3,7 +3,7 @@
 ```
 POST https://api.a7w.cn/api/v1/apps/music_generation/create
 模式：异步（返回 task_id，用 query 查结果）
-计费：65 点 / 次（租户实际结算价，1 元 = 100 点）
+计费：65 点 / 次（**平台租户价字段**，**未必等于实际结算价**；真实扣费看返回里的 `data.usage.points_cost`；1 元 = 100 点）
 ```
 
 **这是整个插件的核心接口。** 17 种操作类型都走它，靠 `type` 区分。

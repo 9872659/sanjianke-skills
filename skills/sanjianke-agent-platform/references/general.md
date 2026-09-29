@@ -148,9 +148,9 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好"}'
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | 公示标准价 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` / `tenant_points_per_1k_output` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` / `tenant_points_per_1k_output` | **租户价字段**（平台侧报价） —— **未必等于实际结算价** |
 
-> **做预算一律用 `tenant_*`，最终以账号里实际扣费为准。** 两者可能差很多，按公示价做的预算不可靠。
+> **做预算以返回里的 `data.usage.points_cost` 为准。** `tenant_*` 是租户价字段、**未必等于实际结算价** —— 两者可能差很多，按任何字段价做的预算都不可靠。
 
 ## 六、错误码全表
 
@@ -303,7 +303,7 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好"}'
 - [ ] 生成类应用走 `/api/v1/apps/<应用代号>/<接口代号>`，没有用 `endpoint_path`
 - [ ] 异步任务先落盘 `task_id`，没有盲目重提
 - [ ] 每把 Key 设了 quota，生产 Key 绑了 IP 白名单
-- [ ] 预算按 `tenant_*` 算，成本观测集中在 `GET /api/v1/tasks` 与用户中心流水
+- [ ] 预算以返回里的 `data.usage.points_cost` 为准（`tenant_*` 只是租户价字段），成本观测集中在 `GET /api/v1/tasks` 与用户中心流水
 
 ## 十一、下一步
 

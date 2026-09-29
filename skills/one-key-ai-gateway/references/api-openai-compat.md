@@ -197,6 +197,6 @@ python3 scripts/client.py chat --model DeepSeek-V4-Flash --prompt "讲个笑话"
 ## 11. 计费与排错
 
 - 文本生成按**点数 / 百万 tokens** 计，**输出分档**。控成本先压 `max_tokens`。
-- 预算一律按**实收价**（`tenant_*`）算，别按公示标准价——两者可能差很多。详见 `api-billing-errors.md`。
+- 预算一律按**接口返回里的 `data.usage.points_cost`（真实扣费）** 算——`tenant_*` 只是租户价字段，**未必等于实际结算价**（实测 `image_human` 字段写 2.0、`standard` 档实扣 3 点/秒；`voice_tts`/`stt` 字段写 30、实扣 40 点/次），公示标准价也不能直接用。详见 `api-billing-errors.md`。
 - 报 402 先分清是账号没钱（`insufficient_points`）还是 Key 额度满（`key_quota_exceeded`）。
 - 报 403 `permission_denied` 说明这个 Key 没有该模型的权限，跟余额无关。

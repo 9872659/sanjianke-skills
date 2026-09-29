@@ -2,9 +2,9 @@
 name: sanjianke-agent-memory
 slug: sanjianke-agent-memory
 displayName: Agent长期记忆库·跨会话用户偏好事实检索接入指南
-description: "给 Agent 接一层跨会话长期记忆：对话里的偏好、事实、决定抽成条目存好，下一轮按用户/会话维度搜回来拼进提示词。含完整操作文档、作用域与检索参数表、向量模型配置与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "把长期记忆接进你的 Agent：对话里的事实、偏好、决定自动抽成条目存好，下一轮按用户 / 会话 / Agent 维度用自然语言搜回来拼进提示词，跨会话不必再让用户重复自我介绍。模型侧统一走 OpenAI 兼容网关 —— 只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元等国产为主，含 OpenAI / Google / xAI 国际主流），不必自己部署模型或买显卡。含作用域设计、写入节流、检索提准与真实计费口径。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。"
+description: "给 Agent 接一层跨会话长期记忆：对话里的偏好、事实、决定抽成条目存好，下一轮按用户/会话维度搜回来拼进提示词。含完整操作文档、作用域与检索参数表、向量模型配置与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "把长期记忆接进你的 Agent：对话里的事实、偏好、决定自动抽成条目存好，下一轮按用户 / 会话 / Agent 维度用自然语言搜回来拼进提示词，跨会话不必再让用户重复自我介绍。模型侧统一走 OpenAI 兼容网关 —— 只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元等国产为主，含 OpenAI / Google / xAI 国际主流），不必自己部署模型或买显卡。含作用域设计、写入节流、检索提准与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -275,7 +275,7 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好世界"}'
 
 - **1 元 = 100 点，1 点 = ¥0.01。**
 - **先冻结、后结算**：调用失败直接退款，异步任务失败冻结点数全额退回。
-- 平台同时给出标准价与租户实际结算价，**以账号里实际扣费为准**；
+- 平台同时给出**标准价**与**租户价字段**（`tenant_*`，平台侧报价），两者都未必等于实际结算价；**以返回里的 `data.usage.points_cost` 为准**；
   每次返回的 `data.usage` 就是本次真实用量，可直接对账。
 - 实时查规则：先 `python3 scripts/a7w.py apps` 拿应用清单，再逐个 `schema <app>` 读 `tenant_*`。
 

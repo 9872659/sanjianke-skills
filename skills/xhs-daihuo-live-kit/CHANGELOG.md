@@ -2,6 +2,31 @@
 
 本文件记录 xhs-daihuo-live-kit 的版本变更。版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## 1.2.5
+
+**新增：真的接上 api.a7w.cn（不再只是方法论）**
+
+此前本包是纯方法论 + 离线脚本，包里没有任何一处真正请求 `api.a7w.cn`，因此被判定不合规。
+这一版把「出稿」这一段接上算力，方法论与原有脚本的结论一个字没改。
+
+- `scripts/a7w.py`：复制进来的 api.a7w.cn 零依赖客户端（`login / whoami / apps / points / schema / call / task`），
+  不内嵌任何密钥，Key 由使用者自己提供
+- `scripts/run.py`：新增出稿与预检层，四个子命令，全部只用标准库
+  - `note` —— 商品笔记出稿，严格套 `references/note-formulas.md` 的交付契约，
+    产出可直接被 `note_score.py` 解析打分
+  - `live` —— 直播脚本出稿，套 `references/live-script-playbook.md` 的五段式比例
+  - `compliance` —— 违禁词 / 广告法**语义**预检，与离线 `compliance_check.py`（子串匹配）互补，
+    支持 `--format md|json|csv` 与 `--strict` 退出码
+  - `models` —— 列出平台在架的文本模型（免费）
+- 真实调用的端点：`POST https://api.a7w.cn/api/v1/chat/completions`（OpenAI 兼容）、
+  `GET https://api.a7w.cn/api/v1/models`
+- `SKILL.md`：新增「怎么用（命令行）」一节，给出可跑命令、参数说明、端点与实测输出；
+  「权限与用途说明」表按实情更新（网络访问与 API Key 只在跑 `run.py` 时申请）
+- 实测：`note` 出稿经 `note_score.py` 打分 94/100（A 级），`compliance` 对
+  「全网最低价，7天见效」判定 `blocked` 并列出 4 条 high
+
+**兼容性**：原有 5 个离线脚本与全部方法论内容不变；不跑 `run.py` 就完全不联网、不产生任何费用。
+
 ## 1.2.3
 
 **修复（SkillHub 上架被拦的问题）**

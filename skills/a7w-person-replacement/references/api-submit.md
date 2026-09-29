@@ -192,7 +192,7 @@ curl -X POST "https://你的域名/api/v1/apps/person_replacement/submit" \
 
 ## 计费
 
-- 结算口径：按用量 2 点（租户价）；按用量 2 点/单位
+- 平台字段价（**未必等于实际结算价**；真实扣费只看返回里的 `data.usage.points_cost`）：按用量 2 点（租户价）；按用量 2 点/单位
 - 标准价：`fixed_price=0.0000` / `input_price=2.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=2.0000`
 - 分档：`max`=3，`fast`=1，`standard`=2

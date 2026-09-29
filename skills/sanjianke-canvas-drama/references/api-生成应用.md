@@ -273,15 +273,21 @@ python3 scripts/a7w.py call wan create \
 
 **计费按驱动音频时长计**，单价随 `mode` 档位变化（点/秒）：
 
-| `mode` | 点/秒 | 60 秒 | 120 秒 |
-|---|---|---|---|
-| `fast` | 1.5 | 90 点 / 0.90 元 | 180 点 / 1.80 元 |
-| `standard` | 2 | 120 点 / 1.20 元 | 240 点 / 2.40 元 |
-| `2k` | 4 | 240 点 / 2.40 元 | 480 点 / 4.80 元 |
-| `4k` | 8 | 480 点 / 4.80 元 | 960 点 / 9.60 元 |
+| `mode` | 平台字段价 | **实测结算价（点/秒）** | 60 秒 | 120 秒 |
+|---|---|---|---|---|
+| `fast` | 1.5 | **2** | 120 点 / 1.20 元 | 240 点 / 2.40 元 |
+| `standard` | 2 | **3** | 180 点 / 1.80 元 | 360 点 / 3.60 元 |
+| `2k` | 4 | **6** | 360 点 / 3.60 元 | 720 点 / 7.20 元 |
+| `4k` | 8 | **12** | 720 点 / 7.20 元 | 1440 点 / 14.40 元 |
 
-> **四档价差 5.3 倍，先算钱再选档。** 发布平台会二次压缩时，
+> **四档价差 6 倍，先算钱再选档。** 发布平台会二次压缩时，
 > 竖屏短剧用 `fast` 或 `standard` 就够。
+>
+> ⚠️ **平台字段价与实际结算价不一致**：`pricing_matrix` 写 1.5 / 2 / 4 / 8，
+> `tenant_points_per_1k_input` 写 2.0，实测四档全部更高。
+> **以返回里的 `usage.points_cost` 为准**；实测 12.75 秒音频 `fast` 28.32 点、`standard` 42.48 点
+> （平台侧 `duration` 14.16 秒），2.64 秒音频 5.28 / 7.92 点，比值一致 → **线性计费，无最低消费**。
+> 平台调价后请重新核对。
 
 ```bash
 python3 scripts/a7w.py call image_human submit \
@@ -317,7 +323,7 @@ python3 scripts/a7w.py call lipsync submit \
 
 | 接口 | 路径 | 模式 | 计费 |
 |---|---|---|---|
-| `tts` | `POST /api/v1/apps/voice_tts/tts` | 同步（≤500 字） | 50 点 / 1k tokens |
+| `tts` | `POST /api/v1/apps/voice_tts/tts` | 同步（≤500 字） | 50 点 / 1k 字（实测） |
 | `tts_async` | `POST /api/v1/apps/voice_tts/tts_async` | 异步（约 1 万字内） | 同上 |
 | `tts_live` | `POST /api/v1/apps/voice_tts/tts_live` | 流式 | 同上 |
 | `clone_voice` | `POST /api/v1/apps/voice_tts/clone_voice` | 同步 | **200 点/次** |
@@ -496,7 +502,7 @@ python3 scripts/a7w.py call flashvsr submit \
 | `full_video` `submit` | 点 / 秒 | 480P 10 · 768P 20 · 1080P/2K/4K 40 |
 | `happy_horse` `submit` | 点 / 秒 | 720P 0.9 · 1080P 1.6 |
 | `seedance` `create` | 点 / 百万 tokens（分档） | 480p 3000/5000 · 720p 3200/5500 · 1080p 3500/6000 |
-| `image_human` `submit` | 点 / 秒 | fast 1.5 · standard 2 · 2k 4 · 4k 8 |
+| `image_human` `submit` | 点 / 秒 | **fast 2 · standard 3 · 2k 6 · 4k 12**（实测） |
 | `voice_tts` `clone_voice` | 点 / 次 | 200 |
 | `voice_tts` `tts` / `tts_async` | 点 / 1k tokens | 50 |
 | `music_generation` `create` | 点 / 次 | 65（`concat` 14 · `all_stems` 230 · `replace_section` 90） |
@@ -505,9 +511,11 @@ python3 scripts/a7w.py call flashvsr submit \
 | `smart_clip` | 点 / 秒 | 720p 0.2 · 1080p 0.3 |
 | 各家 `query` | **免费** | 0 |
 
-> 上表是快照。平台同时给出**标准价**（`fixed_price` / `input_price`）与
-> **租户实际结算价**（`tenant_*`）—— **做预算一律用 `tenant_*`，最终以实际扣费为准**。
-> 每次调用返回的 `data.usage.points_cost` 就是本次真实扣费。
+> 上表是**实测快照**。平台同时给出**标准价**（`fixed_price` / `input_price`）与
+> **租户价字段**（`tenant_*`）—— 但**两者都可能不等于实际结算价**
+> （实测 `image_human` 四档 2 / 3 / 6 / 12 点每秒，字段价是 1.5 / 2 / 4 / 8；
+> `voice_tts/stt` 实测 40 点/次，字段价 30）。
+> **做预算一律以每次调用返回的 `data.usage.points_cost` 为准**，平台调价后请重新核对。
 > 一集 2 分钟的完整测算见 `成本估算.md`。
 
 ---

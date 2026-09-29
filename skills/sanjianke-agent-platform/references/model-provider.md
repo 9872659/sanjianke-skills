@@ -322,7 +322,7 @@ python3 scripts/a7w.py task tsk_xxxxxxxx
 | 极小调用（`max_tokens=8`） | **0.00 点** |
 | 查询任务状态 | **免费** |
 
-> **预算一律按 `tenant_*` 字段算**（`fixed_price` / `input_price` 是公示标准价，可能和你的实际结算价差很多），**最终以账号里实际扣费为准**。
+> **预算一律以返回里的 `data.usage.points_cost` 为准**（`fixed_price` / `input_price` 是公示标准价，`tenant_*` 是平台侧租户价字段 —— 两者都可能和你的实际结算价差很多）。
 
 ## 七、排错：404 / 401 / 402（两种）/ 403 / 429
 
@@ -416,4 +416,4 @@ provider 报错
 - [ ] 代码里 `content == null` 与 `reasoning` / `reasoning_content` 都处理了
 - [ ] 平台侧有全局并发闸门（3~5），429 有指数退避
 - [ ] 每把 Key 一个用途，各自设 quota；生产 Key 绑了 IP 白名单
-- [ ] 成本观测同时看 `actual_points` 与 `usage.points_cost`，并按 `tenant_*` 做预算
+- [ ] 成本观测同时看 `actual_points` 与 `usage.points_cost`，并按返回里的 `data.usage.points_cost` 做预算（`tenant_*` 只是租户价字段）

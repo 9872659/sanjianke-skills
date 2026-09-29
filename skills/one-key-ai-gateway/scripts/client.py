@@ -331,7 +331,8 @@ def cmd_pricing(args):
                     "/api/v1/apps/full_video/submit":{"mode":"per_second",
                         "resolutionRates":{"480P":10,"768P":20,"1080P":40},...}}}
 
-    要**逐接口**的真实价，请用 `schema <app>` 读 tenant_* 字段，那才是完整口径。
+    要**逐接口**的平台字段价，请用 `schema <app>` 读 tenant_* 字段——但 tenant_* 未必等于实际结算价，
+    真实扣费只看返回里的 data.usage.points_cost。
     """
     key, host = resolve(args)
     qs = ""
@@ -359,7 +360,8 @@ def cmd_pricing(args):
           "total_before_filter": total,
           "pricing": pricing, "message": msg,
           "hint": "这是**规则表**（键为路径或通配，值为 {mode, cost/perSecond, markupPercent}），"
-                  "不含全部接口。逐接口真实价请用 `schema <app>` 看 tenant_* 字段。"})
+                  "不含全部接口。逐接口的平台字段价请用 `schema <app>` 看 tenant_* 字段"
+                  "（tenant_* 未必等于实际结算价，真实扣费只看 data.usage.points_cost）。"})
 
 
 def cmd_openai_env(args):

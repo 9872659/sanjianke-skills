@@ -69,6 +69,6 @@
 
 ## 计费
 
-- 结算口径：免费
+- 计费：免费
 - 标准价：`fixed_price=0.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`

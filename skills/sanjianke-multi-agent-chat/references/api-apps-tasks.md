@@ -109,8 +109,8 @@ python3 scripts/a7w.py task tsk_xxxxxxxx
 - **1 元 = 100 点、1 点 = ¥0.01。**
 - 平台同时给出**两套价格字段**：
   `fixed_price` / `input_price` 是**标准价**，
-  `tenant_fixed_points` / `tenant_points_per_1k_input` 是**你所在租户的实际结算价**。
-  **做预算一律用 `tenant_*`，最终以账号里实际扣费为准。**
+  `tenant_fixed_points` / `tenant_points_per_1k_input` 是**租户价字段**（平台侧报价），**未必等于实际结算价** （实测 `image_human` 字段写 `2.0`、`standard` 档实扣 **3 点/秒**；`voice_tts/stt` 字段写 `30`、实扣 **40 点/次**）。
+  **做预算一律以返回里的 `data.usage.points_cost` 为准**（`tenant_*` 是**租户价字段**，**未必等于实际结算价**）。
 - **实时查价**：逐个 `schema <app>` 读 `tenant_*`。
 
 ---

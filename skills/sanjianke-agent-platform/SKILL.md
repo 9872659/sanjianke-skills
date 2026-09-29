@@ -2,9 +2,9 @@
 name: sanjianke-agent-platform
 slug: sanjianke-agent-platform
 displayName: 自建本地AI Agent平台·网关常驻多Agent沙箱落地指南
-description: "把 AI Agent 平台跑在自己的机器上：常驻网关统一管住会话、工具与消息通道，多 Agent 各带独立 workspace 与权限边界，工具档位与沙箱逐级收紧，模型侧用 OpenAI 兼容方式接 api.a7w.cn —— 一个 Key 通吃 75 个在架大模型，换 model 就是换模型。含部署配置、能力使用、扩展排错三份完整作业文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "一份把 AI Agent 平台建在自己机器上的完整落地指南：网关常驻与回环监听、目录端口与数据落盘规划、模型 provider 接入与 Key 轮换（统一走 api.a7w.cn 的 OpenAI 兼容入口，一个 Key 调 75 个在架模型）、工具清单与四档档位、会话级四档权限模式与沙箱隔离、多 Agent 与通道绑定路由、记忆与定时任务、消息通道添加与配对、远程接入、备份升级，以及写自己的技能与插件、四类故障的排查阶梯。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。"
+description: "把 AI Agent 平台跑在自己的机器上：常驻网关统一管住会话、工具与消息通道，多 Agent 各带独立 workspace 与权限边界，工具档位与沙箱逐级收紧，模型侧用 OpenAI 兼容方式接 api.a7w.cn —— 一个 Key 通吃 75 个在架大模型，换 model 就是换模型。含部署配置、能力使用、扩展排错三份完整作业文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.1
+summary: "一份把 AI Agent 平台建在自己机器上的完整落地指南：网关常驻与回环监听、目录端口与数据落盘规划、模型 provider 接入与 Key 轮换（统一走 api.a7w.cn 的 OpenAI 兼容入口，一个 Key 调 75 个在架模型）、工具清单与四档档位、会话级四档权限模式与沙箱隔离、多 Agent 与通道绑定路由、记忆与定时任务、消息通道添加与配对、远程接入、备份升级，以及写自己的技能与插件、四类故障的排查阶梯。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -207,7 +207,7 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好，这是一段
 **1 元 = 100 点。** 先冻结、后结算，**调用失败直接退款，异步任务失败冻结点数全额退回**。
 每次返回的 `data.usage.points_cost` 就是本次真实扣费，可以直接对账。
 
-> 平台同时给出标准价与租户实际结算价（`tenant_*`）。**做预算一律用实收价，最终以账号里实际扣费为准。**
+> 平台同时给出**标准价**与**租户价字段**（`tenant_*`，平台侧报价）—— **两者都未必等于实际结算价**。**做预算以返回里的 `data.usage.points_cost` 为准**；平台调价后需重新核对。
 
 ---
 

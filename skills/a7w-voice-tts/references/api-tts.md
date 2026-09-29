@@ -147,6 +147,6 @@
 
 ## 计费
 
-- 结算口径：输入 50 点/1k tokens（租户价）
+- 平台字段价（**未必等于实际结算价**；真实扣费只看返回里的 `data.usage.points_cost`）：输入 50 点/1k tokens（租户价）
 - 标准价：`fixed_price=0.0200` / `input_price=50.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=50.0000`

@@ -3,7 +3,7 @@ name: one-key-ai-gateway
 slug: one-key-ai-gateway
 displayName: 三剪客 · 国产大模型一键调用统一路由
 description: "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.1.1
+version: 1.1.3
 summary: "把 api.a7w.cn（算力集市）当统一 AI 网关：DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元、百度文心、MiniMax、小米 MiMo 等国产大模型，与 OpenAI GPT、Google nano-banana、xAI Grok 等国际模型，连同视频/图像/语音/数字人/音乐 21 个生成应用，全部收敛成一个入口。换 base_url 即可用，先冻结后结算、失败全额退回。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -197,16 +197,20 @@ python3 scripts/client.py task tsk_xxxxxxxx
 - 计价单位是**点数**，**1 元 = 100 点、1 点 = ¥0.01**。体验包 ¥10 = 600 点（含 7 天会员权益），标准包 ¥99 = 10000 点，点数永久有效。
 - 计费口径随能力不同：文本按**点数/百万 tokens**（输入输出分别计价，流式与非流式同价）、图像按**点数/张或参数档位**、视频生成/超分按**点数/秒**（分辨率档位）、数字人按**点数/次或时长**、TTS/克隆按**点数/千字**、ASR 按**点数/分钟**、工具类按**点数/次**。
 - **先冻结、后结算**：消费优先扣会员点数，不足再扣充值额度；**调用失败直接退款，异步任务失败冻结点数全额退回**，只有成功产出才按实际用量结算。上游调价同步调整，但**不影响已充值的点数余额**。
-- **实时查价**：`python3 scripts/client.py pricing` 拉计费规则表（实测为**全局 markup + 少量特例**，如 `markupPercent: 20`、full_video 按分辨率 10/20/40 点/秒、ASR 2.4 点/分钟、动作迁移 30 点/秒）。**它不含全部接口**，逐接口真实价请用 `schema <app>` 读 `tenant_*`。
+- **实时查价**：`python3 scripts/client.py pricing` 拉计费规则表（实测为**全局 markup + 少量特例**，如 `markupPercent: 20`、full_video 按分辨率 10/20/40 点/秒、ASR 2.4 点/分钟、动作迁移 30 点/秒）。**它不含全部接口**，逐接口的**平台字段价**请用 `schema <app>` 读 `tenant_*`（字段价未必等于实际结算价）。
 - 平台同时给**两套价格字段**，这是最容易算错预算的地方：
 
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | **标准价**，对外公示用 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` | **租户价字段**（平台侧报价，**未必等于实际结算价**） |
 
-两者可能差很多。实测过的例子：`voice_tts/clone_voice` 标准 50 点、实收 200 点；`seedsvc/submit` 标准 100 点、实收 0.10 点。
-**做预算一律用 `tenant_*`，最终以实际扣费为准**——报错信息与任务详情里会写明本次消耗。
+两者可能差很多。实测过的例子：`voice_tts/clone_voice` 标准 50 点、租户价字段 200 点；`seedsvc/submit` 标准 100 点、租户价字段 0.10 点。
+
+> ⚠️ **`tenant_*` 不是实际结算价，别拿它做预算。** 实测 `image_human` 字段写 `2.0`、standard 档实扣 **3 点/秒**；`voice_tts` / `stt` 字段写 `30`、实扣 **40 点/次**（3 次复现一致）。
+> **唯一可靠的数只有接口返回里的 `data.usage.points_cost`**，做预算以它为准；平台调价后需重新核对（报错信息与任务详情里也会写明本次消耗）。
+>
+> 另：**平台侧的 `duration` 可能大于你手上素材的真实时长**——同一段音频，本地解析 MPEG 帧头量出 12.75 秒，平台返回 **14.16 秒（多约 11%）**。计费按平台的算，**做预算留约 10% 余量**。
 
 完整计费模型、预算估算方法与对账口径见 `references/api-billing-errors.md`。
 
@@ -278,7 +282,7 @@ python3 scripts/client.py task tsk_xxxxxxxx
 6. **接口代码的字段名是 `code`，不是 `api`；参数定义在 `params_schema`，不是 `schema`。** 用 `name` 去调用会失败（那是中文展示名，如「文字转语音」）。`client.py schema` 已统一输出为 `api` 字段供调用，并额外给出 `method` 与 `call_type`（1=同步 2=异步）。
 7. **`params_schema` 有两种形态。** 一种带 `properties` 包装，一种是扁平字典（如 `action_transfer`）。只认 `properties` 会把「有 6 个参数」误判成「无参数」。
 8. **`endpoint_path` 的形态不统一，别拿它直接当 URL。** 实测 `voice_tts` 的 6 个接口全是 `/v1/tts/live`、`/model`、`/v1/tts`、`/v1/asr` 这类**别的路由族**，而实际调用走的是 `/api/v1/apps/{app}/{code}`。同一路径还可能按 `method` 区分不同能力（`clone_voice` 是 POST `/model`，`list_voices` 是 GET `/model`）。
-9. **`/api/v1/pricing` 是规则表，不是逐接口价目表。** 实测只有 6 条（一条全局 `*` 默认规则 + `full_video`、`asr`、`flashvsr`、`action_transfer`、`person_replacement` 特例），**不含 voice_tts**。要逐接口真实价，用 `schema <app>` 读 `tenant_*`。
+9. **`/api/v1/pricing` 是规则表，不是逐接口价目表。** 实测只有 6 条（一条全局 `*` 默认规则 + `full_video`、`asr`、`flashvsr`、`action_transfer`、`person_replacement` 特例），**不含 voice_tts**。要看逐接口的**平台字段价**用 `schema <app>` 读 `tenant_*`——但**字段价未必等于实际结算价**，真实扣费只看返回里的 `data.usage.points_cost`。
 10. **任务列表的结算字段是 `actual_points`，且 `page_size` 会被上游忽略。** 实测传 `page_size=2` 仍返回 20 条，翻页请用 `--page-no`。
 11. **推理模型会把 token 先花在 reasoning 上。** 实测 `DeepSeek-V4-Flash` 在 `max_tokens=8` 时 `content` 返回 `null`（`finish_reason=length`），加到 200 才正常返回。思维链字段名在不同线路上分别是 `reasoning` 和 `reasoning_content`。
 12. **PowerShell / CMD 会吃掉 JSON 里的双引号。** 复杂请求体一律用 `--json-file body.json`，或 `--param k=v` 逐个传。
@@ -289,7 +293,7 @@ python3 scripts/client.py task tsk_xxxxxxxx
 
 - [ ] Key 走的是 `~/.a7w/config.json` 或环境变量，**没有硬编进代码或提交进仓库**
 - [ ] 调之前先跑过 `apps` / `models`，**参数名与模型名来自接口而不是猜的**
-- [ ] 预算是按 `tenant_*`（实收价）算的，不是按公示标准价
+- [ ] 预算是按返回里的 **`data.usage.points_cost`（真实扣费）** 校准的，**不是**按 `tenant_*` 字段价、也不是按公示标准价；视频 / 音频类另按平台 `duration` 留约 **10%** 时长余量
 - [ ] 异步任务用的是 `task_id` 去重，**没有在网络超时时直接重提**
 - [ ] 收到 402 时已分清 `insufficient_points`（账号没钱）还是 `key_quota_exceeded`（Key 额度满）
 - [ ] 回调地址返回 2xx（否则平台会按 1–10 次重试，容易重复消费）

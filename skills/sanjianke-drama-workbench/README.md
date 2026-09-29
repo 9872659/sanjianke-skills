@@ -111,12 +111,13 @@ python3 scripts/cost_estimate.py --shots 15 --json
 | 出片 `happy_horse` | 按秒 | 720P 0.9 点/秒；1080P 1.6 点/秒 |
 | 配音 `voice_tts` | 按 Token | 输入 50 点/千 Token |
 | 克隆音色 | 按次 | 200 点/次 |
-| 口型 `image_human` | 按驱动音频秒 | `fast` 1.5 / `standard` 2 / `2k` 4 / `4k` 8 |
+| 口型 `image_human` | 按驱动音频秒 | `fast` **2** / `standard` **3** / `2k` **6** / `4k` **12**（实测） |
 | BGM | 按次 | 65 点/次 |
 | 搜曲 | 按次 | 10 点/次 |
 | 查任务 | — | 免费 |
 
-1 元 = 100 点。**逐接口真实价用 `schema <应用代号>` 读 `tenant_*` 字段**，
+1 元 = 100 点。**上表价格来自实测，平台字段价（`tenant_*` / `pricing_matrix`）与实际结算价可能不一致**，
+**以返回里的 `data.usage.points_cost` 为准**，平台调价后请重新核对。原有说明：用 `schema <应用代号>` 读 `tenant_*` 字段，
 最终以 `data.usage.points_cost` 的实际扣费为准。
 
 ---

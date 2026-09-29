@@ -246,7 +246,7 @@ content = msg.get("content") or ""
 
 - 文本按**点数 / 百万 tokens**，**输入与输出分别计价**；**流式与非流式同价**。
 - **1 元 = 100 点，1 点 = 0.01 元**。点数永久有效。
-- 平台同时给两套价格字段：`fixed_price` / `input_price` 是公示标准价；`tenant_*` 是**你所在租户的实际结算价**。**做预算一律按 `tenant_*`，最终以账号里实际扣费为准。**
+- 平台同时给两套价格**字段**：`fixed_price` / `input_price` 是公示标准价；`tenant_*` 是**租户价字段**（平台侧报价），**未必等于实际结算价**。**只有接口返回里的 `data.usage.points_cost` 是真实扣费**，做预算以它为准；平台调价后需重新核对
 - 实测参考：`DeepSeek-V4-Flash` 一次普通问答约 **0.74 ~ 0.99 点**；极小调用（`max_tokens=8`）为 **0.00 点**。
 - 控成本的第一手段是**压 `max_tokens`**，第二手段是**精简 system prompt**（它每次都随请求计费）。
 
@@ -274,4 +274,4 @@ content = msg.get("content") or ""
 - [ ] 代码里对 `content == null` 做了容错，`reasoning` 与 `reasoning_content` 都取了
 - [ ] 流式解析取的是 `choices[0].delta.content`
 - [ ] Key 走环境变量或 `.env`，`.env` 已在 `.gitignore` 里
-- [ ] 预算按 `tenant_*` 算，不是按公示价算
+- [ ] 预算以返回里的 `data.usage.points_cost` 为准（`tenant_*` 只是租户价字段），不是按公示价算

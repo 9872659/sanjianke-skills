@@ -2,9 +2,9 @@
 name: sanjianke-llm-app-kit
 slug: sanjianke-llm-app-kit
 displayName: LLM应用开发套件·统一接口接OpenAI兼容网关换模型只改一行
-description: "用一套统一接口把模型、工具、记忆、检索串成能跑完的 LLM 应用：把模型提供方的 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调用 75 个在架模型，换 model 字符串就是换模型，业务代码不用动；包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。生成内容的使用与合规责任由使用者承担。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "写 LLM 应用最烦的不是模型不够强，是每换一个供应商就得重写一层胶水：一家一套参数、一家一套消息格式、一家一份账单。这个 Skill 讲的就是把这层胶水标准化之后，把模型提供方整个指向 https://api.a7w.cn/ —— 一个 base_url、一把 Key，现场可查 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用。换模型就是换一个字符串，不用换端点、不用换凭证、账单还是同一份。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) ，注册即送点数、按量计费、失败全额退回。含最小可用写法、流式输出、结构化输出、多模型横评脚本、异步任务生命周期、点数计费口径、错误码排查手册与零依赖客户端。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
+description: "用一套统一接口把模型、工具、记忆、检索串成能跑完的 LLM 应用：把模型提供方的 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调用 75 个在架模型，换 model 字符串就是换模型，业务代码不用动；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "写 LLM 应用最烦的不是模型不够强，是每换一个供应商就得重写一层胶水：一家一套参数、一家一套消息格式、一家一份账单。这个 Skill 讲的就是把这层胶水标准化之后，把模型提供方整个指向 https://api.a7w.cn/ —— 一个 base_url、一把 Key，现场可查 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用。换模型就是换一个字符串，不用换端点、不用换凭证、账单还是同一份。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -228,7 +228,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | **推理模型 `max_tokens` 给小了** | `content` 返回 `null`、`finish_reason=length` | 推理模型先花思维链 token，给足 `max_tokens` |
 | **思维链字段读不到** | 拿不到推理过程 | `reasoning` 与 `reasoning_content` 两个名字都读 |
 | **把 Key 硬编码进代码** | 凭证泄漏 | 走环境变量或 `~/.a7w/config.json`，不要提交进 Git |
-| **做预算用公示标准价** | 预算算错 | 一律用 `tenant_*`（实际结算价） |
+| **做预算用公示标准价** | 预算算错 | 用返回里的 `data.usage.points_cost`；`tenant_*` 是**租户价字段**，未必等于实际结算价 |
 
 ---
 
@@ -245,9 +245,9 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | **标准价**，对外公示用 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` | **租户价字段**（平台侧报价） —— **未必等于实际结算价** |
 
-做预算一律用 `tenant_*`。每次返回的 `data.usage.points_cost` 就是本次真实扣费，可以直接对账。
+**做预算一律以返回里的 `data.usage.points_cost` 为准**（它才是本次真实扣费，可以直接对账）；`tenant_*` 是**租户价字段**（平台侧报价），**未必等于实际结算价**。
 
 ---
 

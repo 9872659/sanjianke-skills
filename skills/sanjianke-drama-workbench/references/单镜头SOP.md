@@ -101,7 +101,7 @@ python3 scripts/a7w.py call lipsync submit \
 ```
 
 **用 `image_human` 时**：`file_url`（人物图）+ `ref_file_url`（驱动音频），
-`mode` 四档 `fast` 1.5 / `standard` 2 / `2k` 4 / `4k` 8 点每秒。**先算钱再选档。**
+`mode` 四档 `fast` **2** / `standard` **3** / `2k` **6** / `4k` **12** 点每秒（实测结算价）。**先算钱再选档** —— 平台字段价写的是 1.5 / 2 / 4 / 8，**以返回里的 `usage.points_cost` 为准**。
 
 ---
 

@@ -199,7 +199,7 @@ python3 scripts/a7w.py schema <应用代号>
 
 - 对话与向量化都按**点数 / 百万 tokens** 计，输入输出分别计价。
 - **控成本先压 `max_tokens`**，再减少一次请求里塞进去的文本量。
-- 预算一律按**实收价**算，最终以返回里的 `usage` 与实际扣费为准。
+- 预算一律以返回里的 `data.usage.points_cost`（真实扣费）算，**公示价与 `tenant_*` 字段价都不能直接当结算价**。
 - 报 402 先分清是账号没钱（`insufficient_points`）还是 Key 额度满（`key_quota_exceeded`）。
 - 报 403 `permission_denied` 说明这个 Key 没有该模型的权限，**跟余额无关**。
 - 报 404 先跑一次 `GET /api/v1/models`，**核对模型名拼写**。

@@ -2,9 +2,9 @@
 name: sanjianke-knowledge-qa
 slug: sanjianke-knowledge-qa
 displayName: 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
-description: "把公司文档变成一个能带出处回答的知识库问答服务：文档接入、切分、向量检索一条链，对话模型与检索链路统一走 https://api.a7w.cn/ —— 一把 Key 同时管住模型与检索，不用逐家注册、逐家充值、逐家对账。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) 。生成内容的使用与合规责任由使用者承担。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "你手上一堆内部文档——产品说明、客服话术、规章流程——同事反复来问同样的问题。这个 Skill 讲的就是把文档灌成知识库、再套一层问答与工作流的完整链路，重点在「模型从哪来」这一环：把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架模型（国产为主 + 国际主流）与 21 个生成应用，对话模型、检索问答、文档要点抽取全部收敛到一份账单。包内含完整操作文档说明，所有能力走 [算力集市 api.a7w.cn](https://api.a7w.cn/) ，注册即送点数、按量计费、失败全额退回。含最小可用接法、多语言 SDK 对照、异步任务生命周期、点数计费口径、错误码排查手册与零依赖客户端。所有能力走算力集市 api.a7w.cn，注册即送点数、按量计费、失败全额退回。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
+description: "把公司文档变成一个能带出处回答的知识库问答服务：文档接入、切分、向量检索一条链，对话模型与检索链路统一走 https://api.a7w.cn/ —— 一把 Key 同时管住模型与检索，不用逐家注册、逐家充值、逐家对账。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.2
+summary: "你手上一堆内部文档——产品说明、客服话术、规章流程——同事反复来问同样的问题。这个 Skill 讲的就是把文档灌成知识库、再套一层问答与工作流的完整链路，重点在「模型从哪来」这一环：把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架模型（国产为主 + 国际主流）与 21 个生成应用，对话模型、检索问答、文档要点抽取全部收敛到一份账单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -213,7 +213,7 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好世界"}'
 | **检索到的内容答不准** | 回答跑偏 | 先把问题问具体、把文档切成语义完整的块，再考虑换更大的模型 |
 | **同一问题反复提交** | 重复扣费 | 先记 `task_id`，用任务查询（免费）确认状态 |
 | **裸对象端点按外壳解析** | 把可用端点误判为不可用 | `balance` / `pricing` 返回裸对象，没有 `code/msg/data` 外壳 |
-| **做预算用公示标准价** | 预算算错 | 一律用 `tenant_*`（实际结算价） |
+| **做预算用公示标准价** | 预算算错 | 用返回里的 `data.usage.points_cost`；`tenant_*` 是**租户价字段**，未必等于实际结算价 |
 
 ---
 
@@ -230,9 +230,9 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好世界"}'
 | 字段 | 含义 |
 |---|---|
 | `fixed_price` / `input_price` | **标准价**，对外公示用 |
-| `tenant_fixed_points` / `tenant_points_per_1k_input` | **你所在租户的实际结算价** |
+| `tenant_fixed_points` / `tenant_points_per_1k_input` | **租户价字段**（平台侧报价） —— **未必等于实际结算价** |
 
-做预算一律用 `tenant_*`。每次返回的 `data.usage.points_cost` 就是本次真实扣费，可以直接对账。
+**做预算一律以返回里的 `data.usage.points_cost` 为准**（它才是本次真实扣费，可以直接对账）；`tenant_*` 是**租户价字段**（平台侧报价），**未必等于实际结算价**。
 
 ---
 

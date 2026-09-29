@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import duanju_compliance as dc   # noqa: E402
 import frame_dedup as fd         # noqa: E402
+import run as rp                 # noqa: E402  导入不联网：网络调用只在 run.main() 里
 
 CHECKS = []
 
@@ -216,6 +217,64 @@ def _():
     assert "相似度" in text and "处理建议" in text, text
     empty = fd.render_text(results, [], {}, 0.4, 24)
     assert "未发现超过阈值" in empty, empty
+
+
+# ------------------------------------------------- 算力版脚本的纯逻辑（离线）
+# `run.py` 里只有「发请求」那一步需要网络；提示词、字幕合并、JSON 解析都是纯函数，
+# 这里全部离线验证。
+@check("算力版：字符级时间戳能补回标点")
+def _():
+    segs = [{"start": 0.0, "end": 0.4, "text": "好"},
+            {"start": 0.4, "end": 0.8, "text": "的"},
+            {"start": 0.8, "end": 1.2, "text": "行"}]
+    out = rp.restore_punctuation(segs, "好的。行")
+    assert [s["text"] for s in out] == ["好", "的。", "行"], out
+
+
+@check("算力版：对不齐时原样返回（不补错位）")
+def _():
+    segs = [{"start": 0, "end": 1, "text": "完"}]
+    out = rp.restore_punctuation(segs, "完全不同的文本")
+    assert out is segs, out
+
+
+@check("算力版：字符级时间戳能合并成正常字幕行")
+def _():
+    segs = [{"start": 0.0, "end": 0.4, "text": "大"},
+            {"start": 0.4, "end": 0.8, "text": "家"},
+            {"start": 0.8, "end": 1.2, "text": "好"},
+            {"start": 1.2, "end": 1.6, "text": "。"},
+            {"start": 5.0, "end": 5.4, "text": "再"},
+            {"start": 5.4, "end": 5.8, "text": "见"}]
+    merged = rp.merge_segments(segs, gap=0.7, max_chars=18)
+    assert [m["text"] for m in merged] == ["大家好。", "再见"], merged
+    assert merged[0]["start"] == 0.0 and merged[0]["end"] == 1.6, merged
+
+
+@check("算力版：SRT 时间戳格式正确")
+def _():
+    assert rp.fmt_ts(0) == "00:00:00,000"
+    assert rp.fmt_ts(3661.5) == "01:01:01,500"
+    srt = rp.to_srt([{"start": 0.0, "end": 1.5, "text": "测"}])
+    assert srt.startswith("1\n00:00:00,000 --> 00:00:01,500\n测"), srt
+
+
+@check("算力版：模型输出后面多字符也能解析出 JSON")
+def _():
+    # 实测踩坑：模型会在合法 JSON 后多吐一两个字符
+    assert rp.parse_json_object('{"a": 1}"}') == {"a": 1}
+    assert rp.parse_json_object('```json\n{"a": 2}\n```') == {"a": 2}
+    assert rp.parse_json_object('好的：{"a": 3} 以上') == {"a": 3}
+    assert rp.parse_json_object("完全不是 JSON") is None
+
+
+@check("算力版：解说稿结构收敛与时长估算")
+def _():
+    draft = rp.normalize_narration({"hook": "钩子", "cta": "引导",
+                                    "paragraphs": ["第一段", {"text": "第二段", "emotion": "紧张"}]})
+    assert draft["hook"] == "钩子" and len(draft["paragraphs"]) == 2, draft
+    assert rp.normalize_narration({"nothing": 1}) is None
+    assert rp.estimate_seconds("四十五个字") == 1.1, rp.estimate_seconds("四十五个字")
 
 
 def main(argv):

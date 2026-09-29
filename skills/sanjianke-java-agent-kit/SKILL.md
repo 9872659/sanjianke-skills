@@ -2,9 +2,9 @@
 name: sanjianke-java-agent-kit
 slug: sanjianke-java-agent-kit
 displayName: Java接大模型与Agent·OpenAI兼容网关直连75模型包
-description: "把大模型与 Agent 能力接进你自己的 Java 工程：一个 Key、一个 base_url 统一调用 75 个在架模型，兼容 OpenAI 协议，换 model 就是换模型。从模块分层、工具声明两条路径、拦截器 order 语义、Agent 运行时到 RAG、MCP 全链路，一次配齐。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ，新用户送点数）。遇到问题加技术微信 9872659。"
-version: 2.0.0
-summary: "Java 团队把大模型与 Agent 能力接进自己工程的成品指南：模块分层、工具声明的注解式与编程式两条路径、工具组动态挂载与工具泄漏、拦截器责任链 order 语义、Agent 运行时（工具审批 / 挂起恢复 / 快照）、RAG 全链路、MCP 与 Skills 定位、模型路由与熔断半开、OpenTelemetry 可观测。全部走 api.a7w.cn 的 OpenAI 兼容入口，一个 Key 可调 75 个在架模型。含计费口径与常见坑排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/` + `scripts/a7w.py`）。作者亲测实操后发布，下载即可使用，自用商用均可。运行需自备 api.a7w.cn 的 API Key（注册领 Key 见 https://api.a7w.cn/ ）。遇到问题加技术微信 9872659。"
+description: "把大模型与 Agent 能力接进你自己的 Java 工程：一个 Key、一个 base_url 统一调用 75 个在架模型，兼容 OpenAI 协议，换 model 就是换模型。从模块分层、工具声明两条路径、拦截器 order 语义、Agent 运行时到 RAG、MCP 全链路，一次配齐。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 2.0.1
+summary: "Java 团队把大模型与 Agent 能力接进自己工程的成品指南：模块分层、工具声明的注解式与编程式两条路径、工具组动态挂载与工具泄漏、拦截器责任链 order 语义、Agent 运行时（工具审批 / 挂起恢复 / 快照）、RAG 全链路、MCP 与 Skills 定位、模型路由与熔断半开、OpenTelemetry 可观测。全部走 api.a7w.cn 的 OpenAI 兼容入口，一个 Key 可调 75 个在架模型。含计费口径与常见坑排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -410,8 +410,8 @@ public String queryOrderStatus(
 | ASR | 点数 / 分钟 |
 | 工具类应用 | 点数 / 次 |
 
-> **两套价格字段，做预算一律用后者**：`fixed_price` / `input_price` 是**公示标准价**；
-> `tenant_fixed_points` / `tenant_points_per_1k_input` 是**你所在租户的实际结算价**。
+> **两套价格字段**：`fixed_price` / `input_price` 是**公示标准价**；
+> `tenant_fixed_points` / `tenant_points_per_1k_input` 是**租户价字段**（平台侧报价），**未必等于实际结算价** （实测 `image_human` 字段写 `2.0`、`standard` 档实扣 **3 点/秒**；`voice_tts/stt` 字段写 `30`、实扣 **40 点/次**）。
 > 最终以账号里实际扣费为准。
 
 ### 异步任务与回调

@@ -57,6 +57,6 @@
 
 ## 计费
 
-- 结算口径：以站内计费为准
+- 平台字段价（**未必等于实际结算价**；真实扣费只看返回里的 `data.usage.points_cost`）：以站内计费为准
 - 标准价：`fixed_price=0.1000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`
