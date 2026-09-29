@@ -320,6 +320,14 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-cover-factory",
+  "displayName": "三剪客 · 封面图批量生成",
+  "description": "给一批标题，批量产出各平台封面图：标题清单 → 出方案 → 批量出背景图 → 本地叠大字 → 平台规格校验（小红书 3:4 / 公众号 2.35:1 / 视频号与 B站 16:9 / 抖音 9:16）。关键取舍是背景图与文字分开：出图提示词里不许出现任何文字，大字由本地 PIL 压上去（字号、断行、描边、安全区全本地可控），清晰度不依赖出图模型。硬闸门七道：违禁词、占位符、照抄示例、比例真伪（读真实像素、容差 3%、--snap 裁准）、叠字可读性（超上限即拦截并报出实际长度，不静默截断）、成本上限、产出图不许进包。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-deepseek-cloud",
   "displayName": "DeepSeek全系云端直连·免部署一个Key切换调用大模型",
   "description": "直接用 api.a7w.cn 在架的 DeepSeek 全系大模型，不用自己部署、不用显卡、不用下模型文件。四款在架型号随任务切换，兼容 OpenAI 协议，只换 base_url 与 model。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -372,6 +380,14 @@
   "displayName": "AI短剧制作工作台·多应用组合配方单镜头SOP与批量排产",
   "description": "把 api.a7w.cn 上的生成应用搭成一张短剧制作工作台：哪个应用擅长什么、什么输入该配哪个、一个镜头从首帧到成片的六步 SOP、六套现成的组合配方（静态对话戏/动作戏/旁白戏/快剪混剪/老片修复/数字人口播）、多项目并行排产与按应用对账，全部写清「传什么、调哪个接口、拿回什么」。含零依赖客户端与成本测算脚本，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "2.0.2",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-ecom-image",
+  "displayName": "三剪客 · 电商主图工厂",
+  "description": "给商品信息与商品实物图，批量产出**电商平台规格**的主图与详情图——白底图 / 场景图 / 卖点图 / 细节图 / 资质图，按淘宝 800x800、1688、拼多多、抖音商城 3:4 等规格出图，卖点文案按**主图位**分配（第 1 张利益点 / 第 2 张规格 / 第 3 张细节 / 第 4 张场景 / 第 5 张资质），含电商合规自检。走 api.a7w.cn 的 nano_banana，零依赖、成本前置，六道硬闸门：广告法违禁词与不伪造销量/评价/资质/检测报告、占位符残留、照抄示例、出图比例真伪（读回真实像素）、主图位完整性、成本上限。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -604,6 +620,14 @@
   "displayName": "歌曲伴奏人声分离·一键提取鼓点贝斯四轨拆解在线工具",
   "description": "把一首歌拆成人声、鼓、贝斯、伴奏四条独立音轨——上传音频链接，约 1 分钟拿到可下载的分轨文件。做剪辑要干净伴奏、做二创要单人声、做混音要单独鼓轨，一条接口全解决。单次 0.65 元，无需自己部署模型或买显卡。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "2.0.2",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-storyboard-art",
+  "displayName": "三剪客 · 漫画分镜出图",
+  "description": "把剧本变成**漫画分镜序列**：抽角色设定卡（外貌/服装/配色/特征词）→ 出分镜表（景别/机位/画面/对白）→ 逐格出图 → 跨格一致性自检 → 本地拼页。难点：**同一角色在 N 格里长得一样**：用「设定卡 + 硬约束提示词 + 多参考图（action=edit 传上一格/锚点）」三道一起压，且不替你补词——哪格漏了哪条特征词就报出来。走 api.a7w.cn 的 nano_banana，零依赖。七道硬闸门：合规、占位符、照抄示例、比例真伪（--snap-exact 裁准）、分镜结构、角色一致性、成本与位置。断点 key 含八维，改一维就重出。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
