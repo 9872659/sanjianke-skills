@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**312 个技能包**：84 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**314 个技能包**：86 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -128,7 +128,7 @@ npx clawhub install <slug>
 - **`sanjianke-wxjava`** 三剪客 · 微信生态 Java 服务端开发包 · 衍生指南
 - **`sanjianke-zulip`** 三剪客 · 话题制团队聊天服务器 · 衍生指南
 
-### 设计多媒体（24）
+### 设计多媒体（26）
 
 - **`a7w-action-transfer`** 三剪客 · 动作迁移
 - **`a7w-dressing-diffusion`** 三剪客 · AI换装
@@ -148,11 +148,13 @@ npx clawhub install <slug>
 - **`a7w-voice-tts`** 三剪客 · 语音TTS
 - **`a7w-wan`** 三剪客 · Wan 视频生成
 - **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
+- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
 - **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
 - **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
 - **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
 - **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
 - **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
+- **`sanjianke-radio-dj`** 三剪客 · AI 电台
 - **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
 
 ### 数据分析（24）

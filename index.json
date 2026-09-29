@@ -256,6 +256,14 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-audiobook-line",
+  "displayName": "三剪客 · 有声书生产线",
+  "description": "把一本小说或长文本做成有声书：章节切分 → 逐章多音色朗读（旁白 / 对白分角色）→ 章节音频 → 字级时间戳出 SRT / VTT 字幕 → 章节清单与时长台账。七道硬闸门全拦截：广告法违禁词（「最X」按可枚举语境豁免）、占位符残留、照抄示例、章节结构（章数为 0 或空章即拦）、角色一致性（同一角色全书同一音色）、成本上限、产出位置。配音与字幕先报价，`--yes` 或 `--budget` 二选一；断点 key 含正文全文与音色、模型、格式、语速等十一维，改任一维都重配不静默复用；结算只认 `usage.points_cost`。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-bg-remover",
   "displayName": "图片一键去背景换白底·商品图抠图透明底批量在线工具",
   "description": "把图片的主体从背景里干净分离：商品图换纯白底、人像抠成透明底、把主体换到另一张背景图上，一条接口全解决。上传一张公网图片 URL，说明你要什么底，约半分钟拿回可直接用的成图。整套操作文档（接口参数表、提示词模板、批量做法、计费口径、常见坑）+ 零依赖客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -548,6 +556,14 @@
   "displayName": "三剪客 · 想法快速原型",
   "description": "把一个还模糊的想法快速做成能看、能点、能反馈的原型，先验证方向再决定是否投入。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-radio-dj",
+  "displayName": "三剪客 · AI 电台",
+  "description": "给一个主题或一份歌单，产出一期可播出的电台节目：节目单（选曲顺序 + 每段串词意图）→ 串词（开场 + 每首前的过渡 + 结尾，三段缺一不可）→ 主持人口播配音（先报价、断点续跑）→ 选曲（music_search 搜索或读本地歌单）→ 与歌曲拼接成 mp3 + 节目单 + 时间轴。六道硬闸门：违禁词（「最X」可枚举语境豁免、句首不豁免）、占位符、照抄示例（三条判据）、**串词结构（过渡条数须等于歌曲数）**、时长台账（±25%）、成本上限。走 api.a7w.cn 的 `/api/v1/chat/completions` 与生成应用端点。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
