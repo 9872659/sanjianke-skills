@@ -176,14 +176,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-agent-control-kit",
-  "displayName": "三剪客 · 长任务 Agent 控制平面",
-  "description": "为长周期 Agent 任务提供可持久、可治理的本地控制平面，跨 harness 续跑。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-agent-crew",
   "displayName": "多角色Agent协作编排·角色分工与流程控制接入指南",
   "description": "把一段活儿拆成几个有岗位、有目标、有背景故事的角色，让它们按顺序或按层级协作完成多步骤任务；需要精确控制时再用事件驱动流程把角色串起来。含角色建模与流程参数表、数据流声明写法与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型、每个角色可分别指定。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -248,14 +240,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-article-shape-kit",
-  "displayName": "三剪客 · 文章结构设计",
-  "description": "动笔前先把论点、章节和顺序定下来，别写到一半才发现结构不对。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-audiobook-line",
   "displayName": "三剪客 · 有声书生产线",
   "description": "把一本小说或长文本做成有声书：章节切分 → 逐章多音色朗读（旁白 / 对白分角色）→ 章节音频 → 字级时间戳出 SRT / VTT 字幕 → 章节清单与时长台账。七道硬闸门全拦截：广告法违禁词（「最X」按可枚举语境豁免）、占位符残留、照抄示例、章节结构（章数为 0 或空章即拦）、角色一致性（同一角色全书同一音色）、成本上限、产出位置。配音与字幕先报价，`--yes` 或 `--budget` 二选一；断点 key 含正文全文与音色、模型、格式、语速等十一维，改任一维都重配不静默复用；结算只认 `usage.points_cost`。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -276,22 +260,6 @@
   "displayName": "三剪客 · 方案竞标小组",
   "description": "给一个名额开一场**真竞标**：三个提案组各自独立出方案（信息隔离，互相看不到对方，也看不到评分维度），评委团按**提案前就已公示**的评分维度与权重（成本 / 可行性 / 差异化 / 风险）打分，每条打分理由必须引用该组方案原文；再交叉质询「我为什么比另外两组更该拿到名额」，最后由裁决人出**获胜方案 + 落选原因 + 落选方案的可用部分（合并建议）+ 打分明细**。八道硬闸门：广告法违禁词、占位符、照抄示例、打分锚点、**提案独立性**（三份方案高度重合即判「假竞争」）、裁决完整性、成本上限、产出不许进包。零依赖。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.0",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-brainstorm-kit",
-  "displayName": "三剪客 · 发散与收敛",
-  "description": "先用多个方向把方案铺开，再按统一标尺收敛成一个，专治想到第一个方案就开干。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-browser-agent-kit",
-  "displayName": "三剪客 · 浏览器自动化",
-  "description": "让 AI Agent 真正操作浏览器：打开页面、点按、填表、翻页、抓取、截图、下载，并保持稳定可控。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -368,22 +336,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-direct-output-kit",
-  "displayName": "三剪客 · 直给结论输出规范",
-  "description": "让 AI 把结论放第一行、步骤编号、不写废话，只留一个下一步。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-doc-grill-kit",
-  "displayName": "三剪客 · 带资料追问",
-  "description": "先把资料读成事实索引，再基于索引逐条追问，标出矛盾与缺口。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-doc-index-qa",
   "displayName": "文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费",
   "description": "模型本身不认识你的文件。这个 Skill 讲的是中间缺的那一层：把 PDF、Word、表格、接口返回的数据接成可检索、可问答的知识库，并把模型侧整排指向 https://api.a7w.cn/ ——一个 base_url、一把 Key，现场可查 75 个在架模型与 21 个生成应用（含文档问答 file_qa）；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -440,22 +392,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-engineer-skills-kit",
-  "displayName": "三剪客 · 工程师技能体系",
-  "description": "把工程经验沉淀成可复用 Agent Skill：怎么切分、怎么写、怎么在团队里落地。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-fullstack-react-kit",
-  "displayName": "三剪客 · React 全栈框架",
-  "description": "让 AI Agent 在 Next.js 项目里少犯错的协作规范。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-graph-rag",
   "displayName": "图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙",
   "description": "先把整批文档读成一张实体关系图，再切成多级社区并逐层写摘要，让「主题、趋势、概览」这类全局性问题有答案——普通向量检索答不上来的问题它能答。抽图与回答都走 api.a7w.cn 网关。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -464,34 +400,10 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-handoff-kit",
-  "displayName": "三剪客 · 任务交接文档",
-  "description": "把进行中的任务整理成一份交接文档，让另一个 Agent 或另一个人能无损接手。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-html-video-kit",
   "displayName": "三剪客 · HTML 转视频引擎",
   "description": "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4；旁白稿与配音接 api.a7w.cn 的大模型与 voice_tts，直接落成能塞进时间轴的音轨与 cues.json。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.4",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-idea-grill-kit",
-  "displayName": "三剪客 · 想法压力测试",
-  "description": "一套原创的深度追问方法，围绕用户的想法连续追问，把隐藏假设、遗漏前提和内在矛盾一层层问出来。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-im-server-kit",
-  "displayName": "三剪客 · 即时通讯服务端",
-  "description": "自建 IM 服务端的协议选型、部署、消息可靠性与集群扩展实战。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -584,22 +496,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-plan-exec-kit",
-  "displayName": "三剪客 · 计划执行与检查点",
-  "description": "把写好的计划一段段执行下去并在关键处停下核对，解决计划完整却跑偏。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-plan-kit",
-  "displayName": "三剪客 · 执行计划拆解",
-  "description": "把复杂目标拆成有顺序、有检查点、每步都能独立验证的执行计划。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.3",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-podcast-studio",
   "displayName": "三剪客 · 播客全自动生产",
   "description": "给一个主题，一条链路产出一期可发布的播客：选题与提纲 → 双人对话稿（标注角色与语气）→ 分角色配音（两个音色）→ 片头 / 转场 / 片尾配乐 → 本地混音成 mp3 + 章节标记 + 时间轴。六道硬闸门全拦截：广告法违禁词、占位符残留、照抄示例、**对话稿必须两个角色交替发言**、时长偏离 ±25%、成本上限；配音与配乐跑前先报价，`--yes` 或 `--budget` 二选一，断点续跑按台词判定，结算只认 `usage.points_cost`。走 api.a7w.cn 的 `/api/v1/chat/completions` 与生成应用端点。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -612,22 +508,6 @@
   "displayName": "三剪客 · 头像写真工坊",
   "description": "给人像照或人设描述加一个内置风格包，批量产出成套的头像与写真：头像 1:1、社交封面 3:4、横版 16:9，按「风格包 × 比例 × 变体」展开成矩阵。走 api.a7w.cn 的 nano_banana，零依赖，成本前置，断点续跑跳过已完成图，改提示词会重出重扣。六道本地硬闸门：比例真伪（读真实像素不信自报值，上游按 32 对齐、3:4 与 16:9 给不出精确比例，配 --snap 裁剪）、人物合规（公众人物/政治人物/明星的姓名与特征词拦截，未成年人一律不做）、恶俗与违背物理词表、成本上限、照抄示例检测、--outdir 指到包内直接拒绝。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.8",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-prd-kit",
-  "displayName": "三剪客 · 需求文档 PRD",
-  "description": "把讨论记录、背景资料和零散想法整理成一份真正能用的 PRD。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.3",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-prototype-kit",
-  "displayName": "三剪客 · 想法快速原型",
-  "description": "把一个还模糊的想法快速做成能看、能点、能反馈的原型，先验证方向再决定是否投入。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -668,22 +548,6 @@
   "displayName": "AI短视频一键生成·选题脚本配音画面字幕全流程批量出片",
   "description": "给一个选题就能出片：大模型写脚本 → TTS 出配音 → 出图定画面 → 图生视频补动感 → 时间轴压字幕 → 配 BGM → 本地合成，七道工序全部走 api.a7w.cn，一把 Key 跑完。支持 9:16 竖屏 / 16:9 横屏 / 1:1 方形，字幕时间轴两种做法都写清了怎么落地。含选题清单批量跑法、成本测算口径与常见坑，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "2.0.2",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-skill-forge-kit",
-  "displayName": "三剪客 · 技能工程",
-  "description": "把一个重复流程写成能被正确触发的 Agent Skill：触发面、结构拆分、触发测试、故障排查。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-skills-catalog-kit",
-  "displayName": "三剪客 · 技能生态实战",
-  "description": "在公开技能目录里读懂、挑对、装稳，并自己写出能被触发的技能。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -731,14 +595,6 @@
   "slug": "sanjianke-support-crew",
   "displayName": "三剪客 · 客诉处置小组",
   "description": "客诉工单进来，四个角色按流程处置完：**接报**分类定级（P0~P3）并给**承诺时限**，**技术判断**定性为产品缺陷 / 用户误用 / 环境问题，**授权**在**权限矩阵内**决定给什么补偿、给多少、话术怎么写，**复盘**出根因与同类工单预警。骨架是**权限矩阵 + 时效 + 升级路径**：一线可批 ≤50 元、二线 ≤300 元，**超权限的补偿 exit=3 并要求给出 escalate_to**；补偿项是**枚举**，不许自创；P0/P1 超时标红；每条判定必须引用原文。八道本地闸门。⚠️ **不接真实支付 / 工单系统**。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "sanjianke-ticket-kit",
-  "displayName": "三剪客 · 任务票据拆分",
-  "description": "把需求或方案拆成一张张可跟踪、可独立交付的任务票据，写清边界、依赖与验收条件。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"

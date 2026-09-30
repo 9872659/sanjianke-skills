@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**329 个技能包**：101 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**311 个技能包**：83 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -45,10 +45,9 @@ npx clawhub install <slug>
 
 ## 技能分类
 
-### 内容创作（49）
+### 内容创作（48）
 
 - **`sanjianke-ai-workflow`** 可视化AI工作流编排·OpenAI兼容网关接21个生成应用
-- **`sanjianke-article-shape-kit`** 三剪客 · 文章结构设计
 - **`sanjianke-bg-remover`** 图片一键去背景换白底·商品图抠图透明底批量在线工具
 - **`sanjianke-canvas-drama`** AI短剧创作画布·智能分镜图像视频生成一站式出片工作流
 - **`sanjianke-content-qc`** 三剪客 · 内容质量闭环
@@ -239,25 +238,6 @@ npx clawhub install <slug>
 - **`sanjianke-unsloth`** 三剪客 · 低显存微调加速 · 衍生指南
 - **`sanjianke-vllm`** 三剪客 · 高吞吐 LLM 推理服务 · 衍生指南
 
-### 开发编程（16）
-
-- **`sanjianke-agent-orchestrator`** 有状态Agent编排·状态图断点续跑与人工审批接统一模型网关
-- **`sanjianke-app-backend-kit`** 三剪客 · Postgres 应用后端 · 衍生指南
-- **`sanjianke-brainstorm-kit`** 三剪客 · 发散与收敛
-- **`sanjianke-direct-output-kit`** 三剪客 · 直给结论输出规范
-- **`sanjianke-doc-grill-kit`** 三剪客 · 带资料追问
-- **`sanjianke-engineer-skills-kit`** 三剪客 · 工程师技能体系
-- **`sanjianke-fullstack-react-kit`** 三剪客 · React 全栈框架
-- **`sanjianke-handoff-kit`** 三剪客 · 任务交接文档
-- **`sanjianke-idea-grill-kit`** 三剪客 · 想法压力测试
-- **`sanjianke-im-server-kit`** 三剪客 · 即时通讯服务端
-- **`sanjianke-llm-app-kit`** LLM应用开发套件·统一接口接OpenAI兼容网关换模型只改一行
-- **`sanjianke-plan-kit`** 三剪客 · 执行计划拆解
-- **`sanjianke-prd-kit`** 三剪客 · 需求文档 PRD
-- **`sanjianke-prototype-kit`** 三剪客 · 想法快速原型
-- **`sanjianke-ticket-kit`** 三剪客 · 任务票据拆分
-- **`sanjianke-vector-db`** 分布式向量数据库检索·亿级向量相似度搜索元数据过滤混合检索
-
 ### 电商（16）
 
 - **`sanjianke-aimeos-laravel`** 三剪客 · Laravel 电商套件 · 衍生指南
@@ -295,23 +275,6 @@ npx clawhub install <slug>
 - **`sanjianke-sherpa-onnx`** 三剪客 · 离线语音识别与合成的 ONNX 运行时 · 衍生指南
 - **`sanjianke-snownlp`** 三剪客 · 中文文本处理与情感分析 · 衍生指南
 - **`sanjianke-wenet`** 三剪客 · 端到端语音识别工具包 · 衍生指南
-
-### AI Agent（14）
-
-- **`sanjianke-agent-app-kit`** 三剪客 · 跨平台 AI Agent 应用 · 衍生指南
-- **`sanjianke-agent-control-kit`** 三剪客 · 长任务 Agent 控制平面
-- **`sanjianke-agent-crew`** 多角色Agent协作编排·角色分工与流程控制接入指南
-- **`sanjianke-agent-memory`** Agent长期记忆库·跨会话用户偏好事实检索接入指南
-- **`sanjianke-agent-platform`** 自建本地AI Agent平台·网关常驻多Agent沙箱落地指南
-- **`sanjianke-agent-team`** 多智能体软件开发团队·一句话需求生成项目文档与代码骨架
-- **`sanjianke-browser-agent-kit`** 三剪客 · 浏览器自动化
-- **`sanjianke-browser-operator`** 浏览器自动化操作员·一句话任务让Agent自己点填翻页抓取
-- **`sanjianke-cross-app-kit`** 三剪客 · 跨端 App 开发 · 衍生指南
-- **`sanjianke-multi-agent-chat`** 多智能体群聊协作·多角色轮流发言与终止条件接入指南
-- **`sanjianke-phone-agent-kit`** 三剪客 · 手机自动化控制 · 衍生指南
-- **`sanjianke-plan-exec-kit`** 三剪客 · 计划执行与检查点
-- **`sanjianke-skill-forge-kit`** 三剪客 · 技能工程
-- **`sanjianke-skills-catalog-kit`** 三剪客 · 技能生态实战
 
 ### 文档转换（13）
 
@@ -371,6 +334,18 @@ npx clawhub install <slug>
 - **`sanjianke-tesseract`** 三剪客 · 老牌 OCR 引擎 · 衍生指南
 - **`sanjianke-typst`** 三剪客 · 现代排版出 PDF · 衍生指南
 
+### AI Agent（9）
+
+- **`sanjianke-agent-app-kit`** 三剪客 · 跨平台 AI Agent 应用 · 衍生指南
+- **`sanjianke-agent-crew`** 多角色Agent协作编排·角色分工与流程控制接入指南
+- **`sanjianke-agent-memory`** Agent长期记忆库·跨会话用户偏好事实检索接入指南
+- **`sanjianke-agent-platform`** 自建本地AI Agent平台·网关常驻多Agent沙箱落地指南
+- **`sanjianke-agent-team`** 多智能体软件开发团队·一句话需求生成项目文档与代码骨架
+- **`sanjianke-browser-operator`** 浏览器自动化操作员·一句话任务让Agent自己点填翻页抓取
+- **`sanjianke-cross-app-kit`** 三剪客 · 跨端 App 开发 · 衍生指南
+- **`sanjianke-multi-agent-chat`** 多智能体群聊协作·多角色轮流发言与终止条件接入指南
+- **`sanjianke-phone-agent-kit`** 三剪客 · 手机自动化控制 · 衍生指南
+
 ### 爬虫（8）
 
 - **`sanjianke-crawlab`** 三剪客 · 分布式爬虫管理平台 · 衍生指南
@@ -391,6 +366,13 @@ npx clawhub install <slug>
 - **`sanjianke-wechat-bot`** 三剪客 · 多平台 IM 智能回复机器人 · 衍生指南
 - **`sanjianke-wechat-chatgpt`** 三剪客 · 微信接入 ChatGPT 自动回复 · 衍生指南
 - **`sanjianke-xiaohongshu-mcp`** 三剪客 · 小红书 MCP 服务 · 衍生指南
+
+### 开发编程（4）
+
+- **`sanjianke-agent-orchestrator`** 有状态Agent编排·状态图断点续跑与人工审批接统一模型网关
+- **`sanjianke-app-backend-kit`** 三剪客 · Postgres 应用后端 · 衍生指南
+- **`sanjianke-llm-app-kit`** LLM应用开发套件·统一接口接OpenAI兼容网关换模型只改一行
+- **`sanjianke-vector-db`** 分布式向量数据库检索·亿级向量相似度搜索元数据过滤混合检索
 
 ### 商业运营（4）
 
