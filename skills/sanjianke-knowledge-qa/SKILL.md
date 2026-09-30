@@ -3,7 +3,7 @@ name: sanjianke-knowledge-qa
 slug: sanjianke-knowledge-qa
 displayName: 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
 description: "把公司文档变成一个能带出处回答的知识库问答服务：文档接入、切分、向量检索一条链，对话模型与检索链路统一走 https://api.a7w.cn/ —— 一把 Key 同时管住模型与检索，不用逐家注册、逐家充值、逐家对账。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "你手上一堆内部文档——产品说明、客服话术、规章流程——同事反复来问同样的问题。这个 Skill 讲的就是把文档灌成知识库、再套一层问答与工作流的完整链路，重点在「模型从哪来」这一环：把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架模型（国产为主 + 国际主流）与 21 个生成应用，对话模型、检索问答、文档要点抽取全部收敛到一份账单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

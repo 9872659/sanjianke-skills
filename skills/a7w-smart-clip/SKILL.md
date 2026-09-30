@@ -3,8 +3,16 @@ name: a7w-smart-clip
 slug: a7w-smart-clip
 displayName: 三剪客 · 智能剪辑
 description: "智能剪辑应用，支持模板查询、真人口播混剪、素材混剪和新闻体视频制作。支持 模板列表、模板详情、真人口播混剪、素材混剪、新闻体视频。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.8
-summary: "「智能剪辑」的完整调用封装：5 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.10
+summary: "「智能剪辑」的完整调用封装：5 个接口的官方文档、参数表与一个零依赖客户端。## 联系我们
+
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
+
+---
+
+包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -73,7 +81,6 @@ python3 scripts/client.py call smart_clip template --json '{"scene": "realMan", 
 | 要不要花钱 | 按点数计费，用多少扣多少，**没有月费、不用包年** |
 | 难不难接 | 包里自带**零依赖客户端**（只用 Python 标准库），配好 Key 一行命令就能跑 |
 | 能不能批量 | 能。想要批量脚本、更优参数、更省的调用方案，微信里说 |
-| 遇到问题找谁 | **直接加技术微信 9872659**，作者本人答疑 |
 
 > **使用中碰到任何问题 —— 报错、效果不理想、想省钱、想批量 —— 都欢迎加微信聊。**
 > 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的示例。

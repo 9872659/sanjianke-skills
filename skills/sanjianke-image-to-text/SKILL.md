@@ -3,7 +3,7 @@ name: sanjianke-image-to-text
 slug: sanjianke-image-to-text
 displayName: 图片文档一键转文字·截图海报表格文字提取在线OCR工具
 description: "把图片和文档里的文字变成可复制的文本：截图、海报、票据、商品标签、扫描件走视觉大模型直读；PDF、Word、TXT、Markdown 走平台的文档解析问答接口。票据要字段、表格要 Markdown、长文档要摘要，都能一次问出来。整套操作文档（两条调用路径、视觉模型清单、提示词模板、批量做法、计费口径、常见坑）+ 零依赖客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.1
+version: 2.0.2
 summary: "图片与文档转文字的成品 Skill。两条路各司其职：**图片**（截图 / 海报 / 票据 / 照片 / 商品标签）走 api.a7w.cn 的 OpenAI 兼容模型网关，用视觉大模型直读字与版式；**文档**（PDF / DOC / DOCX / TXT / MD）走平台的 `file_qa` 接口，最多一次问 8 份公网文档，做问答、摘要、字段抽取与剧本结构化。覆盖发票与票据字段提取、表格转 Markdown、截图转文案、扫描件文字化、合同与报告的要点抽取等场景。正文给出两条路径的三步 curl、视觉模型清单、提示词模板、批量做法、真实计费口径（1 元 = 100 点）、常见坑与排错，并附一个只用 Python 标准库的零依赖客户端。整套操作文档 + 客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

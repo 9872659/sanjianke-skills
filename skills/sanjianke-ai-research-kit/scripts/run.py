@@ -98,6 +98,70 @@ class ChatError(a7w.A7wError):
 # 底层：OpenAI 兼容的大模型调用
 # ---------------------------------------------------------------------------
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
+def _outermost_json(text):
+    """按**括号配平**从 text 里切出最外层那个完整的 JSON 值，切不出来返回 None。
+
+    为什么不用 `find("{")` / `rfind("}")`：
+    外层 JSON 坏掉时（被截断 / 模型吐了语法错），那种切法会把
+    **靠后的** `}` 也圈进来，或者相反地切掉一段；更要紧的是原实现
+    「逐个 { 试」会从嵌套结构里解出一个**内层**对象交出去，
+    上层于是报「缺字段」——**报错指向了错误的方向**。
+    配平切法保证：要么给出真正的顶层值，要么老实返回 None。
+    """
+    if not text:
+        return None
+    start = None
+    for i, ch in enumerate(text):
+        if ch in "{[":
+            start = i
+            break
+    if start is None:
+        return None
+    depth, in_str, esc, end = 0, False, False, None
+    for i in range(start, len(text)):
+        ch = text[i]
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch in "{[":
+            depth += 1
+        elif ch in "}]":
+            depth -= 1
+            if depth == 0:
+                end = i + 1
+                break
+    if end is None:
+        return None
+    try:
+        return json.loads(text[start:end])
+    except ValueError:
+        return None
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.3,
          max_tokens=2048, key=None, timeout=300, json_mode=False, stream=False):
     """调一次 https://api.a7w.cn/api/v1/chat/completions。
@@ -170,6 +234,8 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.3,
         raise ChatError("返回里没有 choices：{}".format(
             json.dumps(payload, ensure_ascii=False)[:400]))
     msg = choices[0].get("message") or {}
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
     text = (msg.get("content") or "").strip()
     if not text:
         # 推理类模型的思维链字段名在两条线路上不一致，两个都试
@@ -366,13 +432,10 @@ def stripped_json(text):
     try:
         return json.loads(t)
     except ValueError:
-        start, end = t.find("{"), t.rfind("}")
-        if 0 <= start < end:
-            try:
-                return json.loads(t[start:end + 1])
-            except ValueError:
-                return None
-    return None
+        pass
+    # ⚠️ 先按括号配平取**最外层**完整值 —— 别用 find/rfind，
+    # 也别逐个 { 试（那会解出内层对象，把报错引向错误的方向）。
+    return _outermost_json(t)
 
 
 def emit(obj, out, text_mode=False):
@@ -414,7 +477,7 @@ def cmd_extract(a):
     emit(result, a.out)
     sys.stderr.write("用量：" + usage_line(usage, pts) + "\n")
     if data is None:
-        sys.stderr.write("模型没有直接给出可解析的 JSON，原文放在 raw 里，供人工核对。\n")
+        sys.stderr.write("模型没有直接给出可解析的 JSON，原文放在 raw 里，供人工核对{}。\n".format(_fr_hint()))
         return 0
     return 0
 
@@ -549,7 +612,8 @@ def build_parser():
         description="AI 科研全流程的算力接入层：抽取 / 摘要 / 对比 / 审稿预演 / 文档问答"
                     "（全部走 api.a7w.cn，零第三方依赖）",
         epilog="端点：POST /api/v1/chat/completions · POST /api/v1/apps/file_qa/chat · "
-               "GET /api/v1/models")
+               "GET /api/v1/models",
+        allow_abbrev=False)
     ap.add_argument("--key", help="临时指定 API Key（默认读 A7W_API_KEY 或 ~/.a7w/config.json）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -561,27 +625,27 @@ def build_parser():
         p.add_argument("--model", default=DEFAULT_MODEL, help="模型名（用 `models` 现查）")
         p.add_argument("--max-tokens", type=int, default=4096, help="输出上限，也是控成本的主旋钮")
 
-    p = sub.add_parser("extract", help="抽结构化字段（JSON）")
+    p = sub.add_parser("extract", help="抽结构化字段（JSON）", allow_abbrev=False)
     add_material_args(p)
     p.add_argument("--fields", help="字段名，逗号分隔。默认：" + ",".join(DEFAULT_FIELDS))
     p.set_defaults(func=cmd_extract)
 
-    p = sub.add_parser("summarize", help="生成带出处的摘要")
+    p = sub.add_parser("summarize", help="生成带出处的摘要", allow_abbrev=False)
     add_material_args(p)
     p.add_argument("--length", default="medium", choices=["short", "medium", "long"])
     p.set_defaults(func=cmd_summarize)
 
-    p = sub.add_parser("matrix", help="多份材料横向对比 → 综述矩阵")
+    p = sub.add_parser("matrix", help="多份材料横向对比 → 综述矩阵", allow_abbrev=False)
     add_material_args(p)
     p.add_argument("--columns", help="自定义表头，逗号分隔")
     p.set_defaults(func=cmd_matrix)
 
-    p = sub.add_parser("review", help="审稿人视角预演（挑刺）")
+    p = sub.add_parser("review", help="审稿人视角预演（挑刺）", allow_abbrev=False)
     add_material_args(p)
     p.add_argument("--venue", help="目标期刊 / 会议")
     p.set_defaults(func=cmd_review)
 
-    p = sub.add_parser("doc-qa", help="公网文档问答 → file_qa/chat")
+    p = sub.add_parser("doc-qa", help="公网文档问答 → file_qa/chat", allow_abbrev=False)
     p.add_argument("--url", action="append", help="公网 HTTP(S) 文档地址（1~8 个，可重复）")
     p.add_argument("--question", help="针对文档的问题")
     p.add_argument("question_positional", nargs="?", help="问题（也可以直接写在 --url 后面）")
@@ -593,13 +657,13 @@ def build_parser():
     p.add_argument("--out", help="答案写入的文件")
     p.set_defaults(func=cmd_doc_qa)
 
-    p = sub.add_parser("models", help="列出平台在架的文本模型")
+    p = sub.add_parser("models", help="列出平台在架的文本模型", allow_abbrev=False)
     p.add_argument("--filter", help="按关键词过滤")
     p.add_argument("--category", help="按类型过滤，如 text / image / video")
     p.add_argument("--json", action="store_true", help="输出原始 JSON")
     p.set_defaults(func=cmd_models)
 
-    p = sub.add_parser("chat", help="裸调一次大模型")
+    p = sub.add_parser("chat", help="裸调一次大模型", allow_abbrev=False)
     p.add_argument("--prompt", required=True)
     p.add_argument("--system", help="system 提示词")
     p.add_argument("--model", default=DEFAULT_MODEL)

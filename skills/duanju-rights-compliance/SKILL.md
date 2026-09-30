@@ -3,7 +3,7 @@ name: duanju-rights-compliance
 slug: duanju-rights-compliance
 displayName: 三剪客 · 短剧二创授权与合规自查
 description: "短剧二创的版权授权核验与内容合规自查：授权四关门禁、留痕模板、音色与音乐字体肖像授权要点、平台原创性要求、AI 内容标注、短剧推广高危话术扫描。适用于开工前判断一部剧能不能做二创、发布前扫描解说稿与推广文案是否踩线，以及被投诉时整理授权链条。自带 `scripts/run.py` 真接算力：给一批文案，先离线正则粗筛、再走 `POST /api/v1/chat/completions` 逐条判风险等级（high/medium/low/pass）并给出可直接用的改写文案。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.1.6
+version: 1.1.7
 summary: "短剧二创开工前的授权门禁与发布前的合规自检工具：3 份作业规范 + 4 个脚本（离线正则扫描 + 零依赖客户端 + 大模型批量初筛 `POST /api/v1/chat/completions`；离线扫描覆盖全集承诺、独家宣称、擦边引流、暴力血腥、盗版导流、收益诱导、极限词七类，模型补谐音与规避写法的语义判定并给改写建议）。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

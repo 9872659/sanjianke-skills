@@ -3,7 +3,7 @@ name: sanjianke-multi-agent-chat
 slug: sanjianke-multi-agent-chat
 displayName: 多智能体群聊协作·多角色轮流发言与终止条件接入指南
 description: "用对话的方式组织多个 Agent 协作：给每个 Agent 一个名字、一段人设、一个模型客户端，再放进群聊里轮流发言或按需发言，靠终止条件收口。含发言策略与终止条件参数表、状态管理写法、工具轮数上限与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.4
 summary: "一个 Agent 干不好的活，往往适合拆给几个角色来回讨论：写手出稿、评审挑刺、写手改稿，直到评审说通过。本包讲怎么把这种多角色群聊的模型入口统一指向一个 OpenAI 兼容网关 —— 只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元等国产为主），并且能给每个发言角色分别指定模型：出稿用快的、评审用强的，账单还是同一份。含发言策略选择、终止条件设计、状态与重置、工具调用轮数上限与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

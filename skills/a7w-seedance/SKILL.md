@@ -3,8 +3,16 @@ name: a7w-seedance
 slug: a7w-seedance
 displayName: 三剪客 · Seedance 2.0
 description: "基于火山方舟 Seedance 2.0 的多模态视频生成应用。支持文本/图片/视频/音频任意组合输入，可输出 480p/720p/1080p 分辨率、4~15 秒时长的视频，并可选生成同步音频。按 token 计费，按分辨率和是否含视频输入分档。支持 创建素材资产组合、上传素材、获取素材详情、更新素材、删除素材、查询任务、创建任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.8
-summary: "「Seedance 2.0」的完整调用封装：7 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.10
+summary: "「Seedance 2.0」的完整调用封装：7 个接口的官方文档、参数表与一个零依赖客户端。## 联系我们
+
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
+
+---
+
+包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -75,7 +83,6 @@ python3 scripts/client.py call seedance createGroup --json '{"Name": "demo-group
 | 要不要花钱 | 按点数计费，用多少扣多少，**没有月费、不用包年** |
 | 难不难接 | 包里自带**零依赖客户端**（只用 Python 标准库），配好 Key 一行命令就能跑 |
 | 能不能批量 | 能。想要批量脚本、更优参数、更省的调用方案，微信里说 |
-| 遇到问题找谁 | **直接加技术微信 9872659**，作者本人答疑 |
 
 > **使用中碰到任何问题 —— 报错、效果不理想、想省钱、想批量 —— 都欢迎加微信聊。**
 > 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的示例。

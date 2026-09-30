@@ -136,8 +136,7 @@ BANNED_PATTERNS = [
      "广告法第九条禁止「最高级」用语"),
     (r"全网(最低|最便宜|第一)|史上(最低|最便宜)|全国(最低|第一)", "高",
      "绝对化价格承诺，无法举证"),
-    (r"第一(名|品牌|选择|名)?(?!次)|No\.?\s*1|TOP\s*1|排名第一|销量第一", "高",
-     "「第一」类排他性表述"),
+    (r"排名第一|销量第一|口碑第一|行业第一|全国第一|全网第一|全球第一|世界第一|第一品牌|第一选择", "高", "「第一」类排他性表述"),
     (r"国家级|世界级|全球级|国际级|国家级产品", "高",
      "「国家级」等权威性词汇属明令禁止"),
     (r"100\s*%|百分之百|百分百", "高",
@@ -382,6 +381,23 @@ class TitleError(a7w.A7wError):
     """标题生成/打分失败。"""
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.8,
          max_tokens=4096, key=None, timeout=240, json_mode=True):
     """调一次 POST /api/v1/chat/completions，返回 (正文, usage)。
@@ -459,6 +475,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.8,
     if not choices:
         raise TitleError("模型没返回 choices：{}".format(json.dumps(payload, ensure_ascii=False)[:300]))
     content = ((choices[0] or {}).get("message") or {}).get("content") or ""
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
+    _LAST_FINISH["chars"] = len(content)
     usage = (data_obj or {}).get("usage") or (payload or {}).get("usage") or {}
     return content, usage
 
@@ -480,6 +499,42 @@ def parse_first_json(text):
         candidates.append(fenced.group(1).strip())
     candidates.append(text)
     for cand in candidates:
+        # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+        # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+        # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+        start = None
+        for i, ch in enumerate(cand):
+            if ch in "{[":
+                start = i
+                break
+        if start is not None:
+            depth, in_str, esc, end = 0, False, False, None
+            for i in range(start, len(cand)):
+                ch = cand[i]
+                if in_str:
+                    if esc:
+                        esc = False
+                    elif ch == "\\":
+                        esc = True
+                    elif ch == '"':
+                        in_str = False
+                    continue
+                if ch == '"':
+                    in_str = True
+                elif ch in "{[":
+                    depth += 1
+                elif ch in "}]":
+                    depth -= 1
+                    if depth == 0:
+                        end = i + 1
+                        break
+            if end is not None:
+                try:
+                    obj = json.loads(cand[start:end])
+                    if isinstance(obj, (dict, list)):
+                        return obj
+                except ValueError:
+                    pass
         for i, ch in enumerate(cand):
             if ch not in "{[":
                 continue
@@ -489,7 +544,8 @@ def parse_first_json(text):
                 continue
             if isinstance(obj, (dict, list)):
                 return obj
-    raise TitleError("模型返回的不是合法 JSON：{}".format(text[:300].replace("\n", " ")))
+    raise TitleError("模型返回的不是合法 JSON：{}{}".format(
+        text[:300].replace("\n", " "), _fr_hint()))
 
 
 # ---------------------------------------------------------------------------
@@ -1304,12 +1360,13 @@ def _main(argv_eff):
         prog="run.py",
         description="三剪客 · 爆款标题工坊（走 api.a7w.cn 的 OpenAI 兼容大模型端点）",
         epilog="端点：POST https://api.a7w.cn/api/v1/chat/completions · "
-               "GET https://api.a7w.cn/api/v1/models")
+               "GET https://api.a7w.cn/api/v1/models",
+        allow_abbrev=False)
     ap.add_argument("--json", action="store_true",
                     help="以 JSON 输出（写在子命令前后都可以）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("gen", help="生成 N 个标题并四维打分降序输出")
+    p = sub.add_parser("gen", help="生成 N 个标题并四维打分降序输出", allow_abbrev=False)
     p.add_argument("--topic", required=True, help="主题 / 产品 / 选题")
     p.add_argument("--platform", default="xiaohongshu", choices=PLATFORM_CHOICES,
                    help="平台风格，默认 xiaohongshu")
@@ -1320,7 +1377,7 @@ def _main(argv_eff):
     _add_model_opts(p)
     p.set_defaults(func=_run_gen)
 
-    p = sub.add_parser("score", help="给已有标题清单打分（参数或文件）")
+    p = sub.add_parser("score", help="给已有标题清单打分（参数或文件）", allow_abbrev=False)
     p.add_argument("title_args", nargs="*", help="直接跟在命令后的标题，可写多条")
     p.add_argument("--titles", nargs="+", help="与位置参数等价，便于脚本里书写")
     p.add_argument("--file", help="从文件读标题（.txt 一行一条；.json 读 gen --json 的结果）")
@@ -1329,7 +1386,7 @@ def _main(argv_eff):
     _add_model_opts(p)
     p.set_defaults(func=_run_score)
 
-    p = sub.add_parser("ab", help="给 A/B 测试配对建议（哪两个配对、测什么变量）")
+    p = sub.add_parser("ab", help="给 A/B 测试配对建议（哪两个配对、测什么变量）", allow_abbrev=False)
     p.add_argument("--file", help="gen --json --out 的结果文件（推荐）")
     p.add_argument("title_args", nargs="*", help="也可直接给标题")
     p.add_argument("--titles", nargs="+", help="与位置参数等价")
@@ -1338,7 +1395,7 @@ def _main(argv_eff):
     _add_json(p)
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_ab)
-    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）")
+    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）", allow_abbrev=False)
     p.add_argument("--type", default="text", help="模型类型，默认 text；传 all 看全部 75 个")
     p.add_argument("--key", help="临时指定 A7W API Key")
     _add_json(p)

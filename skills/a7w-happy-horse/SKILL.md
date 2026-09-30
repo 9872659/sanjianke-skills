@@ -3,8 +3,16 @@ name: a7w-happy-horse
 slug: a7w-happy-horse
 displayName: 三剪客 · Happy Horse
 description: "Happy Horse（HappyHorse-1.1 系列）面向文生/图生高质量短视频，采用统一多模态建模，可一阶段生成声画、支持多语言对白与多镜头场景衔接。计费按目标分辨率与生成秒数对应的参数档位计点。本能力为内测邀请制，正式调用前需完成内测申请。支持 提交任务、创建任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.8
-summary: "「Happy Horse」的完整调用封装：3 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.10
+summary: "「Happy Horse」的完整调用封装：3 个接口的官方文档、参数表与一个零依赖客户端。## 联系我们
+
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
+
+---
+
+包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -71,7 +79,6 @@ python3 scripts/client.py call happy_horse submit --json '{"seed": 42, "media": 
 | 要不要花钱 | 按点数计费，用多少扣多少，**没有月费、不用包年** |
 | 难不难接 | 包里自带**零依赖客户端**（只用 Python 标准库），配好 Key 一行命令就能跑 |
 | 能不能批量 | 能。想要批量脚本、更优参数、更省的调用方案，微信里说 |
-| 遇到问题找谁 | **直接加技术微信 9872659**，作者本人答疑 |
 
 > **使用中碰到任何问题 —— 报错、效果不理想、想省钱、想批量 —— 都欢迎加微信聊。**
 > 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的示例。

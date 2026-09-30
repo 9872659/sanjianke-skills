@@ -625,7 +625,8 @@ def build_parser():
         description="短剧二创作业手册 · 算力版：台词转写（voice_tts/stt）+ 悬念解说稿"
                     "（chat/completions），全部走 api.a7w.cn，零依赖。",
         epilog="费用：转写按次固定价（实测 40 点/次）；大模型按 token 计费。1 元 = 100 点。",
-        formatter_class=argparse.RawDescriptionHelpFormatter)
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False)
     sub = ap.add_subparsers(dest="cmd")
 
     def add_key(p):
@@ -644,7 +645,7 @@ def build_parser():
         p.add_argument("--gap", type=float, default=0.7, help="相邻字间隔超过多少秒断行，默认 0.7")
         p.add_argument("--max-chars", type=int, default=18, help="字幕单行最多字数，默认 18")
 
-    p = sub.add_parser("transcribe", help="语音转文字：台词稿 + 字级时间戳字幕")
+    p = sub.add_parser("transcribe", help="语音转文字：台词稿 + 字级时间戳字幕", allow_abbrev=False)
     p.add_argument("media", nargs="?", help="本地音视频文件路径")
     p.add_argument("--url", help="公网音频地址（与本地文件二选一，走 audio_url 参数）")
     p.add_argument("-o", "--out", help="台词稿写入路径")
@@ -654,7 +655,7 @@ def build_parser():
     add_asr(p)
     p.set_defaults(func=cmd_transcribe)
 
-    p = sub.add_parser("narration", help="大模型写悬念解说稿（可一次多条，互不重复）")
+    p = sub.add_parser("narration", help="大模型写悬念解说稿（可一次多条，互不重复）", allow_abbrev=False)
     p.add_argument("--file", help="台词稿文件（不传则读 stdin）")
     p.add_argument("--text", help="直接给台词文本")
     p.add_argument("--target-min", type=float, default=5.0, help="目标成片分钟数，默认 5")
@@ -668,7 +669,7 @@ def build_parser():
     add_llm(p)
     p.set_defaults(func=cmd_narration)
 
-    p = sub.add_parser("pipeline", help="一条龙：转写 → 字幕 → 多条解说稿 → 落盘")
+    p = sub.add_parser("pipeline", help="一条龙：转写 → 字幕 → 多条解说稿 → 落盘", allow_abbrev=False)
     p.add_argument("media", nargs="?", help="本地音视频文件路径")
     p.add_argument("--url", help="公网音频地址")
     p.add_argument("--target-min", type=float, default=5.0, help="目标成片分钟数，默认 5")

@@ -179,7 +179,9 @@ python3 scripts/a7w.py schema voice_tts
 
 ## 许可证
 
-MIT，见 [`LICENSE.md`](LICENSE.md)。
+MIT，见 `LICENSE.md`。
+
+---
 
 ---
 

@@ -3,7 +3,7 @@ name: sanjianke-browser-operator
 slug: sanjianke-browser-operator
 displayName: 浏览器自动化操作员·一句话任务让Agent自己点填翻页抓取
 description: "一句话任务描述，让 Agent 自己开着浏览器把网页上的活干完：点按钮、填表单、翻页、把结果取回来。写的是任务，不是选择器，页面改版也不容易整条断掉。含任务描述写法、模型挑选依据、真实浏览器与无头环境说明、步数上限与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型，含支持视觉的模型可直接看截图决策。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.1
+version: 2.0.3
 summary: "让 Agent 自己去操作网页：你写一句任务，它看着页面决定下一步点哪、填什么、翻到第几页，最后把结果交回来。适合那些没有 API、只有网页界面的场景 —— 后台系统、比价、批量填表、数据抄录。本包讲怎么把这类浏览器自动化的模型入口统一指向一个 OpenAI 兼容网关：只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM 等国产为主），并且能挑支持视觉的模型直接读页面截图做判断，账单还是同一份。含任务描述写法、模型挑选依据、步数上限与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

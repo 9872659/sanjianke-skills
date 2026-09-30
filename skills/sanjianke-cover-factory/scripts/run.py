@@ -1352,6 +1352,23 @@ def download(url, dst, timeout=180, key=None, retries=3):
     raise a7w.A7wError("下载图片失败（已重试 %d 次）：%s（%s）" % (retries, url, last))
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
          max_tokens=8192, key=None, json_mode=True, retries=CHAT_RETRIES):
     """一次文本调用（OpenAI 兼容）。返回 (content, usage)。"""
@@ -1369,6 +1386,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
             payload = a7w._request("POST", CHAT_URL, a7w.load_key(key), body=body, timeout=300)
             if isinstance(payload, dict) and payload.get("choices"):
                 content = ((payload["choices"][0].get("message") or {}).get("content")) or ""
+                finish_reason = (payload["choices"][0] or {}).get("finish_reason")
+                _LAST_FINISH["reason"] = finish_reason
+                _LAST_FINISH["chars"] = len(content)
                 return content, payload.get("usage") or {}
             last = a7w.A7wError("模型没返回 choices：%s" % json.dumps(
                 payload, ensure_ascii=False)[:200])
@@ -1392,6 +1412,42 @@ def parse_first_json(text):
     except ValueError:
         pass
     dec = json.JSONDecoder()
+    # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+    # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+    # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+    start = None
+    for i, ch in enumerate(s):
+        if ch in "{[":
+            start = i
+            break
+    if start is not None:
+        depth, in_str, esc, end = 0, False, False, None
+        for i in range(start, len(s)):
+            ch = s[i]
+            if in_str:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+            elif ch in "{[":
+                depth += 1
+            elif ch in "}]":
+                depth -= 1
+                if depth == 0:
+                    end = i + 1
+                    break
+        if end is not None:
+            try:
+                obj = json.loads(s[start:end])
+                if isinstance(obj, dict):
+                    return obj
+            except ValueError:
+                pass
     for i, ch in enumerate(s):
         if ch in "{[":
             try:
@@ -1399,7 +1455,8 @@ def parse_first_json(text):
                 return obj
             except ValueError:
                 continue
-    raise a7w.A7wError("模型返回的不是合法 JSON（前 200 字：%s）" % s[:200])
+    raise a7w.A7wError("模型返回的不是合法 JSON（前 200 字：%s）%s"
+                       % (s[:200], _fr_hint()))
 
 
 # ===========================================================================
@@ -2826,7 +2883,8 @@ def _add_image_opts(p, with_outdir=True):
 def build_parser():
     ap = argparse.ArgumentParser(
         prog="run.py",
-        description="三剪客 · 封面图批量生成：一批标题 → 各平台封面（背景图 + 本地叠字）")
+        description="三剪客 · 封面图批量生成：一批标题 → 各平台封面（背景图 + 本地叠字）",
+        allow_abbrev=False)
     ap.add_argument("--key", help="临时指定 api.a7w.cn 的 Key（别写进脚本或文档）")
     ap.add_argument("--json", action="store_true",
                     help="以 JSON 输出（写在子命令前后都可以）")
@@ -2834,7 +2892,7 @@ def build_parser():
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     # --- specs ---
-    p = sub.add_parser("specs", help="各平台封面规格（零网络、零成本）")
+    p = sub.add_parser("specs", help="各平台封面规格（零网络、零成本）", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--platform", action="append", choices=PLATFORM_CHOICES,
                    help="只看指定平台，可重复；默认全部")
@@ -2842,7 +2900,7 @@ def build_parser():
     p.set_defaults(func=cmd_specs)
 
     # --- plan ---
-    p = sub.add_parser("plan", help="按标题清单出封面方案（只花文本钱）")
+    p = sub.add_parser("plan", help="按标题清单出封面方案（只花文本钱）", allow_abbrev=False)
     _add_json(p)
     _add_titles_opts(p)
     _add_model_opts(p)
@@ -2855,7 +2913,7 @@ def build_parser():
     p.set_defaults(func=cmd_plan)
 
     # --- images ---
-    p = sub.add_parser("images", help="按方案批量出背景图（真花钱，先报价再确认）")
+    p = sub.add_parser("images", help="按方案批量出背景图（真花钱，先报价再确认）", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--plan", required=True, help="plan 产出的方案 JSON")
     _add_image_opts(p)
@@ -2875,7 +2933,7 @@ def build_parser():
     p.set_defaults(func=cmd_images)
 
     # --- overlay ---
-    p = sub.add_parser("overlay", help="把大字标题本地渲染到图上（零成本、零网络）")
+    p = sub.add_parser("overlay", help="把大字标题本地渲染到图上（零成本、零网络）", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--plan", required=True, help="plan 产出的方案 JSON")
     _add_image_opts(p)
@@ -2888,7 +2946,7 @@ def build_parser():
     p.set_defaults(func=cmd_overlay)
 
     # --- all ---
-    p = sub.add_parser("all", help="串起 plan → images → overlay（断点续跑）")
+    p = sub.add_parser("all", help="串起 plan → images → overlay（断点续跑）", allow_abbrev=False)
     _add_json(p)
     _add_titles_opts(p)
     _add_model_opts(p)
@@ -2912,7 +2970,7 @@ def build_parser():
     p.set_defaults(func=cmd_all)
 
     # --- cost ---
-    p = sub.add_parser("cost", help="只算钱不出图")
+    p = sub.add_parser("cost", help="只算钱不出图", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--count", type=int, help="要出几张")
     p.add_argument("--titles", type=int, help="标题个数（配合 --platform 算总数）")
@@ -2923,7 +2981,7 @@ def build_parser():
     p.set_defaults(func=cmd_cost)
 
     # --- models ---
-    p = sub.add_parser("models", help="列出在架应用与模型（零成本）")
+    p = sub.add_parser("models", help="列出在架应用与模型（零成本）", allow_abbrev=False)
     _add_json(p)
     p.set_defaults(func=cmd_models)
     return ap

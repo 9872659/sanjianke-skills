@@ -3,7 +3,7 @@ name: sanjianke-subtitle-maker
 slug: sanjianke-subtitle-maker
 displayName: 音视频一键转字幕·语音转文字自动生成SRT时间轴批量出稿
 description: "音频、视频、播客、会议录音丢进去，直接拿回带时间轴的字幕文件（SRT / VTT / 纯文本）。支持多语言识别与自动判定，长音频一次提交，不用自己装模型、不用显卡。一条接口按音频时长计费，查询免费。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "把音频和视频一键转成带时间轴的字幕：支持 SRT、VTT 与纯文本输出，多语言识别、语言自动判定，长音频一次提交即可，不需要本地部署模型、不需要显卡、不需要懂语音工程。覆盖短视频加字幕、播客转文字稿、会议录音整理、影视对白提取、课程转文稿、访谈逐字稿等场景。含完整参数表、真实计费口径、字级时间戳与字幕排版要点、批量转写思路与排错指南。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

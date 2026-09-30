@@ -639,6 +639,23 @@ class CourseGate(CourseError):
     """被本地硬闸门拦下（与"调用失败"分开，退出码也不同：闸门 3 / 失败 4）。"""
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
          max_tokens=8192, key=None, timeout=300, json_mode=True,
          tracker=None, tracker_label=""):
@@ -724,6 +741,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
     if not choices:
         raise CourseError("模型没返回 choices：%s" % json.dumps(payload, ensure_ascii=False)[:300])
     content = ((choices[0] or {}).get("message") or {}).get("content") or ""
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
+    _LAST_FINISH["chars"] = len(content)
     usage = (data_obj or {}).get("usage") or (payload or {}).get("usage") or {}
     if tracker is not None:
         tracker.add(usage, tracker_label)
@@ -744,6 +764,42 @@ def parse_first_json(text):
     candidates = [fenced.group(1).strip()] if fenced else []
     candidates.append(text)
     for cand in candidates:
+        # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+        # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+        # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+        start = None
+        for i, ch in enumerate(cand):
+            if ch in "{[":
+                start = i
+                break
+        if start is not None:
+            depth, in_str, esc, end = 0, False, False, None
+            for i in range(start, len(cand)):
+                ch = cand[i]
+                if in_str:
+                    if esc:
+                        esc = False
+                    elif ch == "\\":
+                        esc = True
+                    elif ch == '"':
+                        in_str = False
+                    continue
+                if ch == '"':
+                    in_str = True
+                elif ch in "{[":
+                    depth += 1
+                elif ch in "}]":
+                    depth -= 1
+                    if depth == 0:
+                        end = i + 1
+                        break
+            if end is not None:
+                try:
+                    obj = json.loads(cand[start:end])
+                    if isinstance(obj, (dict, list)):
+                        return obj
+                except ValueError:
+                    pass
         for i, ch in enumerate(cand):
             if ch not in "{[":
                 continue
@@ -753,7 +809,8 @@ def parse_first_json(text):
                 continue
             if isinstance(obj, (dict, list)):
                 return obj
-    raise CourseError("模型返回的不是合法 JSON：%s" % text[:300].replace("\n", " "))
+    raise CourseError("模型返回的不是合法 JSON：{}{}".format(
+        text[:300].replace("\n", " "), _fr_hint()))
 
 
 # ---------------------------------------------------------------------------
@@ -1905,12 +1962,13 @@ def build_parser():
         prog="run.py",
         description="三剪客 · 课程生产线（走 api.a7w.cn 的 OpenAI 兼容大模型端点）",
         epilog="端点：POST https://api.a7w.cn/api/v1/chat/completions · "
-               "GET https://api.a7w.cn/api/v1/models")
+               "GET https://api.a7w.cn/api/v1/models",
+        allow_abbrev=False)
     ap.add_argument("--json", action="store_true",
                     help="以 JSON 输出（写在子命令前后都可以）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("plan", help="出课程大纲（章节 / 小节 / 学习目标 / 时长）")
+    p = sub.add_parser("plan", help="出课程大纲（章节 / 小节 / 学习目标 / 时长）", allow_abbrev=False)
     p.add_argument("--topic", required=True, help="课程主题")
     p.add_argument("--chapters", type=int, default=4, help="章数，默认 4")
     p.add_argument("--sections-per-chapter", type=int, default=2,
@@ -1921,7 +1979,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=cmd_plan)
 
-    p = sub.add_parser("lesson", help="按大纲逐节写讲义（每节 1500~3000 字）")
+    p = sub.add_parser("lesson", help="按大纲逐节写讲义（每节 1500~3000 字）", allow_abbrev=False)
     p.add_argument("--plan", required=True, help="`plan --json --out` 产出的文件")
     p.add_argument("--count", type=int, default=None, help="最多写几节，默认全部")
     p.add_argument("--from-file", dest="from_file",
@@ -1930,7 +1988,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=cmd_lesson)
 
-    p = sub.add_parser("quiz", help="按大纲逐节出习题 + 答案 + 解析（难度分层）")
+    p = sub.add_parser("quiz", help="按大纲逐节出习题 + 答案 + 解析（难度分层）", allow_abbrev=False)
     p.add_argument("--plan", required=True, help="`plan --json --out` 产出的文件")
     p.add_argument("--count", type=int, default=None, help="最多出几节，默认全部")
     p.add_argument("--per-tier", type=int, default=2, dest="per_tier",
@@ -1943,7 +2001,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=cmd_quiz)
 
-    p = sub.add_parser("all", help="跑完整套（大纲 → 讲义 → 习题），断点续跑")
+    p = sub.add_parser("all", help="跑完整套（大纲 → 讲义 → 习题），断点续跑", allow_abbrev=False)
     p.add_argument("--topic", required=True, help="课程主题")
     p.add_argument("--outdir", default="course-out",
                    help="输出目录，默认 course-out；建议指到包外")
@@ -1959,7 +2017,7 @@ def build_parser():
     _add_model_opts(p, with_out=False)
     p.set_defaults(func=cmd_all)
 
-    p = sub.add_parser("cost", help="只算钱，一次调用都不发")
+    p = sub.add_parser("cost", help="只算钱，一次调用都不发", allow_abbrev=False)
     p.add_argument("--chapters", type=int, default=4, help="章数，默认 4")
     p.add_argument("--sections-per-chapter", type=int, default=2,
                    dest="sections_per_chapter", help="每章小节数，默认 2")
@@ -1973,7 +2031,7 @@ def build_parser():
     _add_json(p)
     p.set_defaults(func=cmd_cost)
 
-    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）")
+    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）", allow_abbrev=False)
     p.add_argument("--type", default="text", help="模型类型，默认 text；传 all 看全部")
     p.add_argument("--key", help="临时指定 A7W API Key")
     _add_json(p)

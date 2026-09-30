@@ -3,7 +3,7 @@ name: sanjianke-agent-orchestrator
 slug: sanjianke-agent-orchestrator
 displayName: 有状态Agent编排·状态图断点续跑与人工审批接统一模型网关
 description: "把 Agent 写成显式的状态图：每一步是一个节点、跳转关系是边，于是「暂停、恢复、回放到某一步、换一条分支重跑」都成了框架能力。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调 75 个在架模型，工具调用与结构化输出都用同一条链路；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "普通的 Agent 循环是一个 while：调模型、看有没有工具调用、执行工具、再调模型。写起来快，但进程一挂整轮对话白跑，想在第 5 步插个人工确认就得自己造一套状态机。把那个隐式循环变成显式的图之后，暂停、恢复、回放、换分支重跑都成了框架能力。模型这一头同样收成一处：base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商）与 21 个生成应用，工具调用与结构化输出走同一条链路，换 model 字符串就是换模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

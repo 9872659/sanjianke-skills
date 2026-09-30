@@ -3,7 +3,7 @@ name: sanjianke-llm-flow-builder
 slug: sanjianke-llm-flow-builder
 displayName: 拖拽式LLM流程编排·画布搭Agent接OpenAI兼容模型网关
 description: "把「模型 + 提示词 + 检索 + 工具」画成流程图，连好线点运行就得到一个带界面的流程应用，同时对外暴露一套 HTTP 接口供程序调用。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ 就能用同一把 Key 调 75 个在架模型，换 model 即换模型；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "把「模型、提示词、知识库检索、工具调用」做成画布上的节点：连好线、点运行，立刻得到一个带界面的服务，同时对外暴露 HTTP 接口供程序调用——改流程不用改代码，业务同学在画布上调整分支和提示词，后端同学只负责调接口。模型提供方不再逐家注册：把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，换 model 字符串就是换模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

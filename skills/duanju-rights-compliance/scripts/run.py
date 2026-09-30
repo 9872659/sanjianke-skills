@@ -535,10 +535,11 @@ def build_parser():
                     "（POST /api/v1/chat/completions）。",
         epilog="等级：high 必须改 / medium 建议改 / low 人工确认 / pass 未发现问题；"
                "最终等级取本地正则与大模型里更高的那个。计费：1 元 = 100 点，按 token 计。",
-        formatter_class=argparse.RawDescriptionHelpFormatter)
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False)
     sub = ap.add_subparsers(dest="cmd")
 
-    p = sub.add_parser("screen", help="批量初筛一批文案")
+    p = sub.add_parser("screen", help="批量初筛一批文案", allow_abbrev=False)
     p.add_argument("--file", help="文案文件：txt 一行一条 / csv 用 --column 指定列 / json 字符串数组")
     p.add_argument("--text", action="append", help="直接给一条文案，可重复多次")
     p.add_argument("--column", help="CSV 里放文案的列名（或 1 开始的列号）")

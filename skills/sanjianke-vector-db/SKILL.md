@@ -3,7 +3,7 @@ name: sanjianke-vector-db
 slug: sanjianke-vector-db
 displayName: 分布式向量数据库检索·亿级向量相似度搜索元数据过滤混合检索
 description: "把文本与多模态数据算成的向量存起来，并在毫秒内找出「和这句话最像的 N 条」：向量与标量一起存，支持元数据过滤、范围检索与稠密叠加全文的混合检索。embedding 走 api.a7w.cn 兼容网关，本地零显卡。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "规模化向量数据库用法：从本机一个文件起步、到单机容器承担业务、再到集群扛住几十亿条向量，同一套接口覆盖三种规模。向量与标量一起存，支持按用户、时间、标签过滤，支持稠密加稀疏的混合检索与重排。embedding 走 api.a7w.cn 的 OpenAI 兼容网关，一把 Key 调用 75 个在架模型。覆盖语义搜索、以图搜图、RAG 正式存储、多租户分层等场景。含索引类型选型、维度一致性铁律、集合加载与健康检查、客户端与服务端版本配对、计费口径与排错清单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

@@ -3,7 +3,7 @@ name: sanjianke-canvas-drama
 slug: sanjianke-canvas-drama
 displayName: AI短剧创作画布·智能分镜图像视频生成一站式出片工作流
 description: "把一部短剧从想法做到能发：无限画布式排布分镜、AI Agent 拆解剧本、逐镜生成图像与视频、配音配乐、导出成片——全流程一套工作流。图像、视频、语音、音乐全部走 api.a7w.cn，一把 Key 打通，不用自己部署模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.3
+version: 2.0.4
 summary: "一套跑得通的 AI 短剧创作工作流：用无限画布排布分镜、用 AI Agent 拆解剧本与人物小传、逐镜生成图像与视频、配音配乐、最后导出成片。覆盖剧本结构拆解、人物一致性控制、分镜表写法、镜头语言与运镜提示词、首尾帧衔接、对口型与数字人口播、字幕与配乐合成等完整链路。所有 AI 能力走 api.a7w.cn——图像、视频、语音、音乐一个 Key 全包，不用自己部署模型、不用买显卡。适用于短剧批量出片、小说改编、广告分镜、漫画分镜转视频、口播矩阵号、课程视频制作等场景。含分镜模板、提示词范式、成本估算与排错清单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

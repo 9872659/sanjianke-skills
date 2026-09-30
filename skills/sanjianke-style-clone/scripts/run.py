@@ -219,8 +219,7 @@ BANNED_PATTERNS = [
     # 「第一」加了两组排除：`第一次` 是时间序数，`第一步` 是步骤序数，两者都不是
     # 排他性宣称。第一版只有 `(?!次)`，实测把「我见过太多同行栽在第一步」判成
     # 高风险广告法命中，整篇被拦 —— 是**在真机跑出来的误伤**，不是想出来的。
-    (r"第一(?:名|品牌|选择)?(?!次|步|天|周|月|年|时间)|No\.?\s*1|TOP\s*1|排名第一|销量第一", "高",
-     "「第一」类排他性表述", None),
+    (r"排名第一|销量第一|口碑第一|行业第一|全国第一|全网第一|全球第一|世界第一|第一品牌|第一选择", "高", "「第一」类排他性表述", None),
     (r"国家级|世界级|全球级|国际级|国家级产品", "高",
      "「国家级」等权威性词汇属明令禁止", None),
     (r"100\s*%|百分之百|百分百", "高",
@@ -1472,6 +1471,23 @@ class UsageError(StyleError):
     """
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
          max_tokens=4096, key=None, timeout=300, json_mode=True):
     """调一次 POST /api/v1/chat/completions，返回 (正文, usage)。
@@ -1560,6 +1576,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
         raise StyleError("模型没返回 choices：{}".format(
             json.dumps(payload, ensure_ascii=False)[:300]))
     content = ((choices[0] or {}).get("message") or {}).get("content") or ""
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
+    _LAST_FINISH["chars"] = len(content)
     usage = (data_obj or {}).get("usage") or (payload or {}).get("usage") or {}
     return content, usage
 
@@ -1580,6 +1599,42 @@ def parse_first_json(text):
         candidates.append(fenced.group(1).strip())
     candidates.append(text)
     for cand in candidates:
+        # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+        # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+        # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+        start = None
+        for i, ch in enumerate(cand):
+            if ch in "{[":
+                start = i
+                break
+        if start is not None:
+            depth, in_str, esc, end = 0, False, False, None
+            for i in range(start, len(cand)):
+                ch = cand[i]
+                if in_str:
+                    if esc:
+                        esc = False
+                    elif ch == "\\":
+                        esc = True
+                    elif ch == '"':
+                        in_str = False
+                    continue
+                if ch == '"':
+                    in_str = True
+                elif ch in "{[":
+                    depth += 1
+                elif ch in "}]":
+                    depth -= 1
+                    if depth == 0:
+                        end = i + 1
+                        break
+            if end is not None:
+                try:
+                    obj = json.loads(cand[start:end])
+                    if isinstance(obj, (dict, list)):
+                        return obj
+                except ValueError:
+                    pass
         for i, ch in enumerate(cand):
             if ch not in "{[":
                 continue
@@ -1589,7 +1644,8 @@ def parse_first_json(text):
                 continue
             if isinstance(obj, (dict, list)):
                 return obj
-    raise StyleError("模型返回的不是合法 JSON：{}".format(text[:300].replace("\n", " ")))
+    raise StyleError("模型返回的不是合法 JSON：{}{}".format(
+        text[:300].replace("\n", " "), _fr_hint()))
 
 
 # ---------------------------------------------------------------------------
@@ -3096,26 +3152,27 @@ def _main(argv_eff):
         prog="run.py",
         description="三剪客 · 风格克隆体（走 api.a7w.cn 的 OpenAI 兼容大模型端点）",
         epilog="端点：POST https://api.a7w.cn/api/v1/chat/completions · "
-               "GET https://api.a7w.cn/api/v1/models")
+               "GET https://api.a7w.cn/api/v1/models",
+        allow_abbrev=False)
     ap.add_argument("--json", action="store_true",
                     help="以 JSON 输出（写在子命令前后都可以）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("profile", help="从样本抽风格档案（纯本地统计，零成本不调模型）")
+    p = sub.add_parser("profile", help="从样本抽风格档案（纯本地统计，零成本不调模型）", allow_abbrev=False)
     _add_sample_opts(p)
     _add_json(p)
     p.add_argument("--out", help="把档案写到这个文件（必须在包外）")
     p.add_argument("--outdir", help="产出目录（必须在包外）")
     p.set_defaults(func=_run_profile)
 
-    p = sub.add_parser("baseline", help="样本自身的自相似基线（反例判据，零成本）")
+    p = sub.add_parser("baseline", help="样本自身的自相似基线（反例判据，零成本）", allow_abbrev=False)
     _add_sample_opts(p)
     _add_json(p)
     p.add_argument("--out", help="把结果写到这个文件（必须在包外）")
     p.add_argument("--outdir", help="产出目录（必须在包外）")
     p.set_defaults(func=_run_baseline)
 
-    p = sub.add_parser("write", help="按风格档案写一篇新稿（要花 token）")
+    p = sub.add_parser("write", help="按风格档案写一篇新稿（要花 token）", allow_abbrev=False)
     p.add_argument("--profile", required=True, help="风格档案 JSON（profile --out 生成）")
     p.add_argument("--topic", required=True, help="主题 / 选题")
     p.add_argument("--brief", help="额外要求")
@@ -3123,7 +3180,7 @@ def _main(argv_eff):
     _add_model_opts(p, with_cost=True)
     p.set_defaults(func=_run_write)
 
-    p = sub.add_parser("verify", help="风格一致性自检：新稿逐指标 vs 档案（纯本地，零成本）")
+    p = sub.add_parser("verify", help="风格一致性自检：新稿逐指标 vs 档案（纯本地，零成本）", allow_abbrev=False)
     p.add_argument("--profile", required=True, help="风格档案 JSON")
     p.add_argument("--result", help="write/all 的结果 JSON")
     p.add_argument("--file", help="稿子文件（.md/.txt）——拿别的风格的稿子跑就是反例测试")
@@ -3134,7 +3191,7 @@ def _main(argv_eff):
     p.add_argument("--outdir", help="产出目录（必须在包外）")
     p.set_defaults(func=_run_verify)
 
-    p = sub.add_parser("diff", help="档案 vs 新稿的指标对照表（纯本地，零成本）")
+    p = sub.add_parser("diff", help="档案 vs 新稿的指标对照表（纯本地，零成本）", allow_abbrev=False)
     p.add_argument("--profile", required=True, help="风格档案 JSON")
     p.add_argument("--result", help="write/all 的结果 JSON")
     p.add_argument("--file", help="稿子文件（.md/.txt）")
@@ -3145,7 +3202,7 @@ def _main(argv_eff):
     p.add_argument("--outdir", help="产出目录（必须在包外）")
     p.set_defaults(func=_run_diff)
 
-    p = sub.add_parser("all", help="抽档 → 写 → 自检 → 迭代（要花 token）")
+    p = sub.add_parser("all", help="抽档 → 写 → 自检 → 迭代（要花 token）", allow_abbrev=False)
     _add_sample_opts(p)
     p.add_argument("--topic", required=True, help="主题 / 选题")
     p.add_argument("--brief", help="额外要求")
@@ -3157,7 +3214,7 @@ def _main(argv_eff):
     _add_model_opts(p, with_cost=True)
     p.set_defaults(func=_run_all)
 
-    p = sub.add_parser("cost", help="只算钱（不给单价就只报 token，不编价）")
+    p = sub.add_parser("cost", help="只算钱（不给单价就只报 token，不编价）", allow_abbrev=False)
     _add_sample_opts(p)
     p.add_argument("--from-result", dest="from_result",
                    help="读 write/all 的结果文件，用**真实 token 数**算钱")
@@ -3170,7 +3227,7 @@ def _main(argv_eff):
     p.add_argument("--out", help="把结果写到这个文件（必须在包外）")
     p.set_defaults(func=_run_cost)
 
-    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）")
+    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）", allow_abbrev=False)
     p.add_argument("--type", default="text", help="模型类型，默认 text；传 all 看全部")
     p.add_argument("--key", help="临时指定 A7W API Key")
     _add_json(p)

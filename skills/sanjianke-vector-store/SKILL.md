@@ -3,7 +3,7 @@ name: sanjianke-vector-store
 slug: sanjianke-vector-store
 displayName: 轻量向量库检索搭建·文档向量化语义搜索元数据过滤知识库零显卡
 description: "像用 SQLite 一样用一个向量库：进程内就能做语义检索，不用先起一套分布式基础设施；集合增删改查、元数据过滤、按内容包含检索一应俱全。向量化交给 api.a7w.cn 的兼容网关，本地零显卡。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "给一批文本做「按意思搜」的最短路径：用户问「怎么退款」，能命中写着「申请售后」的那段话。四种客户端形态按需选——进程内、文件持久化、自托管服务端、托管云；集合增删改查、元数据过滤、按内容包含检索一应俱全。向量化走 api.a7w.cn 的 OpenAI 兼容网关，一把 Key 调用 75 个在架模型，本地零显卡。覆盖本地知识库检索、语义搜索原型、来源过滤、RAG 召回层等场景。含选型对照、数据留存与并发语义要点、离线环境的做法、真实计费口径与排错清单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

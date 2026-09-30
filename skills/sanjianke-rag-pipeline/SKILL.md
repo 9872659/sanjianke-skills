@@ -3,7 +3,7 @@ name: sanjianke-rag-pipeline
 slug: sanjianke-rag-pipeline
 displayName: RAG知识库流水线搭建·文档切分向量检索大模型问答一条龙零部署
 description: "把一堆文档变成能问答的知识库：切分、召回、拼 prompt 每一步都看得见、换得掉。模型这一层全部走 api.a7w.cn 的 OpenAI 兼容网关，一个 base_url、一把 Key 调 75 个在架大模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "知识库问答（RAG）的完整搭建路径：文档怎么切、片段怎么召回、上下文怎么拼、答案怎么控，检索链路每一环都掌握在自己手里。所有模型调用走 api.a7w.cn 的 OpenAI 兼容网关，只换 base_url 与 model，一把 Key 调用 75 个在架大模型，不需要自己部署 embedding 与对话模型。覆盖企业知识库、产品手册问答、客服话术库、法规条款检索等场景。含零安装本地检索写法、逐步 curl 调用、真实计费口径、素材要求与常见坑。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

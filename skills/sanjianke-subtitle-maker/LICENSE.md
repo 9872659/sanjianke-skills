@@ -27,6 +27,6 @@ SOFTWARE.
 本 Skill 由 **三剪客** 出品并独立编写，正文为原创内容，不包含第三方项目的源代码。
 
 - 项目：`Buzz`
-- 仓库：https://github.com/chidiwilliams/buzz
+- 仓库：（上游开源项目）
 
 **不提供该项目的技术支持。** 软件本身的问题请走上游仓库的 Issues。

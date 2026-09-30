@@ -3,7 +3,7 @@ name: one-key-ai-gateway
 slug: one-key-ai-gateway
 displayName: 三剪客 · 国产大模型一键调用统一路由
 description: "国产大模型一键调用统一路由：一个 Key、一个地址调用 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，兼容 OpenAI 协议，换 model 即换模型；含鉴权、计费、回调、错误码与零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.1.3
+version: 1.1.4
 summary: "把 api.a7w.cn（算力集市）当统一 AI 网关：DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元、百度文心、MiniMax、小米 MiMo 等国产大模型，与 OpenAI GPT、Google nano-banana、xAI Grok 等国际模型，连同视频/图像/语音/数字人/音乐 21 个生成应用，全部收敛成一个入口。换 base_url 即可用，先冻结后结算、失败全额退回。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

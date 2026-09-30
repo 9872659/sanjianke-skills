@@ -3,7 +3,7 @@ name: sanjianke-graph-rag
 slug: sanjianke-graph-rag
 displayName: 图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙
 description: "先把整批文档读成一张实体关系图，再切成多级社区并逐层写摘要，让「主题、趋势、概览」这类全局性问题有答案——普通向量检索答不上来的问题它能答。抽图与回答都走 api.a7w.cn 网关。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "图谱增强检索：把整批文档读成实体关系图，再切成多级社区并逐层写摘要，让「这本书的主要主题是什么」「这几百份工单反复出现的根因有哪些」这类全局性问题有答案；局部问题仍可顺着实体与关系追问。抽图、社区摘要与回答全部走 api.a7w.cn 的 OpenAI 兼容网关，一把 Key 调用 75 个在架模型。覆盖行业报告趋势问答、卷宗与访谈梳理、工单根因归纳等场景。含全局与局部问答怎么选、社区层级与摘要粒度、先用小样本探路再全量的成本控制法与排错清单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

@@ -3,7 +3,7 @@ name: sanjianke-agent-memory
 slug: sanjianke-agent-memory
 displayName: Agent长期记忆库·跨会话用户偏好事实检索接入指南
 description: "给 Agent 接一层跨会话长期记忆：对话里的偏好、事实、决定抽成条目存好，下一轮按用户/会话维度搜回来拼进提示词。含完整操作文档、作用域与检索参数表、向量模型配置与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.4
 summary: "把长期记忆接进你的 Agent：对话里的事实、偏好、决定自动抽成条目存好，下一轮按用户 / 会话 / Agent 维度用自然语言搜回来拼进提示词，跨会话不必再让用户重复自我介绍。模型侧统一走 OpenAI 兼容网关 —— 只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元等国产为主，含 OpenAI / Google / xAI 国际主流），不必自己部署模型或买显卡。含作用域设计、写入节流、检索提准与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

@@ -3,7 +3,7 @@ name: sanjianke-light-rag
 slug: sanjianke-light-rag
 displayName: 轻量图谱知识库搭建·实体关系抽取双层级检索跨文档问答零部署
 description: "在向量检索之外再建一层知识图谱：用 api.a7w.cn 的兼容网关从文档里抽实体与关系，检索时既看具体实体也看全局关系链，跨文档的关系型问题答得上来，本地零显卡、不用部署模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "让知识库不止会「找相似段落」：把文档抽成实体—关系图，检索时既能在图上找具体实体，也能顺着关系链看全局，再和普通向量召回合到一起。抽取与生成全部走 api.a7w.cn 的 OpenAI 兼容网关，一把 Key 调用 75 个在架模型，本地只留图谱与索引，不用自己部署大模型。覆盖跨文档关系问答、法律条文与例外条款、金融研报脉络、学术论文综述、操作规范适用范围等场景。含实体抽取提示词写法、双层级检索策略、增量更新与按文档删除、存储后端选型与排错清单。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

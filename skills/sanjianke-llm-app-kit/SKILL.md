@@ -3,7 +3,7 @@ name: sanjianke-llm-app-kit
 slug: sanjianke-llm-app-kit
 displayName: LLM应用开发套件·统一接口接OpenAI兼容网关换模型只改一行
 description: "用一套统一接口把模型、工具、记忆、检索串成能跑完的 LLM 应用：把模型提供方的 base_url 指向 https://api.a7w.cn/ ，同一把 Key 调用 75 个在架模型，换 model 字符串就是换模型，业务代码不用动；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "写 LLM 应用最烦的不是模型不够强，是每换一个供应商就得重写一层胶水：一家一套参数、一家一套消息格式、一家一份账单。这个 Skill 讲的就是把这层胶水标准化之后，把模型提供方整个指向 https://api.a7w.cn/ —— 一个 base_url、一把 Key，现场可查 75 个在架模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用。换模型就是换一个字符串，不用换端点、不用换凭证、账单还是同一份。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

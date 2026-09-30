@@ -61,6 +61,70 @@ class ChatError(a7w.A7wError):
     """大模型调用失败。"""
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
+def _outermost_json(text):
+    """按**括号配平**从 text 里切出最外层那个完整的 JSON 值，切不出来返回 None。
+
+    为什么不用 `find("{")` / `rfind("}")`：
+    外层 JSON 坏掉时（被截断 / 模型吐了语法错），那种切法会把
+    **靠后的** `}` 也圈进来，或者相反地切掉一段；更要紧的是原实现
+    「逐个 { 试」会从嵌套结构里解出一个**内层**对象交出去，
+    上层于是报「缺字段」——**报错指向了错误的方向**。
+    配平切法保证：要么给出真正的顶层值，要么老实返回 None。
+    """
+    if not text:
+        return None
+    start = None
+    for i, ch in enumerate(text):
+        if ch in "{[":
+            start = i
+            break
+    if start is None:
+        return None
+    depth, in_str, esc, end = 0, False, False, None
+    for i in range(start, len(text)):
+        ch = text[i]
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch in "{[":
+            depth += 1
+        elif ch in "}]":
+            depth -= 1
+            if depth == 0:
+                end = i + 1
+                break
+    if end is None:
+        return None
+    try:
+        return json.loads(text[start:end])
+    except ValueError:
+        return None
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
          max_tokens=2048, key=None, timeout=180, json_mode=False):
     """调一次 https://api.a7w.cn/api/v1/chat/completions，返回 (正文, usage)。
@@ -125,6 +189,8 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
     if not choices:
         raise ChatError("返回里没有 choices：{}".format(json.dumps(payload, ensure_ascii=False)[:400]))
     msg = choices[0].get("message") or {}
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
     text = (msg.get("content") or "").strip()
     if not text:
         text = (msg.get("reasoning_content") or "").strip()
@@ -323,13 +389,9 @@ def parse_json_loose(text):
         return json.loads(t)
     except ValueError:
         pass
-    start, end = t.find("{"), t.rfind("}")
-    if start >= 0 and end > start:
-        try:
-            return json.loads(t[start:end + 1])
-        except ValueError:
-            pass
-    return None
+    # ⚠️ 先按括号配平取**最外层**完整值 —— 别用 find/rfind，
+    # 也别逐个 { 试（那会解出内层对象，把报错引向错误的方向）。
+    return _outermost_json(t)
 
 
 def cmd_compliance(a):
@@ -347,7 +409,7 @@ def cmd_compliance(a):
                       max_tokens=a.max_tokens, key=a.key, json_mode=a.json_mode)
     data = parse_json_loose(raw)
     if data is None:
-        sys.stderr.write("模型没有返回可解析的 JSON，下面是原文。\n")
+        sys.stderr.write("模型没有返回可解析的 JSON{}，下面是原文。\n".format(_fr_hint()))
         return emit(a, raw, extra={"model": a.model, "usage": usage,
                                    "points_cost": cost_of(usage), "parsed": False})
 
@@ -442,10 +504,11 @@ def main(argv=None):
     ap = argparse.ArgumentParser(
         prog="run.py",
         description="小红书带货直播作战包 · 出稿与预检（走 api.a7w.cn）",
-        epilog="端点：POST /api/v1/chat/completions · GET /api/v1/models")
+        epilog="端点：POST /api/v1/chat/completions · GET /api/v1/models",
+        allow_abbrev=False)
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("note", help="按交付契约生成商品笔记（大模型）")
+    p = sub.add_parser("note", help="按交付契约生成商品笔记（大模型）", allow_abbrev=False)
     _add_common(p)
     p.add_argument("--product", help="商品名")
     p.add_argument("--price", type=float, help="售价（元）")
@@ -456,7 +519,7 @@ def main(argv=None):
     p.add_argument("--evidence", help="可用的真实证据（实拍 / 检测报告 / 参数），没写就不许编")
     p.set_defaults(func=cmd_note)
 
-    p = sub.add_parser("live", help="生成五段式分钟级直播脚本（大模型）")
+    p = sub.add_parser("live", help="生成五段式分钟级直播脚本（大模型）", allow_abbrev=False)
     _add_common(p)
     p.add_argument("--minutes", type=int, default=30, help="直播总时长（分钟），默认 30")
     p.add_argument("--products", help="本场商品，逗号分隔，按上架顺序")
@@ -465,7 +528,7 @@ def main(argv=None):
     p.add_argument("--usp", help="主推品卖点/证据")
     p.set_defaults(func=cmd_live)
 
-    p = sub.add_parser("compliance", help="大模型语义违禁词 / 广告法预检")
+    p = sub.add_parser("compliance", help="大模型语义违禁词 / 广告法预检", allow_abbrev=False)
     _add_common(p)
     p.add_argument("-c", "--category", help="类目，叠加类目规则")
     p.add_argument("--format", default="md", choices=["md", "json", "csv"], help="输出格式")
@@ -476,7 +539,7 @@ def main(argv=None):
                    help="额外要求上游按 JSON 对象返回（部分模型不支持，失败可去掉）")
     p.set_defaults(func=cmd_compliance)
 
-    p = sub.add_parser("models", help="列出平台在架的文本模型（免费）")
+    p = sub.add_parser("models", help="列出平台在架的文本模型（免费）", allow_abbrev=False)
     p.add_argument("--type", default="text", help="模型类型，默认 text；传 all 看全部")
     p.add_argument("--key", help="临时指定 A7W API Key")
     p.add_argument("--json", action="store_true", help="原始 JSON")

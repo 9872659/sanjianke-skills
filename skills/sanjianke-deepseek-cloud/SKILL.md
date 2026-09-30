@@ -3,7 +3,7 @@ name: sanjianke-deepseek-cloud
 slug: sanjianke-deepseek-cloud
 displayName: DeepSeek全系云端直连·免部署一个Key切换调用大模型
 description: "直接用 api.a7w.cn 在架的 DeepSeek 全系大模型，不用自己部署、不用显卡、不用下模型文件。四款在架型号随任务切换，兼容 OpenAI 协议，只换 base_url 与 model。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.1
+version: 2.0.4
 summary: "不用自己部署，直接调 api.a7w.cn 在架的 DeepSeek 全系大模型：填两行配置就能用上 V4-Pro、V4-Flash、V3.2 与 R1-Distill-32B，免显卡、免运维、按量计费，调用失败直接退款。日常问答、推理、长文、代码与批量跑量都能按用途选档，接线三种任选：curl 直连、OpenAI SDK 只换 base_url 与 api_key、包内零依赖客户端。含流式示例、选型表、常见坑与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

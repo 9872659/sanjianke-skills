@@ -1777,18 +1777,19 @@ def _add_json(p):
 def build_parser():
     ap = argparse.ArgumentParser(
         prog="run.py",
-        description="三剪客 · 头像写真工坊：一张人像照 + 一个风格包，批量出头像与写真")
+        description="三剪客 · 头像写真工坊：一张人像照 + 一个风格包，批量出头像与写真",
+        allow_abbrev=False)
     ap.add_argument("--key", help="临时指定 api.a7w.cn 的 Key（别写进脚本或文档）")
     ap.add_argument("--json", action="store_true", help="以 JSON 输出")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     # --- styles ---
-    p = sub.add_parser("styles", help="列出内置风格包（零网络、零成本）")
+    p = sub.add_parser("styles", help="列出内置风格包（零网络、零成本）", allow_abbrev=False)
     _add_json(p)
     p.set_defaults(func=cmd_styles)
 
     # --- plan ---
-    p = sub.add_parser("plan", help="出拍摄方案（零网络、零成本，本地矩阵展开）")
+    p = sub.add_parser("plan", help="出拍摄方案（零网络、零成本，本地矩阵展开）", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--style", action="append", choices=list(STYLE_PACKS),
                    help="风格包，可重复；默认 business")
@@ -1804,7 +1805,7 @@ def build_parser():
     p.set_defaults(func=cmd_plan)
 
     # --- cost ---
-    p = sub.add_parser("cost", help="只算钱不出图")
+    p = sub.add_parser("cost", help="只算钱不出图", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--count", type=int, required=True, help="要出几张")
     p.add_argument("--resolution", default="1K", choices=list(RESOLUTIONS))
@@ -1813,12 +1814,12 @@ def build_parser():
     p.set_defaults(func=cmd_cost)
 
     # --- models ---
-    p = sub.add_parser("models", help="列出在架应用与模型")
+    p = sub.add_parser("models", help="列出在架应用与模型", allow_abbrev=False)
     _add_json(p)
     p.set_defaults(func=cmd_models)
 
     # --- verify ---
-    p = sub.add_parser("verify", help="复核已有图片的比例真伪（闸门一）")
+    p = sub.add_parser("verify", help="复核已有图片的比例真伪（闸门一）", allow_abbrev=False)
     _add_json(p)
     p.add_argument("files", nargs="+", help="要复核的图片文件")
     p.add_argument("--ratio", required=True, help="请求比例，如 1:1 / 3:4 / 16:9")
@@ -1827,7 +1828,7 @@ def build_parser():
     p.set_defaults(func=cmd_verify)
 
     # --- gen ---
-    p = sub.add_parser("gen", help="批量出图（真花钱，先报价再确认）")
+    p = sub.add_parser("gen", help="批量出图（真花钱，先报价再确认）", allow_abbrev=False)
     _add_json(p)
     p.add_argument("--plan", help="plan 产出的方案 JSON")
     p.add_argument("--prompt", help="直接给一条出图提示词（与 --plan 二选一）")

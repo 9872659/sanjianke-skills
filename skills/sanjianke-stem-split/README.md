@@ -57,7 +57,7 @@ Demucs：音乐分轨与人声提取 的安装、常用命令与避坑要点
 本 Skill 由 **三剪客** 出品并独立编写，正文为原创内容，不包含第三方项目的源代码。
 
 - 项目：`Demucs`
-- 仓库：https://github.com/facebookresearch/demucs
+- 仓库：（上游开源项目）
 
 ---
 

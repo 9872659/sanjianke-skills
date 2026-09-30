@@ -3,7 +3,7 @@ name: short-drama-factory
 slug: short-drama-factory
 displayName: 三剪客 · AI 短剧工厂出片全流程
 description: "把一本小说跑成一部成片的工业化流程：把 api.a7w.cn 的文本/图像/视频/语音四类能力按十个阶段串成流水线，用「多参考图 + 硬约束双锁」和「跨镜头状态快照」把人物一致性压住。含分镜九铁律、模型参数差异表、真实单价与成本台账。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.0
+version: 1.1.2
 summary: "AI 短剧的量产方法论 + 可落地参数：十个阶段流水线、人物一致性双锁（多参考图 + 全局硬约束）、站位记忆的跨镜头状态承接、分镜九铁律与四类过渡桥梁、逐模型参数适配（qwen-image / gpt-image / h3 / wan 各吃一套）、真实实测单价与断点续跑。全部算力走 api.a7w.cn。图文并茂，附 20 张实测配图。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

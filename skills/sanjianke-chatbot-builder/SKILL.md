@@ -3,7 +3,7 @@ name: sanjianke-chatbot-builder
 slug: sanjianke-chatbot-builder
 displayName: 聊天机器人接大模型·多平台机器人用国产模型回话方案
 description: "让聊天机器人真正会说话：群里收到消息，用 api.a7w.cn 的 OpenAI 兼容接口让 DeepSeek、通义千问、智谱 GLM、Kimi、混元等 75 个在架大模型回话，同一把 Key 还能发图、发语音、转写群里的语音。含多轮上下文裁剪、并发与 429 处理、消息去重、超时降级、模型选型与控成本口径，以及零依赖客户端与排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.1
+version: 2.0.2
 summary: "把大模型接进聊天机器人的完整落地方案：框架侧负责平台协议与事件分发，大模型侧统一走 api.a7w.cn 的 OpenAI 兼容入口，一个 Key 调 75 个在架大模型与 21 个生成应用。覆盖多轮上下文裁剪、同群串行与并发控制、429 退避重试、消息幂等去重、回复分段、超时降级到更快的模型、群里 @ 才触发、内容合规自检；并给出用同一把 Key 发图（nano_banana）、发语音（voice_tts/tts）、转写语音（voice_tts/stt）的接法与按用途选模型表、控成本口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

@@ -1275,6 +1275,23 @@ def snap_to_ratio(src, dst, want_ratio, probe_pil=True):
                      "本机没有 PIL，请去掉 --snap 或装 pillow")
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
          max_tokens=8192, key=None, json_mode=True, retries=CHAT_RETRIES):
     """一次文本调用（OpenAI 兼容）。返回 (content, usage)。
@@ -1296,6 +1313,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
             payload = a7w._request("POST", CHAT_URL, a7w.load_key(key), body=body, timeout=300)
             if isinstance(payload, dict) and payload.get("choices"):
                 content = ((payload["choices"][0].get("message") or {}).get("content")) or ""
+                finish_reason = (payload["choices"][0] or {}).get("finish_reason")
+                _LAST_FINISH["reason"] = finish_reason
+                _LAST_FINISH["chars"] = len(content)
                 return content, payload.get("usage") or {}
             last = a7w.A7wError("模型没返回 choices：%s" % json.dumps(
                 payload, ensure_ascii=False)[:200])
@@ -1319,6 +1339,42 @@ def parse_first_json(text):
     except ValueError:
         pass
     dec = json.JSONDecoder()
+    # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+    # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+    # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+    start = None
+    for i, ch in enumerate(s):
+        if ch in "{[":
+            start = i
+            break
+    if start is not None:
+        depth, in_str, esc, end = 0, False, False, None
+        for i in range(start, len(s)):
+            ch = s[i]
+            if in_str:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+            elif ch in "{[":
+                depth += 1
+            elif ch in "}]":
+                depth -= 1
+                if depth == 0:
+                    end = i + 1
+                    break
+        if end is not None:
+            try:
+                obj = json.loads(s[start:end])
+                if isinstance(obj, dict):
+                    return obj
+            except ValueError:
+                pass
     for i, ch in enumerate(s):
         if ch in "{[":
             try:
@@ -1326,7 +1382,8 @@ def parse_first_json(text):
                 return obj
             except ValueError:
                 continue
-    raise a7w.A7wError("模型返回的不是合法 JSON（前 200 字：%s）" % s[:200])
+    raise a7w.A7wError("模型返回的不是合法 JSON（前 200 字：%s）%s"
+                       % (s[:200], _fr_hint()))
 
 
 # ===========================================================================
@@ -3059,13 +3116,14 @@ def build_parser():
         description="三剪客 · 课件配图与排版：讲义 → 分页 → 每页内容 → 配图 → 本地排版 PNG",
         epilog="端点：POST /api/v1/chat/completions（文本）、"
                "POST /api/v1/apps/nano_banana/submit（出图）、"
-               "GET /api/v1/tasks/<task_id>（轮询）、GET /api/v1/models（模型清单）")
+               "GET /api/v1/tasks/<task_id>（轮询）、GET /api/v1/models（模型清单）",
+        allow_abbrev=False)
     ap.add_argument("--version", action="version", version="sanjianke-slide-kit %s" % VERSION)
     _add_json(ap, suppress=False)      # 父级：default=False，保证 a.json 永远存在
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     # --- outline ---
-    p = sub.add_parser("outline", help="读讲义 → 分页方案（只花文本钱）")
+    p = sub.add_parser("outline", help="读讲义 → 分页方案（只花文本钱）", allow_abbrev=False)
     _add_source_opts(p)
     p.add_argument("--outdir", default="slide-out", help="产出目录（**指到包外**）")
     p.add_argument("--out", help="额外把分页方案 JSON 写一份到指定路径")
@@ -3078,7 +3136,7 @@ def build_parser():
     p.set_defaults(func=cmd_outline)
 
     # --- pages ---
-    p = sub.add_parser("pages", help="把分页方案展开成成稿（要点 + 讲稿备注）")
+    p = sub.add_parser("pages", help="把分页方案展开成成稿（要点 + 讲稿备注）", allow_abbrev=False)
     _add_deck_opts(p)
     p.add_argument("--style", help="讲课风格补充说明")
     p.add_argument("--strict-notes", action="store_true",
@@ -3089,14 +3147,14 @@ def build_parser():
     p.set_defaults(func=cmd_pages)
 
     # --- images ---
-    p = sub.add_parser("images", help="按页出配图（真花钱，先报价）")
+    p = sub.add_parser("images", help="按页出配图（真花钱，先报价）", allow_abbrev=False)
     _add_deck_opts(p)
     _add_image_opts(p)
     _add_model_opts(p)
     p.set_defaults(func=cmd_images)
 
     # --- render ---
-    p = sub.add_parser("render", help="本地排版成逐页 PNG（零成本、零网络，需要 PIL）")
+    p = sub.add_parser("render", help="本地排版成逐页 PNG（零成本、零网络，需要 PIL）", allow_abbrev=False)
     _add_deck_opts(p)
     p.add_argument("--theme", choices=list(THEME_CHOICES),
                    help="配色主题，默认按分页方案或 ink")
@@ -3110,7 +3168,7 @@ def build_parser():
     p.set_defaults(func=cmd_render)
 
     # --- all ---
-    p = sub.add_parser("all", help="串起 outline → pages → images → render（断点续跑）")
+    p = sub.add_parser("all", help="串起 outline → pages → images → render（断点续跑）", allow_abbrev=False)
     _add_source_opts(p)
     p.add_argument("--outdir", default="slide-out", help="产出目录（**指到包外**）")
     p.add_argument("--style", help="讲课风格补充说明")
@@ -3128,7 +3186,7 @@ def build_parser():
     p.set_defaults(func=cmd_all)
 
     # --- cost ---
-    p = sub.add_parser("cost", help="只算钱，一次调用都不发")
+    p = sub.add_parser("cost", help="只算钱，一次调用都不发", allow_abbrev=False)
     p.add_argument("--pages", type=int, default=12, help="页数，默认 12")
     p.add_argument("--every", type=int, default=1, help="每 N 页一张图，默认 1")
     p.add_argument("--images", type=int, help="直接指定要出几张图（覆盖 --pages / --every）")
@@ -3147,7 +3205,7 @@ def build_parser():
     p.set_defaults(func=cmd_cost)
 
     # --- models ---
-    p = sub.add_parser("models", help="列出在架模型与应用（零成本）")
+    p = sub.add_parser("models", help="列出在架模型与应用（零成本）", allow_abbrev=False)
     p.add_argument("--type", default="all", help="只看某类模型：text / image / all")
     _add_model_opts(p)
     _add_json(p)

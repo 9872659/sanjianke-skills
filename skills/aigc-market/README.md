@@ -109,8 +109,28 @@ python3 scripts/a7w.py task <task_id>      # 查异步任务
 
 ---
 
-## 联系
+## 许可证
 
-- 技术微信：**9872659**
-- AI 插件市场：https://aigc.a7w.cn/
-- 算力集市：https://api.a7w.cn/
+MIT，见 `LICENSE.md`。
+
+---
+
+---
+
+## 联系我们
+
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
+
+---
+
+## 相关链接
+
+| 链接 | 地址 | 说明 |
+|---|---|---|
+| [算力集市 · 注册领 API Key](https://api.a7w.cn/) | api.a7w.cn | 一个 Key 调用全部 AI 算力；注册、充值、创建 Key 都在这 |
+| [AI 插件市场](https://aigc.a7w.cn/) | aigc.a7w.cn | 浏览全部 AI 插件与接口说明 |
+| [三剪客 · 一句话批量出片](https://ks.a7w.cn/) | ks.a7w.cn | 短剧二创 / 影视解说 / 矩阵号批量混剪桌面客户端 |
+| [视频超清 · 在线批量超分](https://vr.a7w.cn/) | vr.a7w.cn | 网页版视频超分，批量处理，最高 4K |
+| [0人公司 · AI Agent 平台](https://a7w.cn/) | a7w.cn | 主站，了解整套 AI Agent 生态 |

@@ -276,8 +276,7 @@ BANNED_PATTERNS = [
     # 那三种整串已经被上一条规则按「绝对化价格承诺」抓走了。
     # 少了这个 lookbehind，「全国第一」会额外多报一条「第一」（重复报，且理由不对），
     # 而且序数豁免会把它误放过一半 —— 实测发现并修掉。
-    (r"(?<![国网史])第一(名|品牌|选择|名)?(?!次)|No\.?\s*1|TOP\s*1|排名第一|销量第一|行业第一", "高",
-     "「第一」类排他性表述", "ordinal"),
+    (r"排名第一|销量第一|口碑第一|行业第一|全国第一|全网第一|全球第一|世界第一|第一品牌|第一选择", "高", "「第一」类排他性表述", "ordinal"),
     (r"国家级|世界级|全球级|国际级", "高",
      "「国家级」等权威性词汇属明令禁止"),
     (r"100\s*%|百分之百|百分百", "高",
@@ -798,6 +797,23 @@ class UsageError(NoteError):
     """
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.8,
          max_tokens=8192, key=None, timeout=300, json_mode=True):
     """调一次 POST /api/v1/chat/completions，返回 (正文, usage)。
@@ -886,6 +902,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.8,
         raise NoteError("模型没返回 choices：{}".format(
             json.dumps(payload, ensure_ascii=False)[:300]))
     content = ((choices[0] or {}).get("message") or {}).get("content") or ""
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
+    _LAST_FINISH["chars"] = len(content)
     usage = (data_obj or {}).get("usage") or (payload or {}).get("usage") or {}
     return content, usage
 
@@ -906,6 +925,42 @@ def parse_first_json(text):
         candidates.append(fenced.group(1).strip())
     candidates.append(text)
     for cand in candidates:
+        # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+        # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+        # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+        start = None
+        for i, ch in enumerate(cand):
+            if ch in "{[":
+                start = i
+                break
+        if start is not None:
+            depth, in_str, esc, end = 0, False, False, None
+            for i in range(start, len(cand)):
+                ch = cand[i]
+                if in_str:
+                    if esc:
+                        esc = False
+                    elif ch == "\\":
+                        esc = True
+                    elif ch == '"':
+                        in_str = False
+                    continue
+                if ch == '"':
+                    in_str = True
+                elif ch in "{[":
+                    depth += 1
+                elif ch in "}]":
+                    depth -= 1
+                    if depth == 0:
+                        end = i + 1
+                        break
+            if end is not None:
+                try:
+                    obj = json.loads(cand[start:end])
+                    if isinstance(obj, (dict, list)):
+                        return obj
+                except ValueError:
+                    pass
         for i, ch in enumerate(cand):
             if ch not in "{[":
                 continue
@@ -915,7 +970,8 @@ def parse_first_json(text):
                 continue
             if isinstance(obj, (dict, list)):
                 return obj
-    raise NoteError("模型返回的不是合法 JSON：{}".format(text[:300].replace("\n", " ")))
+    raise NoteError("模型返回的不是合法 JSON：{}{}".format(
+        text[:300].replace("\n", " "), _fr_hint()))
 
 
 # ===========================================================================
@@ -2898,12 +2954,13 @@ def build_parser():
         description="三剪客 · 小红书笔记工厂（母稿 → N 篇笔记 → 封面 → 合规自检）",
         epilog="端点：POST https://api.a7w.cn/api/v1/chat/completions · "
                "POST https://api.a7w.cn/api/v1/apps/nano_banana/submit · "
-               "GET https://api.a7w.cn/api/v1/tasks/<task_id>")
+               "GET https://api.a7w.cn/api/v1/tasks/<task_id>",
+        allow_abbrev=False)
     ap.add_argument("--json", action="store_true",
                     help="以 JSON 输出（写在子命令前后都可以）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("angles", help="出 N 个切入角度（默认零成本，本地角度库）")
+    p = sub.add_parser("angles", help="出 N 个切入角度（默认零成本，本地角度库）", allow_abbrev=False)
     _add_source_opts(p)
     p.add_argument("--strategy", choices=("local", "llm"), default="local",
                    help="local=本地角度库（零成本、可复现）；llm=针对材料出角度（一次调用）")
@@ -2913,7 +2970,7 @@ def build_parser():
     _add_json(p)
     p.set_defaults(func=_run_angles)
 
-    p = sub.add_parser("notes", help="按角度逐篇写笔记正文 + 话题标签（花钱）")
+    p = sub.add_parser("notes", help="按角度逐篇写笔记正文 + 话题标签（花钱）", allow_abbrev=False)
     _add_source_opts(p)
     p.add_argument("--strategy", choices=("local", "llm"), default="local",
                    help="角度来源，默认 local（零成本）")
@@ -2924,7 +2981,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=_run_notes)
 
-    p = sub.add_parser("covers", help="出封面图方案 + 出图（3:4 大字标题；先报价）")
+    p = sub.add_parser("covers", help="出封面图方案 + 出图（3:4 大字标题；先报价）", allow_abbrev=False)
     p.add_argument("--notes", required=True, help="notes --outdir 生成的 notes.json")
     p.add_argument("--count", type=int, default=0, help="只出前 N 张，默认全部")
     _add_outdir_opts(p)
@@ -2934,13 +2991,13 @@ def build_parser():
     _add_json(p)
     p.set_defaults(func=_run_covers)
 
-    p = sub.add_parser("check", help="对已有笔记做本地合规自检（零成本，不调模型）")
+    p = sub.add_parser("check", help="对已有笔记做本地合规自检（零成本，不调模型）", allow_abbrev=False)
     p.add_argument("--file", required=True, help="notes --outdir 生成的 notes.json")
     _add_json(p)
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_check)
 
-    p = sub.add_parser("all", help="整条链路（角度 → 笔记 → 封面），断点续跑")
+    p = sub.add_parser("all", help="整条链路（角度 → 笔记 → 封面），断点续跑", allow_abbrev=False)
     _add_source_opts(p)
     p.add_argument("--strategy", choices=("local", "llm"), default="local",
                    help="角度来源，默认 local（零成本）")
@@ -2962,7 +3019,7 @@ def build_parser():
     _add_json(p)
     p.set_defaults(func=_run_all)
 
-    p = sub.add_parser("cost", help="只算钱（不调模型）")
+    p = sub.add_parser("cost", help="只算钱（不调模型）", allow_abbrev=False)
     _add_source_opts(p)
     p.add_argument("--cover-count", type=int, default=0, dest="cover_count",
                    help="要出几张封面（默认 0，只算文本）")
@@ -2974,7 +3031,7 @@ def build_parser():
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_cost)
 
-    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）")
+    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）", allow_abbrev=False)
     p.add_argument("--type", default="text", help="模型类型，默认 text；传 all 看全部")
     p.add_argument("--key", help="临时指定 A7W API Key")
     _add_json(p)

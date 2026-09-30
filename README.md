@@ -132,38 +132,6 @@ npx clawhub install <slug>
 - **`sanjianke-wxjava`** 三剪客 · 微信生态 Java 服务端开发包 · 衍生指南
 - **`sanjianke-zulip`** 三剪客 · 话题制团队聊天服务器 · 衍生指南
 
-### 设计多媒体（29）
-
-- **`a7w-action-transfer`** 三剪客 · 动作迁移
-- **`a7w-dressing-diffusion`** 三剪客 · AI换装
-- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
-- **`a7w-full-video`** 三剪客 · 全能视频生成
-- **`a7w-grok-video`** 三剪客 · Grok 视频生成
-- **`a7w-happy-horse`** 三剪客 · Happy Horse
-- **`a7w-image-human`** AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清
-- **`a7w-lipsync`** 三剪客 · 数字人对口型
-- **`a7w-mmaudio`** 三剪客 · 音效生成、视频配音
-- **`a7w-music-generation`** 三剪客 · 音乐生成
-- **`a7w-nano-banana`** 三剪客 · nano-banana
-- **`a7w-person-replacement`** 三剪客 · 人物替换
-- **`a7w-seedance`** 三剪客 · Seedance 2.0
-- **`a7w-seedsvc`** 三剪客 · 音色修改、AI翻唱
-- **`a7w-smart-clip`** 三剪客 · 智能剪辑
-- **`a7w-voice-tts`** 三剪客 · 语音TTS
-- **`a7w-wan`** 三剪客 · Wan 视频生成
-- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
-- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
-- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
-- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
-- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
-- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
-- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
-- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
-- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
-- **`sanjianke-radio-dj`** 三剪客 · AI 电台
-- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
-- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
-
 ### 数据分析（25）
 
 - **`sanjianke-ai-research-kit`** 三剪客 · AI 科研全流程
@@ -238,6 +206,25 @@ npx clawhub install <slug>
 - **`sanjianke-unsloth`** 三剪客 · 低显存微调加速 · 衍生指南
 - **`sanjianke-vllm`** 三剪客 · 高吞吐 LLM 推理服务 · 衍生指南
 
+### 其他（16）
+
+- **`a7w-action-transfer`** 三剪客 · 动作迁移
+- **`a7w-dressing-diffusion`** 三剪客 · AI换装
+- **`a7w-full-video`** 三剪客 · 全能视频生成
+- **`a7w-grok-video`** 三剪客 · Grok 视频生成
+- **`a7w-happy-horse`** 三剪客 · Happy Horse
+- **`a7w-image-human`** AI数字人视频生成照片说话口播虚拟主播带货视频一键出片2K4K高清
+- **`a7w-lipsync`** 三剪客 · 数字人对口型
+- **`a7w-mmaudio`** 三剪客 · 音效生成、视频配音
+- **`a7w-music-generation`** 三剪客 · 音乐生成
+- **`a7w-nano-banana`** 三剪客 · nano-banana
+- **`a7w-person-replacement`** 三剪客 · 人物替换
+- **`a7w-seedance`** 三剪客 · Seedance 2.0
+- **`a7w-seedsvc`** 三剪客 · 音色修改、AI翻唱
+- **`a7w-smart-clip`** 三剪客 · 智能剪辑
+- **`a7w-voice-tts`** 三剪客 · 语音TTS
+- **`a7w-wan`** 三剪客 · Wan 视频生成
+
 ### 电商（16）
 
 - **`sanjianke-aimeos-laravel`** 三剪客 · Laravel 电商套件 · 衍生指南
@@ -275,6 +262,21 @@ npx clawhub install <slug>
 - **`sanjianke-sherpa-onnx`** 三剪客 · 离线语音识别与合成的 ONNX 运行时 · 衍生指南
 - **`sanjianke-snownlp`** 三剪客 · 中文文本处理与情感分析 · 衍生指南
 - **`sanjianke-wenet`** 三剪客 · 端到端语音识别工具包 · 衍生指南
+
+### 设计多媒体（13）
+
+- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
+- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
+- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
+- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
+- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
+- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
+- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
+- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
+- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
+- **`sanjianke-radio-dj`** 三剪客 · AI 电台
+- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
+- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
 
 ### 文档转换（13）
 

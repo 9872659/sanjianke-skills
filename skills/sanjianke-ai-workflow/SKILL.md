@@ -3,7 +3,7 @@ name: sanjianke-ai-workflow
 slug: sanjianke-ai-workflow
 displayName: 可视化AI工作流编排·OpenAI兼容网关接21个生成应用
 description: "不写编排代码，用画布把「输入 → 检索 → 模型 → 工具 → 输出」串成一条可调试、可发布的 AI 工作流，再一键接上 21 个生成应用（出图 / 视频 / 数字人 / 配音 / 音乐 / 文档问答）。模型侧走 OpenAI 兼容网关，把 base_url 指向 https://api.a7w.cn/ 就能调 75 个在架模型，一把 Key 通吃、换 model 即换模型；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "把「输入 → 检索 → 模型 → 工具 → 输出」这条链路从代码里搬到画布上：拖节点、连线、实时调试，改一版试一版，不用为了改一行提示词就重新发版。模型提供方不再逐家注册——把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，换 model 字符串就是换模型，账单只此一份。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

@@ -3,7 +3,7 @@ name: sanjianke-doc-index-qa
 slug: sanjianke-doc-index-qa
 displayName: 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
 description: "模型本身不认识你的文件。这个 Skill 讲的是中间缺的那一层：把 PDF、Word、表格、接口返回的数据接成可检索、可问答的知识库，并把模型侧整排指向 https://api.a7w.cn/ ——一个 base_url、一把 Key，现场可查 75 个在架模型与 21 个生成应用（含文档问答 file_qa）；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "模型本身不认识你的文件。想让它回答「我们公司这份规范里怎么写的」，中间缺的就是一层：把文档切成片、算成向量、存起来，提问时先捞出相关片段再交给模型。这个 Skill 讲的就是这一层的落地：加载、切分、索引、检索、问答，每一段都可替换。模型侧同样收成一处——把 base_url 指向 https://api.a7w.cn/ ，用同一把 Key 调用 75 个在架大模型（23 家厂商，国产为主 + 国际主流）与 21 个生成应用，文档问答走 file_qa、语音转写走 voice_tts，账单只有一份。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

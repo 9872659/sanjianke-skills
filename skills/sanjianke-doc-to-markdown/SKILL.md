@@ -3,7 +3,7 @@ name: sanjianke-doc-to-markdown
 slug: sanjianke-doc-to-markdown
 displayName: 文档转Markdown·PDF Word表格结构保留在线工具
 description: "把 PDF、Word、TXT、Markdown 等文档统一转成一份能直接喂给大模型和知识库的 Markdown：标题层级、有序无序列表、表格、链接全部保留，不是抓成一坨无结构字符。上传一个公网文档地址，说明要什么结构，几十秒拿回干净 Markdown；一次最多能同时处理 8 份文档做合并或对比。整套操作文档（三步跑通、指令模板、转换清单、批量做法、计费口径、常见坑）+ 零依赖客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.1
+version: 2.0.2
 summary: "文档转 Markdown 的成品 Skill：把格式五花八门的资料统一成一份结构清晰的 Markdown，供大模型、RAG 切片与知识库消费。上传公网文档地址（PDF / DOC / DOCX / TXT / MD），写清要保留什么结构，几十秒拿回干净 Markdown —— 标题层级、列表、表格、链接都在，而不是一坨无结构字符。一次最多同时处理 8 份文档，可做合并、对比与统一口径。覆盖知识库入库前清洗、合同与报告归档、论文与规范转文本、多份文档合并成一份、给大模型准备上下文等场景。正文给出三步跑通、指令模板表、转换清单、批量做法、真实计费口径（输入 2,600 点/百万 Token，1 元 = 100 点）、常见坑与排错，并附一个只用 Python 标准库的零依赖客户端。整套操作文档 + 客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

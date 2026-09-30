@@ -3,7 +3,7 @@ name: sanjianke-agent-crew
 slug: sanjianke-agent-crew
 displayName: 多角色Agent协作编排·角色分工与流程控制接入指南
 description: "把一段活儿拆成几个有岗位、有目标、有背景故事的角色，让它们按顺序或按层级协作完成多步骤任务；需要精确控制时再用事件驱动流程把角色串起来。含角色建模与流程参数表、数据流声明写法与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型、每个角色可分别指定。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.4
 summary: "多角色协作最难的不是调模型，而是描述分工：给每个角色一个岗位、一个目标、一段背景故事，再把任务派下去，让它们按顺序或按层级把一段多步骤工作干完。本包讲怎么把角色的模型入口统一指向一个 OpenAI 兼容网关 —— 只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元等国产为主），并且能给每个角色单独指定模型：调研用快的、评审用强的，账单还是同一份。含角色建模、任务依赖与产出落盘、流程选择与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

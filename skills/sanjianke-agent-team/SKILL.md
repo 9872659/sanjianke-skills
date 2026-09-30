@@ -3,7 +3,7 @@ name: sanjianke-agent-team
 slug: sanjianke-agent-team
 displayName: 多智能体软件开发团队·一句话需求生成项目文档与代码骨架
 description: "一句话需求进去，一整套东西出来：用户故事、需求拆解、数据结构、接口设计、文档，最后落到一个能打开的项目仓库。含角色分工与产出清单、模型接入配置、需求写法与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型、按角色分档指定。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.4
 summary: "给一句需求，想要的不只是一段代码，而是一整套东西：用户故事、竞品分析、需求拆解、数据结构、接口设计、文档，最后落到一个能打开的仓库。本包讲怎么把这种多角色流水线的模型入口统一指向一个 OpenAI 兼容网关 —— 只改一个 base_url，同一把 Key 调 75 个在架模型（DeepSeek、通义千问、智谱 GLM、Kimi、腾讯混元等国产为主），并且能给不同角色分配不同档位：拆需求用快模型、写架构用强模型，账单还是同一份。含角色分工与产出清单、需求写法、产物目录说明与真实计费口径。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

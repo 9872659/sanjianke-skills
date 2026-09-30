@@ -3,7 +3,7 @@ name: sanjianke-short-video-maker
 slug: sanjianke-short-video-maker
 displayName: AI短视频一键生成·选题脚本配音画面字幕全流程批量出片
 description: "给一个选题就能出片：大模型写脚本 → TTS 出配音 → 出图定画面 → 图生视频补动感 → 时间轴压字幕 → 配 BGM → 本地合成，七道工序全部走 api.a7w.cn，一把 Key 跑完。支持 9:16 竖屏 / 16:9 横屏 / 1:1 方形，字幕时间轴两种做法都写清了怎么落地。含选题清单批量跑法、成本测算口径与常见坑，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.2
+version: 2.0.3
 summary: "AI 短视频量产的成品 Skill：一个选题进，一条能发的短视频出。七道工序全部走 api.a7w.cn —— 选题与脚本走 OpenAI 兼容模型网关（75 个在架模型换 model 即换），配音走 `voice_tts`，画面走 `nano_banana` 出图，动感走 `full_video` / `happy_horse` 图生视频，字幕时间轴给出「分段合成累计时长」与「`stt` 精确时间戳」两种可落地做法，BGM 走 `music_generation` / `music_search`，成片超分走 `flashvsr`，口播号另有 `image_human` 一条路。支持竖屏 9:16 / 横屏 16:9 / 方形 1:1，含选题清单批量跑法、真实计费口径（1 元 = 100 点）、成本结构与常见坑。整套操作文档 + 零依赖客户端都在包里，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

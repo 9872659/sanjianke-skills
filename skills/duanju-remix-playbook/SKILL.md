@@ -3,7 +3,7 @@ name: duanju-remix-playbook
 slug: duanju-remix-playbook
 displayName: 三剪客 · 短剧二创作业手册
 description: "短剧二创的完整作业规范：授权核验门禁、成片口径锁定、四条差异化规则、批量成片抽帧查重、发布前合规扫描与质检清单。适用于一部剧批量出片前的流程搭建、成片互相雷同的排查、以及发布前的版权与违禁话术核验。自带 `scripts/run.py` 真接算力：台词转写走 `POST /api/v1/apps/voice_tts/stt`（拿回字级时间戳字幕），悬念解说稿走 `POST /api/v1/chat/completions`，只需一把 api.a7w.cn 的 API Key。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.3.6
+version: 1.3.7
 summary: "短剧二创的可落地作业规范：五套示例口径（含分辨率、帧率、编码、响度、音量、时长结构、取材与转场的全套参数）、九步出片流程与实算例、四条差异化规则、批量成片抽帧查重、七类高危话术扫描。7 份资料 + 5 个脚本（3 个纯离线自检，2 个接 api.a7w.cn 算力：语音转写 `POST /api/v1/apps/voice_tts/stt` + 解说稿 `POST /api/v1/chat/completions`），示例口径可直接照抄开工。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

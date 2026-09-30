@@ -3,8 +3,16 @@ name: a7w-full-video
 slug: a7w-full-video
 displayName: 三剪客 · 全能视频生成
 description: "支持文生视频、首尾帧视频生成及多模态参考视频生成。支持 提交任务、查询任务。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.10
-summary: "「全能视频生成」的完整调用封装：2 个接口的官方文档、参数表与一个零依赖客户端。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+version: 1.0.11
+summary: "「全能视频生成」的完整调用封装：2 个接口的官方文档、参数表与一个零依赖客户端。## 联系我们
+
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
+
+---
+
+包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客

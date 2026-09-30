@@ -3,7 +3,7 @@ name: sanjianke-audiobook-line
 slug: sanjianke-audiobook-line
 displayName: 三剪客 · 有声书生产线
 description: "把一本小说或长文本做成有声书：章节切分 → 逐章多音色朗读（旁白 / 对白分角色）→ 章节音频 → 字级时间戳出 SRT / VTT 字幕 → 章节清单与时长台账。七道硬闸门全拦截：广告法违禁词（「最X」按可枚举语境豁免）、占位符残留、照抄示例、章节结构（章数为 0 或空章即拦）、角色一致性（同一角色全书同一音色）、成本上限、产出位置。配音与字幕先报价，`--yes` 或 `--budget` 二选一；断点 key 含正文全文与音色、模型、格式、语速等十一维，改任一维都重配不静默复用；结算只认 `usage.points_cost`。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 1.0.0
+version: 1.0.2
 summary: "有声书最难的不是录音，是「一本书怎么切章、谁在说、说了多久、字幕对不对得上」。`split` 纯本地切章（行首锚定 + 标题长度 + 句末标点三重判据），`cast` 默认用本地正则识别对白与旁白（零成本、可复现；推不出说话人就归旁白并登记数量，不静默丢字），`--llm` 才逐章调大模型且强制校验逐字一致（改一个字就报错——音频是逐字念的，改了字幕与音频就对不上），`voice` 逐章分角色配音（先报价、断点续跑），`subtitle` 用 `voice_tts/stt` 的 `ignore_timestamps=false` 拿字级时间戳出 SRT / VTT，`join` 纯本地出章节清单与时长台账（有 ffmpeg 拼 mp3，没有则用标准库拼 PCM wav），`all` 串全流程，`cost` 只算钱，`models`/`voices` 现查在架模型与音色。真机实测：2 章切出 15 片段、3 角色；配音 145 字 = 7.25 点（50 点/千字）；字幕 2 段 = 80 点（40 点/次），拿到一字一段的真实时间戳。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

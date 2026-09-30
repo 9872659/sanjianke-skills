@@ -3,7 +3,7 @@ name: sanjianke-ai-chat-ui
 slug: sanjianke-ai-chat-ui
 displayName: AI聊天客户端接国产大模型·一个Key换75个模型接入配置
 description: "让 AI 聊天客户端用上 75 个在架大模型：填一个 base_url、一把 api.a7w.cn 的 Key，DeepSeek、通义千问、智谱 GLM、Kimi、混元、MiniMax 与 GPT 全部进同一个模型下拉框，换 model 就是换模型，不用逐家注册、不用改代码。另附出图、配音、视频、数字人等 21 个生成应用的接入口径、base_url 层数判断法与全套排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
-version: 2.0.1
+version: 2.0.4
 summary: "把 AI 聊天客户端接到算力集市 api.a7w.cn，一个 Key 用上 75 个在架大模型与 21 个生成应用。含客户端侧的 base_url / apiHost / 代理地址逐项填法对照、模型列表刷不出来的四类原因与手动添加模型的做法、流式与推理模型返回空正文的处理、多厂商模型在同一入口切换的配置方式、生成类应用（出图 / 配音 / 视频 / 数字人）的接入口径，以及 401 / 402 / 403 / 429 全套错误码排错表。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

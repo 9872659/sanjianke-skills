@@ -220,12 +220,19 @@ short-drama-factory/
 
 > **相对路径提示**：文档里写的是 `python3 scripts/preflight.py`，取决于运行时的工作目录。若宿主在项目根目录执行，请先 `cd` 到本技能目录，或改用绝对路径。
 
+## 许可证
+
+MIT，见 `LICENSE.md`。
+
+---
+
+---
+
 ## 联系我们
 
 - **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
 - **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
 - **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
-
 
 ---
 

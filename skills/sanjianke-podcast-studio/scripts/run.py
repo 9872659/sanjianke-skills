@@ -784,6 +784,23 @@ class UsageError(PodcastError):
     """
 
 
+# 最近一次模型调用的 `finish_reason`。**必须记它**，且**初值不猜**（None）。
+# 它是区分「该加大 --max-tokens」（=length）与「模型自己写错了 / 响应在路上断了」
+# （stop / None）的**唯一**依据 —— 拿 content 长度去猜是错的：
+# 同一端点实测在 2989 / 3898 / 3984 字符都能返回完整内容（finish_reason='stop'）。
+_LAST_FINISH = {"reason": None, "chars": None}
+
+
+def _fr_hint():
+    """按 `_LAST_FINISH` 给出可执行的处置建议。只认 finish_reason，不认长度。"""
+    fr = _LAST_FINISH.get("reason")
+    if fr == "length":
+        return ("；finish_reason=length —— 输出**确实**被 max_tokens 截断了，"
+                "加大 --max-tokens 重试")
+    return ("；finish_reason={!r}（**不是 length**）—— **加大 --max-tokens 没用**："
+            "这是模型写错了或响应在路上断了，换模型或把这一稿拆段跑".format(fr))
+
+
 def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
          max_tokens=4096, key=None, timeout=300, json_mode=True):
     """调一次 POST /api/v1/chat/completions，返回 (正文, usage)。
@@ -873,6 +890,9 @@ def chat(prompt, system=None, model=DEFAULT_MODEL, temperature=0.7,
         raise PodcastError("模型没返回 choices：{}".format(
             json.dumps(payload, ensure_ascii=False)[:300]))
     content = ((choices[0] or {}).get("message") or {}).get("content") or ""
+    finish_reason = (choices[0] or {}).get("finish_reason")
+    _LAST_FINISH["reason"] = finish_reason
+    _LAST_FINISH["chars"] = len(content)
     usage = (data_obj or {}).get("usage") or (payload or {}).get("usage") or {}
     return content, usage
 
@@ -893,6 +913,42 @@ def parse_first_json(text):
         candidates.append(fenced.group(1).strip())
     candidates.append(text)
     for cand in candidates:
+        # ⚠️ 第一优先：按**括号配平**取最外层那个完整值，再解析。
+        # 否则外层坏了时会从嵌套结构里解出一个**内层**对象交出去，
+        # 上层报的错就指向了错误的方向（这一条是同族实测踩出来的）。
+        start = None
+        for i, ch in enumerate(cand):
+            if ch in "{[":
+                start = i
+                break
+        if start is not None:
+            depth, in_str, esc, end = 0, False, False, None
+            for i in range(start, len(cand)):
+                ch = cand[i]
+                if in_str:
+                    if esc:
+                        esc = False
+                    elif ch == "\\":
+                        esc = True
+                    elif ch == '"':
+                        in_str = False
+                    continue
+                if ch == '"':
+                    in_str = True
+                elif ch in "{[":
+                    depth += 1
+                elif ch in "}]":
+                    depth -= 1
+                    if depth == 0:
+                        end = i + 1
+                        break
+            if end is not None:
+                try:
+                    obj = json.loads(cand[start:end])
+                    if isinstance(obj, (dict, list)):
+                        return obj
+                except ValueError:
+                    pass
         for i, ch in enumerate(cand):
             if ch not in "{[":
                 continue
@@ -902,8 +958,8 @@ def parse_first_json(text):
                 continue
             if isinstance(obj, (dict, list)):
                 return obj
-    raise PodcastError("模型返回的不是合法 JSON：{}".format(
-        text[:300].replace("\n", " ")))
+    raise PodcastError("模型返回的不是合法 JSON：{}{}".format(
+        text[:300].replace("\n", " "), _fr_hint()))
 
 
 # ---------------------------------------------------------------------------
@@ -2844,12 +2900,13 @@ def build_parser():
                "GET https://api.a7w.cn/api/v1/models · "
                "POST https://api.a7w.cn/api/v1/apps/voice_tts/tts · "
                "POST https://api.a7w.cn/api/v1/apps/music_generation/create · "
-               "GET https://api.a7w.cn/api/v1/tasks/<task_id>")
+               "GET https://api.a7w.cn/api/v1/tasks/<task_id>",
+        allow_abbrev=False)
     ap.add_argument("--json", action="store_true",
                     help="以 JSON 输出（写在子命令前后都可以）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("outline", help="选题 + 提纲（标题/角度/受众/章节/片头钩子/片尾收束）")
+    p = sub.add_parser("outline", help="选题 + 提纲（标题/角度/受众/章节/片头钩子/片尾收束）", allow_abbrev=False)
     p.add_argument("--topic", required=True, help="播客主题（一句话说清讲什么）")
     p.add_argument("--minutes", type=float, default=SHOW["default_minutes"],
                    help="目标时长（分钟），默认 %d" % SHOW["default_minutes"])
@@ -2861,7 +2918,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=_run_outline)
 
-    p = sub.add_parser("script", help="写双人对话稿（两个角色 + 交替发言 + 语气标注）")
+    p = sub.add_parser("script", help="写双人对话稿（两个角色 + 交替发言 + 语气标注）", allow_abbrev=False)
     p.add_argument("--outdir", default="podcast-out", help="产出目录（**不许在包内**）")
     p.add_argument("--outline", help="提纲文件，默认 <outdir>/outline.json")
     p.add_argument("--minutes", type=float, help="覆盖目标时长（默认取提纲各章之和）")
@@ -2874,7 +2931,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=_run_script)
 
-    p = sub.add_parser("voice", help="分角色配音（两个音色；先报价；断点续跑）")
+    p = sub.add_parser("voice", help="分角色配音（两个音色；先报价；断点续跑）", allow_abbrev=False)
     p.add_argument("--outdir", default="podcast-out", help="产出目录（**不许在包内**）")
     p.add_argument("--script", help="对话稿（script.json 或 .md），默认 <outdir>/script.json")
     p.add_argument("--minutes", type=float, help="覆盖目标时长（只影响时长闸门）")
@@ -2896,7 +2953,7 @@ def build_parser():
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_voice)
 
-    p = sub.add_parser("music", help="片头 / 转场 / 片尾配乐（music_generation/create）")
+    p = sub.add_parser("music", help="片头 / 转场 / 片尾配乐（music_generation/create）", allow_abbrev=False)
     p.add_argument("--outdir", default="podcast-out", help="产出目录（**不许在包内**）")
     p.add_argument("--cues", help="要生成哪些：intro,bed,outro（默认三个都做）")
     p.add_argument("--style", help="覆盖音乐风格描述（默认按档位内置）")
@@ -2913,7 +2970,7 @@ def build_parser():
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_music)
 
-    p = sub.add_parser("mix", help="本地拼接成 mp3 + 章节标记 + 时间轴（需要 ffmpeg）")
+    p = sub.add_parser("mix", help="本地拼接成 mp3 + 章节标记 + 时间轴（需要 ffmpeg）", allow_abbrev=False)
     p.add_argument("--outdir", default="podcast-out", help="产出目录")
     p.add_argument("--ffmpeg", help="ffmpeg 可执行文件路径（默认找 PATH 与 FFMPEG 环境变量）")
     p.add_argument("--filename", help="成片文件名，默认 episode.mp3")
@@ -2928,7 +2985,7 @@ def build_parser():
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_mix)
 
-    p = sub.add_parser("all", help="整条链路：提纲 → 对话稿 → 配音 → 配乐 → 混音")
+    p = sub.add_parser("all", help="整条链路：提纲 → 对话稿 → 配音 → 配乐 → 混音", allow_abbrev=False)
     p.add_argument("--topic", help="播客主题（outline 用；已存在提纲时可省）")
     p.add_argument("--topic-override", action="store_true", dest="topic_override",
                    help="即使已有提纲也重新出题（**会重复扣费**）")
@@ -2968,7 +3025,7 @@ def build_parser():
     _add_model_opts(p)
     p.set_defaults(func=_run_all)
 
-    p = sub.add_parser("cost", help="只算钱（本地计算，一次调用都不发）")
+    p = sub.add_parser("cost", help="只算钱（本地计算，一次调用都不发）", allow_abbrev=False)
     p.add_argument("--minutes", type=float, default=SHOW["default_minutes"], help="目标时长")
     p.add_argument("--chars", type=int, help="直接给字数（默认按目标时长折算）")
     p.add_argument("--cues", help="配乐档位，默认三个都做")
@@ -2982,13 +3039,13 @@ def build_parser():
     p.add_argument("--out", help="把结果写到这个文件")
     p.set_defaults(func=_run_cost)
 
-    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）")
+    p = sub.add_parser("models", help="列出 api.a7w.cn 当前在架的模型（免费）", allow_abbrev=False)
     p.add_argument("--type", default="text", help="模型类型，默认 text；传 all 看全部")
     p.add_argument("--key", help="临时指定 A7W API Key")
     _add_json(p)
     p.set_defaults(func=_run_models)
 
-    p = sub.add_parser("voices", help="列出可用音色，拿配音要的 reference_id（免费）")
+    p = sub.add_parser("voices", help="列出可用音色，拿配音要的 reference_id（免费）", allow_abbrev=False)
     p.add_argument("--tag", help="按标签筛选")
     p.add_argument("--title-search", dest="title_search", help="按音色名称搜索")
     p.add_argument("--page-size", type=int, default=20, dest="page_size", help="每页数量")
