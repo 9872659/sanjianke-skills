@@ -67,8 +67,8 @@ tags:
 
 ## 概述
 
-> 本节口径取自站方公众号图文《不想露脸、不想录音、不想学剪辑的人，终于也能做口播了》。
-> 配图见站方公众号图文《不想露脸、不想录音、不想学剪辑的人，终于也能做口播了》。
+> 本节口径取自站方公众号图文《**不想露脸、不想录音、不想学剪辑的人，终于也能做口播了**》，
+> 配图为该文原图（首发日实拍）。
 
 先问三个问题，不用回答，心里过一遍就行 ——
 
@@ -77,6 +77,12 @@ tags:
 3. 你是不是也找过外面的团队拍片 —— **钱花了，成片出来了，播放量三位数**？
 
 如果有一个戳到你了，那这件事现在**被压缩成了一次点击**。
+
+![首发上线 · 第一天：上传一张照片 + 一段文案 → 点一下「生成成片」→ 剩下的全自动](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/01-launch.jpg)
+
+> 🚩 **首发上线 · 第一天**
+> 上传一张照片 + 一段文案 → 点一下「生成成片」→ 剩下的全自动。
+> 不用出镜，不用录音，不用剪，不用做封面。
 
 ### 它到底替谁解决什么问题
 
@@ -92,7 +98,6 @@ tags:
 | 会剪但讨厌剪 | 80% 的时间花在套版式、加字幕、做封面上 |
 
 共同点是：**它们都不是"创作"，却吃掉了你全部的时间。**
-
 而这件工具做的事情，就是把这一段**全部接过去**。
 
 ### 它把中间那一段，整个删掉了
@@ -101,9 +106,7 @@ tags:
 一张人物图 + 一段文案 →（自动）配音 →（自动）数字人口播 →（自动）套模板剪辑 →（自动）封面 → 成片
 ```
 
-**你实际只做三件事：传图、粘文案、选模板。** 就三件。
-
-剩下的按四个阶段自己跑：
+**你实际只做三件事：传图、粘文案、选模板。** 就三件。剩下的按四个阶段自己跑：
 
 | 阶段 | 在做什么 | 耗时 |
 |---|---|---|
@@ -113,6 +116,8 @@ tags:
 | ④ 自动剪辑成片 | 套模板 + 字幕 + AI 首帧封面 | 1~2 分钟 |
 
 **进度面板全程可见**：每个阶段转圈或打勾，日志滚动显示每一步在做什么、拿到什么结果、第几次重试 —— **你不用猜它卡没卡**。
+
+![右侧面板：各阶段转圈或打勾，日志滚动显示每一步在做什么、第几次重试](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/02-panel-progress.jpg)
 
 ### 真机跑出来的东西
 
@@ -126,7 +131,36 @@ tags:
 | 口型 | 对得上 |
 | 操作时间 | 大约两分钟，其中一分钟在等 |
 
-不看演示，看真机结果 —— 配图见站方公众号图文（成片与真实抽帧，没有美化）。
+不看演示，看真机结果 —— 拿到就能直接发：
+
+![真实成片 · 29.84 秒 / 1080×1920 / 带字幕带封面](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/03-final-video.jpg)
+
+这是成片的第 2 秒和第 22 秒，**真实抽帧，没有美化**：
+
+| 成片第 2 秒 | 成片第 22 秒 |
+|---|---|
+| ![成片第 2 秒 · 真实抽帧](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/04-frame-02s.jpg) | ![成片第 22 秒 · 真实抽帧](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/05-frame-22s.jpg) |
+
+### 模板库直接铺开给你挑
+
+每张卡带封面、名称、9:16 角标；**鼠标停上去 320ms 自动播放样片**，不用一个个点开猜：
+
+![模板库：94 套真人口播，悬停 320ms 自动播放样片](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/06-templates.jpg)
+
+> 三个场景共 **171 套**：真人口播混剪 **94** 套 / 素材混剪 **47** 套 / 新闻体·门店推广 **30** 套。
+> ⚠️ **数字人的成片只能提交给「真人口播混剪」这一组模板。**
+
+### 出片之后，结果面板长这样
+
+**时长、分辨率、扣费、下载，全在一屏里，没有藏起来的东西：**
+
+![结果面板：时长 / 分辨率 / 扣费 / 下载全在一屏](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/07-result-panel.jpg)
+
+### 封面也是自动的
+
+AI 首帧封面由系统生成，**不用你再开一次修图软件**：
+
+![AI 首帧封面（系统自动生成，不用再开修图软件）](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/08-ai-cover.jpg)
 
 ### 价格：固定价，写多长都不加钱
 
