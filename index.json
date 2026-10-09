@@ -368,6 +368,14 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-drama-studio-kit",
+  "displayName": "三剪客 · AI 短剧创作台",
+  "description": "短剧创作台的选型评估与私有化搭建指南，含真实算力接入：出图走 `/api/v1/apps/nano_banana/submit`、出片走 `/api/v1/apps/full_video/submit`、配音走 `/api/v1/apps/voice_tts/tts`，并按 `/api/v1/pricing` 的真实单价做成本估算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-drama-workbench",
   "displayName": "AI短剧制作工作台·多应用组合配方单镜头SOP与批量排产",
   "description": "把 api.a7w.cn 上的生成应用搭成一张短剧制作工作台：哪个应用擅长什么、什么输入该配哪个、一个镜头从首帧到成片的六步 SOP、六套现成的组合配方（静态对话戏/动作戏/旁白戏/快剪混剪/老片修复/数字人口播）、多项目并行排产与按应用对账，全部写清「传什么、调哪个接口、拿回什么」。含零依赖客户端与成本测算脚本，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -396,6 +404,14 @@
   "displayName": "图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙",
   "description": "先把整批文档读成一张实体关系图，再切成多级社区并逐层写摘要，让「主题、趋势、概览」这类全局性问题有答案——普通向量检索答不上来的问题它能答。抽图与回答都走 api.a7w.cn 网关。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "2.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-html-video-kit",
+  "displayName": "三剪客 · HTML 转视频引擎",
+  "description": "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4；旁白稿与配音接 api.a7w.cn 的大模型与 voice_tts，直接落成能塞进时间轴的音轨与 cues.json。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.5",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -624,6 +640,94 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-video-vr",
+  "displayName": "三剪客 · 视频增强台",
+  "description": "把 api.a7w.cn 在架的那 10 档视频增强能力做成一个命令行台子：4K旗舰版 / 标准超分1080P / 高清超分2K / 超清超分4K / 人像增强 / 字幕擦除 / 人像卡通化 / 人像抠像 / 画质综合增强 / 视频校色，共用同一套「上传 → 提交 → 轮询 → 下载」流程，只是路径与单价不同。**按秒计费**，所以包内自带免费 `tiers`（10 档与单价）与 `cost`（先算这一条多少钱）、`doctor`（Key/档位/上传/素材入口判据（零成本实测）/ffprobe 体检），以及把免费闸门全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`upscale` 档**不校验素材可达性**（传 404 地址也会扣费），且不传 `duration` 时服务端探测失败会**按 5 秒收费**。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库，不内嵌任何密钥（用你自己的 api.a7w.cn Key）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。价格与规格以线上为准。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-cartoon",
+  "displayName": "三剪客 · 人像卡通化",
+  "description": "把 `api.a7w.cn` 在架的**「人像卡通化」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/cartoon`，**按秒计费 24 点/秒（¥0.24/秒）**，单条上限 600s。画面人数 ≤5；风格由服务端注入为 `anime`。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-colorize",
+  "displayName": "三剪客 · 视频校色",
+  "description": "把 `api.a7w.cn` 在架的**「视频校色」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/colorize`，**按秒计费 9 点/秒（¥0.09/秒）**，单条上限 600s。上游 action 是 `AdjustVideoColor`（色调校正），**不是「黑白上色」**。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-enhance",
+  "displayName": "三剪客 · 画质综合增强",
+  "description": "把 `api.a7w.cn` 在架的**「画质综合增强」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/enhance`，**按秒计费 15 点/秒（¥0.15/秒）**，单条上限 600s。降噪 + 锐化 + 增强一条链路，无分辨率门槛。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-portrait",
+  "displayName": "三剪客 · 人像增强",
+  "description": "把 `api.a7w.cn` 在架的**「人像增强」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/portrait`，**按秒计费 18 点/秒（¥0.18/秒）**，单条上限 600s。**上游成本 0（公测免费）**，售价 18 点/秒是纯毛利档。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-segment",
+  "displayName": "三剪客 · 人像抠像",
+  "description": "把 `api.a7w.cn` 在架的**「人像抠像」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/segment`，**按秒计费 9 点/秒（¥0.09/秒）**，单条上限 60s。输出是**人像 mask 视频**（不是透明背景 MP4），要自己做合成；单条上限只有 60 秒。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-subtitle",
+  "displayName": "三剪客 · 字幕擦除",
+  "description": "把 `api.a7w.cn` 在架的**「字幕擦除」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/subtitle`，**按秒计费 9 点/秒（¥0.09/秒）**，单条上限 600s。擦的是**画面上的硬字幕**（不是字幕轨）；**要求你对素材拥有合法权利**。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-superres",
+  "displayName": "三剪客 · 标准超分 1080P",
+  "description": "把 `api.a7w.cn` 在架的**「标准超分 1080P」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/superres`，**按秒计费 9 点/秒（¥0.09/秒）**，单条上限 600s。最便宜的一档（9 点/秒），适合长片批量。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-superres-2k",
+  "displayName": "三剪客 · 高清超分 2K",
+  "description": "把 `api.a7w.cn` 在架的**「高清超分 2K」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/superres2k`，**按秒计费 15 点/秒（¥0.15/秒）**，单条上限 600s。输出是输入的 2×，帧率不变（**不是插帧**）。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-superres-4k",
+  "displayName": "三剪客 · 超清超分 4K",
+  "description": "把 `api.a7w.cn` 在架的**「超清超分 4K」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/viapi/superres4k`，**按秒计费 20 点/秒（¥0.20/秒）**，单条上限 600s。1080P 输入 → 2160P 输出。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-vr-upscale-4k",
+  "displayName": "三剪客 · 4K 旗舰版",
+  "description": "把 `api.a7w.cn` 在架的**「4K 旗舰版」这一档**做成一个独立的命令行 Skill：`POST /api/v1/video/upscale`，**按秒计费 30 点/秒（¥0.30/秒）**，单条上限 30s。**它不校验素材可达性**（喂 404 地址也会建任务并扣费），所以本包在扣费前先替你探素材。库里自带免费 `info`（单价/上限/素材要求/输入规格）、`points`（查余额）、`doctor`（Key / 上传入口 / 素材入口判据 / 素材可达性 / 本机 ffprobe 体检，**零成本实测**）与 `cost`（**先算清这一条多少钱**，纯本地一次请求都不发），以及把扣费之前能验的全跑一遍的 `--dry-run`。两处实测坑已内置拦截：`duration` 不传时服务端探测失败会**按 5 秒收费**，所以本包一律先本地 ffprobe、拿不到就报错要求显式 `--duration`，**绝不静默按 5 秒提交**；提交前一定先探素材可达性，探不到就拒提交。素材先用本网关 `upload` 传上来即可，**不再需要任何第三方站点**。零依赖、只用 Python 标准库、不内嵌任何密钥（用你自己的 api.a7w.cn Key，注册领 Key 见 https://api.a7w.cn/ ）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-xhs-note-factory",
   "displayName": "三剪客 · 小红书笔记工厂",
   "description": "给一个产品或主题，批量产出可直接发的小红书笔记：母稿 → N 个互不重复的切入角度 → 每角度独立一次调用写正文 + 话题标签 → 每篇配 3:4 大字标题封面 → 本地合规自检。七道硬闸门（合规违禁词与小红书医疗功效红线、占位符、照抄提示词示例、笔记规格正文 ≤1000 字且标签 5~8 个且首行必须是钩子、跨篇换皮、出图比例真伪、成本上限），命中即标红 + stderr 汇总 + 退出码非 0，可直接进 CI。走 api.a7w.cn 的 OpenAI 兼容端点写文案、nano_banana 出封面，零第三方依赖。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -644,6 +748,22 @@
   "displayName": "三剪客 · 小红书带货直播作战包",
   "description": "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.2.8",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "avatar-autoclip",
+  "displayName": "三剪客 · 数字人自动剪辑",
+  "description": "只要一张参考图 + 一段文字，一条命令出成品短视频：参考生图（1 张参考图派生多张同风格人物图，保住同一张脸）→ 文案转配音 → 语音识别取字级时间轴做逐字字幕 → 图片数字人口播 → 智能剪辑套模板成片，含自动 AI 首帧封面。覆盖 nano_banana 参考生图、voice_tts 合成与识别、pic_lipsync 图片数字人、smart_clip 智能剪辑（模板列表/模板详情/真人口播混剪/素材混剪/新闻体视频）与通用任务查询，共 15 个命令。补上了上游缺的四处：本地预检（素材时长/分辨率/地址重名/字幕边界，不花点数就拦下）、提交前 dry-run、任务刚 completed 时结果为空的竞态兜底、人格权授权硬门禁。零依赖仅标准库，实测端到端出片成功（真实 mp4，1080x1920，含 AI 生成水印）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。★ 算力接口已锁定：只能访问 api.a7w.cn，改地址会被就地拒绝并说明原因（不会一路报含糊的网络错）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "aigc-digital-human-studio",
+  "displayName": "三剪客 · 数字人自动剪辑（网页版）",
+  "description": "在浏览器里做出成品短视频：上传一张人物图片（或一段人物视频）+ 一段文案，自动配音、对口型、套模板、连封面一起生成，导出 1080×1920 竖屏成片。两个入口对应两条线——`#/tool/digital_human`（数字人视频：图片 + 文案）与 `#/tool/lipsync`（数字人对口型：视频 + 文案）。内置 94 套真人口播混剪模板（另有素材混剪、新闻体共三档场景），模板支持悬停即播的样片预览与全屏弹层预览；内置 3 个精选公共音色并可一键试听，也能上传自己的配音或克隆专属音色；「自动生成封面」用人物形象作首帧生成 AI 封面，成片第一帧就是它。成片按【固定 999 点/条】计费，与时长无关（1 元 = 100 点）。无需安装任何软件、无需 API Key，打开网页即可用。本包是面向使用者的操作向导，含两个入口怎么选、三步出片、逐项功能说明、计价口径与常见报错对照。需要 API/命令行版本请用同系列的 avatar-autoclip。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },

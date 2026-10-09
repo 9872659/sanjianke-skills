@@ -1,0 +1,300 @@
+# api.a7w.cn 视频增强 10 档 · 完整接口契约
+
+> 全部来自 **POST 实测** + 线上只读接口 + relay 服务端源码。
+> 未确认的地方都标了「未确认」，不要凭前端文案猜。
+
+---
+
+## 1. 档位总表
+
+| 档位 id | 中文名 | 提交路径 | 售价(点/秒) | 成本 | 上游 action | 单条上限 |
+|---|---|---|---|---|---|---|
+| `upscale` | 4K旗舰版 | `/api/v1/video/upscale` | 30 | 15 | `pixverse/pixverse-upscale`（生成式） | 30 秒 |
+| `superres` | 标准超分 1080P | `/api/v1/video/viapi/superres` | 9 | 0.67 | `SuperResolveVideo` | 600 秒 |
+| `superres2k` | 高清超分 2K | `/api/v1/video/viapi/superres2k` | 15 | 2.67 | `SuperResolveVideo` | 600 秒 |
+| `superres4k` | 超清超分 4K | `/api/v1/video/viapi/superres4k` | 20 | 4 | `SuperResolveVideo` | 600 秒 |
+| `portrait` | 人像增强 | `/api/v1/video/viapi/portrait` | 18 | **0** | `EnhancePortraitVideo` | 600 秒 |
+| `subtitle` | 字幕擦除 | `/api/v1/video/viapi/subtitle` | 9 | 0.67 | `EraseVideoSubtitles` | 600 秒 |
+| `cartoon` | 人像卡通化 | `/api/v1/video/viapi/cartoon` | 24 | 12 | `GenerateHumanAnimeStyleVideo` | 600 秒 |
+| `segment` | 人像抠像 | `/api/v1/video/viapi/segment` | 9 | 0.67 | `SegmentVideoBody` | **60 秒** |
+| `enhance` | 画质综合增强 | `/api/v1/video/viapi/enhance` | 15 | 0.67 | `EnhanceVideoQuality` | 600 秒 |
+| `colorize` | 视频校色 | `/api/v1/video/viapi/colorize` | 9 | 0.67 | `AdjustVideoColor` | 600 秒 |
+
+**已下线，不要做**：`interp` / `/api/v1/video/viapi/interp`（`InterpolateVideoFrame`，25 点/秒）
+—— 线上档位说明原文写着「视频插帧 60fps（**已下线**）」，`tiers` 里也没有它。
+
+> `colorize` 的上游 action 是 **`AdjustVideoColor`**（色调校正），不是"黑白上色"。
+> 有些老注释写成"黑白上色"，是错的。
+
+---
+
+## 2. 提交
+
+```
+POST <提交路径>
+Authorization: Bearer <你的 api.a7w.cn Key>
+Content-Type: application/json
+```
+
+```json
+{
+  "videoUrl": "https://...mp4",     // 必填（也接受 video_url / url）
+  "duration": 12,                   // 可选，但**强烈建议给**（见 §5）
+  "callback_url": "https://..."     // 可选
+}
+```
+
+- `upscale` 另有 `targetResolution`，**当前只支持 `"4k"`**
+  （传 `1080p` → `400 invalid_resolution：不支持的 targetResolution: 1080p（当前仅支持 4k）`）。
+- 9 档**没有** `targetResolution`；传了会被忽略。
+- `cartoon` 的服务端默认参数是 `CartoonStyle='anime'`（服务端注入，用户不用传）。
+  可选值（未在本站逐项确认）：`anime` / `3d` / `handdrawn` / `sketch` / `artstyle`。
+
+### 提交成功（HTTP 201）
+
+```json
+{
+  "taskId": "task_e2c1f5245568838a888ec3cc",
+  "status": "PENDING",
+  "tool": "upscale",
+  "duration": 2,
+  "resolution": "4K",
+  "costIn": 60,
+  "cost": 60,
+  "markUpPercent": 0,
+  "balance": 999997920934.5667
+}
+```
+
+`viapi/*` 9 档还多 `provider` / `action` / `name` 字段。**余额只在这个响应里给**，
+`GET /api/v1/me/tasks` 不返回余额。
+
+### 提交失败（HTTP 4xx/5xx）
+
+```json
+{"error": {"code": "url_not_allowed", "message": "...", "type": "relay"}}
+```
+
+---
+
+## 3. 查询
+
+**路径形式**，10 档都是「提交路径 + `/` + taskId」：
+
+```
+GET /api/v1/video/upscale/<taskId>
+GET /api/v1/video/viapi/<tier>/<taskId>
+```
+
+⚠️ **不要用 `GET /api/v1/tasks/<id>`** —— 那是网关自有层，返回
+`{"code":0,"msg":"任务不存在","data":null}`，**查不到这 10 档的任务**。
+
+其它可用查询：
+
+| 接口 | 说明 |
+|---|---|
+| `GET /api/v1/me/tasks` | 网关自有层任务列表，**包含这 10 档**（带 `provider`/`path`/`status`），需 Key |
+| `GET /api/v1/apps` | 网关自有 app 列表（21 个），需 Key |
+| `GET /health` | relay 健康检查，**免鉴权**：`{"ok":true,"service":"relay-platform"}` |
+
+### 查询成功（HTTP 200）
+
+```json
+{
+  "taskId": "task_e2c1f5245568838a888ec3cc",
+  "status": "processing",
+  "videoUrl": "",
+  "posterUrl": "",
+  "transferStatus": "",
+  "note": "正在转存到本站，请稍候…",
+  "duration": 0,
+  "cost": 0,
+  "costIn": 0,
+  "resolution": "4K"
+}
+```
+
+`status` 取值：`processing` / `completed` / `failed` / `transfer_failed`。
+
+- **`videoUrl` 为空是正常的**：成片要先「转存到本站/七牛」，转存完才有地址，
+  `note` 会说明原因。轮询要容忍这一点。
+- `transfer_failed` → 成片转存失败，**会自动退款**，让用户重新提交。
+
+### 查询失败
+
+```
+404 {"error":{"code":"not_found","message":"Task not found.","type":"relay"}}
+403 {"error":{"code":"forbidden","message":"Task belongs to another user.","type":"relay"}}
+```
+
+---
+
+## 4. ★ 素材入口判据（决定 9 档能不能用）
+
+`viapi/*` 那 9 档**只收「本网关素材」**。`upload` 之后拿到的地址就是标准形态：
+
+```
+POST api.a7w.cn/api/v1/upload      multipart/form-data，字段名 file
+      ↓ 200 返回
+https://oss.gpu.likeadmin.cn/openapi/…      ← 把这个地址原样交给 --url 即可
+```
+
+**不再需要任何第三方站点。**
+
+⚠️ **线上入口判据以线上为准**：本包不写死「一定放行/一定不放行」，而是让 `doctor`
+**零成本实测**。做法是拿一个「上传域前缀下、但绝对不可能存在的路径」去打这一档：
+
+| 探针结果 | 含义 | 花费 |
+|---|---|---|
+| `400 url_not_allowed` | 该前缀**当前未放行** | **0**（在冻结扣费之前返回） |
+| `502 oss_mirror_failed` | 该前缀**已放行**（只是探针素材不存在） | **0**（在冻结扣费之前返回） |
+
+探针路径形如
+`https://oss.gpu.likeadmin.cn/openapi/__a7w_ingress_probe_never_exists__/x.mp4` ——
+它**不可能**被镜像成功，所以**不可能**走到冻结扣费那一步。
+
+### 其它地址（本来就不在放行范围内的）
+
+| 输入地址 | 返回 | 判定 |
+|---|---|---|
+| 任意第三方公网地址 | 400 `url_not_allowed` | ❌（**未扣费**） |
+| 非 `https` 地址 | 400 `url_not_allowed` | ❌ |
+| `https://cdn2.jiujiushuyuan.cn.evil.com/vr/x.mp4`（域名后缀欺骗） | 400 `url_not_allowed` | ❌ |
+| 带端口的地址 | 400 `url_not_allowed` | ❌ |
+| 本站素材地址（`cdn2.jiujiushuyuan.cn/vr|vr2/` 下） | `502 oss_mirror_failed`（不存在时） | ✅ |
+
+**`upscale` 档没有这条限制**（见 §5）。
+
+### 素材镜像通道
+
+判据通过的地址会**先被转存到阿里云上海 OSS** 再交给上游 VIAPI。取不到时：
+
+```
+502 {"error":{"code":"oss_mirror_failed",
+     "message":"素材转存到阿里云上海 OSS 失败（http_404），未扣费，请稍后重试","type":"relay"}}
+```
+
+→ 也就是说链路是「入口判据 → 镜像 → 上游」，**镜像失败不扣费**。
+
+---
+
+## 5. ★ 闸门顺序（决定"哪些失败是免费的"）
+
+线上服务端的判定顺序：
+
+```
+1. empty_url        空 videoUrl          → 400 empty_url / pixverse_empty_url
+2. 入口判据         素材能不能收         → 400 url_not_allowed      （仅 viapi 9 档）
+3. 素材镜像/可达性                        → 502 oss_mirror_failed    （未扣费）
+4. ffprobe 时长     不传 duration 时探测  → 探测不到则按 5 秒
+5. 输入规格预检                           → 400 superres_input_too_large 等
+6. charge           冻结扣费  ★★★ 扣费点在这里 ★★★
+7. 提交上游                               → 502 viapi_error
+```
+
+**结论：参数错、入口判据不过、规格不符，全部在扣费之前返回，天然免费。**
+本包的 `--dry-run` 就是靠这一点做到"把能免费验的全验掉"。
+
+### ⚠️ 两个必须记住的坑
+
+**(a) `upscale` 档不校验素材可达性。** 实测三个地址**全部返回 201 并冻结 60 点**：
+
+```json
+{"videoUrl":"https://example.invalid/x.mp4","duration":2}                 → 201 costIn=60
+{"videoUrl":"https://oss.gpu.likeadmin.cn/.../x.mp4","duration":2}        → 201 costIn=60
+{"videoUrl":"https://cdn2.jiujiushuyuan.cn/vr/<不存在>.mp4","duration":2}  → 201 costIn=60
+```
+
+**(b) `duration` 不传就可能被按 5 秒收费。** 服务端逻辑：
+
+```js
+let duration = Math.ceil(Number(payload.duration) || 0);
+if (!duration) duration = Math.ceil(await probeVideoDuration(url));
+if (!(duration > 0)) duration = 5;      // ← 探测不到就按 5 秒
+```
+
+→ 所以**一定要显式传 `duration`**（本地 ffprobe 先取；取不到就让用户显式给）。
+
+---
+
+## 6. 错误码对照
+
+| code | HTTP | 含义与处置 |
+|---|---|---|
+| `empty_url` / `pixverse_empty_url` | 400 | 没给 `videoUrl` |
+| `url_not_allowed` | 400 | 9 档要求本站素材；改用 `upscale` 或把素材放到本站 |
+| `invalid_resolution` | 400 | `upscale` 只支持 `4k` |
+| `superres_input_too_large` | 400 | 超分输入需 <1920×1080 |
+| `interp_input_too_large` | 400 | 插帧仅支持 ≤720P（该档已下线） |
+| `oss_mirror_failed` | 502 | 素材转存失败（**未扣费**） |
+| `insufficient_points` | 402 | 点数不足 |
+| `tool_not_launched` | 501 | 该档未开放 |
+| `unknown_tool` | 404 | 档位 id 不认识 |
+| `viapi_not_configured` | 400 | 平台侧凭据未配置（服务端问题） |
+| `unauthorized` | 401 | Key 无效/缺失 |
+| `not_found` | 404 | 任务不存在 |
+| `forbidden` | 403 | 任务属于别的用户 |
+| `transfer_failed`（status，非 code） | 200 | 成片转存失败，**已退款**，重新提交 |
+
+---
+
+## 7. 上传入口
+
+```
+POST /api/v1/upload      multipart/form-data，字段名 file
+```
+
+- **必须带 Key**：匿名调用返回 `401 {"error":{"code":"unauthorized","message":"Missing or invalid relay API key.","type":"relay"}}`。
+- 空 body 带 Key → `200 {"code":0,"msg":"请使用 file 字段提交一个文件","data":null}`。
+- 真上传（带 Key）→ `200`：
+
+```json
+{"code":1,"msg":"success","data":{
+  "url":"https://oss.gpu.likeadmin.cn/openapi/18/20261001/4178f4ad23d191620a9bc2bc11d1dbfb.mp4",
+  "path":"openapi/18/20261001/4178f4ad23d191620a9bc2bc11d1dbfb.mp4",
+  "name":"a7w_probe_1s.mp4","size":32,"mime_type":"video/mp4","type":"video"}}
+```
+
+**返回域名稳定是 `oss.gpu.likeadmin.cn`**（取样 3 次一致），**不在 9 档白名单内**。
+
+其它上传入口全部 404（返回前端 Nuxt 页面）：
+`/api/v1/files/upload`、`/api/v1/upload/file`、`/api/v1/file/upload`、
+`/api/v1/uploads`、`/api/v1/storage/upload`。
+
+---
+
+## 8. 免费只读接口（本包 `tiers` / `doctor` 用）
+
+```
+GET /api/v1/video/viapi/tools
+{"provider":"viapi","configured":true,
+ "tools":[{"tool":"enhance","action":"EnhanceVideoQuality","perSecond":15,
+           "costPerSecond":0.67,"note":"画质综合增强（降噪+锐化+增强）"}, ...]}
+```
+
+⚠️ **这个接口的状态变了**（同一天实测）：
+
+| 时刻 | 无 Key | 带有效 Key |
+|---|---|---|
+| 早先 | **200**（1294 B，完整 10 档） | — |
+| 后来（复测 3 次 + 间隔 60 秒） | **401** `Missing or invalid relay API key.` | **404**（前端 Nuxt 页面） |
+
+`POST` 同路径会掉进单档处理器：`404 {"error":{"code":"unknown_tool","message":"未知的视频能力：tools"}}`。
+`GET .../tools/x` 仍正常回 `404 not_found`（查询路由还在）。
+
+→ 说明 relay 的 `tools` **GET 路由掉了**。本包因此**优雅降级**到内置档位表，
+并如实打印"在线源当前不可达"。**如果这条恢复了，把 `fetch_tiers()` 的注释更新一下即可，代码无需改。**
+
+对照（同一时刻全部正常）：`/health` 200、`/api/v1/apps` 200、`/api/v1/me/tasks` 200、
+`POST /api/v1/video/viapi/superres` 400 `url_not_allowed`（提交链路与闸门都正常）。
+
+---
+
+## 9. 未确认的事
+
+1. `enhance` / `colorize` / `cartoon` / `segment` 的**线上真实单价与上限**，
+   除 `tools` 接口那一次读取外，未在线上 `config.json` 直接核对过
+   （该文件在服务器上，只读查看也需要授权）。
+2. `cartoon` 的 `CartoonStyle` 可选值未在本站逐项确认。
+3. 9 档的**端到端成片**未能取得（受白名单限制），"能出片"只证到
+   "素材白名单通过 + 镜像启动 + 未扣费"这一步。

@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**311 个技能包**：83 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**324 个技能包**：96 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -160,6 +160,33 @@ npx clawhub install <slug>
 - **`sanjianke-tushare`** 三剪客 · A股行情与财务数据接口 · 衍生指南
 - **`sanjianke-web-scrape-kit`** 三剪客 · 全网数据采集引擎 · 衍生指南
 
+### 设计多媒体（24）
+
+- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
+- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
+- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
+- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
+- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
+- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
+- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
+- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
+- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
+- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
+- **`sanjianke-radio-dj`** 三剪客 · AI 电台
+- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
+- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
+- **`sanjianke-video-vr`** 三剪客 · 视频增强台
+- **`sanjianke-vr-cartoon`** 三剪客 · 人像卡通化
+- **`sanjianke-vr-colorize`** 三剪客 · 视频校色
+- **`sanjianke-vr-enhance`** 三剪客 · 画质综合增强
+- **`sanjianke-vr-portrait`** 三剪客 · 人像增强
+- **`sanjianke-vr-segment`** 三剪客 · 人像抠像
+- **`sanjianke-vr-subtitle`** 三剪客 · 字幕擦除
+- **`sanjianke-vr-superres`** 三剪客 · 标准超分 1080P
+- **`sanjianke-vr-superres-2k`** 三剪客 · 高清超分 2K
+- **`sanjianke-vr-superres-4k`** 三剪客 · 超清超分 4K
+- **`sanjianke-vr-upscale-4k`** 三剪客 · 4K 旗舰版
+
 ### CLI（22）
 
 - **`sanjianke-asdf`** 三剪客 · 多语言运行时版本管理 · 衍生指南
@@ -262,21 +289,6 @@ npx clawhub install <slug>
 - **`sanjianke-sherpa-onnx`** 三剪客 · 离线语音识别与合成的 ONNX 运行时 · 衍生指南
 - **`sanjianke-snownlp`** 三剪客 · 中文文本处理与情感分析 · 衍生指南
 - **`sanjianke-wenet`** 三剪客 · 端到端语音识别工具包 · 衍生指南
-
-### 设计多媒体（13）
-
-- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
-- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
-- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
-- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
-- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
-- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
-- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
-- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
-- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
-- **`sanjianke-radio-dj`** 三剪客 · AI 电台
-- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
-- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
 
 ### 文档转换（13）
 
@@ -400,6 +412,11 @@ npx clawhub install <slug>
 - **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
 - **`sanjianke-knowledge-qa`** 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
 
+### 数字人（2）
+
+- **`aigc-digital-human-studio`** 三剪客 · 数字人自动剪辑（网页版）
+- **`avatar-autoclip`** 三剪客 · 数字人自动剪辑
+
 ### 设计（2）
 
 - **`sanjianke-comfyui`** 三剪客 · 节点式出图流水线 · 衍生指南
@@ -432,6 +449,7 @@ npx clawhub install <slug>
 
 ### AI短剧（1）
 
+- **`sanjianke-drama-studio-kit`** 三剪客 · AI 短剧创作台
 
 ### Java（1）
 
