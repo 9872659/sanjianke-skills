@@ -3,7 +3,7 @@ name: aigc-digital-human-studio
 slug: aigc-digital-human-studio
 displayName: 三剪客 · 数字人自动剪辑（网页版）
 description: "在浏览器里做出成品短视频：上传一张人物图片（或一段人物视频）+ 一段文案，自动配音、对口型、套模板、连封面一起生成，导出 1080×1920 竖屏成片。两个入口对应两条线——`#/tool/digital_human`（数字人视频：图片 + 文案）与 `#/tool/lipsync`（数字人对口型：视频 + 文案）。内置 94 套真人口播混剪模板（另有素材混剪、新闻体共三档场景），模板支持悬停即播的样片预览与全屏弹层预览；内置 3 个精选公共音色并可一键试听，也能上传自己的配音或克隆专属音色；「自动生成封面」用人物形象作首帧生成 AI 封面，成片第一帧就是它。成片按【固定 999 点/条】计费，与时长无关（1 元 = 100 点）。无需安装任何软件、无需 API Key，打开网页即可用。本包是面向使用者的操作向导，含两个入口怎么选、三步出片、逐项功能说明、计价口径与常见报错对照。需要 API/命令行版本请用同系列的 avatar-autoclip。遇到问题可加技术微信 9872659。"
-version: 1.0.0
+version: 1.0.2
 summary: "数字人自动剪辑的网页版使用向导：一张图（或一段视频）+ 一段文案 → 自动配音 → 对口型 → 套模板 → 出 1080×1920 竖屏成片，封面同步生成。两个入口：数字人视频（图片线）、数字人对口型（视频线）。模板库 94 套真人口播混剪 + 素材混剪 + 新闻体，支持悬停即播样片预览与弹层预览；3 个精选公共音色可试听，也支持上传自己的配音与克隆音色；自动封面开关决定成片首帧是否用 AI 生成封面。成片固定 999 点/条（1 元 = 100 点），与时长无关；配音按上游实际点数（实测约 0.7 点/次）；视频对口型的模型档位另按音频时长计点。含肖像权授权门禁、实时进度与日志、历史创作与成片下载。零安装、零配置、不需要 API Key。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
@@ -78,11 +78,8 @@ tags:
 
 如果有一个戳到你了，那这件事现在**被压缩成了一次点击**。
 
-![首发上线 · 第一天：上传一张照片 + 一段文案 → 点一下「生成成片」→ 剩下的全自动](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/01-launch.jpg)
-
-> 🚩 **首发上线 · 第一天**
-> 上传一张照片 + 一段文案 → 点一下「生成成片」→ 剩下的全自动。
-> 不用出镜，不用录音，不用剪，不用做封面。
+| ![首发上线 · 第一天](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/01-launch.jpg) | 🚩 **首发上线 · 第一天**<br><br>一张照片 + 一段文案<br>点一下「生成成片」<br>剩下的全自动<br><br>不用出镜 · 不用录音<br>不用剪 · 不用做封面 |
+|---|---|
 
 ### 它到底替谁解决什么问题
 
@@ -123,18 +120,10 @@ tags:
 
 下面这条片子，输入是**一张人物照 + 一段约 170 字的口播文案 + 一套真人口播模板**：
 
-| 项 | 实测值 |
+| ![真实成片 · 29.84 秒 / 1080×1920 / 带字幕带封面](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/03-final-video.jpg) | **成片实测**<br><br>**29.84 秒**<br>1080×1920 竖屏 · 25fps<br><br>字幕：自动生成<br>封面：AI 首帧封面<br>口型：对得上<br><br>操作时间 **约两分钟**<br>（其中一分钟在等） |
 |---|---|
-| 规格 | **29.84 秒 · 1080×1920 竖屏 · 25fps** |
-| 字幕 | 自动生成 |
-| 封面 | AI 首帧封面，自动生成 |
-| 口型 | 对得上 |
-| 操作时间 | 大约两分钟，其中一分钟在等 |
 
-不看演示，看真机结果 —— 拿到就能直接发：
-
-![真实成片 · 29.84 秒 / 1080×1920 / 带字幕带封面](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/03-final-video.jpg)
-
+不看演示，看真机结果 —— 拿到就能直接发。
 这是成片的第 2 秒和第 22 秒，**真实抽帧，没有美化**：
 
 | 成片第 2 秒 | 成片第 22 秒 |
@@ -156,11 +145,8 @@ tags:
 
 ![结果面板：时长 / 分辨率 / 扣费 / 下载全在一屏](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/07-result-panel.jpg)
 
-### 封面也是自动的
-
-AI 首帧封面由系统生成，**不用你再开一次修图软件**：
-
-![AI 首帧封面（系统自动生成，不用再开修图软件）](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/08-ai-cover.jpg)
+| ![AI 首帧封面（系统自动生成）](https://raw.githubusercontent.com/9872659/sanjianke-skills/main/skills/aigc-digital-human-studio/assets/08-ai-cover.jpg) | **封面也是自动的**<br><br>AI 首帧封面<br>由系统生成<br><br>**不用再开修图软件**<br><br>成片第一帧就是它<br>发出去就有可用封面 |
+|---|---|
 
 ### 价格：固定价，写多长都不加钱
 
