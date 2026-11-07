@@ -211,118 +211,126 @@
 
 ```json
 {
-  "title": {
-    "type": "string",
-    "example": "聊AI行业",
-    "maxLength": 1800,
-    "minLength": 3,
-    "description": "标题"
-  },
-  "styleId": {
-    "type": "string",
-    "example": "68aebb91b8619ed6f4168f40",
-    "description": "视频模板ID"
-  },
-  "materials": {
-    "type": "array",
-    "items": {
+  "type": "object",
+  "required": [
+    "styleId",
+    "title",
+    "materials"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "example": "聊AI行业",
+      "maxLength": 1800,
+      "minLength": 3,
+      "description": "标题"
+    },
+    "styleId": {
+      "type": "string",
+      "example": "68aebb91b8619ed6f4168f40",
+      "description": "视频模板ID"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "fileUrl"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "image",
+              "video"
+            ],
+            "type": "string",
+            "options": "image / video",
+            "description": "素材类型"
+          },
+          "fileUrl": {
+            "type": "string",
+            "description": "素材url"
+          },
+          "soundSwitch": {
+            "type": "boolean",
+            "default": false,
+            "description": "当素材为视频时原声开关"
+          }
+        }
+      },
+      "description": "素材"
+    },
+    "packRules": {
       "type": "object",
-      "required": [
-        "type",
-        "fileUrl"
-      ],
+      "description": "包装规则：仅用于控制标题、素材、字幕等是否参与模版的效果包装，无特殊要求不建议设置。"
+    },
+    "callbackUrl": {
+      "type": "string",
+      "example": "https://example.com/hook",
+      "description": "结果通知回调地址"
+    },
+    "processRules": {
+      "type": "object",
       "properties": {
-        "type": {
-          "enum": [
-            "image",
-            "video"
-          ],
-          "type": "string",
-          "options": "image / video",
-          "description": "素材类型"
+        "metadata": {
+          "type": "object",
+          "description": "元水印数据，仅支持写入一组数据，且value值需为字符串，详情见产品介绍/元数据-AI 显式标识和隐式标识说明"
         },
-        "fileUrl": {
-          "type": "string",
-          "description": "素材url"
+        "videoDuration": {
+          "type": "integer",
+          "example": 30,
+          "maximum": 300,
+          "minimum": 5,
+          "description": "视频时长 单位：秒，默认：跟随素材资源时长"
         },
-        "soundSwitch": {
+        "watermarkShow": {
           "type": "boolean",
           "default": false,
-          "description": "当素材为视频时原声开关"
+          "description": "是否添加“AI生成”字样水印"
+        },
+        "firstFrameCover": {
+          "type": "object",
+          "description": "首帧封面配置"
+        },
+        "materialComposition": {
+          "enum": [
+            "random",
+            "order"
+          ],
+          "type": "string",
+          "default": "random",
+          "options": "random / order",
+          "description": "素材组合方式"
         }
-      }
+      },
+      "description": "处理规则"
     },
-    "description": "素材"
-  },
-  "packRules": {
-    "type": "object",
-    "description": "包装规则：仅用于控制标题、素材、字幕等是否参与模版的效果包装，无特殊要求不建议设置。"
-  },
-  "callbackUrl": {
-    "type": "string",
-    "example": "https://example.com/hook",
-    "description": "结果通知回调地址"
-  },
-  "processRules": {
-    "type": "object",
-    "properties": {
-      "metadata": {
-        "type": "object",
-        "description": "元水印数据，仅支持写入一组数据，且value值需为字符串，详情见产品介绍/元数据-AI 显式标识和隐式标识说明"
-      },
-      "videoDuration": {
-        "type": "integer",
-        "example": 30,
-        "maximum": 300,
-        "minimum": 5,
-        "description": "视频时长 单位：秒，默认：跟随素材资源时长"
-      },
-      "watermarkShow": {
-        "type": "boolean",
-        "default": false,
-        "description": "是否添加“AI生成”字样水印"
-      },
-      "firstFrameCover": {
-        "type": "object",
-        "description": "首帧封面配置"
-      },
-      "materialComposition": {
-        "enum": [
-          "random",
-          "order"
-        ],
-        "type": "string",
-        "default": "random",
-        "options": "random / order",
-        "description": "素材组合方式"
-      }
+    "structLayers": {
+      "type": "array",
+      "description": "需要修改的图层数据"
     },
-    "description": "处理规则"
-  },
-  "structLayers": {
-    "type": "array",
-    "description": "需要修改的图层数据"
-  },
-  "introduceCard": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "description": "名称"
+    "introduceCard": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        }
       },
-      "description": {
-        "type": "string",
-        "description": "描述"
-      }
-    },
-    "description": "身份栏信息，含义详见常见问题库"
+      "description": "身份栏信息，含义详见常见问题库"
+    }
   }
 }
 ```
 
 ## 计费
 
-- 计费：免费
+- 计费：按分档价（`pricing_matrix`：720p=0.2 / 1080p=0.3，`billing_type=5`）；真实扣费看 `data.usage.points_cost`
 - 标准价：`fixed_price=0.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`
 - 分档：`720p`=0.2，`1080p`=0.3

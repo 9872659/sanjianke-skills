@@ -231,211 +231,218 @@
 
 ```json
 {
-  "title": {
-    "type": "string",
-    "example": "聊AI行业",
-    "description": "标题"
-  },
-  "styleId": {
-    "type": "string",
-    "example": "68aebb91b8619ed6f4168f40",
-    "description": "视频模板id"
-  },
-  "language": {
-    "type": "string",
-    "example": "zh-CN",
-    "description": "特指视频中（videoUrl）对应的语种，音频驱动时需要传音频中内容的语种，语种参考ASR支持的语种"
-  },
-  "subtitle": {
-    "type": "array",
-    "items": {
-      "type": "object",
-      "required": [
-        "startMs",
-        "endMs",
-        "text"
-      ],
-      "properties": {
-        "text": {
-          "type": "string",
-          "description": "文本，只支持单字符级别"
-        },
-        "endMs": {
-          "type": "integer",
-          "description": "时间戳结束，单位ms，最大支持310000ms"
-        },
-        "startMs": {
-          "type": "integer",
-          "description": "时间戳开始，单位ms"
-        }
-      }
+  "type": "object",
+  "required": [
+    "styleId",
+    "videoUrl"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "example": "聊AI行业",
+      "description": "标题"
     },
-    "description": "字幕信息（兼容subtitles字段），该字段专用于填充语音识别（ASR）后的结果，如果您未预先进行语音识别（ASR），请忽略该字段。"
-  },
-  "videoUrl": {
-    "type": "string",
-    "example": "https://example.com/a.mp4",
-    "description": "视频url"
-  },
-  "materials": {
-    "type": "array",
-    "items": {
+    "styleId": {
+      "type": "string",
+      "example": "68aebb91b8619ed6f4168f40",
+      "description": "视频模板id"
+    },
+    "language": {
+      "type": "string",
+      "example": "zh-CN",
+      "description": "特指视频中（videoUrl）对应的语种，音频驱动时需要传音频中内容的语种，语种参考ASR支持的语种"
+    },
+    "subtitle": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "startMs",
+          "endMs",
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "文本，只支持单字符级别"
+          },
+          "endMs": {
+            "type": "integer",
+            "description": "时间戳结束，单位ms，最大支持310000ms"
+          },
+          "startMs": {
+            "type": "integer",
+            "description": "时间戳开始，单位ms"
+          }
+        }
+      },
+      "description": "字幕信息（兼容subtitles字段），该字段专用于填充语音识别（ASR）后的结果，如果您未预先进行语音识别（ASR），请忽略该字段。"
+    },
+    "videoUrl": {
+      "type": "string",
+      "example": "https://example.com/a.mp4",
+      "description": "视频url"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "fileUrl"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "image",
+              "video"
+            ],
+            "type": "string",
+            "options": "image / video",
+            "description": "素材类型"
+          },
+          "fileUrl": {
+            "type": "string",
+            "description": "素材url"
+          }
+        }
+      },
+      "description": "素材，素材格式要求详见产品介绍-功能介绍"
+    },
+    "packRules": {
       "type": "object",
-      "required": [
-        "type",
-        "fileUrl"
-      ],
       "properties": {
-        "type": {
+        "headerSwitch": {
+          "type": "boolean",
+          "description": "标题包装开关"
+        },
+        "keywordSwitch": {
+          "type": "boolean",
+          "description": "关键词包装开关"
+        },
+        "materialSwitch": {
+          "type": "boolean",
+          "description": "素材包装开关"
+        },
+        "subtitleSwitch": {
+          "type": "boolean",
+          "description": "字幕包装开关"
+        },
+        "backgroundMusic": {
+          "type": "object",
+          "properties": {
+            "volume": {
+              "type": "number",
+              "default": 0.3,
+              "maximum": 1,
+              "minimum": 0,
+              "description": "音量，保留一位小数"
+            },
+            "audioUrl": {
+              "type": "string",
+              "description": "音频url，模板内置背景音乐和传递audioUrl，优先使用audioUrl"
+            },
+            "audioSwitch": {
+              "type": "boolean",
+              "description": "音乐开关"
+            }
+          },
+          "description": "背景音乐设置"
+        }
+      },
+      "description": "包装规则：仅用于控制标题、素材、字幕等是否参与模版的效果包装，无特殊要求不建议设置。"
+    },
+    "callbackUrl": {
+      "type": "string",
+      "example": "https://example.com/hook",
+      "description": "结果通知回调地址"
+    },
+    "processRules": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "description": "元水印数据，仅支持写入一组数据，且value值需为字符串，详情见产品介绍/元数据-AI 显式标识和隐式标识说明"
+        },
+        "watermarkShow": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否添加“AI生成”字样水印"
+        },
+        "firstFrameCover": {
+          "type": "object",
+          "properties": {
+            "imageUrl": {
+              "type": "string",
+              "description": "图片地址，用于生成AI封面图的底图，imageUrl和resultImageUrl二选一必填。"
+            },
+            "templateId": {
+              "type": "string",
+              "description": "模版ID，如果未设置则系统匹配"
+            },
+            "coverSwitch": {
+              "type": "boolean",
+              "default": false,
+              "description": "封面开关"
+            },
+            "resultImageUrl": {
+              "type": "string",
+              "description": "图片生成接口的结果图片地址或其他封面图片地址，传了此值将直接运用作为视频首桢封面，优先级更高。"
+            }
+          }
+        },
+        "materialMatchWay": {
           "enum": [
-            "image",
-            "video"
+            "fuzzyMatch",
+            "preciseMatch"
           ],
           "type": "string",
-          "options": "image / video",
-          "description": "素材类型"
+          "default": "preciseMatch",
+          "options": "fuzzyMatch / preciseMatch",
+          "description": "素材匹配方式"
         },
-        "fileUrl": {
+        "resourcePreprocessMethod": {
+          "enum": [
+            "sliceMerge",
+            "roughCut"
+          ],
           "type": "string",
-          "description": "素材url"
+          "options": "sliceMerge / roughCut",
+          "description": "真人视频预处理方式，不设置真人视频预处理方式时，默认保持原始视频时长。"
         }
-      }
+      },
+      "description": "处理规则"
     },
-    "description": "素材，素材格式要求详见产品介绍-功能介绍"
-  },
-  "packRules": {
-    "type": "object",
-    "properties": {
-      "headerSwitch": {
-        "type": "boolean",
-        "description": "标题包装开关"
-      },
-      "keywordSwitch": {
-        "type": "boolean",
-        "description": "关键词包装开关"
-      },
-      "materialSwitch": {
-        "type": "boolean",
-        "description": "素材包装开关"
-      },
-      "subtitleSwitch": {
-        "type": "boolean",
-        "description": "字幕包装开关"
-      },
-      "backgroundMusic": {
-        "type": "object",
-        "properties": {
-          "volume": {
-            "type": "number",
-            "default": 0.3,
-            "maximum": 1,
-            "minimum": 0,
-            "description": "音量，保留一位小数"
-          },
-          "audioUrl": {
-            "type": "string",
-            "description": "音频url，模板内置背景音乐和传递audioUrl，优先使用audioUrl"
-          },
-          "audioSwitch": {
-            "type": "boolean",
-            "description": "音乐开关"
-          }
+    "structLayers": {
+      "type": "array",
+      "description": "需要修改的图层数据"
+    },
+    "introduceCard": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "名称"
         },
-        "description": "背景音乐设置"
-      }
-    },
-    "description": "包装规则：仅用于控制标题、素材、字幕等是否参与模版的效果包装，无特殊要求不建议设置。"
-  },
-  "callbackUrl": {
-    "type": "string",
-    "example": "https://example.com/hook",
-    "description": "结果通知回调地址"
-  },
-  "processRules": {
-    "type": "object",
-    "properties": {
-      "metadata": {
-        "type": "object",
-        "description": "元水印数据，仅支持写入一组数据，且value值需为字符串，详情见产品介绍/元数据-AI 显式标识和隐式标识说明"
-      },
-      "watermarkShow": {
-        "type": "boolean",
-        "default": false,
-        "description": "是否添加“AI生成”字样水印"
-      },
-      "firstFrameCover": {
-        "type": "object",
-        "properties": {
-          "imageUrl": {
-            "type": "string",
-            "description": "图片地址，用于生成AI封面图的底图，imageUrl和resultImageUrl二选一必填。"
-          },
-          "templateId": {
-            "type": "string",
-            "description": "模版ID，如果未设置则系统匹配"
-          },
-          "coverSwitch": {
-            "type": "boolean",
-            "default": false,
-            "description": "封面开关"
-          },
-          "resultImageUrl": {
-            "type": "string",
-            "description": "图片生成接口的结果图片地址或其他封面图片地址，传了此值将直接运用作为视频首桢封面，优先级更高。"
-          }
+        "description": {
+          "type": "string",
+          "description": "描述"
         }
       },
-      "materialMatchWay": {
-        "enum": [
-          "fuzzyMatch",
-          "preciseMatch"
-        ],
-        "type": "string",
-        "default": "preciseMatch",
-        "options": "fuzzyMatch / preciseMatch",
-        "description": "素材匹配方式"
-      },
-      "resourcePreprocessMethod": {
-        "enum": [
-          "sliceMerge",
-          "roughCut"
-        ],
-        "type": "string",
-        "options": "sliceMerge / roughCut",
-        "description": "真人视频预处理方式，不设置真人视频预处理方式时，默认保持原始视频时长。"
-      }
+      "description": "身份栏信息，含义详见常见问题库"
     },
-    "description": "处理规则"
-  },
-  "structLayers": {
-    "type": "array",
-    "description": "需要修改的图层数据"
-  },
-  "introduceCard": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "description": "名称"
-      },
-      "description": {
-        "type": "string",
-        "description": "描述"
-      }
-    },
-    "description": "身份栏信息，含义详见常见问题库"
-  },
-  "materialSoundSwitch": {
-    "type": "boolean",
-    "default": false,
-    "description": "当素材为视频时原声开关"
+    "materialSoundSwitch": {
+      "type": "boolean",
+      "default": false,
+      "description": "当素材为视频时原声开关"
+    }
   }
 }
 ```
 
 ## 计费
 
-- 计费：免费
+- 计费：按分档价（`pricing_matrix`：720p=0.2 / 1080p=0.3，`billing_type=5`）；真实扣费看 `data.usage.points_cost`
 - 标准价：`fixed_price=0.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`
 - 分档：`720p`=0.2，`1080p`=0.3

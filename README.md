@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**332 个技能包**：104 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**360 个技能包**：132 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -132,34 +132,6 @@ npx clawhub install <slug>
 - **`sanjianke-wxjava`** 三剪客 · 微信生态 Java 服务端开发包 · 衍生指南
 - **`sanjianke-zulip`** 三剪客 · 话题制团队聊天服务器 · 衍生指南
 
-### 设计多媒体（25）
-
-- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
-- **`a7w-smart-clip`** 三剪客 · 智能剪辑
-- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
-- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
-- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
-- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
-- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
-- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
-- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
-- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
-- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
-- **`sanjianke-radio-dj`** 三剪客 · AI 电台
-- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
-- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
-- **`sanjianke-video-vr`** 三剪客 · 视频增强台
-- **`sanjianke-vr-cartoon`** 三剪客 · 人像卡通化
-- **`sanjianke-vr-colorize`** 三剪客 · 视频校色
-- **`sanjianke-vr-enhance`** 三剪客 · 画质综合增强
-- **`sanjianke-vr-portrait`** 三剪客 · 人像增强
-- **`sanjianke-vr-segment`** 三剪客 · 人像抠像
-- **`sanjianke-vr-subtitle`** 三剪客 · 字幕擦除
-- **`sanjianke-vr-superres`** 三剪客 · 标准超分 1080P
-- **`sanjianke-vr-superres-2k`** 三剪客 · 高清超分 2K
-- **`sanjianke-vr-superres-4k`** 三剪客 · 超清超分 4K
-- **`sanjianke-vr-upscale-4k`** 三剪客 · 4K 旗舰版
-
 ### 数据分析（25）
 
 - **`sanjianke-ai-research-kit`** 三剪客 · AI 科研全流程
@@ -188,6 +160,33 @@ npx clawhub install <slug>
 - **`sanjianke-tushare`** 三剪客 · A股行情与财务数据接口 · 衍生指南
 - **`sanjianke-web-scrape-kit`** 三剪客 · 全网数据采集引擎 · 衍生指南
 
+### 设计多媒体（24）
+
+- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
+- **`a7w-smart-clip`** 三剪客 · 智能剪辑
+- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
+- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
+- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
+- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
+- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
+- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
+- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
+- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
+- **`sanjianke-radio-dj`** 三剪客 · AI 电台
+- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
+- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
+- **`sanjianke-video-vr`** 三剪客 · 视频增强台
+- **`sanjianke-vr-cartoon`** 三剪客 · 人像卡通化
+- **`sanjianke-vr-colorize`** 三剪客 · 视频校色
+- **`sanjianke-vr-enhance`** 三剪客 · 画质综合增强
+- **`sanjianke-vr-portrait`** 三剪客 · 人像增强
+- **`sanjianke-vr-segment`** 三剪客 · 人像抠像
+- **`sanjianke-vr-subtitle`** 三剪客 · 字幕擦除
+- **`sanjianke-vr-superres`** 三剪客 · 标准超分 1080P
+- **`sanjianke-vr-superres-2k`** 三剪客 · 高清超分 2K
+- **`sanjianke-vr-superres-4k`** 三剪客 · 超清超分 4K
+- **`sanjianke-vr-upscale-4k`** 三剪客 · 4K 旗舰版
+
 ### CLI（22）
 
 - **`sanjianke-asdf`** 三剪客 · 多语言运行时版本管理 · 衍生指南
@@ -213,6 +212,28 @@ npx clawhub install <slug>
 - **`sanjianke-yq`** 三剪客 · YAML 命令行处理 · 衍生指南
 - **`sanjianke-zoxide`** 三剪客 · 智能目录跳转 · 衍生指南
 
+### 电商（19）
+
+- **`sanjianke-aimeos-laravel`** 三剪客 · Laravel 电商套件 · 衍生指南
+- **`sanjianke-bagisto`** 三剪客 · 开源跨境电商独立站系统 · 衍生指南
+- **`sanjianke-commerce`** 三剪客 · Next.js 电商前端模板 · 衍生指南
+- **`sanjianke-dolibarr`** 三剪客 · 企业 ERP 与 CRM · 衍生指南
+- **`sanjianke-ecom-detail`** 电商详情页 一张实拍出整页 13 张
+- **`sanjianke-ecom-picset`** 电商图包：一张商品图出 10 张上架素材
+- **`sanjianke-ecom-studio`** 电商素材台 换装出图一套配齐
+- **`sanjianke-inventree`** 三剪客 · 开源库存与物料管理系统 · 衍生指南
+- **`sanjianke-litemall`** 三剪客 · 小程序商城全栈系统 · 衍生指南
+- **`sanjianke-mall-admin-web`** 三剪客 · 电商后台管理前端 · 衍生指南
+- **`sanjianke-mall-swarm`** 三剪客 · 微服务电商商城系统 · 衍生指南
+- **`sanjianke-mall4cloud`** 三剪客 · 微服务电商中台 · 衍生指南
+- **`sanjianke-mall4j`** 三剪客 · Java 商城系统 · 衍生指南
+- **`sanjianke-newbee-mall-vue3-app`** 三剪客 · 商城前台 Vue3 源码 · 衍生指南
+- **`sanjianke-saleor`** 三剪客 · GraphQL 原生电商后端平台 · 衍生指南
+- **`sanjianke-spree`** 三剪客 · 开源无头电商平台 · 衍生指南
+- **`sanjianke-sylius`** 三剪客 · 开源电商平台 · 衍生指南
+- **`sanjianke-vendure`** 三剪客 · 电商后端框架 · 衍生指南
+- **`sanjianke-wechat-app-mall`** 三剪客 · 微信小程序商城前端模板 · 衍生指南
+
 ### AI（18）
 
 - **`sanjianke-colossalai`** 三剪客 · 大规模并行训练 · 衍生指南
@@ -233,26 +254,6 @@ npx clawhub install <slug>
 - **`sanjianke-transformers`** 三剪客 · 模型加载与推理 · 衍生指南
 - **`sanjianke-unsloth`** 三剪客 · 低显存微调加速 · 衍生指南
 - **`sanjianke-vllm`** 三剪客 · 高吞吐 LLM 推理服务 · 衍生指南
-
-### 电商（17）
-
-- **`sanjianke-aimeos-laravel`** 三剪客 · Laravel 电商套件 · 衍生指南
-- **`sanjianke-bagisto`** 三剪客 · 开源跨境电商独立站系统 · 衍生指南
-- **`sanjianke-commerce`** 三剪客 · Next.js 电商前端模板 · 衍生指南
-- **`sanjianke-dolibarr`** 三剪客 · 企业 ERP 与 CRM · 衍生指南
-- **`sanjianke-ecom-studio`** 电商素材台 换装出图一套配齐
-- **`sanjianke-inventree`** 三剪客 · 开源库存与物料管理系统 · 衍生指南
-- **`sanjianke-litemall`** 三剪客 · 小程序商城全栈系统 · 衍生指南
-- **`sanjianke-mall-admin-web`** 三剪客 · 电商后台管理前端 · 衍生指南
-- **`sanjianke-mall-swarm`** 三剪客 · 微服务电商商城系统 · 衍生指南
-- **`sanjianke-mall4cloud`** 三剪客 · 微服务电商中台 · 衍生指南
-- **`sanjianke-mall4j`** 三剪客 · Java 商城系统 · 衍生指南
-- **`sanjianke-newbee-mall-vue3-app`** 三剪客 · 商城前台 Vue3 源码 · 衍生指南
-- **`sanjianke-saleor`** 三剪客 · GraphQL 原生电商后端平台 · 衍生指南
-- **`sanjianke-spree`** 三剪客 · 开源无头电商平台 · 衍生指南
-- **`sanjianke-sylius`** 三剪客 · 开源电商平台 · 衍生指南
-- **`sanjianke-vendure`** 三剪客 · 电商后端框架 · 衍生指南
-- **`sanjianke-wechat-app-mall`** 三剪客 · 微信小程序商城前端模板 · 衍生指南
 
 ### 中文NLP（16）
 
@@ -382,6 +383,13 @@ npx clawhub install <slug>
 - **`sanjianke-wechat-chatgpt`** 三剪客 · 微信接入 ChatGPT 自动回复 · 衍生指南
 - **`sanjianke-xiaohongshu-mcp`** 三剪客 · 小红书 MCP 服务 · 衍生指南
 
+### 数字人（4）
+
+- **`aigc-digital-human-studio`** 三剪客 · 数字人自动剪辑（网页版）
+- **`avatar-autoclip`** 三剪客 · 数字人自动剪辑
+- **`sanjianke-digital-host`** 数字人口播台 一张图一段话一个人开口
+- **`sanjianke-talking-matrix`** 口播矩阵 3 形象 × 4 音色一次出 12 条
+
 ### 开发编程（4）
 
 - **`sanjianke-agent-orchestrator`** 有状态Agent编排·状态图断点续跑与人工审批接统一模型网关
@@ -403,21 +411,31 @@ npx clawhub install <slug>
 - **`sanjianke-course-outline`** 三剪客 · 课程生产线
 - **`sanjianke-slide-kit`** 三剪客 · 课件配图与排版
 
-### 数字人（3）
-
-- **`aigc-digital-human-studio`** 三剪客 · 数字人自动剪辑（网页版）
-- **`avatar-autoclip`** 三剪客 · 数字人自动剪辑
-- **`sanjianke-digital-host`** 数字人口播台 一张图一段话一个人开口
-
-### 短剧二创（2）
+### 短剧二创（3）
 
 - **`duanju-remix-playbook`** 三剪客 · 短剧二创作业手册
 - **`duanju-rights-compliance`** 三剪客 · 短剧二创授权与合规自查
+- **`sanjianke-shortdrama-remix`** 短剧二创一条龙 · 60 秒片 18 元跑完全链
+
+### 音频生成（2）
+
+- **`sanjianke-audiobook-line`** 有声书生产线 · 10 万字书稿切 34 章、分角色配音、带时间戳
+- **`sanjianke-podcast-line`** 播客生产线 · 3 条请求出一期成品播客
 
 ### 知识管理（2）
 
 - **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
 - **`sanjianke-knowledge-qa`** 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
+
+### 视频生成（2）
+
+- **`sanjianke-model-video`** 视频生成台·模型层（同一条片便宜 75 倍）
+- **`sanjianke-muse-video`** muse video单条支持3分钟视频 0.11元一秒
+
+### 短剧（2）
+
+- **`sanjianke-shortdrama-mass`** 短剧量产 · 一天 10 条日更的排产台
+- **`short-drama-factory`** 三剪客 · AI 短剧工厂出片全流程
 
 ### 设计（2）
 
@@ -437,17 +455,45 @@ npx clawhub install <slug>
 
 - **`one-key-ai-gateway`** 三剪客 · 国产大模型一键调用统一路由
 
+### 广告投放（1）
+
+- **`sanjianke-ad-creative`** 广告投放素材 一个卖点 15 条矩阵
+
 ### AI 客户端（1）
 
 - **`sanjianke-ai-chat-ui`** AI聊天客户端接国产大模型·一个Key换75个模型接入配置
+
+### 音频配乐（1）
+
+- **`sanjianke-ai-soundtrack`** AI 配乐 60 点一段 卡点与混音一起给
+
+### 图文转视频（1）
+
+- **`sanjianke-article-to-video`** 一篇 2000 字文章，10 元出一条 60 秒成片
+
+### 批量调度（1）
+
+- **`sanjianke-batch-runner`** 批量调度 一千条任务排队跑完
 
 ### 对账计费（1）
 
 - **`sanjianke-billing`** 对账台 · 我的钱花在哪一查就清
 
+### 品牌 VI（1）
+
+- **`sanjianke-brand-vi`** 品牌 VI 生成 一套 VI 六毛钱
+
 ### 聊天机器人（1）
 
 - **`sanjianke-chatbot-builder`** 聊天机器人接大模型·多平台机器人用国产模型回话方案
+
+### 成本预估（1）
+
+- **`sanjianke-cost-forecast`** 成本预估器 花之前先把这一单算清
+
+### 课程视频（1）
+
+- **`sanjianke-course-video`** 10 章课程口播课件 · 每章 60 秒 6 元起
 
 ### 大模型（1）
 
@@ -457,6 +503,18 @@ npx clawhub install <slug>
 
 - **`sanjianke-drama-studio-kit`** 三剪客 · AI 短剧创作台
 
+### 带货侦察（1）
+
+- **`sanjianke-ecom-spy`** 带货素材侦察 1 元拆一条爆款
+
+### 教育课件（1）
+
+- **`sanjianke-edu-courseware`** 教育课件 · 一节课 5 样交付物
+
+### 游戏宣发（1）
+
+- **`sanjianke-game-promo`** 游戏宣发 三个节奏点一套交付
+
 ### 图片生成（1）
 
 - **`sanjianke-gpt-image`** GPT Image 2.6 六分钱出图工作台
@@ -465,13 +523,53 @@ npx clawhub install <slug>
 
 - **`sanjianke-java-agent-kit`** Java接大模型与Agent·OpenAI兼容网关直连75模型包
 
+### 知识付费（1）
+
+- **`sanjianke-knowledge-pay`** 知识付费招生 一门课 15 条链路素材
+
+### 本地生活（1）
+
+- **`sanjianke-local-life`** 本地生活视频 一天 5 条门店矩阵
+
+### 视频本地化（1）
+
+- **`sanjianke-localize-line`** 多语言出海 · 一条中文视频出 12 语版本（10 分钟 2.40 元起）
+
+### 医疗合规（1）
+
+- **`sanjianke-medical-compliance`** 医疗合规素材 一条 9.35 元 · 出片前先过合规
+
 ### 视频超分（1）
 
 - **`sanjianke-mps-upscale`** 腾讯云超分台 · 2 点一秒，4K 也能提
 
-### 视频生成（1）
+### 新闻资讯（1）
 
-- **`sanjianke-muse-video`** muse video单条支持3分钟视频 0.11元一秒
+- **`sanjianke-news-shorts`** 新闻资讯短视频 一条快讯 1.80 元
+
+### 视频修复（1）
+
+- **`sanjianke-oldfilm-restore`** 老片转高清一条龙 · 60 秒 19.8 元出 1080P
+
+### 比价（1）
+
+- **`sanjianke-price-radar`** 模型比价器 同一个模型差 75 倍
+
+### 语音配音（1）
+
+- **`sanjianke-pro-voice`** 高保真语音台 短剧配音一句话一个角色
+
+### 商品视频（1）
+
+- **`sanjianke-product-video`** 商品视频：一张商品图 2.4 元出一条带货短视频
+
+### 房产汽车（1）
+
+- **`sanjianke-realestate-auto`** 房产汽车 一单一套房源片 28 元
+
+### 招聘雇主品牌（1）
+
+- **`sanjianke-recruit-brand`** 招聘雇主品牌 一条 JD 视频 14 元
 
 ### 音乐生成（1）
 
@@ -480,10 +578,6 @@ npx clawhub install <slug>
 ### 视频后处理（1）
 
 - **`sanjianke-video-lab`** 视频后处理台 11 个能力一个命令
-
-### 短剧（1）
-
-- **`short-drama-factory`** 三剪客 · AI 短剧工厂出片全流程
 
 ### xiaohongshu（1）
 

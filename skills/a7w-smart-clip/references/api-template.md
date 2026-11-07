@@ -66,58 +66,64 @@ Authorization: Bearer <YOUR_API_KEY>
 
 ```json
 {
-  "sid": {
-    "type": "string",
-    "description": "分页游标，当有值时代表存在下一页，继续查询下一页时需传入该值"
-  },
-  "scene": {
-    "enum": [
-      "realMan",
-      "oralMixCutting",
-      "newsMixCutting"
-    ],
-    "type": "string",
-    "example": "realMan",
-    "options": "realMan / oralMixCutting / newsMixCutting",
-    "description": "模板使用场景：真人口播 realMan（提交接口 realman_broadcast）、素材混剪 oralMixCutting（提交接口 broadcast_mixcut）、新闻体视频 newsMixCutting（提交接口 news_mixcut）"
-  },
-  "sortBy": {
-    "enum": [
-      "desc",
-      "asc"
-    ],
-    "type": "string",
-    "default": "desc",
-    "example": "desc",
-    "options": "desc / asc",
-    "description": "排序方式，desc：按上架时间倒序排序，asc：按上架时间正序排序"
-  },
-  "pageSize": {
-    "type": "integer",
-    "default": 10,
-    "example": 10,
-    "description": "每页大小"
-  },
-  "searchKey": {
-    "enum": [
-      "name",
-      "id"
-    ],
-    "type": "string",
-    "example": "name",
-    "options": "name / id",
-    "description": "搜索字段"
-  },
-  "searchValue": {
-    "type": "string",
-    "example": "口播",
-    "description": "搜索值"
+  "type": "object",
+  "required": [
+    "scene"
+  ],
+  "properties": {
+    "sid": {
+      "type": "string",
+      "description": "分页游标，当有值时代表存在下一页，继续查询下一页时需传入该值"
+    },
+    "scene": {
+      "enum": [
+        "realMan",
+        "oralMixCutting",
+        "newsMixCutting"
+      ],
+      "type": "string",
+      "example": "realMan",
+      "options": "realMan / oralMixCutting / newsMixCutting",
+      "description": "模板使用场景：真人口播 realMan（提交接口 realman_broadcast）、素材混剪 oralMixCutting（提交接口 broadcast_mixcut）、新闻体视频 newsMixCutting（提交接口 news_mixcut）"
+    },
+    "sortBy": {
+      "enum": [
+        "desc",
+        "asc"
+      ],
+      "type": "string",
+      "default": "desc",
+      "example": "desc",
+      "options": "desc / asc",
+      "description": "排序方式，desc：按上架时间倒序排序，asc：按上架时间正序排序"
+    },
+    "pageSize": {
+      "type": "integer",
+      "default": 10,
+      "example": 10,
+      "description": "每页大小"
+    },
+    "searchKey": {
+      "enum": [
+        "name",
+        "id"
+      ],
+      "type": "string",
+      "example": "name",
+      "options": "name / id",
+      "description": "搜索字段"
+    },
+    "searchValue": {
+      "type": "string",
+      "example": "口播",
+      "description": "搜索值"
+    }
   }
 }
 ```
 
 ## 计费
 
-- 计费：免费
+- 计费：字段价 0（查询类接口）
 - 标准价：`fixed_price=0.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`

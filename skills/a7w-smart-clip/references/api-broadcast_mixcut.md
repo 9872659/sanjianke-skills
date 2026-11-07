@@ -228,125 +228,132 @@
 
 ```json
 {
-  "title": {
-    "type": "string",
-    "example": "聊AI行业",
-    "description": "标题"
-  },
-  "content": {
-    "type": "string",
-    "description": "文本，与audioUrl字段二选一，选择文本，则speakerId为必须；当前应用不支持该定制声音分支"
-  },
-  "styleId": {
-    "type": "string",
-    "example": "68aebb91b8619ed6f4168f40",
-    "description": "视频模板ID"
-  },
-  "audioUrl": {
-    "type": "string",
-    "example": "https://example.com/a.mp3",
-    "description": "音频URL，与content字段二选一；当前应用仅支持 audioUrl 或素材输入链路"
-  },
-  "language": {
-    "type": "string",
-    "example": "zh-CN",
-    "description": "语种，特指音频（audioUrl）对应的语种，语种参考ASR支持的语种"
-  },
-  "subtitle": {
-    "type": "array",
-    "description": "字幕信息（兼容subtitles字段），该字段专用于填充语音识别（ASR）后的结果，如果您未预先进行语音识别（ASR），请忽略该字段。"
-  },
-  "materials": {
-    "type": "array",
-    "items": {
+  "type": "object",
+  "required": [
+    "styleId",
+    "materials"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "example": "聊AI行业",
+      "description": "标题"
+    },
+    "content": {
+      "type": "string",
+      "description": "文本，与audioUrl字段二选一，选择文本，则speakerId为必须；当前应用不支持该定制声音分支"
+    },
+    "styleId": {
+      "type": "string",
+      "example": "68aebb91b8619ed6f4168f40",
+      "description": "视频模板ID"
+    },
+    "audioUrl": {
+      "type": "string",
+      "example": "https://example.com/a.mp3",
+      "description": "音频URL，与content字段二选一；当前应用仅支持 audioUrl 或素材输入链路"
+    },
+    "language": {
+      "type": "string",
+      "example": "zh-CN",
+      "description": "语种，特指音频（audioUrl）对应的语种，语种参考ASR支持的语种"
+    },
+    "subtitle": {
+      "type": "array",
+      "description": "字幕信息（兼容subtitles字段），该字段专用于填充语音识别（ASR）后的结果，如果您未预先进行语音识别（ASR），请忽略该字段。"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "fileUrl"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "image",
+              "video"
+            ],
+            "type": "string",
+            "options": "image / video",
+            "description": "素材类型"
+          },
+          "fileUrl": {
+            "type": "string",
+            "description": "素材url"
+          },
+          "soundSwitch": {
+            "type": "boolean",
+            "default": false,
+            "description": "当素材为视频时原声开关"
+          }
+        }
+      },
+      "description": "素材"
+    },
+    "packRules": {
       "type": "object",
-      "required": [
-        "type",
-        "fileUrl"
-      ],
+      "description": "包装规则：仅用于控制标题、素材、字幕等是否参与模版的效果包装，无特殊要求不建议设置。"
+    },
+    "speakerId": {
+      "type": "string",
+      "description": "音色ID；当前应用不支持 content + speakerId 定制声音分支"
+    },
+    "callbackUrl": {
+      "type": "string",
+      "example": "https://example.com/hook",
+      "description": "结果通知回调地址"
+    },
+    "processRules": {
+      "type": "object",
       "properties": {
-        "type": {
-          "enum": [
-            "image",
-            "video"
-          ],
-          "type": "string",
-          "options": "image / video",
-          "description": "素材类型"
+        "metadata": {
+          "type": "object",
+          "description": "元水印数据，仅支持写入一组数据，且value值需为字符串，详情见产品介绍/元数据-AI 显式标识和隐式标识说明"
         },
-        "fileUrl": {
-          "type": "string",
-          "description": "素材url"
-        },
-        "soundSwitch": {
+        "watermarkShow": {
           "type": "boolean",
           "default": false,
-          "description": "当素材为视频时原声开关"
+          "description": "是否添加“AI生成”字样水印"
+        },
+        "firstFrameCover": {
+          "type": "object",
+          "description": "首帧封面配置"
         }
-      }
-    },
-    "description": "素材"
-  },
-  "packRules": {
-    "type": "object",
-    "description": "包装规则：仅用于控制标题、素材、字幕等是否参与模版的效果包装，无特殊要求不建议设置。"
-  },
-  "speakerId": {
-    "type": "string",
-    "description": "音色ID；当前应用不支持 content + speakerId 定制声音分支"
-  },
-  "callbackUrl": {
-    "type": "string",
-    "example": "https://example.com/hook",
-    "description": "结果通知回调地址"
-  },
-  "processRules": {
-    "type": "object",
-    "properties": {
-      "metadata": {
-        "type": "object",
-        "description": "元水印数据，仅支持写入一组数据，且value值需为字符串，详情见产品介绍/元数据-AI 显式标识和隐式标识说明"
       },
-      "watermarkShow": {
-        "type": "boolean",
-        "default": false,
-        "description": "是否添加“AI生成”字样水印"
-      },
-      "firstFrameCover": {
-        "type": "object",
-        "description": "首帧封面配置"
-      }
+      "description": "处理规则"
     },
-    "description": "处理规则"
-  },
-  "speakerExtra": {
-    "type": "object",
-    "description": "音色扩展参数，传speakerId时有效；当前应用不支持 content + speakerId 定制声音分支"
-  },
-  "structLayers": {
-    "type": "array",
-    "description": "需要修改的图层数据"
-  },
-  "introduceCard": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "description": "名称"
-      },
-      "description": {
-        "type": "string",
-        "description": "描述"
-      }
+    "speakerExtra": {
+      "type": "object",
+      "description": "音色扩展参数，传speakerId时有效；当前应用不支持 content + speakerId 定制声音分支"
     },
-    "description": "身份栏信息，含义详见常见问题库"
+    "structLayers": {
+      "type": "array",
+      "description": "需要修改的图层数据"
+    },
+    "introduceCard": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        }
+      },
+      "description": "身份栏信息，含义详见常见问题库"
+    }
   }
 }
 ```
 
 ## 计费
 
-- 计费：免费
+- 计费：按分档价（`pricing_matrix`：720p=0.2 / 1080p=0.3，`billing_type=5`）；真实扣费看 `data.usage.points_cost`
 - 标准价：`fixed_price=0.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`
 - 分档：`720p`=0.2，`1080p`=0.3

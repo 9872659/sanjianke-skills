@@ -72,16 +72,22 @@ Authorization: Bearer <YOUR_API_KEY>
 
 ```json
 {
-  "id": {
-    "type": "string",
-    "example": "67b7ee802b2beb0030cdeaaf",
-    "description": "模板id"
+  "type": "object",
+  "required": [
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "67b7ee802b2beb0030cdeaaf",
+      "description": "模板id"
+    }
   }
 }
 ```
 
 ## 计费
 
-- 计费：免费
+- 计费：字段价 0（查询类接口）
 - 标准价：`fixed_price=0.0000` / `input_price=0.000000`
 - 租户价：`tenant_fixed_points=0.00` / `tenant_points_per_1k_input=0.0000`

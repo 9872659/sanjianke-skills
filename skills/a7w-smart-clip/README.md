@@ -37,12 +37,13 @@ python3 scripts/client.py call smart_clip <接口编码> --json '{...}' --no-wai
 ## 目录结构
 
 ```
-smart-clip/
+a7w-smart-clip/
 ├── SKILL.md                   概览、接口索引与参数表
 ├── README.md                  本文件
 ├── LICENSE.md
 ├── references/
 │   ├── getting-started.md     注册 / 充值 / 取 Key / 配置
+│   ├── 通用说明.md             所有 api.a7w.cn 插件 Skill 共用说明
 │   └── api-*.md               各接口官方文档（5 个）
 └── scripts/
     └── client.py                 通用客户端（零依赖）
