@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**325 个技能包**：97 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**326 个技能包**：98 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -141,6 +141,7 @@ npx clawhub install <slug>
 - **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
 - **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
 - **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
+- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
 - **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
 - **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
 - **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
@@ -448,6 +449,7 @@ npx clawhub install <slug>
 
 ### AI短剧（1）
 
+- **`sanjianke-drama-studio-kit`** 三剪客 · AI 短剧创作台
 
 ### 图片生成（1）
 
@@ -456,6 +458,10 @@ npx clawhub install <slug>
 ### Java（1）
 
 - **`sanjianke-java-agent-kit`** Java接大模型与Agent·OpenAI兼容网关直连75模型包
+
+### 视频生成（1）
+
+- **`sanjianke-muse-video`** muse video单条支持3分钟视频 0.11元一秒
 
 ### 短剧（1）
 
