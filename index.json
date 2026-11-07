@@ -280,6 +280,14 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-billing",
+  "displayName": "对账台 · 我的钱花在哪一查就清",
+  "description": "**跑了 100 次调用，账户少了 300 块 —— 到底花在哪了？一条命令摊开给你看，扣 0 点。** 本包只用 7 个只读 GET，把 api.a7w.cn 已经记好的账全部读出来、算清、摆成表：30 天花了多少、退了多少、净花多少、日均多少，按 32 个真实接口路径排序算占比，并把 `/api/v1/apps/pic_lipsync/submit` 这种路径翻成人话「图片对口型（照片开口说话）」。实测踩出来的三个口径坑都做成了默认动作：一、`/user/usage` 的 `byPath` 只回**一个桶** `{\\\"(任务冻结/结算)\\\": 420306}`，按路径分组必须自己从任务台账的 `path` 字段归集；二、`refunded` 不等于没花钱、`netPoints` 也不等于标价 —— 全量实测标价合计 1,614,557 点而真扣只有 104,785 点，差 15 倍；三、流水页的 `netPoints` 是流水口径（-404,408，预扣+退款来回都算），`balanceMoving` 才是真净（-175,243）。`doctor` 每次都会验 `usage.netPoints = billing.netConsumedPoints = logs.balanceMoving` 三方一致，实测差 0.00 点。6 个子命令全部只读，任何情况下扣 0 点。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-browser-operator",
   "displayName": "浏览器自动化操作员·一句话任务让Agent自己点填翻页抓取",
   "description": "一句话任务描述，让 Agent 自己开着浏览器把网页上的活干完：点按钮、填表单、翻页、把结果取回来。写的是任务，不是选择器，页面改版也不容易整条断掉。含任务描述写法、模型挑选依据、真实浏览器与无头环境说明、步数上限与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型，含支持视觉的模型可直接看截图决策。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -512,6 +520,14 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-mps-upscale",
+  "displayName": "腾讯云超分台 · 2 点一秒，4K 也能提",
+  "description": "**4K 超分 8 点/秒（¥0.08）——一条 10 分钟的片子 48 块提满 4K**；1080P 更狠，2 点/秒，10 分钟 12 块。走 api.a7w.cn 的腾讯云 MPS 音视频增强，和阿里 VIAPI 同一条产线，价格是它的 1/4.5（1080P 9→2、2K 15→4、4K 20→8 点/秒）。本包把两件真会花错钱的事做成了默认路径：一是 `duration` 要你自己给（平台自动探测失败会直接拒单，实测 `400 duration_unknown`），二是按**输入秒数**而不是输出秒数计费。`cost` 先报钱、`--budget` 是第一道闸门（一个请求都不发）、`--yes` 是第二道，`doctor` 用「带视频地址但缺时长」探三档端点（上游规定 400，零扣费）。一条命令完成提交 → 自动轮询 → 拿成片地址，失败全额退回。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-multi-agent-chat",
   "displayName": "多智能体群聊协作·多角色轮流发言与终止条件接入指南",
   "description": "用对话的方式组织多个 Agent 协作：给每个 Agent 一个名字、一段人设、一个模型客户端，再放进群聊里轮流发言或按需发言，靠终止条件收口。含发言策略与终止条件参数表、状态管理写法、工具轮数上限与零依赖客户端。模型侧改一个 base_url 走 OpenAI 兼容网关即可，一把 Key 调 75 个在架模型。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -628,6 +644,14 @@
   "displayName": "音视频一键转字幕·语音转文字自动生成SRT时间轴批量出稿",
   "description": "音频、视频、播客、会议录音丢进去，直接拿回带时间轴的字幕文件（SRT / VTT / 纯文本）。支持多语言识别与自动判定，长音频一次提交，不用自己装模型、不用显卡。一条接口按音频时长计费，查询免费。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "2.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-suno-music",
+  "displayName": "Suno 音乐台 一句话出一首歌",
+  "description": "**给人一句话，它给你一首完整的歌 —— 带人声、带伴奏、带时间戳歌词。** 走 api.a7w.cn 的 Official 音频（`media_services_33`），7 个 Suno 音乐接口接通：一句话出歌、给副歌再接一段、按描述出音效、用自己的声音建音色、导出带时间戳歌词做字幕、过期再恢复、把一首歌的味道存成 Persona。提交后自动轮询，完成时把 `audio_id` 与音频直链打出来 —— 延长、取歌词、建 Persona 都要它。价格：`/api/v1/pricing` 里没有它的专属规则，落通配「上游实际点数 × 2，单笔保底 50 点」，所以 `cost` 是**下限估算**，真跑一条才知道准确点数。`--budget` 是第一道闸门、`--yes` 第二道，`doctor` 用必然被校验拦下的请求把 7 个端点探一遍，零扣费。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },

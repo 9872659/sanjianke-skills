@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**326 个技能包**：98 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**329 个技能包**：101 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -439,6 +439,10 @@ npx clawhub install <slug>
 
 - **`sanjianke-ai-chat-ui`** AI聊天客户端接国产大模型·一个Key换75个模型接入配置
 
+### 对账计费（1）
+
+- **`sanjianke-billing`** 对账台 · 我的钱花在哪一查就清
+
 ### 聊天机器人（1）
 
 - **`sanjianke-chatbot-builder`** 聊天机器人接大模型·多平台机器人用国产模型回话方案
@@ -459,9 +463,17 @@ npx clawhub install <slug>
 
 - **`sanjianke-java-agent-kit`** Java接大模型与Agent·OpenAI兼容网关直连75模型包
 
+### 视频超分（1）
+
+- **`sanjianke-mps-upscale`** 腾讯云超分台 · 2 点一秒，4K 也能提
+
 ### 视频生成（1）
 
 - **`sanjianke-muse-video`** muse video单条支持3分钟视频 0.11元一秒
+
+### 音乐生成（1）
+
+- **`sanjianke-suno-music`** Suno 音乐台 一句话出一首歌
 
 ### 短剧（1）
 
