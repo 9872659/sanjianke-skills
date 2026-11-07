@@ -114,8 +114,8 @@
  {
   "slug": "a7w-smart-clip",
   "displayName": "三剪客 · 智能剪辑",
-  "description": "智能剪辑应用，支持模板查询、真人口播混剪、素材混剪和新闻体视频制作。支持 模板列表、模板详情、真人口播混剪、素材混剪、新闻体视频。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.10",
+  "description": "一条 JSON 出成片：模板列表/模板详情查模板，真人口播混剪、素材混剪、新闻体视频三条生产链路直接提交，异步任务出 720p/1080p 成片。含 5 个接口的逐参数表（含必填项与 scene 对应关系）、上游真实分档价、真实模板 id 的取法，以及一个零依赖客户端（`SKILL.md` + `references/` + `scripts/client.py`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.11",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -144,10 +144,26 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "aigc-digital-human-studio",
+  "displayName": "三剪客 · 数字人自动剪辑（网页版）",
+  "description": "在浏览器里做出成品短视频：上传一张人物图片（或一段人物视频）+ 一段文案，自动配音、对口型、套模板、连封面一起生成，导出 1080×1920 竖屏成片。两个入口对应两条线——`#/tool/digital_human`（数字人视频：图片 + 文案）与 `#/tool/lipsync`（数字人对口型：视频 + 文案）。内置 94 套真人口播混剪模板（另有素材混剪、新闻体共三档场景），模板支持悬停即播的样片预览与全屏弹层预览；内置 3 个精选公共音色并可一键试听，也能上传自己的配音或克隆专属音色；「自动生成封面」用人物形象作首帧生成 AI 封面，成片第一帧就是它。成片按【固定 999 点/条】计费，与时长无关（1 元 = 100 点）。无需安装任何软件、无需 API Key，打开网页即可用。本包是面向使用者的操作向导，含两个入口怎么选、三步出片、逐项功能说明、计价口径与常见报错对照。需要 API/命令行版本请用同系列的 avatar-autoclip。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "aigc-market",
   "displayName": "AI图片视频音乐语音配音数字人口播换装超分剪辑全能创作插件市场",
   "description": "通过一个 Key 调用 21 个 AI 插件、71 个接口，完成 AI 图片生成、AI 视频生成、AI 音乐生成、AI 语音合成与识别、数字人、口播、换装、超分、剪辑等全部创作环节。AI 插件市场 aigc.a7w.cn 把文生图、图生图、文生视频、图生视频、视频编辑、动作迁移、人物替换、AI 换装、数字人对口型、全驱动数字人、图片数字人、音效生成、视频配音、音色克隆、AI 翻唱、语音转文字、视频超分、智能混剪、文件问答、音乐搜索收在一个 Key 之下。含 21 个插件的接口清单、参数表、真实计费口径与选型建议。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.6",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "avatar-autoclip",
+  "displayName": "三剪客 · 数字人自动剪辑",
+  "description": "只要一张参考图 + 一段文字，一条命令出成品短视频：参考生图（1 张参考图派生多张同风格人物图，保住同一张脸）→ 文案转配音 → 语音识别取字级时间轴做逐字字幕 → 图片数字人口播 → 智能剪辑套模板成片，含自动 AI 首帧封面。覆盖 nano_banana 参考生图、voice_tts 合成与识别、pic_lipsync 图片数字人、smart_clip 智能剪辑（模板列表/模板详情/真人口播混剪/素材混剪/新闻体视频）与通用任务查询，共 15 个命令。补上了上游缺的四处：本地预检（素材时长/分辨率/地址重名/字幕边界，不花点数就拦下）、提交前 dry-run、任务刚 completed 时结果为空的竞态兜底、人格权授权硬门禁。零依赖仅标准库，实测端到端出片成功（真实 mp4，1080x1920，含 AI 生成水印）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。★ 算力接口已锁定：只能访问 api.a7w.cn，改地址会被就地拒绝并说明原因（不会一路报含糊的网络错）。遇到问题可加技术微信 9872659。",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -368,14 +384,6 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-drama-studio-kit",
-  "displayName": "三剪客 · AI 短剧创作台",
-  "description": "短剧创作台的选型评估与私有化搭建指南，含真实算力接入：出图走 `/api/v1/apps/nano_banana/submit`、出片走 `/api/v1/apps/full_video/submit`、配音走 `/api/v1/apps/voice_tts/tts`，并按 `/api/v1/pricing` 的真实单价做成本估算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
   "slug": "sanjianke-drama-workbench",
   "displayName": "AI短剧制作工作台·多应用组合配方单镜头SOP与批量排产",
   "description": "把 api.a7w.cn 上的生成应用搭成一张短剧制作工作台：哪个应用擅长什么、什么输入该配哪个、一个镜头从首帧到成片的六步 SOP、六套现成的组合配方（静态对话戏/动作戏/旁白戏/快剪混剪/老片修复/数字人口播）、多项目并行排产与按应用对账，全部写清「传什么、调哪个接口、拿回什么」。含零依赖客户端与成本测算脚本，。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -400,18 +408,18 @@
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-graph-rag",
-  "displayName": "图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙",
-  "description": "先把整批文档读成一张实体关系图，再切成多级社区并逐层写摘要，让「主题、趋势、概览」这类全局性问题有答案——普通向量检索答不上来的问题它能答。抽图与回答都走 api.a7w.cn 网关。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "2.0.3",
+  "slug": "sanjianke-gpt-image",
+  "displayName": "GPT Image 2.6 六分钱出图工作台",
+  "description": "**六分钱一张图**（6 点 = ¥0.06），走 api.a7w.cn 的 GPT Image 2.6，OpenAI Images API 兼容、同步出图、零依赖。本包把三个真会花错钱的坑写进默认路径：一是端点少写 `/api` 前缀就会掉到网关默认应用（传任何 model 都被忽略），二是返回默认是 `b64_json` 而不是 URL，三是一张图到底几毛钱没人知道。`cost` 先报钱（6 点/张，4 张才 0.24 元），`--budget` 是第一道闸门、`--yes` 是第二道，`doctor` 用「带 model 的空 prompt」探端点（文档规定 422，不扣费）。文生图、图生图、标注层改图、GIF 动图都收在一个命令里，出完自动把 b64 或链接落成文件。遇到问题可加技术微信 9872659。",
+  "version": "1.1.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
-  "slug": "sanjianke-html-video-kit",
-  "displayName": "三剪客 · HTML 转视频引擎",
-  "description": "把 HTML/CSS 当时间轴写，一条命令渲染出确定性 MP4；旁白稿与配音接 api.a7w.cn 的大模型与 voice_tts，直接落成能塞进时间轴的音轨与 cues.json。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
-  "version": "1.0.5",
+  "slug": "sanjianke-graph-rag",
+  "displayName": "图谱增强检索知识库·实体关系抽取社区摘要全局趋势问答一条龙",
+  "description": "先把整批文档读成一张实体关系图，再切成多级社区并逐层写摘要，让「主题、趋势、概览」这类全局性问题有答案——普通向量检索答不上来的问题它能答。抽图与回答都走 api.a7w.cn 网关。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "2.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -748,22 +756,6 @@
   "displayName": "三剪客 · 小红书带货直播作战包",
   "description": "小红书电商带货全链路作战包：选品测算、商品笔记、直播脚本、评论话术、数据复盘与违禁词合规自检。适用于商品笔记批量出稿、直播间从开场到逼单的分钟级脚本设计、带货文案的广告法与平台规则预检，以及账号冷启动与投放前的毛利测算。包内含完整操作文档（`SKILL.md` + `references/`）。更多 AI 算力与插件见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.2.8",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "avatar-autoclip",
-  "displayName": "三剪客 · 数字人自动剪辑",
-  "description": "只要一张参考图 + 一段文字，一条命令出成品短视频：参考生图（1 张参考图派生多张同风格人物图，保住同一张脸）→ 文案转配音 → 语音识别取字级时间轴做逐字字幕 → 图片数字人口播 → 智能剪辑套模板成片，含自动 AI 首帧封面。覆盖 nano_banana 参考生图、voice_tts 合成与识别、pic_lipsync 图片数字人、smart_clip 智能剪辑（模板列表/模板详情/真人口播混剪/素材混剪/新闻体视频）与通用任务查询，共 15 个命令。补上了上游缺的四处：本地预检（素材时长/分辨率/地址重名/字幕边界，不花点数就拦下）、提交前 dry-run、任务刚 completed 时结果为空的竞态兜底、人格权授权硬门禁。零依赖仅标准库，实测端到端出片成功（真实 mp4，1080x1920，含 AI 生成水印）。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。★ 算力接口已锁定：只能访问 api.a7w.cn，改地址会被就地拒绝并说明原因（不会一路报含糊的网络错）。遇到问题可加技术微信 9872659。",
-  "version": "1.0.1",
-  "license": "MIT",
-  "origin": "sanjianke"
- },
- {
-  "slug": "aigc-digital-human-studio",
-  "displayName": "三剪客 · 数字人自动剪辑（网页版）",
-  "description": "在浏览器里做出成品短视频：上传一张人物图片（或一段人物视频）+ 一段文案，自动配音、对口型、套模板、连封面一起生成，导出 1080×1920 竖屏成片。两个入口对应两条线——`#/tool/digital_human`（数字人视频：图片 + 文案）与 `#/tool/lipsync`（数字人对口型：视频 + 文案）。内置 94 套真人口播混剪模板（另有素材混剪、新闻体共三档场景），模板支持悬停即播的样片预览与全屏弹层预览；内置 3 个精选公共音色并可一键试听，也能上传自己的配音或克隆专属音色；「自动生成封面」用人物形象作首帧生成 AI 封面，成片第一帧就是它。成片按【固定 999 点/条】计费，与时长无关（1 元 = 100 点）。无需安装任何软件、无需 API Key，打开网页即可用。本包是面向使用者的操作向导，含两个入口怎么选、三步出片、逐项功能说明、计价口径与常见报错对照。需要 API/命令行版本请用同系列的 avatar-autoclip。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
