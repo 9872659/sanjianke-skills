@@ -65,6 +65,17 @@ import urllib.error
 import urllib.request
 import uuid
 
+
+# ── GBK 编码兜底（2026-11-07 实测修复）──────────────────────────────────────
+# Windows 上 stdout 被管道/重定向时，Python 用本地编码（cp936）而不是 UTF-8，
+# 遇到 `√`/`×` 这类 cp936 编不出的字符就 UnicodeEncodeError 崩掉。
+# 先加 errors='replace' 兜底，再把这类字符换掉，输出才不会变 `?`。
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(errors="replace")
+    except Exception:
+        pass
+
 sys.dont_write_bytecode = True
 
 VERSION = "1.0.0"
@@ -345,7 +356,7 @@ def cmd_doctor(a, key, host):
     print("自检（不扣费：只读接口 + 空 body 触发参数校验）")
     print()
     for n, o, d in checks:
-        print("  %s %-28s %s" % ("✓" if o else "✗", n, d))
+        print("  %s %-28s %s" % ("√" if o else "×", n, d))
     print()
     print("  端点：%s" % out["endpoint"])
     print("  单价：%d 点/张（¥%.2f）" % (POINTS_PER_IMAGE, POINTS_PER_IMAGE / 100.0))

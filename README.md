@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**329 个技能包**：101 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**332 个技能包**：104 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -234,12 +234,13 @@ npx clawhub install <slug>
 - **`sanjianke-unsloth`** 三剪客 · 低显存微调加速 · 衍生指南
 - **`sanjianke-vllm`** 三剪客 · 高吞吐 LLM 推理服务 · 衍生指南
 
-### 电商（16）
+### 电商（17）
 
 - **`sanjianke-aimeos-laravel`** 三剪客 · Laravel 电商套件 · 衍生指南
 - **`sanjianke-bagisto`** 三剪客 · 开源跨境电商独立站系统 · 衍生指南
 - **`sanjianke-commerce`** 三剪客 · Next.js 电商前端模板 · 衍生指南
 - **`sanjianke-dolibarr`** 三剪客 · 企业 ERP 与 CRM · 衍生指南
+- **`sanjianke-ecom-studio`** 电商素材台 换装出图一套配齐
 - **`sanjianke-inventree`** 三剪客 · 开源库存与物料管理系统 · 衍生指南
 - **`sanjianke-litemall`** 三剪客 · 小程序商城全栈系统 · 衍生指南
 - **`sanjianke-mall-admin-web`** 三剪客 · 电商后台管理前端 · 衍生指南
@@ -402,10 +403,11 @@ npx clawhub install <slug>
 - **`sanjianke-course-outline`** 三剪客 · 课程生产线
 - **`sanjianke-slide-kit`** 三剪客 · 课件配图与排版
 
-### 数字人（2）
+### 数字人（3）
 
 - **`aigc-digital-human-studio`** 三剪客 · 数字人自动剪辑（网页版）
 - **`avatar-autoclip`** 三剪客 · 数字人自动剪辑
+- **`sanjianke-digital-host`** 数字人口播台 一张图一段话一个人开口
 
 ### 短剧二创（2）
 
@@ -474,6 +476,10 @@ npx clawhub install <slug>
 ### 音乐生成（1）
 
 - **`sanjianke-suno-music`** Suno 音乐台 一句话出一首歌
+
+### 视频后处理（1）
+
+- **`sanjianke-video-lab`** 视频后处理台 11 个能力一个命令
 
 ### 短剧（1）
 

@@ -79,6 +79,17 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+
+# ── GBK 编码兜底（2026-11-07 实测修复）──────────────────────────────────────
+# Windows 上 stdout 被管道/重定向时，Python 用本地编码（cp936）而不是 UTF-8，
+# 遇到 `√`/`×` 这类 cp936 编不出的字符就 UnicodeEncodeError 崩掉。
+# 先加 errors='replace' 兜底，再把这类字符换掉，输出才不会变 `?`。
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(errors="replace")
+    except Exception:
+        pass
+
 sys.dont_write_bytecode = True
 
 VERSION = "1.0.0"
@@ -383,7 +394,7 @@ def cmd_doctor(a, key, host):
     print("自检（不扣费：只读接口 + 必然被参数校验拦下的 POST）")
     print()
     for n, o, dt in checks:
-        print("  %s %-40s %s" % ("✓" if o else "✗", n, dt))
+        print("  %s %-40s %s" % ("√" if o else "×", n, dt))
     print()
     print("  端点：POST %s" % out["endpoint"])
     print("  查询：GET  %s" % out["taskEndpoint"])

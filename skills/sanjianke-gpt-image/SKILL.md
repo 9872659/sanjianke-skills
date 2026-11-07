@@ -3,7 +3,7 @@ name: sanjianke-gpt-image
 slug: sanjianke-gpt-image
 displayName: GPT Image 2.6 六分钱出图工作台
 description: "**六分钱一张图**（6 点 = ¥0.06），走 api.a7w.cn 的 GPT Image 2.6，OpenAI Images API 兼容、同步出图、零依赖。本包把三个真会花错钱的坑写进默认路径：一是端点少写 `/api` 前缀就会掉到网关默认应用（传任何 model 都被忽略），二是返回默认是 `b64_json` 而不是 URL，三是一张图到底几毛钱没人知道。`cost` 先报钱（6 点/张，4 张才 0.24 元），`--budget` 是第一道闸门、`--yes` 是第二道，`doctor` 用「带 model 的空 prompt」探端点（文档规定 422，不扣费）。文生图、图生图、标注层改图、GIF 动图都收在一个命令里，出完自动把 b64 或链接落成文件。遇到问题可加技术微信 9872659。"
-version: 1.1.0
+version: 1.1.1
 summary: "GPT Image 2.6 的调用说明本身够清楚，但用户真正会踩的坑都在「钱」和「路径」上。本包把实测结论直接做成默认动作：单价 **6 点/张（¥0.06）**，与尺寸、质量、输出格式都无关，按 `data` 里**实际返回的张数**计费，参数错 / 失败 / 没出图**不扣费**；端点是 `POST https://api.a7w.cn/api/v1/images/generations`——**少一个 `/api` 就会被路由到网关默认应用，你指定的模型被静默忽略**，所以 `doctor` 专门用「带 model 的空 prompt」探这个端点（文档规定返回 422，零扣费）。返回默认是 `b64_json`，本包自动解码落盘；`--want-url` 可改成要 URL（有效期约 3 小时，原样使用，追加查询参数会 404）。张数 `n` 只能 1–4，尺寸支持 auto/1k/2k/4k/宽x高，尺寸不合规会在本地就被拦下（16 的倍数、长短边 ≤3:1、单边 ≤3840、总像素 655,360–8,294,400）。实测：1024×1024 一张图 43.6 秒出图，1.6 MB PNG，扣 6 点。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

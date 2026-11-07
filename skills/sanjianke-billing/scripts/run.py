@@ -71,6 +71,17 @@ import unicodedata
 import urllib.error
 import urllib.request
 
+
+# ── GBK 编码兜底（2026-11-07 实测修复）──────────────────────────────────────
+# Windows 上 stdout 被管道/重定向时，Python 用本地编码（cp936）而不是 UTF-8，
+# 遇到 `√`/`×` 这类 cp936 编不出的字符就 UnicodeEncodeError 崩掉。
+# 先加 errors='replace' 兜底，再把这类字符换掉，输出才不会变 `?`。
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(errors="replace")
+    except Exception:
+        pass
+
 sys.dont_write_bytecode = True
 
 VERSION = "1.0.0"
@@ -476,7 +487,7 @@ def cmd_doctor(a, key, host):
     print("自检（全部只读 GET，扣 0 点）")
     print()
     for n, o, d in checks:
-        print("  %s %s %s" % ("✓" if o else "✗", pad(n, 40), d))
+        print("  %s %s %s" % ("√" if o else "×", pad(n, 40), d))
     print()
     print("  7 个端点全部只读，本轮花费 **0 点**。")
     return 0 if out["ok"] else EXIT_GATE
@@ -553,7 +564,7 @@ def cmd_overview(a, key, host):
     print("对账校验（三方口径）")
     print("  usage.netPoints %s · billing.netConsumedPoints %s · 流水 balanceMoving %s"
           % (pnum(net), pnum(bl.get("netConsumedPoints")), pnum(abs(float(lg.get("balanceMoving") or 0)))))
-    print("  %s 一致" % ("✓" if abs(net - abs(float(lg.get("balanceMoving") or 0))) <= max(2.0, net * 0.01) else "≈"))
+    print("  %s 一致" % ("√" if abs(net - abs(float(lg.get("balanceMoving") or 0))) <= max(2.0, net * 0.01) else "≈"))
     print()
     print("钱花在哪（Top %d · 按 task 台账的 path 归集，扫描 %d 条）"
           % (len(top), len(tasks)))

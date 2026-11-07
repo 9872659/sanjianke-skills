@@ -283,7 +283,7 @@
   "slug": "sanjianke-billing",
   "displayName": "对账台 · 我的钱花在哪一查就清",
   "description": "**跑了 100 次调用，账户少了 300 块 —— 到底花在哪了？一条命令摊开给你看，扣 0 点。** 本包只用 7 个只读 GET，把 api.a7w.cn 已经记好的账全部读出来、算清、摆成表：30 天花了多少、退了多少、净花多少、日均多少，按 32 个真实接口路径排序算占比，并把 `/api/v1/apps/pic_lipsync/submit` 这种路径翻成人话「图片对口型（照片开口说话）」。实测踩出来的三个口径坑都做成了默认动作：一、`/user/usage` 的 `byPath` 只回**一个桶** `{\\\"(任务冻结/结算)\\\": 420306}`，按路径分组必须自己从任务台账的 `path` 字段归集；二、`refunded` 不等于没花钱、`netPoints` 也不等于标价 —— 全量实测标价合计 1,614,557 点而真扣只有 104,785 点，差 15 倍；三、流水页的 `netPoints` 是流水口径（-404,408，预扣+退款来回都算），`balanceMoving` 才是真净（-175,243）。`doctor` 每次都会验 `usage.netPoints = billing.netConsumedPoints = logs.balanceMoving` 三方一致，实测差 0.00 点。6 个子命令全部只读，任何情况下扣 0 点。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -360,6 +360,14 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-digital-host",
+  "displayName": "数字人口播台 一张图一段话一个人开口",
+  "description": "**不用出镜、不用录音、不用剪辑 —— 一张照片加一段文案，三分钟给你一条口播视频。** 三个数字人应用收成一个入口：`talk` 文案驱动（15 点/秒）、`drive` 全驱动（10/15/30/60 点/输入秒）、`dub` 已有视频重新对口型（上游×3）。`catalog` 一屏对照三种做法，`cost` 三路算钱，`doctor` 只用四个只读 GET（apps / pricing / tasks / balance），并核对 live 速率卡。两个花钱的坑做进了默认动作：image_human 不传 mode 会「按 standard 出片、按 fast 收钱」，所以 `--mode` 必填；pic_lipsync 的档位真名是 `quality`。需要自备 API Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-doc-index-qa",
   "displayName": "文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费",
   "description": "模型本身不认识你的文件。这个 Skill 讲的是中间缺的那一层：把 PDF、Word、表格、接口返回的数据接成可检索、可问答的知识库，并把模型侧整排指向 https://api.a7w.cn/ ——一个 base_url、一把 Key，现场可查 75 个在架模型与 21 个生成应用（含文档问答 file_qa）；。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
@@ -424,10 +432,18 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-ecom-studio",
+  "displayName": "电商素材台 换装出图一套配齐",
+  "description": "**一件衣服，三种用法：换到模特身上（200 点）、出场景图（6 点）、出细节图（6 点）—— 一套主图不到一块钱。** `catalog` 把换装 200 点/次、nano_banana 72 点/次、gpt-image-2.6 6 点/张三条线并排摆出来：同一个「1 次换装 + 4 张场景细节」的活，走 6 点那条 224 点，走 72 点那条 344 点。`cost` 先报价，`--budget` 与 `--yes` 是两道硬闸门；`doctor` 用只读目录与价格表自检，0 建单 0 扣费。`batch` 一条链路跑完：模特图 + 服装图换装出效果图，再批量出场景图与细节图，自动落盘到本地。零依赖，只用 Python 标准库。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-gpt-image",
   "displayName": "GPT Image 2.6 六分钱出图工作台",
   "description": "**六分钱一张图**（6 点 = ¥0.06），走 api.a7w.cn 的 GPT Image 2.6，OpenAI Images API 兼容、同步出图、零依赖。本包把三个真会花错钱的坑写进默认路径：一是端点少写 `/api` 前缀就会掉到网关默认应用（传任何 model 都被忽略），二是返回默认是 `b64_json` 而不是 URL，三是一张图到底几毛钱没人知道。`cost` 先报钱（6 点/张，4 张才 0.24 元），`--budget` 是第一道闸门、`--yes` 是第二道，`doctor` 用「带 model 的空 prompt」探端点（文档规定 422，不扣费）。文生图、图生图、标注层改图、GIF 动图都收在一个命令里，出完自动把 b64 或链接落成文件。遇到问题可加技术微信 9872659。",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -547,7 +563,7 @@
   "slug": "sanjianke-muse-video",
   "displayName": "muse video单条支持3分钟视频 0.11元一秒",
   "description": "**单条最长 3 分钟（180 秒）的 720P 带声音视频，0.11 元一秒。** 走 api.a7w.cn 的 muse-video，接口与 OpenAI 视频接口一致，文字或图片进、带声音的 MP4 出。四件事本包替你挡住：①**按请求秒数计费**不是糊涂账，`cost --seconds 30` 先报 330 点、`--budget` 兜底；②**凑档不加钱** —— 填 17 秒出 20 秒只收 17 秒，本包会把这个差价标出来；③**等待可能 8–15 分钟**，所以默认不等完、只给你 task id，要等就 `--wait`；④**任务会自己跑完** —— 关终端、断网都不影响，随时回来取。遇到问题可加技术微信 9872659。",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -651,7 +667,7 @@
   "slug": "sanjianke-suno-music",
   "displayName": "Suno 音乐台 一句话出一首歌",
   "description": "**给人一句话，它给你一首完整的歌 —— 带人声、带伴奏、带时间戳歌词。** 走 api.a7w.cn 的 Official 音频（`media_services_33`），7 个 Suno 音乐接口接通：一句话出歌、给副歌再接一段、按描述出音效、用自己的声音建音色、导出带时间戳歌词做字幕、过期再恢复、把一首歌的味道存成 Persona。提交后自动轮询，完成时把 `audio_id` 与音频直链打出来 —— 延长、取歌词、建 Persona 都要它。价格：`/api/v1/pricing` 里没有它的专属规则，落通配「上游实际点数 × 2，单笔保底 50 点」，所以 `cost` 是**下限估算**，真跑一条才知道准确点数。`--budget` 是第一道闸门、`--yes` 第二道，`doctor` 用必然被校验拦下的请求把 7 个端点探一遍，零扣费。遇到问题可加技术微信 9872659。",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -684,6 +700,14 @@
   "displayName": "轻量向量库检索搭建·文档向量化语义搜索元数据过滤知识库零显卡",
   "description": "像用 SQLite 一样用一个向量库：进程内就能做语义检索，不用先起一套分布式基础设施；集合增删改查、元数据过滤、按内容包含检索一应俱全。向量化交给 api.a7w.cn 的兼容网关，本地零显卡。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "2.0.3",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-video-lab",
+  "displayName": "视频后处理台 11 个能力一个命令",
+  "description": "**一条老片，去台标、擦字幕、校色、增强，11 个工序一条命令跑完 —— 最便宜的一档 9 点一秒（¥0.09）。** 走 api.a7w.cn 的视频后处理通道，异步两步、零依赖。本包把三件真会白跑一趟的事写进了默认动作：一是 11 档能力**不是同一条路径**（restore 只在 `/api/v1/video/restore`，换脸/抠像/卡通化只在 `/api/v1/video/viapi/`），二是 `videoUrl` 要**平台托管**的地址（`upload` 上传后拿到的 `oss.gpu.likeadmin.cn/openapi/…` 或本站 `vr.a7w.cn` 成片），三是 `shot`/`castcrew`/`delogo` 的价签写「点/次」而引擎按秒 —— `cost` 先算钱、`--budget` 与 `--yes` 两道闸门、`doctor` 用空 body 把 11 个端点全验一遍（400 即正确，0 条任务、0 点冻结）。`catalog` 会逐档打出实际路径与单价。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
