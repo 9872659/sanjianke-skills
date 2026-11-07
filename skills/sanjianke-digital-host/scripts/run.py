@@ -55,7 +55,7 @@
 Key：`--key` → 环境变量 `A7W_API_KEY` → `~/.a7w/config.json`。
 **需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。**
 
-遇到问题可加技术微信 9872659。
+遇到问题可加技术微信 技术微信。
 """
 import argparse
 import io

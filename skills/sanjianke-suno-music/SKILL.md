@@ -3,7 +3,7 @@ name: sanjianke-suno-music
 slug: sanjianke-suno-music
 displayName: Suno 音乐台 一句话出一首歌
 description: "**给人一句话，它给你一首完整的歌 —— 带人声、带伴奏、带时间戳歌词。** 走 api.a7w.cn 的 Official 音频（`media_services_33`），7 个 Suno 音乐接口接通：一句话出歌、给副歌再接一段、按描述出音效、用自己的声音建音色、导出带时间戳歌词做字幕、过期再恢复、把一首歌的味道存成 Persona。提交后自动轮询，完成时把 `audio_id` 与音频直链打出来 —— 延长、取歌词、建 Persona 都要它。价格：`/api/v1/pricing` 里没有它的专属规则，落通配「上游实际点数 × 2，单笔保底 50 点」，所以 `cost` 是**下限估算**，真跑一条才知道准确点数。`--budget` 是第一道闸门、`--yes` 第二道，`doctor` 用必然被校验拦下的请求把 7 个端点探一遍，零扣费。遇到问题可加技术微信 9872659。"
-version: 1.0.1
+version: 1.0.2
 summary: "一个命令出一首完整的歌。`song --prompt \"夏夜霓虹的温暖合成器流行\"` 提交后自动轮询，完成时打印每首的 `audio_id`、时长、直链与歌词。控词加 `--custom --style … --lyrics … --title …`；纯音乐加 `--instrumental`；`--duration` 控时长、`--variety` 控多样性。model 用 `V6`（默认）、`V6_MINI` 轻快省、`V6_WILD` 更敢玩。另外 6 个各管一段：`extend` 拿 `audio_id` 接着往下写、`sound` 一句话出音效（本包总是显式传 `--tempo`，缺省值判类型错误，默认 120）、`voice` 走 `prepare → create` 建音色、`lyrics` 用 `task_id + audio_id` 取带时间戳歌词做字幕、`recover` 过期后重取、`persona` 存成可复用模板。网关成功判据是 `code=1`；校验失败也是 HTTP 200 + `code=0`，本包按 `code` 判定。价格「上游 × 2，保底 50 点」，`cost` 给下限、`--upstream` 可换算。需要自备 api.a7w.cn 的 Key（注册见 https://api.a7w.cn/ ）。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

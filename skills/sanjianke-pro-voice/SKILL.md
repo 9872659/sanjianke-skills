@@ -3,7 +3,7 @@ name: sanjianke-pro-voice
 slug: sanjianke-pro-voice
 displayName: 高保真语音台 短剧配音一句话一个角色
 description: "**同一个剧本，五个角色，五种声音 —— 一人一句，一次出完，还能带时间戳字幕。** 走 api.a7w.cn 的语音通道，8 个接口一条命令：ElevenLabs 多语言 V2 的音质标杆、Turbo 2.5 的极速档、对话 V3 的多人对白，加上 Gemini 3.8 双档与 2.5 Pro 的 30 音色 8 口音。`voice` 传的是 20 位音色 ID（67 个，包里按名字自动换 ID），`dialogue` 是每个角色各带 `voice` 的数组 —— 这两处最容易白跑一趟，已经写进默认动作。`cost` 先算钱、`--budget` 与 `--yes` 两道闸门、`doctor` 默认零 POST 就把 8 个端点全验一遍。遇到问题可加技术微信 9872659。"
-version: 1.0.0
+version: 1.0.1
 summary: "短剧、播客、有声书的配音有三个坑：音色要 ID 不要名字、对白要数组不要段落、价格按上游实际点数算。本包把三条都做成了默认行为。**8 条线**（同一条 `POST /api/v1/apps/media_services_33/<code>`，换 code 就换线）：`v2` 多语言 V2（67 音色，音质标杆）、`turbo` Turbo 2.5（同款音色更快，唯一支持强制语言）、`v3` 对话 V3（多人对白，每句自带音色）、`gemini38` / `gemini38lite`（70 音色，逐句可给语气、可加语气词）、`gemini25pro`（30 音色 + 8 口音 + 4 档语速 + 6 种情感）、`omni` 音色设计、`character` 角色设计。**实测形态**：`voice` 传名字回「input.voice: 不在允许选项内」，`dialogue` 传字符串回「input.dialogue: 类型不正确」，`speakers` 类型错了回 HTTP 500 但同样不建单。**价格**：pricing 的 115 条规则里没有 media_services_33 也没有 elevenlabs_*，全部落通配「上游实际点数 × 2、保底 50 点」；实测每次 POST 预冻结 60 点，所以 `cost` 给的是 60 点/条的下限，成交价要真跑一条才知道。一次请求就是一条任务，十句对白也是一条。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

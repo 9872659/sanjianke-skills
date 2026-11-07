@@ -132,6 +132,34 @@ npx clawhub install <slug>
 - **`sanjianke-wxjava`** 三剪客 · 微信生态 Java 服务端开发包 · 衍生指南
 - **`sanjianke-zulip`** 三剪客 · 话题制团队聊天服务器 · 衍生指南
 
+### 设计多媒体（25）
+
+- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
+- **`a7w-smart-clip`** 三剪客 · 智能剪辑
+- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
+- **`sanjianke-audiobook-line`** 三剪客 · 有声书生产线
+- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
+- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
+- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
+- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
+- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
+- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
+- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
+- **`sanjianke-radio-dj`** 三剪客 · AI 电台
+- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
+- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
+- **`sanjianke-video-vr`** 三剪客 · 视频增强台
+- **`sanjianke-vr-cartoon`** 三剪客 · 人像卡通化
+- **`sanjianke-vr-colorize`** 三剪客 · 视频校色
+- **`sanjianke-vr-enhance`** 三剪客 · 画质综合增强
+- **`sanjianke-vr-portrait`** 三剪客 · 人像增强
+- **`sanjianke-vr-segment`** 三剪客 · 人像抠像
+- **`sanjianke-vr-subtitle`** 三剪客 · 字幕擦除
+- **`sanjianke-vr-superres`** 三剪客 · 标准超分 1080P
+- **`sanjianke-vr-superres-2k`** 三剪客 · 高清超分 2K
+- **`sanjianke-vr-superres-4k`** 三剪客 · 超清超分 4K
+- **`sanjianke-vr-upscale-4k`** 三剪客 · 4K 旗舰版
+
 ### 数据分析（25）
 
 - **`sanjianke-ai-research-kit`** 三剪客 · AI 科研全流程
@@ -159,33 +187,6 @@ npx clawhub install <slug>
 - **`sanjianke-superset`** 三剪客 · 企业级数据可视化与 BI 平台 · 衍生指南
 - **`sanjianke-tushare`** 三剪客 · A股行情与财务数据接口 · 衍生指南
 - **`sanjianke-web-scrape-kit`** 三剪客 · 全网数据采集引擎 · 衍生指南
-
-### 设计多媒体（24）
-
-- **`a7w-flashvsr`** 三剪客 · 视频超分（糊片救 4K）
-- **`a7w-smart-clip`** 三剪客 · 智能剪辑
-- **`ai-music-studio`** AI音乐生成歌曲写词作曲编曲演唱人声克隆翻唱伴奏分轨混音一键出歌
-- **`sanjianke-code-video-kit`** 三剪客 · 代码化视频生成 · 衍生指南
-- **`sanjianke-cover-factory`** 三剪客 · 封面图批量生成
-- **`sanjianke-ecom-image`** 三剪客 · 电商主图工厂
-- **`sanjianke-html-video-kit`** 三剪客 · HTML 转视频引擎
-- **`sanjianke-image-factory`** 三剪客 · 新媒体配图工厂
-- **`sanjianke-podcast-studio`** 三剪客 · 播客全自动生产
-- **`sanjianke-portrait-studio`** 三剪客 · 头像写真工坊
-- **`sanjianke-radio-dj`** 三剪客 · AI 电台
-- **`sanjianke-storyboard-art`** 三剪客 · 漫画分镜出图
-- **`sanjianke-video-upscale`** 三剪客 · 视频超分（糊片救 4K）
-- **`sanjianke-video-vr`** 三剪客 · 视频增强台
-- **`sanjianke-vr-cartoon`** 三剪客 · 人像卡通化
-- **`sanjianke-vr-colorize`** 三剪客 · 视频校色
-- **`sanjianke-vr-enhance`** 三剪客 · 画质综合增强
-- **`sanjianke-vr-portrait`** 三剪客 · 人像增强
-- **`sanjianke-vr-segment`** 三剪客 · 人像抠像
-- **`sanjianke-vr-subtitle`** 三剪客 · 字幕擦除
-- **`sanjianke-vr-superres`** 三剪客 · 标准超分 1080P
-- **`sanjianke-vr-superres-2k`** 三剪客 · 高清超分 2K
-- **`sanjianke-vr-superres-4k`** 三剪客 · 超清超分 4K
-- **`sanjianke-vr-upscale-4k`** 三剪客 · 4K 旗舰版
 
 ### CLI（22）
 
@@ -417,11 +418,6 @@ npx clawhub install <slug>
 - **`duanju-rights-compliance`** 三剪客 · 短剧二创授权与合规自查
 - **`sanjianke-shortdrama-remix`** 短剧二创一条龙 · 60 秒片 18 元跑完全链
 
-### 音频生成（2）
-
-- **`sanjianke-audiobook-line`** 有声书生产线 · 10 万字书稿切 34 章、分角色配音、带时间戳
-- **`sanjianke-podcast-line`** 播客生产线 · 3 条请求出一期成品播客
-
 ### 知识管理（2）
 
 - **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
@@ -550,6 +546,10 @@ npx clawhub install <slug>
 ### 视频修复（1）
 
 - **`sanjianke-oldfilm-restore`** 老片转高清一条龙 · 60 秒 19.8 元出 1080P
+
+### 音频生成（1）
+
+- **`sanjianke-podcast-line`** 播客生产线 · 3 条请求出一期成品播客
 
 ### 比价（1）
 

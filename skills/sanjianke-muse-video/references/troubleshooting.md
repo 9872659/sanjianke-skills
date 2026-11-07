@@ -254,5 +254,5 @@ python3 scripts/run.py gen --prompt "..." --seconds 5 --dry-run
 
 ## 九、联系
 
-加技术微信 **9872659** 时说一下是从 `sanjianke-muse-video` 找过来的，
+见 SKILL.md 的「## 联系我们」 时说一下是从 `sanjianke-muse-video` 找过来的，
 直接给你配套的 API Key 与能跑的示例。
