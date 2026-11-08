@@ -1,10 +1,10 @@
 ---
 name: sanjianke-ltx-image-to-video-lipsync
 slug: sanjianke-ltx-image-to-video-lipsync
-displayName: LTX2.3图生视频对口型 39.0点一次
-description: "**LTX2.3图生视频对口型，一次 39.0 点（0.39 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
-version: 1.0.2
-summary: "LTX2.3图生视频对口型 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 39.0 点（0.39 元）**。它的原始参数名是节点 id（n73_audio, n96_image, n72_value 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+displayName: LTX2.3图生视频对口型 39点一次
+description: "**LTX2.3图生视频对口型，一次 39 点（0.39 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
+version: 1.0.3
+summary: "LTX2.3图生视频对口型 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 39 点（0.39 元）**。它的原始参数名是节点 id（n73_audio, n96_image, n72_value 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -13,7 +13,7 @@ tags:
   - api.a7w.cn
 ---
 
-# LTX2.3图生视频对口型 39.0点一次
+# LTX2.3图生视频对口型 39点一次
 
 > ## 先申请你自己的 API Key
 >
@@ -25,14 +25,14 @@ tags:
 
 ## 一句话
 
-**LTX2.3图生视频对口型，一次 39.0 点 = 0.39 元。**
+**LTX2.3图生视频对口型，一次 39 点 = 0.39 元。**
 
 ## 价目
 
 | 项 | 值 |
 |---|---|
 | 类型 | 视频 |
-| **每次** | **39.0 点（0.39 元）** |
+| **每次** | **39 点（0.39 元）** |
 | 参数 | 4 个（必填 4 个）|
 | 端点 | `POST /api/v1/gpu/apps/wf_3df3b000e2109fc94cd2/run` |
 
@@ -74,7 +74,7 @@ python3 scripts/run.py run --image 你的图.png --yes
 |---|---|---|
 | `info` | 免费 | 应用信息 + 自检 |
 | `params` | 免费 | 参数表（中文含义对照）|
-| `run` | **39.0 点/次** | 提交任务（要 `--yes`）|
+| `run` | **39 点/次** | 提交任务（要 `--yes`）|
 
 ## 退出码
 

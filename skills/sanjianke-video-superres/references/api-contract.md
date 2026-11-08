@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n2_video` | video | video | 是 | |
+| `n2_video` | video | video | 是 |  |
 | `n26_boolean` | 有无音频 | bool | 是 | False |
 | `n22_scale_to_length` | 视频实际分辨率 | int | 是 | 480 |
 | `n18_resolution` | 超分目标分辨率 | int | 是 | 720 |

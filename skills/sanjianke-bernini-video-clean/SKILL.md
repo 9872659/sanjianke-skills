@@ -1,10 +1,10 @@
 ---
 name: sanjianke-bernini-video-clean
 slug: sanjianke-bernini-video-clean
-displayName: Bernini视频去水印和字幕 225.0点一次
-description: "**Bernini视频去水印和字幕，一次 225.0 点（2.25 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
-version: 1.0.2
-summary: "Bernini视频去水印和字幕 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 225.0 点（2.25 元）**。它的原始参数名是节点 id（n40_video, n91_value 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+displayName: Bernini视频去水印和字幕 225点一次
+description: "**Bernini视频去水印和字幕，一次 225 点（2.25 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
+version: 1.0.3
+summary: "Bernini视频去水印和字幕 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 225 点（2.25 元）**。它的原始参数名是节点 id（n40_video, n91_value 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -13,7 +13,7 @@ tags:
   - api.a7w.cn
 ---
 
-# Bernini视频去水印和字幕 225.0点一次
+# Bernini视频去水印和字幕 225点一次
 
 > ## 先申请你自己的 API Key
 >
@@ -25,14 +25,14 @@ tags:
 
 ## 一句话
 
-**Bernini视频去水印和字幕，一次 225.0 点 = 2.25 元。**
+**Bernini视频去水印和字幕，一次 225 点 = 2.25 元。**
 
 ## 价目
 
 | 项 | 值 |
 |---|---|
 | 类型 | 视频 |
-| **每次** | **225.0 点（2.25 元）** |
+| **每次** | **225 点（2.25 元）** |
 | 参数 | 2 个（必填 2 个）|
 | 端点 | `POST /api/v1/gpu/apps/wf_16e27a1dc81527e23703/run` |
 
@@ -72,7 +72,7 @@ python3 scripts/run.py run --image 你的图.png --yes
 |---|---|---|
 | `info` | 免费 | 应用信息 + 自检 |
 | `params` | 免费 | 参数表（中文含义对照）|
-| `run` | **225.0 点/次** | 提交任务（要 `--yes`）|
+| `run` | **225 点/次** | 提交任务（要 `--yes`）|
 
 ## 退出码
 

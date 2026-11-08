@@ -24,7 +24,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
 | `n105_104_prompt` | 提示词 | string | 是 | 女孩愤怒的撤下自己的假发摔在地上，露出发 |
-| `n114_image` | image | image_input | 是 | |
+| `n114_image` | image | image_input | 是 |  |
 | `n105_111_value` | 秒数 | float | 是 | 10 |
 | `n119_megapixels` | 像素（百万） | float | 是 | 0.4 |
 

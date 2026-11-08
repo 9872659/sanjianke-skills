@@ -42,9 +42,9 @@ APP = json.loads(r"""{
  "title": "H3最强特效流➡冲击帧",
  "desc": "邀请码：CMK29F      单采最终流！平替SD2.0\n全网最干净方便的空间折叠工作流，去除繁复连线、虚空桥接+空间折叠；\n本地整合包+工程文件合集：https://my.feishu.cn/wiki/SkTuwaMOUipTjQk6K6icotXwnze\nB站教学演示：https://www.bilibili.com/video/BV1YHxS6aE68/?",
  "kind": "video",
- "quote_yuan": 0.01,
- "user_yuan": 0.135,
- "user_points": 13.5,
+ "quote_yuan": 0,
+ "user_yuan": 0.11,
+ "user_points": 11.0,
  "params": [
   {
    "name": "node_228_aspect_ratio",
@@ -231,7 +231,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

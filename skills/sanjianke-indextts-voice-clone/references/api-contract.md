@@ -23,8 +23,8 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n12_audio` | 音色参考 | audio | 是 | |
-| `n18_audio` | 情感参考 | audio | - | |
+| `n12_audio` | 音色参考 | audio | 是 |  |
+| `n18_audio` | 情感参考 | audio | - |  |
 | `n3_text` | 输入文本 | string | 是 | I can't believe what |
 | `n8_afraid` | 害怕 | float | - | 0 |
 | `n8_angry` | 生气 | float | - | 0 |

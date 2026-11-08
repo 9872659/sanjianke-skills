@@ -23,9 +23,9 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n2780_image` | 参考图 | image_input | 是 | |
-| `n2779_image` | 脸部参考 | image_input | 是 | |
-| `n2770_image` | 服装参考 | image_input | 是 | |
+| `n2780_image` | 参考图 | image_input | 是 |  |
+| `n2779_image` | 脸部参考 | image_input | 是 |  |
+| `n2770_image` | 服装参考 | image_input | 是 |  |
 
 ## 返回
 

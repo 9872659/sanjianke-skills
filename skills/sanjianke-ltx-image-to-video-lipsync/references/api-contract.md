@@ -23,8 +23,8 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n73_audio` | 音频 | audio | 是 | |
-| `n96_image` | 图片 | image_input | 是 | |
+| `n73_audio` | 音频 | audio | 是 |  |
+| `n96_image` | 图片 | image_input | 是 |  |
 | `n72_value` | 长边 | int | 是 | 720 |
 | `n121_text` | 辅助描述 | string | 是 | 固定镜头，男人不屑的讲话 |
 

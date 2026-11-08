@@ -23,9 +23,9 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n439_image` | 原图 | image_input | 是 | |
+| `n439_image` | 原图 | image_input | 是 |  |
 | `n454_value` | 预设表情 | float | 是 | 2 |
-| `n447_text` | 自定义表情 | string | - | |
+| `n447_text` | 自定义表情 | string | - |  |
 
 ## 返回
 

@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n268_video` | 上传视频 | video | 是 | |
+| `n268_video` | 上传视频 | video | 是 |  |
 | `n362_text` | 描述词 | string | 是 | 女生衣服变成白色连衣裙 |
 | `n331_value` | 视频时长（s） | int | 是 | 5 |
 | `n333_value` | 视频帧率 | int | 是 | 25 |

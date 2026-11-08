@@ -7,7 +7,7 @@
 | workflow_id | `wf_ab627ae9673ee00cefb8` |
 | 名称 | 万物高清放大修复 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n15_image` | 上传图片 | image_input | 是 | |
+| `n15_image` | 上传图片 | image_input | 是 |  |
 
 ## 返回
 

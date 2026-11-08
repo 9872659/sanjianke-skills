@@ -23,10 +23,10 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n199_video` | 上传视频 | video | 是 | |
+| `n199_video` | 上传视频 | video | 是 |  |
 | `n199_frame_load_cap` | 视频帧数（默认0实为视频总帧数，谨慎修改） | int | - | 0 |
 | `n216_text` | 描述词 | string | - | 一个女人在说话 |
-| `n209_audio` | 上传音频 | audio | 是 | |
+| `n209_audio` | 上传音频 | audio | 是 |  |
 
 ## 返回
 

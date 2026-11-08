@@ -7,7 +7,7 @@
 | workflow_id | `wf_0f14e4172da658bd5a5d` |
 | 名称 | 场景扩图 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n411_image` | 原图 | image_input | 是 | |
+| `n411_image` | 原图 | image_input | 是 |  |
 | `n418_value` | 向左扩展 | int | 是 | 400 |
 | `n420_value` | 向右扩展 | int | 是 | 400 |
 | `n419_value` | 向上扩展 | int | 是 | 400 |

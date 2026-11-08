@@ -42,9 +42,9 @@ APP = json.loads(r"""{
  "title": "一键抠图",
  "desc": "一键将图片中主图抠出",
  "kind": "image",
- "quote_yuan": 0.01,
- "user_yuan": 0.135,
- "user_points": 13.5,
+ "quote_yuan": 0,
+ "user_yuan": 0.11,
+ "user_points": 11.0,
  "params": [
   {
    "name": "n4_image",
@@ -190,7 +190,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

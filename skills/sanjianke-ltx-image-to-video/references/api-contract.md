@@ -24,7 +24,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
 | `n325_scale_to_length` | 长边长度 | int | 是 | 1280 |
-| `n269_image` | 首帧图 | image_input | 是 | |
+| `n269_image` | 首帧图 | image_input | 是 |  |
 | `n324_string` | 描述 | string | 是 | 女人讲话 |
 | `n320_301_value` | 秒数 | int | 是 | 5 |
 

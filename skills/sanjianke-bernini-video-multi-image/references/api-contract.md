@@ -23,9 +23,9 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n268_video` | 上传视频 | video | 是 | |
-| `n340_image` | 上传物品（图1） | image_input | 是 | |
-| `n348_image` | 上传物品（图2） | image_input | 是 | |
+| `n268_video` | 上传视频 | video | 是 |  |
+| `n340_image` | 上传物品（图1） | image_input | 是 |  |
+| `n348_image` | 上传物品（图2） | image_input | 是 |  |
 | `n809_text` | 描述词 | string | 是 | 视频中的人物头上戴着参考图1的帽子，保持 |
 | `n331_value` | 视频生成秒数 | int | 是 | 5 |
 | `n333_value` | 视频帧率 | int | 是 | 25 |

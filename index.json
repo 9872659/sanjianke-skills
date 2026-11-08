@@ -193,9 +193,9 @@
  },
  {
   "slug": "sanjianke-action-martial-arts",
-  "displayName": "黄色的大宝剑专用武打流 13.5点一次",
-  "description": "**黄色的大宝剑专用武打流，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 9 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "黄色的大宝剑专用武打流 11点一次",
+  "description": "**黄色的大宝剑专用武打流，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 9 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -297,17 +297,17 @@
  },
  {
   "slug": "sanjianke-audio-1080p-5plus4",
-  "displayName": "【1080P】5+4返璞归真版 13.5点一次",
-  "description": "**【1080P】5+4返璞归真版，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 12 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "【1080P】5+4返璞归真版 11点一次",
+  "description": "**【1080P】5+4返璞归真版，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 12 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-audio-1080p-8step",
-  "displayName": "1080P八步双采 13.5点一次",
-  "description": "**1080P八步双采，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 12 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "1080P八步双采 11点一次",
+  "description": "**1080P八步双采，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 12 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -329,17 +329,17 @@
  },
  {
   "slug": "sanjianke-auto-face-retouch",
-  "displayName": "自动修脸 13.5点一次",
-  "description": "**自动修脸，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "自动修脸 11点一次",
+  "description": "**自动修脸，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-auto-inpaint",
-  "displayName": "自动补绘 13.5点一次",
-  "description": "**自动补绘，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "自动补绘 11点一次",
+  "description": "**自动补绘，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -363,15 +363,15 @@
   "slug": "sanjianke-bernini-video-bg",
   "displayName": "Bernini视频换背景 253.5点一次",
   "description": "**Bernini视频换背景，一次 253.5 点（2.535 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-bernini-video-clean",
-  "displayName": "Bernini视频去水印和字幕 225.0点一次",
-  "description": "**Bernini视频去水印和字幕，一次 225.0 点（2.25 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "Bernini视频去水印和字幕 225点一次",
+  "description": "**Bernini视频去水印和字幕，一次 225 点（2.25 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -379,15 +379,15 @@
   "slug": "sanjianke-bernini-video-multi-image",
   "displayName": "Bernini视频编辑-多图控制编辑视频 100.5点一次",
   "description": "**Bernini视频编辑-多图控制编辑视频，一次 100.5 点（1.005 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-bernini-video-prompt-edit",
-  "displayName": "Bernini视频编辑-描述词编辑视频 174.0点一次",
-  "description": "**Bernini视频编辑-描述词编辑视频，一次 174.0 点（1.74 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "Bernini视频编辑-描述词编辑视频 174点一次",
+  "description": "**Bernini视频编辑-描述词编辑视频，一次 174 点（1.74 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -395,7 +395,7 @@
   "slug": "sanjianke-bernini-video-single-image",
   "displayName": "Bernini视频编辑-单图控制编辑视频 94.5点一次",
   "description": "**Bernini视频编辑-单图控制编辑视频，一次 94.5 点（0.945 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -441,9 +441,9 @@
  },
  {
   "slug": "sanjianke-building-restore",
-  "displayName": "修复建筑强化版 13.5点一次",
-  "description": "**修复建筑强化版，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "修复建筑强化版 11点一次",
+  "description": "**修复建筑强化版，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -521,17 +521,17 @@
  },
  {
   "slug": "sanjianke-cutout",
-  "displayName": "一键抠图 13.5点一次",
-  "description": "**一键抠图，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "一键抠图 11点一次",
+  "description": "**一键抠图，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-day-to-night",
-  "displayName": "白天转夜景 13.5点一次",
-  "description": "**白天转夜景，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "白天转夜景 11点一次",
+  "description": "**白天转夜景，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -633,9 +633,9 @@
  },
  {
   "slug": "sanjianke-ecom-product-lighting",
-  "displayName": "电商产品融合打光 13.5点一次",
-  "description": "**电商产品融合打光，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "电商产品融合打光 12点一次",
+  "description": "**电商产品融合打光，一次 12 点（0.12 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -665,9 +665,9 @@
  },
  {
   "slug": "sanjianke-expression-change",
-  "displayName": "表情变换 15.0点一次",
-  "description": "**表情变换，一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "表情变换 15点一次",
+  "description": "**表情变换，一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -675,15 +675,15 @@
   "slug": "sanjianke-face-swap-photo",
   "displayName": "人物换头 58.5点一次",
   "description": "**人物换头，一次 58.5 点（0.585 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-first-last-frame-video",
-  "displayName": "首尾帧视频 60.0点一次",
-  "description": "**首尾帧视频，一次 60.0 点（0.6 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "首尾帧视频 60点一次",
+  "description": "**首尾帧视频，一次 60 点（0.6 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -697,9 +697,9 @@
  },
  {
   "slug": "sanjianke-garment-optimize",
-  "displayName": "服装优化 13.5点一次",
-  "description": "**服装优化，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "服装优化 11点一次",
+  "description": "**服装优化，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -707,7 +707,7 @@
   "slug": "sanjianke-generate-foreground",
   "displayName": "生成前景 31.5点一次",
   "description": "**生成前景，一次 31.5 点（0.315 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -729,41 +729,41 @@
  },
  {
   "slug": "sanjianke-h3-effect-impact-frame",
-  "displayName": "H3最强特效流➡冲击帧 13.5点一次",
-  "description": "**H3最强特效流➡冲击帧，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 8 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "H3最强特效流➡冲击帧 11点一次",
+  "description": "**H3最强特效流➡冲击帧，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 8 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-h3-single-10step-fast",
-  "displayName": "H3最强单采10步极速版 13.5点一次",
-  "description": "**H3最强单采10步极速版，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 14 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "H3最强单采10步极速版 11点一次",
+  "description": "**H3最强单采10步极速版，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 14 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-h3-video",
-  "displayName": "H3视频 13.5点一次",
-  "description": "**H3视频，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 12 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "H3视频 11点一次",
+  "description": "**H3视频，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 12 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-hair-beautify",
-  "displayName": "头发美化 13.5点一次",
-  "description": "**头发美化，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "头发美化 11点一次",
+  "description": "**头发美化，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-hair-color",
-  "displayName": "修改发色 18.0点一次",
-  "description": "**修改发色，一次 18.0 点（0.18 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "修改发色 18点一次",
+  "description": "**修改发色，一次 18 点（0.18 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -771,7 +771,7 @@
   "slug": "sanjianke-hair-style",
   "displayName": "修改发型 16.5点一次",
   "description": "**修改发型，一次 16.5 点（0.165 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -785,9 +785,9 @@
  },
  {
   "slug": "sanjianke-image-expand",
-  "displayName": "图片扩充 18.0点一次",
-  "description": "**图片扩充，一次 18.0 点（0.18 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "图片扩充 18点一次",
+  "description": "**图片扩充，一次 18 点（0.18 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -817,25 +817,25 @@
  },
  {
   "slug": "sanjianke-indextts-voice-clone",
-  "displayName": "IndexTTS_2声音克隆-支持各种情绪编辑 15.0点一次",
-  "description": "**IndexTTS_2声音克隆-支持各种情绪编辑，一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 11 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "IndexTTS_2声音克隆-支持各种情绪编辑 15点一次",
+  "description": "**IndexTTS_2声音克隆-支持各种情绪编辑，一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 11 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-infinitetalk-avatar",
-  "displayName": "Infinitetalk对口型数字人 102.0点一次",
-  "description": "**Infinitetalk对口型数字人，一次 102.0 点（1.02 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "Infinitetalk对口型数字人 102点一次",
+  "description": "**Infinitetalk对口型数字人，一次 102 点（1.02 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-interior-design",
-  "displayName": "室内设计 13.5点一次",
-  "description": "**室内设计，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "室内设计 11点一次",
+  "description": "**室内设计，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -865,9 +865,9 @@
  },
  {
   "slug": "sanjianke-lawn-repair-2k",
-  "displayName": "修复草坪2K版 13.5点一次",
-  "description": "**修复草坪2K版，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "修复草坪2K版 11点一次",
+  "description": "**修复草坪2K版，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -875,7 +875,7 @@
   "slug": "sanjianke-lawn-repair-fast",
   "displayName": "修复草坪极速版 16.5点一次",
   "description": "**修复草坪极速版，一次 16.5 点（0.165 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -883,15 +883,15 @@
   "slug": "sanjianke-light-aurora",
   "displayName": "极光光影氛围 49.5点一次",
   "description": "**极光光影氛围，一次 49.5 点（0.495 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-light-blinds",
-  "displayName": "百叶窗条纹光影 48.0点一次",
-  "description": "**百叶窗条纹光影，一次 48.0 点（0.48 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "百叶窗条纹光影 48点一次",
+  "description": "**百叶窗条纹光影，一次 48 点（0.48 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -905,9 +905,9 @@
  },
  {
   "slug": "sanjianke-light-rainbow",
-  "displayName": "彩虹光影氛围 48.0点一次",
-  "description": "**彩虹光影氛围，一次 48.0 点（0.48 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "彩虹光影氛围 48点一次",
+  "description": "**彩虹光影氛围，一次 48 点（0.48 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -915,7 +915,7 @@
   "slug": "sanjianke-light-sunset",
   "displayName": "一键夕阳光影氛围 55.5点一次",
   "description": "**一键夕阳光影氛围，一次 55.5 点（0.555 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -923,7 +923,7 @@
   "slug": "sanjianke-light-window-grid",
   "displayName": "窗格光影氛围 52.5点一次",
   "description": "**窗格光影氛围，一次 52.5 点（0.525 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -977,25 +977,25 @@
  },
  {
   "slug": "sanjianke-ltx-image-to-video",
-  "displayName": "LTX2.3图生视频 30.0点一次",
-  "description": "**LTX2.3图生视频，一次 30.0 点（0.3 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "LTX2.3图生视频 30点一次",
+  "description": "**LTX2.3图生视频，一次 30 点（0.3 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-ltx-image-to-video-lipsync",
-  "displayName": "LTX2.3图生视频对口型 39.0点一次",
-  "description": "**LTX2.3图生视频对口型，一次 39.0 点（0.39 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "LTX2.3图生视频对口型 39点一次",
+  "description": "**LTX2.3图生视频对口型，一次 39 点（0.39 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-ltx-text-to-video",
-  "displayName": "LTX2.3文生视频 13.5点一次",
-  "description": "**LTX2.3文生视频，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "LTX2.3文生视频 12点一次",
+  "description": "**LTX2.3文生视频，一次 12 点（0.12 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1009,49 +1009,49 @@
  },
  {
   "slug": "sanjianke-menswear-preview-image",
-  "displayName": "男装开车变装（预览图生成） 15.0点一次",
-  "description": "**男装开车变装（预览图生成），一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "男装开车变装（预览图生成） 15点一次",
+  "description": "**男装开车变装（预览图生成），一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-menswear-video",
-  "displayName": "男装开车变装（视频生成） 15.0点一次",
-  "description": "**男装开车变装（视频生成），一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "男装开车变装（视频生成） 15点一次",
+  "description": "**男装开车变装（视频生成），一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-minimax-h3-image-to-video",
-  "displayName": "Minimax-H3图生视频 147.0点一次",
-  "description": "**Minimax-H3图生视频，一次 147.0 点（1.47 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "Minimax-H3图生视频 147点一次",
+  "description": "**Minimax-H3图生视频，一次 147 点（1.47 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-minimax-h3-reference-video",
-  "displayName": "【MINIMAX-H3教学】全能参考视频官方工作流 13.5点一次",
-  "description": "**【MINIMAX-H3教学】全能参考视频官方工作流，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "【MINIMAX-H3教学】全能参考视频官方工作流 11点一次",
+  "description": "**【MINIMAX-H3教学】全能参考视频官方工作流，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-minimax-h3-text-to-video",
-  "displayName": "Minimax-H3文生视频 60.0点一次",
-  "description": "**Minimax-H3文生视频，一次 60.0 点（0.6 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "Minimax-H3文生视频 60点一次",
+  "description": "**Minimax-H3文生视频，一次 60 点（0.6 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-model-outfit-swap",
-  "displayName": "模特一致性一键换装 13.5点一次",
-  "description": "**模特一致性一键换装，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "模特一致性一键换装 11点一次",
+  "description": "**模特一致性一键换装，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1065,9 +1065,9 @@
  },
  {
   "slug": "sanjianke-motion-expression-transfer",
-  "displayName": "动作表情迁移 72.0点一次",
-  "description": "**动作表情迁移，一次 72.0 点（0.72 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "动作表情迁移 72点一次",
+  "description": "**动作表情迁移，一次 72 点（0.72 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1113,9 +1113,9 @@
  },
  {
   "slug": "sanjianke-old-photo-restore",
-  "displayName": "老照片修复 15.0点一次",
-  "description": "**老照片修复，一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "老照片修复 15点一次",
+  "description": "**老照片修复，一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1131,7 +1131,7 @@
   "slug": "sanjianke-pattern-extract",
   "displayName": "印花提取 16.5点一次",
   "description": "**印花提取，一次 16.5 点（0.165 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1139,7 +1139,7 @@
   "slug": "sanjianke-person-removal",
   "displayName": "人物移除 13.5点一次",
   "description": "**人物移除，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1161,17 +1161,17 @@
  },
  {
   "slug": "sanjianke-portrait-hd",
-  "displayName": "人像高清 33.0点一次",
-  "description": "**人像高清，一次 33.0 点（0.33 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "人像高清 33点一次",
+  "description": "**人像高清，一次 33 点（0.33 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-portrait-paint",
-  "displayName": "熟颜世绘 13.5点一次",
-  "description": "**熟颜世绘，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "熟颜世绘 11点一次",
+  "description": "**熟颜世绘，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1257,33 +1257,33 @@
  },
  {
   "slug": "sanjianke-scene-flaw-repair",
-  "displayName": "场景瑕疵修复 13.5点一次",
-  "description": "**场景瑕疵修复，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "场景瑕疵修复 11点一次",
+  "description": "**场景瑕疵修复，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-scene-outpaint",
-  "displayName": "场景扩图 13.5点一次",
-  "description": "**场景扩图，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "场景扩图 11点一次",
+  "description": "**场景扩图，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-seedvr2-8k",
-  "displayName": "SeedVR2放大8K版 15.0点一次",
-  "description": "**SeedVR2放大8K版，一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "SeedVR2放大8K版 15点一次",
+  "description": "**SeedVR2放大8K版，一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-seedvr2-texture-upscale",
-  "displayName": "SeedVR2无缝贴图素材放大 13.5点一次",
-  "description": "**SeedVR2无缝贴图素材放大，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "SeedVR2无缝贴图素材放大 11点一次",
+  "description": "**SeedVR2无缝贴图素材放大，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1321,9 +1321,9 @@
  },
  {
   "slug": "sanjianke-smart-repaint",
-  "displayName": "智能重绘 13.5点一次",
-  "description": "**智能重绘，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "智能重绘 11点一次",
+  "description": "**智能重绘，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1385,9 +1385,9 @@
  },
  {
   "slug": "sanjianke-text-edit-in-image",
-  "displayName": "文字编辑 13.5点一次",
-  "description": "**文字编辑，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "文字编辑 11点一次",
+  "description": "**文字编辑，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1401,9 +1401,9 @@
  },
  {
   "slug": "sanjianke-text-to-image",
-  "displayName": "文生图 15.0点一次",
-  "description": "**文生图，一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "文生图 15点一次",
+  "description": "**文生图，一次 15 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1417,9 +1417,9 @@
  },
  {
   "slug": "sanjianke-universal-upscale",
-  "displayName": "万物高清放大修复 13.5点一次",
-  "description": "**万物高清放大修复，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "万物高清放大修复 11点一次",
+  "description": "**万物高清放大修复，一次 11 点（0.11 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1451,7 +1451,7 @@
   "slug": "sanjianke-video-bg-swap",
   "displayName": "视频换背景 79.5点一次",
   "description": "**视频换背景，一次 79.5 点（0.795 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 2 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1459,15 +1459,15 @@
   "slug": "sanjianke-video-expression-transfer",
   "displayName": "视频表情迁移 52.5点一次",
   "description": "**视频表情迁移，一次 52.5 点（0.525 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 5 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
  {
   "slug": "sanjianke-video-interpolation",
-  "displayName": "视频补帧 18.0点一次",
-  "description": "**视频补帧，一次 18.0 点（0.18 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "视频补帧 18点一次",
+  "description": "**视频补帧，一次 18 点（0.18 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1481,9 +1481,9 @@
  },
  {
   "slug": "sanjianke-video-lipsync",
-  "displayName": "视频对口型 39.0点一次",
-  "description": "**视频对口型，一次 39.0 点（0.39 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "视频对口型 39点一次",
+  "description": "**视频对口型，一次 39 点（0.39 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1499,7 +1499,7 @@
   "slug": "sanjianke-video-motion-copy",
   "displayName": "视频动作复刻 55.5点一次",
   "description": "**视频动作复刻，一次 55.5 点（0.555 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1507,7 +1507,7 @@
   "slug": "sanjianke-video-repaint-superres",
   "displayName": "视频重绘超分 28.5点一次",
   "description": "**视频重绘超分，一次 28.5 点（0.285 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1515,7 +1515,7 @@
   "slug": "sanjianke-video-superres",
   "displayName": "视频超分 43.5点一次",
   "description": "**视频超分，一次 43.5 点（0.435 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1617,9 +1617,9 @@
  },
  {
   "slug": "sanjianke-wan-animate-character",
-  "displayName": "WanAnimate视频角色替换 54.0点一次",
-  "description": "**WanAnimate视频角色替换，一次 54.0 点（0.54 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "displayName": "WanAnimate视频角色替换 54点一次",
+  "description": "**WanAnimate视频角色替换，一次 54 点（0.54 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1627,7 +1627,7 @@
   "slug": "sanjianke-wan-s2v-avatar",
   "displayName": "Wan2.2-S2V+音频合成数字人 34.5点一次",
   "description": "**Wan2.2-S2V+音频合成数字人，一次 34.5 点（0.345 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 3 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -1635,7 +1635,7 @@
   "slug": "sanjianke-watermark-removal",
   "displayName": "一键去水印 13.5点一次",
   "description": "**一键去水印，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 1 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "origin": "sanjianke"
  },

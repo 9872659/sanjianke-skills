@@ -25,7 +25,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 |---|---|---|---|---|
 | `n5146_boolean` | 音频 | bool | 是 | False |
 | `n5144_number` | 最大时长 | string | 是 | 10 |
-| `n5099_video` | video | video | 是 | |
+| `n5099_video` | video | video | 是 |  |
 
 ## 返回
 

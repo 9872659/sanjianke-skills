@@ -28,4 +28,4 @@ python3 scripts/run.py run --set nXXX_xxx=值 --yes
 
 ## 价格
 
-**每次 13.5 点（0.135 元）**。
+**每次 11.0 点（0.11 元）**。

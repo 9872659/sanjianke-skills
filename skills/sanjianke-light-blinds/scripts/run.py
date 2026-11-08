@@ -42,7 +42,7 @@ APP = json.loads(r"""{
  "title": "百叶窗条纹光影",
  "desc": "一键添加百叶窗条纹光影，明暗层次细腻，轻松打造复古氛围感人像",
  "kind": "image",
- "quote_yuan": 0.32,
+ "quote_yuan": 0,
  "user_yuan": 0.48,
  "user_points": 48.0,
  "params": [
@@ -190,7 +190,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

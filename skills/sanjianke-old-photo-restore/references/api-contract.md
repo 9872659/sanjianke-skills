@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n1_image` | 上传图片 | image_input | 是 | |
+| `n1_image` | 上传图片 | image_input | 是 |  |
 
 ## 返回
 

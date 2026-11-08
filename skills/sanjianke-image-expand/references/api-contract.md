@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n71_image` | 上传图片 | image_input | 是 | |
+| `n71_image` | 上传图片 | image_input | 是 |  |
 | `n116_top` | 向上扩像素值 | int | - | 480 |
 | `n116_bottom` | 向下扩像素值 | int | - | 480 |
 | `n116_left` | 向左扩像素值 | int | - | 272 |

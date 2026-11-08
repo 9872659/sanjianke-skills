@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n20_image` | 需提取印花的图片 | image_input | 是 | |
+| `n20_image` | 需提取印花的图片 | image_input | 是 |  |
 | `n25_prompt` | 提示词 | string | 是 | 提取床单全部的图案纹理，输出为平整的纹理 |
 
 ## 返回

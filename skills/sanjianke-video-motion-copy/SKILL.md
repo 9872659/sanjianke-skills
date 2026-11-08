@@ -3,7 +3,7 @@ name: sanjianke-video-motion-copy
 slug: sanjianke-video-motion-copy
 displayName: 视频动作复刻 55.5点一次
 description: "**视频动作复刻，一次 55.5 点（0.555 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
-version: 1.0.2
+version: 1.0.3
 summary: "视频动作复刻 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 55.5 点（0.555 元）**。它的原始参数名是节点 id（n55_image, n72_video, n72_frame_load_cap 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:

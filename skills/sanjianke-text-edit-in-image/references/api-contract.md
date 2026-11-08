@@ -7,7 +7,7 @@
 | workflow_id | `wf_cff31d6091663e0c9465` |
 | 名称 | 文字编辑 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,8 +23,8 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n2_image` | 原图 | image_input | 是 | |
-| `n7_value` | 修改要求 | string | 是 | |
+| `n2_image` | 原图 | image_input | 是 |  |
+| `n7_value` | 修改要求 | string | 是 |  |
 
 ## 返回
 

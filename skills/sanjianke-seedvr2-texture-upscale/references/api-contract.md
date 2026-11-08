@@ -7,7 +7,7 @@
 | workflow_id | `wf_793369d0ec928d73a2d9` |
 | 名称 | SeedVR2无缝贴图素材放大 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n31_image` | 输入图片 | image_input | 是 | |
+| `n31_image` | 输入图片 | image_input | 是 |  |
 
 ## 返回
 

@@ -42,7 +42,7 @@ APP = json.loads(r"""{
  "title": "生成前景",
  "desc": "一键自动生成自然真实前景，丰富画面层次，提升照片氛围感。",
  "kind": "image",
- "quote_yuan": 0.21,
+ "quote_yuan": 0,
  "user_yuan": 0.315,
  "user_points": 31.5,
  "params": [
@@ -190,7 +190,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

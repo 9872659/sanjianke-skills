@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n40_video` | 上传视频 | video | 是 | |
+| `n40_video` | 上传视频 | video | 是 |  |
 | `n91_value` | 视频时长 | int | 是 | 10 |
 
 ## 返回

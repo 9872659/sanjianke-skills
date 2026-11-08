@@ -7,7 +7,7 @@
 | workflow_id | `wf_f5b5964ba0d16e5b1b84` |
 | 名称 | 智能重绘 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n255_image` | image | image_input | 是 | |
+| `n255_image` | image | image_input | 是 |  |
 | `n1_ckpt_name` | ckpt_name | string | 是 | 超美写实.safetensors |
 | `n2_sampler_name` | sampler_name | string | 是 | euler |
 | `n2_scheduler` | scheduler | string | 是 | normal |

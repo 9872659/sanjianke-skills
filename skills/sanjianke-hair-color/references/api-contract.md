@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n205_image` | 原图 | image_input | 是 | |
+| `n205_image` | 原图 | image_input | 是 |  |
 | `n439_value` | 预设发色 | float | 是 | 5 |
 | `n431_text` | 自定义发色 | string | - | 蓝紫渐变色 |
 

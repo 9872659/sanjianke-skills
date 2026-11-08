@@ -42,7 +42,7 @@ APP = json.loads(r"""{
  "title": "人物移除",
  "desc": "全自动去除图片中的人物，支持2K网图",
  "kind": "image",
- "quote_yuan": 0.09,
+ "quote_yuan": 0,
  "user_yuan": 0.135,
  "user_points": 13.5,
  "params": [
@@ -190,7 +190,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

@@ -23,8 +23,8 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n143_image` | 上传图片 | image_input | 是 | |
-| `n160_video` | 上传视频 | video | 是 | |
+| `n143_image` | 上传图片 | image_input | 是 |  |
+| `n160_video` | 上传视频 | video | 是 |  |
 | `n222_value` | 视频帧数 | int | - | 113 |
 | `n223_value` | 宽度 | int | 是 | 480 |
 | `n224_value` | 高度 | int | 是 | 832 |

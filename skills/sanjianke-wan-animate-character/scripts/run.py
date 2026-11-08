@@ -42,7 +42,7 @@ APP = json.loads(r"""{
  "title": "WanAnimate视频角色替换",
  "desc": "WanAnimate视频角色替换",
  "kind": "video",
- "quote_yuan": 0.36,
+ "quote_yuan": 0,
  "user_yuan": 0.54,
  "user_points": 54.0,
  "params": [
@@ -211,7 +211,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

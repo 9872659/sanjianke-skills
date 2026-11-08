@@ -7,7 +7,7 @@
 | workflow_id | `wf_a1bf42098902905dbabf` |
 | 名称 | 修复草坪2K版 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n2_image` | 原图 | image_input | 是 | |
+| `n2_image` | 原图 | image_input | 是 |  |
 
 ## 返回
 

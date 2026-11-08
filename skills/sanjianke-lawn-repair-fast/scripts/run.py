@@ -42,7 +42,7 @@ APP = json.loads(r"""{
  "title": "修复草坪极速版",
  "desc": "专门修复草坪使用的，这次用极速版，出图速度很快，但细节会丢失，需要2K画质可以去另一个“修复草坪2K版”。\n\n请注意首次加载模型可能耗时较长。",
  "kind": "image",
- "quote_yuan": 0.11,
+ "quote_yuan": 0,
  "user_yuan": 0.165,
  "user_points": 16.5,
  "params": [
@@ -190,7 +190,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

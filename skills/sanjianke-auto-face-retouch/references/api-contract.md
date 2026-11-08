@@ -7,7 +7,7 @@
 | workflow_id | `wf_fb72fb12968cbf5aff33` |
 | 名称 | 自动修脸 |
 | 类型 | 图片 |
-| **每次** | **13.5 点（0.135 元）** |
+| **每次** | **11.0 点（0.11 元）** |
 
 ## 端点
 
@@ -23,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n1_image` | image | image_input | 是 | |
+| `n1_image` | image | image_input | 是 |  |
 | `n9_denoise` | denoise | float | 是 | 0.1 |
 | `n12` | 最大边长 | int | 是 | 1728 |
 

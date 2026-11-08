@@ -23,8 +23,8 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n36_image` | 上传图片 | image_input | 是 | |
-| `n34_audio` | 上传音频 | audio | 是 | |
+| `n36_image` | 上传图片 | image_input | 是 |  |
+| `n34_audio` | 上传音频 | audio | 是 |  |
 | `n20_start_time` | 音频开始时间 | string | 是 | 0:00 |
 | `n20_end_time` | 音频结束时间 | string | 是 | 0:18 |
 | `n30_prompt` | 提示词描述 | string | - | 女人对着镜头讲话，表情动作自然

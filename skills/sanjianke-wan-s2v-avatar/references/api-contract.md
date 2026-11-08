@@ -23,9 +23,9 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n126_image` | 上传人物图片 | image_input | 是 | |
+| `n126_image` | 上传人物图片 | image_input | 是 |  |
 | `n141_prompt` | 提示词描述 | string | - | 人物讲话时轻松自然，身体略微放松，目光温 |
-| `n185_audio` | 上传音频 | audio | 是 | |
+| `n185_audio` | 上传音频 | audio | 是 |  |
 
 ## 返回
 

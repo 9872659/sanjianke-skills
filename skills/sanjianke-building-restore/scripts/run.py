@@ -42,9 +42,9 @@ APP = json.loads(r"""{
  "title": "修复建筑强化版",
  "desc": "用于整张照片中建筑表面的清洁与修复，包括墙面、地面、台阶等区域的脏污、污渍、细小裂缝和局部表面破损。尽量保持原有建筑结构、透视、材质纹理及光影。",
  "kind": "image",
- "quote_yuan": 0.02,
- "user_yuan": 0.135,
- "user_points": 13.5,
+ "quote_yuan": 0,
+ "user_yuan": 0.11,
+ "user_points": 11.0,
  "params": [
   {
    "name": "n2_image",
@@ -190,7 +190,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")
