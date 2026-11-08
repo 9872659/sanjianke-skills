@@ -3,7 +3,7 @@
 给 AI Agent 用的一组技能包（Skill），遵循 **SKILL.md** 约定，
 可直接被 Claude / OpenAI / Coze / SkillHub / ClawHub 等支持 SKILL.md 的平台加载。
 
-**360 个技能包**：132 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
+**367 个技能包**：139 个三剪客原创，228 个为第三方开源项目编写的原创使用指南。
 
 ## 目录结构
 
@@ -384,10 +384,11 @@ npx clawhub install <slug>
 - **`sanjianke-wechat-chatgpt`** 三剪客 · 微信接入 ChatGPT 自动回复 · 衍生指南
 - **`sanjianke-xiaohongshu-mcp`** 三剪客 · 小红书 MCP 服务 · 衍生指南
 
-### 数字人（4）
+### 数字人（5）
 
 - **`aigc-digital-human-studio`** 三剪客 · 数字人自动剪辑（网页版）
 - **`avatar-autoclip`** 三剪客 · 数字人自动剪辑
+- **`sanjianke-avatar-models`** 数字人模型台 5 款横评 10 秒 50 点起
 - **`sanjianke-digital-host`** 数字人口播台 一张图一段话一个人开口
 - **`sanjianke-talking-matrix`** 口播矩阵 3 形象 × 4 音色一次出 12 条
 
@@ -418,15 +419,26 @@ npx clawhub install <slug>
 - **`duanju-rights-compliance`** 三剪客 · 短剧二创授权与合规自查
 - **`sanjianke-shortdrama-remix`** 短剧二创一条龙 · 60 秒片 18 元跑完全链
 
+### 视频生成（3）
+
+- **`sanjianke-model-video`** 视频生成台·模型层（同一条片便宜 75 倍）
+- **`sanjianke-muse-video`** muse video单条支持3分钟视频 0.11元一秒
+- **`sanjianke-video-models`** 文生视频模型台 · 一句话横评 5 个模型，最低 0.44 元一条
+
 ### 知识管理（2）
 
 - **`sanjianke-doc-index-qa`** 文档索引与知识检索·数据接进模型接OpenAI兼容网关统一计费
 - **`sanjianke-knowledge-qa`** 知识库问答搭建·向量检索加OpenAI兼容模型网关统一接入
 
-### 视频生成（2）
+### 图片生成（2）
 
-- **`sanjianke-model-video`** 视频生成台·模型层（同一条片便宜 75 倍）
-- **`sanjianke-muse-video`** muse video单条支持3分钟视频 0.11元一秒
+- **`sanjianke-gpt-image`** GPT Image 2.6 六分钱出图工作台
+- **`sanjianke-image-models`** 文生图模型台 · 6 点一张图，多模型横评
+
+### 视频超分（2）
+
+- **`sanjianke-mps-upscale`** 腾讯云超分台 · 2 点一秒，4K 也能提
+- **`sanjianke-upscale-models`** 超分模型台 · 3 条线比价，1080P 一分钟 5.4 元
 
 ### 短剧（2）
 
@@ -466,6 +478,14 @@ npx clawhub install <slug>
 ### 图文转视频（1）
 
 - **`sanjianke-article-to-video`** 一篇 2000 字文章，10 元出一条 60 秒成片
+
+### 素材管理（1）
+
+- **`sanjianke-asset-vault`** 素材库管家 · 上传 0 点，11 个应用的素材一表管到底
+
+### 音频后处理（1）
+
+- **`sanjianke-audio-tools`** 音频工具台 · 人声分离 42 点 / 补帧 25 点每秒
 
 ### 批量调度（1）
 
@@ -511,10 +531,6 @@ npx clawhub install <slug>
 
 - **`sanjianke-game-promo`** 游戏宣发 三个节奏点一套交付
 
-### 图片生成（1）
-
-- **`sanjianke-gpt-image`** GPT Image 2.6 六分钱出图工作台
-
 ### Java（1）
 
 - **`sanjianke-java-agent-kit`** Java接大模型与Agent·OpenAI兼容网关直连75模型包
@@ -534,10 +550,6 @@ npx clawhub install <slug>
 ### 医疗合规（1）
 
 - **`sanjianke-medical-compliance`** 医疗合规素材 一条 9.35 元 · 出片前先过合规
-
-### 视频超分（1）
-
-- **`sanjianke-mps-upscale`** 腾讯云超分台 · 2 点一秒，4K 也能提
 
 ### 新闻资讯（1）
 
@@ -574,6 +586,10 @@ npx clawhub install <slug>
 ### 音乐生成（1）
 
 - **`sanjianke-suno-music`** Suno 音乐台 一句话出一首歌
+
+### 文本模型（1）
+
+- **`sanjianke-text-models`** 文本模型台 · 92 个模型一句话横评，最便宜 0.40 元/百万 token
 
 ### 视频后处理（1）
 

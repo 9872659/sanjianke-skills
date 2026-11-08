@@ -280,10 +280,34 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-asset-vault",
+  "displayName": "素材库管家 · 上传 0 点，11 个应用的素材一表管到底",
+  "description": "**上传一个素材 0 点，11 个应用的 22 条 create/remove 入口 + 24 小时到期时间，一张表全看清。** 素材这一层所有生成类 Skill 都缺：传完就忘、地址过期、同一个文件传三遍、清理时才发现 remove 也要钱。本包把它补齐：`upload` 批量上传（`/api/v1/upload` 规则 cost=0）→ 台账记 url / 大小 / 到期时间 / sha256 → 同文件再传自动复用 → `ls` 看剩余小时与标签 → `bind` 登记进 11 个应用之一，先 `cost` 比价，45 点还是 11,000 点一目了然。三条实测硬事实：一、`remove` 不是免费动作，10 个应用按上游点数 ×2 动态计价，`watermark_removal/remove` 更是 100 点/次的去水印主业务；二、价目表里有 create 规则不等于应用目录登记了 create，只有 happy_horse / wan / seedance 登记了；三、seedance 的素材入库三件套按价目表字面命中 `/api/v1/apps/seedance/*` 的 11,000 点/次。7 个免费命令 + 2 个付费命令，付费的缺 `--yes` 退 4、超 `--budget` 退 5 且一个请求都不发。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-audio-tools",
+  "displayName": "音频工具台 · 人声分离 42 点 / 补帧 25 点每秒",
+  "description": "**一首 3 分钟的歌，42 点（0.42 元）拆出人声和伴奏两条轨；30 秒的片子补到 60fps，750 点（7.50 元）。** 一条命令接完二次创作的音频后处理：本地音频 `upload`（0 点）换平台地址 → `audio-id`（39 点）换 audio_id → `split`（42 点）出人声 / 伴奏 → `mashup`（36 点）把两段歌词融成一段新的 → `interp`（25 点/秒）把片子补到 60fps。全部走 api.a7w.cn，零依赖、只用 Python 标准库。价格口径如实写：`vox` / `mashup_lyrics` / `upload_audio` 在 `GET /api/v1/pricing` 里只有一条 `music_generation/*` 的「上游实际点数 × 3」，没有独立单价，本包按平台 schema 的 14 / 12 / 13 点折算成 42 / 36 / 39 点，真实成交价只在返回体 `usage.points_cost` 里；`interp` 是价目表里唯一写死的 25 点/秒。`--budget`（单位：点）与 `--yes` 双闸门，超预算一个请求都不发；`doctor` 打 10 项免费探针、三个音频接口一次都不 POST。需要自备 api.a7w.cn 的 Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-audiobook-line",
   "displayName": "三剪客 · 有声书生产线",
   "description": "把一本小说或长文本做成有声书：章节切分 → 逐章多音色朗读（旁白 / 对白分角色）→ 章节音频 → 字级时间戳出 SRT / VTT 字幕 → 章节清单与时长台账。七道硬闸门全拦截：广告法违禁词（「最X」按可枚举语境豁免）、占位符残留、照抄示例、章节结构（章数为 0 或空章即拦）、角色一致性（同一角色全书同一音色）、成本上限、产出位置。配音与字幕先报价，`--yes` 或 `--budget` 二选一；断点 key 含正文全文与音色、模型、格式、语速等十一维，改任一维都重配不静默复用；结算只认 `usage.points_cost`。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.2",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-avatar-models",
+  "displayName": "数字人模型台 5 款横评 10 秒 50 点起",
+  "description": "**一张图 + 一段 10 秒音频，5 个模型先报价再出片：模型层 50–240 点，应用层 100–600 点，差 12 倍。** 8 个 ID：OmniHuman 2.0 / 1.5、Infinitalk、可灵 Avatar ×2、视频对口型。`catalog` 看 ID 与 7 条锚点，`cost` 报价，`gen` 出片带对比清单。实测提交只走 `/videos/generations`（`/videos` 404）；2.0 用 `image_urls` 数组，图驱动用 `image_url`；模型层单价不在表里，0 笔成交按 4–24 点/秒基线标 `baseline`，跑过换 `live`。轮询只走 `/api/v1/tasks/<id>`。缺 `--yes` 退 4，超预算退 5。Key 见 https://api.a7w.cn/。技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -564,6 +588,14 @@
   "displayName": "三剪客 · 新媒体配图工厂",
   "description": "给一篇文稿或一个主题，自动产出整套新媒体配图：先出配图方案（几张、每张画什么、什么比例、放哪），确认成本后按平台比例批量出图——小红书 3:4、公众号 2.35:1、抖音 9:16、头条 16:9。走 api.a7w.cn 的 nano_banana，零依赖，成本前置（跑之前先告诉你花多少钱），断点续跑能跳过已完成的图，但断点 key 含提示词——提示词一改就重出重扣，四道本地硬闸门：比例真伪（读回真实像素，不信自报字段）、成本上限、违禁词、照抄提示词示例检测。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.10",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-image-models",
+  "displayName": "文生图模型台 · 6 点一张图，多模型横评",
+  "description": "**6 点一张图，一条命令横评 3 个出图模型。** 同一句 prompt 先逐个报价：gpt-image-2.6 6 点、Seedream 5.0 Flash 15.60 点、GPT Image 2 26 点，最贵与最便宜差 4.3 倍，看完价再决定跑一个还是全跑。图片线单价不在 `GET /api/v1/pricing` 里（115 条规则没有 `/api/v1/images/*`），本包按 `GET /api/v1/me/tasks` 的 actualPrice 归集：跑过用你的成交价，没跑过用同路 70 笔流水的 4 - 13.78 点区间标基线，不编单价。`catalog` 把 49 个图片型号分成 14 个可调用与 35 个待验证，`gen` 预检先拦住。出图落盘带命名规范，并生成 manifest.json 与「对比清单.md」。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -904,10 +936,26 @@
   "origin": "sanjianke"
  },
  {
+  "slug": "sanjianke-text-models",
+  "displayName": "文本模型台 · 92 个模型一句话横评，最便宜 0.40 元/百万 token",
+  "description": "**同一句话，92 个文本模型先报价再开口，最便宜的每百万 token 只要 0.40 元。** 实测 claude 13 个变体、kimi 5 个、通义千问 3.5/3.7/3.8 共 7 个、文心 3 个、DeepSeek 5 个，再加 gemma-4、MiMo、LegalOne、AutoGLM、KAT、Sinong1.0：每百万 token 输出 40 - 15,840 点（0.40 - 158.40 元）。三件事：①文本层只有一条入口 `POST /api/v1/chat/completions`，`/v1/messages` 实测 404；②单价不用反推，92 条文本模型自带 pricing，字段名叫 `per_1k_*`、单位其实是每百万 token；③`check` 用空 messages 免费验通不通，先冻 60 点全额退回。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
   "slug": "sanjianke-title-workshop",
   "displayName": "三剪客 · 爆款标题工坊",
   "description": "给一个主题或产品，自动产出 N 个标题并按点击欲望、信息量、平台适配、合规四个维度打分排序，再给出「哪两个标题配对做 A/B 测试、测哪个变量」的组合建议。内置小红书 / 抖音 / 公众号 / 知乎四套标题公式与字数口径，自带广告法违禁词自检（命中标红并强制压分）。走 api.a7w.cn 的 OpenAI 兼容大模型端点，一个 Key 换模型即换风格，零第三方依赖。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。",
   "version": "1.0.10",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-upscale-models",
+  "displayName": "超分模型台 · 3 条线比价，1080P 一分钟 5.4 元",
+  "description": "1080P 一分钟 5.4 元、10 分钟 4K 120 元——三条超分线（VIAPI 9/15/20 点每秒、腾讯 2/4/8、模型层 50 点起）放进一个命令。腾讯同规格只要 1.2 元，当前 502 InvalidMpsUser（失败全额退）；catalog 先标哪条可用，compare 按秒报三线价并给推荐，--tier 一条命令下单。附腾讯 502、Topaz 404、Recraft 端点冻 20 退 20 的流水原文，先看清再点。技术微信：9872659。",
+  "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"
  },
@@ -931,6 +979,14 @@
   "slug": "sanjianke-video-lab",
   "displayName": "视频后处理台 11 个能力一个命令",
   "description": "**一条老片，去台标、擦字幕、校色、增强，11 个工序一条命令跑完 —— 最便宜的一档 9 点一秒（¥0.09）。** 走 api.a7w.cn 的视频后处理通道，异步两步、零依赖。本包把三件真会白跑一趟的事写进了默认动作：一是 11 档能力**不是同一条路径**（restore 只在 `/api/v1/video/restore`，换脸/抠像/卡通化只在 `/api/v1/video/viapi/`），二是 `videoUrl` 要**平台托管**的地址（`upload` 上传后拿到的 `oss.gpu.likeadmin.cn/openapi/…` 或本站 `vr.a7w.cn` 成片），三是 `shot`/`castcrew`/`delogo` 的价签写「点/次」而引擎按秒 —— `cost` 先算钱、`--budget` 与 `--yes` 两道闸门、`doctor` 用空 body 把 11 个端点全验一遍（400 即正确，0 条任务、0 点冻结）。`catalog` 会逐档打出实际路径与单价。遇到问题可加技术微信 9872659。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "origin": "sanjianke"
+ },
+ {
+  "slug": "sanjianke-video-models",
+  "displayName": "文生视频模型台 · 一句话横评 5 个模型，最低 0.44 元一条",
+  "description": "**同一句话，5 个视频模型先报价再出片，最低 0.44 元一条。** 实测 muse-video 44 点、Seedance 2.0 145.73 点、2.5 762.30 点，最贵上界与最便宜差 11.7 倍 —— 看完价再跑。两件事：①目录里的 kling-4-0、veo3.1-pro、hailuo-02-standard 打 `POST /api/v1/videos` 会 404 `model_not_found`，真正的提交端点是 `POST /api/v1/videos/generations`（13 个型号实测停在参数校验）；②单价不在 115 条价目表里，本包按 `me/tasks` 的 actualPrice 归集，跑过标 live、没跑过标 baseline，不编单价。`gen` 用同一句话逐个提交，落盘并生成「五个模型」对比清单。遇到问题可加技术微信 9872659。",
   "version": "1.0.0",
   "license": "MIT",
   "origin": "sanjianke"

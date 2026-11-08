@@ -1,0 +1,262 @@
+# 文生图模型台 · 6 点一张图，多模型横评
+
+**6 点（6 分钱）一张图，一条命令横评 3 个出图模型。**
+同一句 prompt 先逐个报价，再决定跑一个还是全跑。
+
+实测：`gpt-image-2.6` **6 点/张**、`seedream-5-0-flash` **15.60 点/张**、`gpt-image-2` **26 点/张** ——
+最贵与最便宜差 **4.3 倍**。
+
+---
+
+## 三条干货
+
+### 一、单价不在价目表里
+
+`GET /api/v1/pricing` 的 **115 条规则**里没有 `/api/v1/images/*`。图片线按型号计次，
+真实单价只存在于 `GET /api/v1/me/tasks` 的 `actualPrice` 里。
+
+同一条路径最近 1000 条流水里有 **71 笔结算**，70 笔落在 4 - 13.78 的 7 个价位上：
+`-4 / -6 / -7.8 / -10.54 / -10.6 / -12 / -13.78`，而流水条目**不记 model**。
+所以本包按 model 归集 `actualPrice`：跑过就是 `source=live`，没跑过用同路区间标 `source=baseline`。
+
+### 二、49 个图片型号，14 个真能打
+
+目录里 35 个型号的 `channel_code` 是 `official`，描述写着「同步后请先验证并完成上架」。
+实测 `flux-2-flex` 空 prompt 打到出图端点，返回的是 **404 HTML**（网关 SPA 兜底：目录里有、路由没有）。
+
+```
+POST /api/v1/images/generations  {"model":"flux-2-flex","prompt":""}
+-> HTTP 404  <!DOCTYPE html> … nuxt-spa-loading …
+```
+
+`catalog` 默认只列 14 个可调用的；`gen` 预检会把待验证型号挡在发请求之前，省掉一次白跑。
+
+### 三、空 prompt 探针只对部分型号停在扣费前
+
+```
+gpt-image-2.6  {"prompt":""}  -> 422 prompt: String should have at least 1 character   0 点
+qwen-image-3.0 {"prompt":""}  -> 502 百炼提交失败
+                                 流水：reserve_sync -20 -> refund +20                 净 0
+```
+
+所以 `doctor` 只探 `gpt-image-2.6` 一条，并把**余额前后对比**一起打出来。
+
+---
+
+## 价目表（按上界）
+
+| 型号 | 单价（点/张） | 折合 | 来源 |
+|---|---|---|---|
+| `gpt-image-2.6` | **6** | 0.06 元 | 本账号流水 43 笔各 -6 |
+| `seedream-5-0-flash` | 15.60 | 0.16 元 | me/tasks actualPrice |
+| `gpt-image-2` | 26 | 0.26 元 | me/tasks actualPrice |
+| `gpt-image-2-pro` | 39 - 104 | 0.39 - 1.04 元 | me/tasks 17 笔 |
+| `nano-banana-pro` | 72 | 0.72 元 | 应用层同型号成交价 |
+
+1 元 = 100 点。`--budget` 单位是「点」，默认 200 点（2 元）。
+
+---
+
+## 快速开始
+
+```bash
+# 1) 填 Key（三选一）
+export A7W_API_KEY=sk-你的key
+# 或者：python3 scripts/a7w.py login --key sk-你的key
+
+# 2) 0 点自检
+python3 scripts/run.py doctor
+
+# 3) 0 点报价：同一句 prompt，3 个型号逐个报
+python3 scripts/run.py cost --n 1
+
+# 4) 出图
+python3 scripts/run.py gen --models gpt-image-2.6 --prompt "白底商品图，一只黄色音箱" --yes
+```
+
+---
+
+## 用法示例
+
+```bash
+# 看全部型号（含 35 个待验证的）
+python3 scripts/run.py catalog --all
+
+# 只报 2 个型号，各 2 张
+python3 scripts/run.py cost --models gpt-image-2.6,seedream-5-0-flash --n 2
+
+# 全跑：同一句 prompt 出 3 个模型，落盘 + 对比清单
+python3 scripts/run.py gen --models gpt-image-2.6,seedream-5-0-flash,gpt-image-2 \
+    --prompt "雨夜街头，霓虹灯下撑伞的女孩" --n 1 --yes
+
+# 先看请求，一分钱不花
+python3 scripts/run.py gen --models gpt-image-2.6 --prompt "一只橘猫" --dry-run
+
+# 2K 出图
+python3 scripts/run.py gen --models gpt-image-2.6 --prompt "产品主图" --size 2k --yes
+
+# 查异步任务（免费）
+python3 scripts/run.py status --task-id task_xxx
+
+# 重出对比清单（免费）
+python3 scripts/run.py sheet --run ./run-20261108-093000
+```
+
+### 落盘规范
+
+```
+run-20261108-093000/
+├── 01-gpt_image_2_6-01.png      序号-型号-张序.png
+├── 02-seedream_5_0_flash-01.png
+├── manifest.json                结构化结果（含实际点数）
+└── 对比清单.md                  一张表看完成本与产出
+```
+
+型号里的 `.` 会换成 `_`，文件名全平台可用。
+
+---
+
+## 参数
+
+| 参数 | 默认 | 说明 |
+|---|---|---|
+| `--models` | 3 个默认型号 | 逗号分隔，例如 `a,b,c` |
+| `--model` | — | 只跑一个型号 |
+| `--prompt` | 必填 | 所有型号共用同一句 |
+| `--n` | 1 | 每个型号 1 - 4 张 |
+| `--size` | `auto` | `auto` / `1k` / `2k` / `4k` / 宽x高 |
+| `--output-format` | `png` | `png` / `jpeg` / `webp` |
+| `--want-url` | — | 让网关返回 url（默认 b64 直接落盘） |
+| `--outdir` | `.` | 落盘根目录 |
+| `--budget` | 200 | 点数上限（单位：点） |
+| `--pages` | 10 | 翻几页 me/tasks 找成交价 |
+| `--refresh` | — | 忽略本机价格缓存（6 小时） |
+| `--yes` | — | 确认真实出图 |
+
+---
+
+## 子命令
+
+| 子命令 | 扣费吗 | 干什么 |
+|---|---|---|
+| `catalog` | 免费 | 图片型号 + 单价 + 来源 + 是否已上架 |
+| `cost` | 免费 | 同一句 prompt 多型号逐个报价 |
+| `doctor` | 免费 | 7 个只读端点 + 1 个 422 探针 + 余额对比 |
+| `gen` | 按张 | 多型号出图，落盘 + manifest + 对比清单 |
+| `status` | 免费 | 查异步任务 |
+| `sheet` | 免费 | 用 manifest 重出对比清单 |
+| `log` | 免费 | 本地台账 |
+
+---
+
+## 退出码
+
+| 码 | 含义 |
+|---|---|
+| `0` | 成功 |
+| `2` | 用法错（型号不在目录 / 缺 prompt / n 越界 / 缩写） |
+| `4` | 需要确认 —— 没给 `--yes` |
+| `5` | 超预算 —— 一个出图请求都不发 |
+| `6` | 调用失败 |
+| `1` | 内部错误 |
+| `130` | 被 Ctrl-C 中断 |
+
+---
+
+## `--json` 契约
+
+```json
+{"ok": true, "runId": "20261108-093000", "dir": "./run-20261108-093000",
+ "results": [{"model": "gpt-image-2.6", "status": "ok", "files": ["./…/01-gpt_image_2_6-01.png"],
+              "actualPoints": 6, "elapsed": 43.6}],
+ "totalEstimated": 6, "totalActual": 6}
+```
+
+失败：
+
+```json
+{"ok": false, "exit": 5, "error": {"kind": "budget", "message": "…"}}
+```
+
+`--json` 写在子命令前后都可以，stdout 只有一个 JSON 文档。
+
+---
+
+## 和已有包的分工
+
+| 你的需求 | 用哪个包 | 为什么 |
+|---|---|---|
+| 同一句 prompt 横评几个模型，选一个或全跑 | **本包** | 多型号报价 + 同 prompt 出图 + 对比清单 |
+| 只跑 gpt-image-2.6 出图 / 改图 / GIF | `sanjianke-gpt-image` | 单模型深度：图生图 multipart、尺寸校验、GIF |
+| 一套电商素材（白底 / 场景 / 细节 / 详情页） | `sanjianke-ecom-picset` | 按位分配 prompt、平台尺寸换算、批量铺图 |
+| 看全站应用层与模型层的差价排行 | `sanjianke-price-radar` | 6 个只读子命令、115 条规则、app-vs-model 排行 |
+| 一个角色跨多格保持一致 | `sanjianke-storyboard-art` | 设定卡 + 参考图锁定 + 跨格自检 |
+
+---
+
+## 文件结构
+
+```
+sanjianke-image-models/
+├── SKILL.md
+├── README.md
+├── LICENSE.md
+├── references/
+│   ├── api-contract.md       接口契约（实测原文 + 单价反推法）
+│   └── troubleshooting.md    排错：按报错找原因
+└── scripts/
+    ├── a7w.py                零依赖客户端（全家族共用，16,797 B 逐字节一致）
+    └── run.py                本包命令层
+```
+
+---
+
+## 实测记录
+
+```
+2026-11-08 09:0x  doctor（7 个只读 + 1 个 422 探针）
+  √ 模型目录        HTTP 200 · 共 316 条 · 图片型号 49 个（已上架 14）
+  √ 出图端点探针    HTTP 422 · prompt: String should have at least 1 character
+  √ 余额前后对比    前 999,997,393,470.26 点 -> 后同值 · 差 0 点
+  本轮花费 0 点
+```
+
+```bash
+$ python3 scripts/run.py cost --models gpt-image-2.6,seedream-5-0-flash,gpt-image-2 --n 2
+  合计（按上界）：95 点 = 0.95 元
+  最便宜 gpt-image-2.6 · 最贵 gpt-image-2 的单价相差 4.3 倍
+```
+
+---
+
+## 免责
+
+- 单价按「点/张」计，实际以响应里的 `usage` 与 `GET /user/balance/logs` 为准。
+- 图片链接约 3 小时有效；本包默认把 `b64_json` 落成文件，不受过期影响。
+- 生成内容的合规责任在使用者：请用在合法、有授权的素材与用途上。
+
+## 许可证
+
+MIT，见 `LICENSE.md`。
+
+---
+
+---
+
+## 联系我们
+
+- **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
+- **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
+- **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
+
+---
+
+## 相关链接
+
+| 链接 | 地址 | 说明 |
+|---|---|---|
+| [算力集市 · 注册领 API Key](https://api.a7w.cn/) | api.a7w.cn | 一个 Key 调用全部 AI 算力；注册、充值、创建 Key 都在这 |
+| [AI 插件市场](https://aigc.a7w.cn/) | aigc.a7w.cn | 浏览全部 AI 插件与接口说明 |
+| [三剪客 · 一句话批量出片](https://ks.a7w.cn/) | ks.a7w.cn | 短剧二创 / 影视解说 / 矩阵号批量混剪桌面客户端 |
+| [视频超清 · 在线批量超分](https://vr.a7w.cn/) | vr.a7w.cn | 网页版视频超分，批量处理，最高 4K |
+| [0人公司 · AI Agent 平台](https://a7w.cn/) | a7w.cn | 主站，了解整套 AI Agent 生态 |
