@@ -20,7 +20,7 @@
 2. 多模块项目用 `wx-java-bom` 统一版本；单模块直接引 `weixin-java-*`。
 3. Spring Boot 项目优先用 `wx-java-*-spring-boot-starter`（多账号场景选带 `multi` 的），写好 `wx.mp.*` 或 `wx.pay.*` 配置即可注入 `WxMpService`、`WxMpConfigStorage` 等对象。
 4. 生产环境务必把令牌存储从默认内存切到 Redis，多实例部署还要自定义消息去重。
-5. 被动消息用 `WxMpMessageRouter` 配规则，规则从细到粗、每条 `end()` 收尾，进程退出前关掉内部线程池。
+5. 被动消息用 `WxMpMessageRouter` 配规则，规则从细到粗、每条 `end` 收尾，进程退出前关掉内部线程池。
 6. 支付相关先确认证书路径在部署产物里存在，密钥与证书不要提交到代码仓库。
 
 ---

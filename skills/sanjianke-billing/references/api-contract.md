@@ -137,7 +137,7 @@
 ### 字段口径
 
 - `lists` 在 `data` 下，不是顶层 `list`。
-- **`actual_points` 是字符串**（`"181.50"`），直接做加法会变成字符串拼接，务必 `float()`。
+- **`actual_points` 是字符串**（`"181.50"`），直接做加法会变成字符串拼接，务必 `float`。
 - **失败任务的 `actual_points` 实测恒为 `"0.00"`**（181 条 failed 采样，取值集合只有 `{"0.00"}`）。
 - `completed_at` 是 Unix 秒，`created_at` 是 ISO 字符串 —— 两个字段格式不统一。
 - `channel_code` 实测取值：`app` / `official` / `official_media_33` / `bailian_compatible` /

@@ -11,7 +11,6 @@
 - 昇腾平台走 PyTorch 引擎，需按官方对应文档安装。
 - 4bit AWQ / GPTQ 推理对 GPU 架构有要求（Volta sm70、Turing sm75、Ampere sm80/86、Ada sm89 等，以官方当前列表为准）。
 - 模型权重需自行下载（默认 Hugging Face，可切 ModelScope / openMind Hub）；受控仓库需要 Token。
-- VLM 模型需要额外安装上游视觉组件的依赖 —— 官方明确说明这些依赖不在 LMDeploy 的依赖列表里。
 
 ---
 

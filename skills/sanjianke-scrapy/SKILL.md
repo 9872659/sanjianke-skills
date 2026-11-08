@@ -16,8 +16,6 @@ tags:
 
 写爬虫最难的不是取数据，而是并发、重试、去重、限速、断点这些脏活。它把这些都做成了框架的一部分：你只写"抓哪个 URL、从哪里取字段、下一页在哪"，剩下的调度、并发、编码探测、结果落盘由框架负责。想批量抓一个站点、还要求抓得稳又有礼貌，它是 Python 里最省事的那条路。
 
-**上游项目**：`scrapy`　**仓库**：https://github.com/scrapy/scrapy
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -109,10 +107,10 @@ class QuotesSpider(scrapy.Spider):
     def parse(self, response):
         for quote in response.css("div.quote"):
             yield {
-                "author": quote.xpath("span/small/text()").get(),
-                "text": quote.css("span.text::text").get(),
+                "author": quote.xpath("span/small/text").get,
+                "text": quote.css("span.text::text").get,
             }
-        next_page = response.css('li.next a::attr("href")').get()
+        next_page = response.css('li.next a::attr("href")').get
         if next_page is not None:
             yield response.follow(next_page, self.parse)
 ```

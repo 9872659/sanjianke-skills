@@ -18,18 +18,16 @@ tags:
 
 它自己不做编解码，非 wav 格式一律交给 ffmpeg。所以它的价值不在算法，而在**把一堆零碎的音频编辑需求变成几行 Python**。
 
-**上游项目**：`pydub`　**仓库**：https://github.com/jiaaro/pydub
-
 ## 什么时候用 / 不用
 
 **用它**：
 
 - 「把这段音频从第 X 秒到第 Y 秒剪出来」——切片就是一对方括号，单位是毫秒。
-- 「把 mp4/flv/m4a 里的音轨导成 mp3」——`AudioSegment.from_file()` 能吃 ffmpeg 支持的任意格式。
+- 「把 mp4/flv/m4a 里的音轨导成 mp3」——`AudioSegment.from_file` 能吃 ffmpeg 支持的任意格式。
 - 「把几段音频拼起来，接缝处别咔哒响」——拼接自带交叉淡化，也支持自定义淡化时长。
 - 「开头结尾的静音太长，帮我掐掉」——`silence` 模块有检测与切分静音的函数。
 - 「整体音量小，统一提升一下」——`normalize`、`apply_gain`、`dBFS` 一套都有。
-- 「输出 mp3 顺便写歌手/专辑这些标签」——`export()` 支持 `tags`，还能塞封面图。
+- 「输出 mp3 顺便写歌手/专辑这些标签」——`export` 支持 `tags`，还能塞封面图。
 - 「纯 Python 环境，不想装一堆重依赖」——它本身没有第三方运行时依赖（ffmpeg 是外部程序）。
 
 **不要用它**：
@@ -79,7 +77,7 @@ Windows：README 给的步骤是下载 libav 的 Windows 构建包，解压后�
 
 **关于 wav**：README 说明打开和保存 **wav** 文件用纯 Python 就够了，不需要 ffmpeg。只有处理 mp3 这类非 wav 格式才必须依赖它。
 
-**播放功能（可选）**：想用 `pydub.playback.play()` 得额外装一个播放后端，README 列出四个可选项：`simpleaudio`（官方强烈推荐）、`pyaudio`、`ffplay`（通常随 ffmpeg 一起来）、`avplay`（通常随 libav 一起来）。**只是做文件处理的话，一个都不用装。**
+**播放功能（可选）**：想用 `pydub.playback.play` 得额外装一个播放后端，README 列出四个可选项：`simpleaudio`（官方强烈推荐）、`pyaudio`、`ffplay`（通常随 ffmpeg 一起来）、`avplay`（通常随 libav 一起来）。**只是做文件处理的话，一个都不用装。**
 
 **版本**：当前 PyPI 上的版本是 0.25.1（本地实测确认）。包元数据里没有声明 `python_requires`，也没有声明任何第三方运行时依赖。
 
@@ -166,7 +164,7 @@ awesome = do_it_over.fade_in(2000).fade_out(3000)
 with_style = beginning.append(end, crossfade=1500)   # 1.5 秒交叉淡化
 ```
 
-`append()` 默认用 100ms 交叉淡化来消除咔哒声；`+` 运算符是**不带**交叉淡化的拼接。要无接缝就用 `append(crossfade=...)`，要硬拼就用 `+`。
+`append` 默认用 100ms 交叉淡化来消除咔哒声；`+` 运算符是**不带**交叉淡化的拼接。要无接缝就用 `append(crossfade=...)`，要硬拼就用 `+`。
 
 **5）导出与写标签**
 
@@ -239,7 +237,7 @@ faster = song.speedup(playback_speed=1.25)
 song2 = song.set_frame_rate(44100).set_channels(2).set_sample_width(2)
 
 # 立体声拆成两条单声道，或反过来合成
-left, right = song.split_to_mono()
+left, right = song.split_to_mono
 stereo = AudioSegment.from_mono_audiosegments(left, right)
 ```
 
@@ -260,8 +258,8 @@ print(song.channels, song.frame_rate, song.sample_width, song.frame_width)
 ten_second_silence = AudioSegment.silent(duration=10000)          # 默认 frame_rate=11025
 better = AudioSegment.silent(duration=10000, frame_rate=44100)    # 对齐素材采样率更稳妥
 
-empty = AudioSegment.empty()      # 零长度，适合做累加容器
-playlist = AudioSegment.empty()
+empty = AudioSegment.empty      # 零长度，适合做累加容器
+playlist = AudioSegment.empty
 for s in sounds:
     playlist += s
 ```
@@ -294,7 +292,7 @@ import logging
 
 l = logging.getLogger("pydub.converter")
 l.setLevel(logging.DEBUG)
-l.addHandler(logging.StreamHandler())
+l.addHandler(logging.StreamHandler)
 
 AudioSegment.from_file("./test/data/test1.mp3")
 ```
@@ -312,15 +310,15 @@ AudioSegment.from_file("./test/data/test1.mp3")
 | 切片切出来的位置差了几百毫秒 | 所有时间参数单位是**毫秒**，不是秒 | `song[:10]` 是前 10 **毫秒**（几乎为空），前 10 秒要写 `song[:10*1000]` |
 | 极短的片段长度不是想要的 | 不足 1ms 的片段会被当成 0 长度 | 别做亚毫秒级切片；需要更细粒度就用样本数组自己处理 |
 | 拼接后音质明显下降，或某一段变响了 | 组合两个参数不一致的片段时，pydub 会把低质量的一方**升格**去匹配高质量的一方（单声道转立体声、升采样、加位深） | 这是官方文档写明的行为。要么先统一参数（`set_frame_rate`/`set_channels`/`set_sample_width`），要么明确用低参数的那一方 |
-| 叠加后发现声音被截断了 | `overlay()` 的结果长度**永远等于被叠加的那一段**，超出部分被裁掉 | 反过来叠加（短盖长），或者先用 `AudioSegment.silent()` 造一个足够长的底再往上叠 |
+| 叠加后发现声音被截断了 | `overlay` 的结果长度**永远等于被叠加的那一段**，超出部分被裁掉 | 反过来叠加（短盖长），或者先用 `AudioSegment.silent` 造一个足够长的底再往上叠 |
 | 导出 `out.ogg` 报编码器问题 | Ogg 规范不指定编解码器，pydub 不指定时默认用 vorbis，等价于 `codec="libvorbis"` | 显式写 `codec="libvorbis"`；要别的编码器就明确传 |
-| `export("x.wav")` 出来的却是 mp3 | `export()` 的 `format` 默认值是 `"mp3"`，不跟随文件扩展名 | 永远显式传 `format=`，别指望它从文件名猜 |
+| `export("x.wav")` 出来的却是 mp3 | `export` 的 `format` 默认值是 `"mp3"`，不跟随文件扩展名 | 永远显式传 `format=`，别指望它从文件名猜 |
 | 写标签后 Windows 资源管理器里看不到 | ID3v2 版本问题 | 加 `id3v2_version="3"` |
 | 静音切分把整段都切没了，或一段都没切 | `silence_thresh` 默认 **-16 dBFS**，对安静素材来说太高（整段都被判成静音），对嘈杂素材来说太低 | 按素材实测值调，常见做法是相对本段响度：`silence_thresh=song.dBFS - 16`；再配合 `min_silence_len` 控制「多长的空隙才算间隔」 |
 | 检测静音慢得离谱 | 官方文档直言这几个函数「可能非常慢」，因为它要逐段扫描整段音频 | 加大 `seek_step`（默认 1ms）换取速度；或者先切片再检测 |
 | 大文件处理时内存飙满 | 整段音频全部驻留内存，AudioSegment 是不可变对象，每次操作都可能复制一份 | 用 `from_file(..., start_second=, duration=)` 分段读；切片后及时让中间对象出作用域；实在大就改用命令行 ffmpeg 做粗切 |
-| 以为 `AudioSegment` 被就地改掉了 | 它是**不可变**的，所有操作返回新对象 | 一定要接住返回值：`song = song.reverse()`，光写 `song.reverse()` 等于没做 |
-| `song[::5000]` 之后 `len()` 报错 | 按步长切片返回的是生成器 | 需要长度就先 `list(song[::5000])` |
+| 以为 `AudioSegment` 被就地改掉了 | 它是**不可变**的，所有操作返回新对象 | 一定要接住返回值：`song = song.reverse`，光写 `song.reverse` 等于没做 |
+| `song[::5000]` 之后 `len` 报错 | 按步长切片返回的是生成器 | 需要长度就先 `list(song[::5000])` |
 | 想直接 `import scipy_effects` 却报没有 scipy | `pydub.scipy_effects` 是可选模块，需要另外装 scipy | 用不到就别导入；要用就先 `pip install scipy` |
 | 播放报没有可用播放后端 | 播放需要 `simpleaudio`/`pyaudio`/`ffplay`/`avplay` 之一 | 装 `simpleaudio`（官方首选）；**只做文件处理的话根本不需要播放能力** |
 
@@ -412,7 +410,7 @@ AudioSegment.from_file("./test/data/test1.mp3")
 
 执行后：
 
-- [ ] 用播放器或 `dBFS`/`len()` 核对结果的时长与响度是否符合预期。
+- [ ] 用播放器或 `dBFS`/`len` 核对结果的时长与响度是否符合预期。
 - [ ] 检查拼接处有没有爆音（该用 `append(crossfade=)` 的地方别用 `+`）。
 - [ ] 确认导出文件的标签、码率、声道数符合交付要求。
 - [ ] 记录本次用到的 ffmpeg 版本与关键参数，便于批量任务复现。

@@ -19,8 +19,6 @@ tags:
 
 它的核心是**语义层**（context layer，也叫 semantic layer）：在 dbt 项目或 Lightdash 自己的 YAML 里定义指标、维度、join、描述、缓存与权限规则，之后看板、AI 问答、数据应用、嵌入式分析全都从这一层取数。换句话说，改一次口径，所有消费方一起生效。
 
-**上游项目**：`lightdash`　**仓库**：https://github.com/lightdash/lightdash
-
 > 关于名称与版本：官方文档会同时出现 "Lightdash Cloud"（托管服务）与自托管两条路线。CLI 命令与选项在版本间会增删（例如官方文档已明确说明 `PARTIAL_COMPILATION_ENABLED` 环境变量不再被支持），**具体命令与参数以官方 CLI 参考页和你本机 `lightdash --help` 为准**。
 
 ## 什么时候用 / 不用
@@ -37,7 +35,6 @@ tags:
 
 **不要用它**：
 
-- **没有数据仓库、数据还在业务库里零散放着**——它连的是分析型仓库（BigQuery、Snowflake、Redshift、Databricks、Postgres、Trino、ClickHouse 等），上游没有建模好的仓库就得先解决仓库问题。
 - **没有 dbt 且不打算用**——虽然支持直接用 Lightdash YAML 指向仓库，但绝大多数用法与文档都围绕 dbt 项目展开，没有 dbt 会丢掉不少便利。
 - **只想要一次性的图表导出或临时 SQL 查询**——直接用仓库客户端或 notebook 更快，不必上平台。
 - **团队里没人管基础设施，也不想用托管服务**——自托管要管 K8s 或 Docker、元数据库、密钥、升级；不想管就走 Cloud。

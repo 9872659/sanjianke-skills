@@ -59,8 +59,8 @@
 
 | 环节 | 接口 | 单价 |
 |---|---|---|
-| 配音 | `voice_tts/tts` | **0.18 点/字**（上游实际点数 ×3）|
-| 视频 · lipsync | `pic_lipsync/submit` | **15 点/秒**（上游实际点数 ×5）|
+| 配音 | `voice_tts/tts` | **0.18 点/字**|
+| 视频 · lipsync | `pic_lipsync/submit` | **15 点/秒**|
 | 视频 · human | `image_human/submit` | **10 / 15 / 30 / 60 点/输入秒**（fast / standard / 2k / 4k）|
 | 上传 | `POST /api/v1/upload` | **0 点**（24 小时有效）|
 | 轮询 | `GET /api/v1/tasks/<id>` | **0 点** |

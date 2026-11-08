@@ -20,8 +20,6 @@ tags:
 
 注意名字里的「posh」指的是 PowerShell 血统，但它早已不限于 PowerShell。
 
-**上游项目**：`oh-my-posh`　**仓库**：https://github.com/JanDeDobbeleer/oh-my-posh
-
 ## 什么时候用 / 不用
 
 **用它**：

@@ -14,8 +14,8 @@
 | `f.Save(opts ...Options)` | 存回原路径；`NewFile` 出来的没有路径，要用 `SaveAs` |
 | `f.SaveAs(name string, opts ...Options)` | 另存为新路径 |
 | `f.Write(w io.Writer, opts ...Options)` / `f.WriteTo(w, opts)` | 直接写到流 |
-| `f.WriteToBuffer() (*bytes.Buffer, error)` | 写进内存缓冲 |
-| `f.Close() error` | **必须调用**，清理临时文件 |
+| `f.WriteToBuffer (*bytes.Buffer, error)` | 写进内存缓冲 |
+| `f.Close error` | **必须调用**，清理临时文件 |
 
 `Options` 字段（打开/读取行为）：`MaxCalcIterations`、`Password`、`RawCellValue`、
 `UnzipSizeLimit`（默认 16GB）、`UnzipXMLSizeLimit`（默认 16MB）、`TmpDir`、
@@ -28,7 +28,7 @@ f, err := excelize.OpenFile("Book1.xlsx", excelize.Options{Password: "password"}
 ## 工作表
 
 `NewSheet(name) (int, error)` / `DeleteSheet(name)` / `SetSheetName(source, target)` /
-`GetSheetList() []string` / `GetSheetIndex(name) (int, error)` / `GetSheetName(index)` /
+`GetSheetList []string` / `GetSheetIndex(name) (int, error)` / `GetSheetName(index)` /
 `SetActiveSheet(index)` / `CopySheet(from, to)` / `MoveSheet(source, target)` /
 `SetSheetVisible(sheet, visible, veryHidden)` / `SetSheetRow` / `SetSheetCol` /
 `GetSheetDimension(sheet)` / `SetSheetDimension(sheet, rangeRef)`
@@ -98,7 +98,7 @@ _ = f.SetCellStyle("Sheet1", "A1", "D1", styleID)
 | `AddDataValidation(sheet, dv *DataValidation)` | 下拉/校验规则；`NewDataValidation` + `SetDropList` / `SetRange` |
 | `AddVBAProject(file []byte)` | 塞入 `vbaProject.bin`，文件须为 XLSM/XLTM |
 | `ProtectSheet(sheet, opts *SheetProtectionOptions)` / `ProtectWorkbook` | 保护 |
-| `UpdateLinkedValue()` | 清掉公式的旧缓存值，让 Excel 打开时重算 |
+| `UpdateLinkedValue` | 清掉公式的旧缓存值，让 Excel 打开时重算 |
 
 ## 工具函数
 

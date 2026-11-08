@@ -64,9 +64,8 @@ python3 scripts/run.py doctor
 
 ---
 
-## 3. 报错对照表（上游 code → 人话）
+## 3. 报错对照表
 
-| 上游 code | HTTP | 本包的说法 / 处置 |
 |---|---|---|
 | `empty_url` / `pixverse_empty_url` | 400 | 没给 `videoUrl` |
 | `url_not_allowed` | 400 | **这一档只收本网关素材**：先 `upload`，再用返回的地址（见 §2，本包会提前拦） |

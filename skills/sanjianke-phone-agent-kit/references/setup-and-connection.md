@@ -163,15 +163,15 @@ phone-harness --doctor android     # 单独查安卓
 | 安卓 `no-device` | USB 调试没开、线或口有问题；无线调试因重启关闭；手机与主机不同网段 | 开调试、换线换口、重开无线调试、对齐网络；`adb devices` 看 adb 视角 |
 | 安卓 `unauthorized` | 手机的授权弹窗没点，或没勾「一直允许」 | 解锁手机点「允许」；弹窗不出现就重新插拔 |
 | 安卓 `locked` | 手机锁屏了 | 请用户解锁；长任务先 `android awake --bg` |
-| 安卓无障碍树取不到 | 该界面一直在动画，`uiautomator` 等不到静止 | 改用 `screenshot()`，或换到会静止的界面 |
+| 安卓无障碍树取不到 | 该界面一直在动画，`uiautomator` 等不到静止 | 改用 `screenshot`，或换到会静止的界面 |
 | iPhone 截屏全黑 | 终端未重启；镜像窗口有提示层；手机被解锁 | 重启终端；清掉提示层；把 iPhone 锁屏 |
-| iPhone 点击无反应 | 缺辅助功能权限；或有别的窗口抢了焦点 | 补权限；检查是否弹出系统授权框；手动 `activate()` 一次 |
+| iPhone 点击无反应 | 缺辅助功能权限；或有别的窗口抢了焦点 | 补权限；检查是否弹出系统授权框；手动 `activate` 一次 |
 | `--doctor` 报 pyobjc 缺失但明明装过 | 跑的是另一个 Python 解释器 | 用 `pip install -e .` 时那个解释器，或给它单独装 pyobjc 三个 framework 包 |
 | 提示 iPhone 在使用中 | 实体手机被解锁，镜像会话暂停 | 请用户锁屏；**不要**去点恢复界面上的按钮 |
 
 ### 5.2 连接状态机
 
-`connection_state()` 返回四种状态，处置完全不同：
+`connection_state` 返回四种状态，处置完全不同：
 
 | 状态 | 含义 | Agent 该做什么 |
 |---|---|---|

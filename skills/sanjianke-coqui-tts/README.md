@@ -12,7 +12,6 @@
 - **包名注意**：PyPI 上的安装包名是 `coqui-tts`，而代码里的导入名是 `TTS`，两者不一样。
 - **语言前端**：非英语语言需要对应的可选依赖，例如中文要装 `zh` extra。
 - **磁盘**：每个模型的权重都是运行时单独下载的，多个模型累计占用可观。
-- **维护状态**：上游原仓库已归档，当前维护与文档由社区接手的版本提供。建议锁定版本使用。
 
 ---
 
@@ -92,15 +91,11 @@ tts-server --model_name "tts_models/en/vctk/vits" --speaker_idx p376
 - 推理文档：https://coqui-tts.readthedocs.io/en/latest/inference.html
 - 克隆文档：https://coqui-tts.readthedocs.io/en/latest/cloning.html
 
-> 说明：上游原仓库已归档，实际维护与文档目前由社区接手的版本提供。安装命令与参数请以该文档站当前内容为准。
-
 ---
 
 ## 许可证
 
 MIT，见 `LICENSE.md`。
-
-> 上游项目的**代码**与**发布的预训练模型**可能适用不同的许可条款，且条款与商业使用限制可能随版本变化。商用前请自行核对官方当前说明，不要仅凭本包的 MIT 声明推断上游授权。
 
 ---
 

@@ -15,8 +15,6 @@ tags:
 
 用纯 Go 读写 xlsx 这类电子表格文件，不依赖 Office、不需要装 Excel、也不需要 CGO——丢一个二进制到服务器上就能把数据库里的数据导出成报表，或者把别人上传的表格读进来。它同时提供两套 API：一套是普通读写（打开整个工作簿、按单元格随便改），一套是流式读写（几十万行不进内存，边写边落临时文件）。选哪套、什么时候会踩坑，是这个 Skill 想讲清的事。
 
-**上游项目**：`excelize`　**仓库**：https://github.com/qax-os/excelize
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -58,13 +56,13 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-func main() {
-	f := excelize.NewFile()
-	defer func() {
-		if err := f.Close(); err != nil {
+func main {
+	f := excelize.NewFile
+	defer func {
+		if err := f.Close; err != nil {
 			fmt.Println(err)
 		}
-	}()
+	}
 	f.SetCellValue("Sheet1", "A1", "Hello")
 	if err := f.SaveAs("Book1.xlsx"); err != nil {
 		fmt.Println(err)
@@ -85,8 +83,8 @@ go run .
 **1）新建 + 多个工作表 + 存盘**
 
 ```go
-f := excelize.NewFile()
-defer f.Close()
+f := excelize.NewFile
+defer f.Close
 
 // NewFile 已经自带一个 Sheet1；要加表就换名字，别重复建 Sheet1
 idx, err := f.NewSheet("订单")
@@ -121,7 +119,7 @@ if err != nil {
 	fmt.Println(err)
 	return
 }
-defer f.Close()
+defer f.Close
 
 // 小文件：一次拿到二维数组
 rows, err := f.GetRows("订单")
@@ -139,15 +137,15 @@ if err != nil {
 	fmt.Println(err)
 	return
 }
-for r.Next() {
-	cols, err := r.Columns()
+for r.Next {
+	cols, err := r.Columns
 	if err != nil {
 		fmt.Println(err)
 		break
 	}
 	fmt.Println(cols)
 }
-if err := r.Close(); err != nil {   // 释放临时文件
+if err := r.Close; err != nil {   // 释放临时文件
 	fmt.Println(err)
 }
 ```
@@ -155,8 +153,8 @@ if err := r.Close(); err != nil {   // 释放临时文件
 **4）写入大文件：StreamWriter（几十万行不进内存）**
 
 ```go
-f := excelize.NewFile()
-defer f.Close()
+f := excelize.NewFile
+defer f.Close
 
 sw, err := f.NewStreamWriter("Sheet1")
 if err != nil {
@@ -183,7 +181,7 @@ for rowID := 2; rowID <= 100000; rowID++ {   // 行号必须递增
 		break
 	}
 }
-if err := sw.Flush(); err != nil {   // 必须 Flush，否则数据不落盘
+if err := sw.Flush; err != nil {   // 必须 Flush，否则数据不落盘
 	fmt.Println(err)
 	return
 }
@@ -239,15 +237,15 @@ _ = f.AddChart("订单", "H2", &excelize.Chart{
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| `NewSheet("Sheet1")` 报「工作表已存在」 | `NewFile()` 创建的工作簿里**已经有一张 Sheet1** | 要么改用别的名字，要么用 `SetSheetName("Sheet1", "订单")` 改名 |
-| 跑完在系统临时目录里堆了一堆 `excelize-*` 文件 | 流式读写和共享字符串表会在超过阈值时落临时文件，只有 `Close()` 才清理 | 每个 `OpenFile`/`NewFile` 都 `defer f.Close()`；流式读还要 `rows.Close()` |
+| `NewSheet("Sheet1")` 报「工作表已存在」 | `NewFile` 创建的工作簿里**已经有一张 Sheet1** | 要么改用别的名字，要么用 `SetSheetName("Sheet1", "订单")` 改名 |
+| 跑完在系统临时目录里堆了一堆 `excelize-*` 文件 | 流式读写和共享字符串表会在超过阈值时落临时文件，只有 `Close` 才清理 | 每个 `OpenFile`/`NewFile` 都 `defer f.Close`；流式读还要 `rows.Close` |
 | `SetSheetRow` 报参数错误（ErrParameterInvalid） | 第三个参数必须是**指向切片的指针**，不是切片本身 | 写 `&row` 而不是 `row` |
 | 往合并单元格区域写数据，值跑到左上角去了 | 合并区域内只有左上角是真实单元格，写入会被重定向；反过来 `GetCellValue` 对区域内任意单元格返回同一个值 | 记住「合并区只有左上角」这个模型；要分格写就先 `UnmergeCell` |
 | 很长的文本写进去被截断 | 单元格内容上限 32767 个字符，超了会静默截断 | 长文本拆多格，或改成附件/文件路径 |
 | 写完公式，读回来是空字符串 | 库只写公式不负责计算；读到的是文件里的**缓存值**，程序生成的簿通常没有缓存值 | 读之前用 `CalcCellValue` 自己算，或按官方说明在写公式后调用 `UpdateLinkedValue`，让 Excel 打开时重算 |
 | 插入/删除行之后，打开文件提示损坏 | `InsertRows` / `RemoveRow` / `DuplicateRow` 只会**部分**更新公式、图表等引用 | 这类操作后重新核对公式区域；对公式密集的表，宁可按值重建工作簿 |
 | 流式写完发现列宽/样式没生效，或报顺序错误 | 流式模式下 `SetColWidth` / `SetColStyle` / `SetColVisible` / `SetPanes` 必须**在第一次 SetRow 之前**调用；行号还必须递增 | 调整调用顺序；不要在流式写同一张表时混用普通模式 API |
-| `GetRows` 出来的每行长度不一致 | 行尾连续空白单元格会被跳过 | 自己按最大列数补齐；或改用 `Rows().Columns()` 逐行处理 |
+| `GetRows` 出来的每行长度不一致 | 行尾连续空白单元格会被跳过 | 自己按最大列数补齐；或改用 `Rows.Columns` 逐行处理 |
 | 读到的日期是 `2024/1/1` 这种字符串，想拿数字拿不到 | 默认会套用单元格的数字格式；这是设计行为 | 传 `excelize.Options{RawCellValue: true}` 拿原始值，再用 `excelize.ExcelDateToTime` 转时间 |
 | 构建报 Go 版本太低 | 这个库对 Go 版本要求跟着上游走，比较靠前 | 升级 Go 工具链到仓库 README 要求的版本 |
 
@@ -320,8 +318,8 @@ _ = f.AddChart("订单", "H2", &excelize.Chart{
 
 **执行后**
 
-- [ ] 每个 `NewFile` / `OpenFile` 都有 `defer f.Close()`；流式读有 `rows.Close()`
-- [ ] 流式写调了 `Flush()`，并且 `SetRow` 的行号递增
+- [ ] 每个 `NewFile` / `OpenFile` 都有 `defer f.Close`；流式读有 `rows.Close`
+- [ ] 流式写调了 `Flush`，并且 `SetRow` 的行号递增
 - [ ] 用真实数据打开生成的文件抽查：公式是否有值、合并区是否正确、中文是否乱码
 - [ ] 检查系统临时目录没有残留 `excelize-*` 文件
 - [ ] 大文件场景记录内存占用，确认没有把整表读进内存

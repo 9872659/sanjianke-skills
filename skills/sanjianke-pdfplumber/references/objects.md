@@ -25,7 +25,7 @@ page.width    # 页宽
 page.height   # 页高
 ```
 
-`crop()` 等方法的 `bounding_box` 统一是 `(x0, top, x1, bottom)` 四元组——注意第二、四个元素是 `top` 系口径，不是 `y0` 系。
+`crop` 等方法的 `bounding_box` 统一是 `(x0, top, x1, bottom)` 四元组——注意第二、四个元素是 `top` 系口径，不是 `y0` 系。
 
 ## 二、对象类型总览
 
@@ -86,7 +86,7 @@ print(my_char_ctm.skew_x)
 
 `matrix` 定义见 PDF 规范（第 6 版）4.2.2 节。矩阵控制字符的缩放、倾斜与位置平移；旋转是缩放与倾斜的组合，多数情况下可视为等于 x 轴倾斜。
 
-**但更简单是先看 `upright`**：`False` 就说明这个字符不是正立的，多半是旋转页或水印。用 `extract_words()` 时它内部会分别处理正立与非正立字符。
+**但更简单是先看 `upright`**：`False` 就说明这个字符不是正立的，多半是旋转页或水印。用 `extract_words` 时它内部会分别处理正立与非正立字符。
 
 ## 四、`line` / `rect` / `curve` 属性
 
@@ -132,7 +132,7 @@ print(my_char_ctm.skew_x)
 | `mcid` / `tag` | 实验性 |
 | `object_type` | `"image"` |
 
-**重要限制**：pdfplumber **不提供重建图片内容的方法**。`images` 只给位置与格式元信息。要导出图片请换 PyMuPDF（`page.get_images()` + `Pixmap`）或类似的库。
+**重要限制**：pdfplumber **不提供重建图片内容的方法**。`images` 只给位置与格式元信息。要导出图片请换 PyMuPDF（`page.get_images` + `Pixmap`）或类似的库。
 
 ## 六、文本提取方法
 
@@ -149,7 +149,7 @@ page.extract_text(
 ```
 
 - `layout=False`（默认）：把所有字符拼成一个字符串。当**前一个字符的 `x1` 与后一个字符的 `x0` 之差大于 `x_tolerance`** 时插入空格；当**前后字符的 `doctop` 之差大于 `y_tolerance`** 时插入换行。
-- `layout=True`（**实验性**）：尝试模仿页面上的版面结构，用 `x_density` / `y_density` 决定每「点」（PDF 度量单位）最少几个字符 / 换行。传 `line_dir_render` / `char_dir_render`（取值 `ttb` / `btt` / `ltr` / `rtl`）可以改变输出方向。所有多出来的 `**kwargs` 会传给 `extract_words()`——它是布局计算的第一步。
+- `layout=True`（**实验性**）：尝试模仿页面上的版面结构，用 `x_density` / `y_density` 决定每「点」（PDF 度量单位）最少几个字符 / 换行。传 `line_dir_render` / `char_dir_render`（取值 `ttb` / `btt` / `ltr` / `rtl`）可以改变输出方向。所有多出来的 `**kwargs` 会传给 `extract_words`——它是布局计算的第一步。
 
 `x_tolerance_ratio` 不为 `None` 时，改用**动态容差**：等于 `x_tolerance_ratio × 前一个字符的 size`。这比固定容差更能适应同一页里的字号变化。
 
@@ -178,7 +178,7 @@ page.extract_text(
 page.extract_text_lines(layout=False, strip=True, return_chars=True, **kwargs)
 ```
 
-返回表示页面上文本行的字典列表。`strip` 的作用类似 Python 的 `str.strip()`（仅在 `layout=True` 时相关，用来去掉 `text` 属性前后的空白）。`return_chars=False` 则不返回组成该行的字符对象。其余 `**kwargs` 就是给 `extract_text(layout=True, ...)` 的那些。
+返回表示页面上文本行的字典列表。`strip` 的作用类似 Python 的 `str.strip`（仅在 `layout=True` 时相关，用来去掉 `text` 属性前后的空白）。`return_chars=False` 则不返回组成该行的字符对象。其余 `**kwargs` 就是给 `extract_text(layout=True, ...)` 的那些。
 
 ### `search(...)`（实验性）
 
@@ -209,7 +209,7 @@ page.search(pattern, regex=True, case=True, main_group=0,
 | `crop(bbox, relative=False, strict=True)` | 保留**至少有一部分**落在框内的对象；跨界的对象会被切齐到框边 | |
 | `within_bbox(bbox, relative=False, strict=True)` | 只保留**完全在**框内的对象 | |
 | `outside_bbox(bbox, relative=False, strict=True)` | 只保留**完全在**框外的对象 | |
-| `filter(test_function)` | 只保留 `test_function(obj)` 返回 `True` 的对象 | 改动**不会**反映在 `to_image()` 里 |
+| `filter(test_function)` | 只保留 `test_function(obj)` 返回 `True` 的对象 | 改动**不会**反映在 `to_image` 里 |
 
 - `bbox` 是 `(x0, top, x1, bottom)` 四元组。
 - `relative=True` 时，框按页面左上角的偏移量算，而不是绝对坐标。
@@ -220,10 +220,10 @@ page.search(pattern, regex=True, case=True, main_group=0,
 `Page` 对象默认**缓存**布局与对象信息，避免重复解析。大 PDF 上这些缓存很占内存。用完一页就：
 
 ```python
-page.close()      # 刷新该页缓存
+page.close      # 刷新该页缓存
 ```
 
-`PDF.close()` 会对每页调 `Page.close()`，并关闭文件流（除非流是外部传入的、已经打开的）。
+`PDF.close` 会对每页调 `Page.close`，并关闭文件流（除非流是外部传入的、已经打开的）。
 
 ## 八、可视化
 
@@ -231,17 +231,17 @@ page.close()      # 刷新该页缓存
 im = page.to_image(resolution=150)     # 默认 72 DPI
 ```
 
-`to_image()` 可以只传以下**其中之一**：`resolution`（每英寸像素数，默认 72）、`width`、`height`；另有 `antialias`（默认 `False`，开了字更平滑但文件更大）、`force_mediabox`（用页面 `mediabox` 尺寸而不是 `cropbox`，默认 `False`）。
+`to_image` 可以只传以下**其中之一**：`resolution`（每英寸像素数，默认 72）、`width`、`height`；另有 `antialias`（默认 `False`，开了字更平滑但文件更大）、`force_mediabox`（用页面 `mediabox` 尺寸而不是 `cropbox`，默认 `False`）。
 
-在 REPL 里 `im.show()` 会打开本地图片查看器；在 Jupyter 里 `PageImage` 会自动渲染为单元格输出。
+在 REPL 里 `im.show` 会打开本地图片查看器；在 Jupyter 里 `PageImage` 会自动渲染为单元格输出。
 
 `PageImage` 方法：
 
 | 方法 | 说明 |
 |---|---|
-| `im.reset()` | 清掉已画的所有内容 |
-| `im.copy()` | 复制成一个新的 `PageImage` |
-| `im.show()` | 用本地查看器打开 |
+| `im.reset` | 清掉已画的所有内容 |
+| `im.copy` | 复制成一个新的 `PageImage` |
+| `im.show` | 用本地查看器打开 |
 | `im.save(path, format="PNG", quantize=True, colors=256, bits=8)` | 存成 PNG。默认量化到 256 色调色板、8 位色深；`quantize=False` 关掉量化，`colors=N` 调色板大小 |
 
 绘制方法（单对象 / 批量两版）：
@@ -258,7 +258,7 @@ im = page.to_image(resolution=150)     # 默认 72 DPI
 
 `im.debug_tablefinder(table_settings={})` 返回叠加了识别结果的版本：**线为红色、交点为圆圈、表格为浅蓝色**。
 
-**注意**：`to_image()` 能正确反映 `crop()` / `CroppedPage` 的结果，但**无法体现 `filter()` / `FilteredPage` 做的改动**。
+**注意**：`to_image` 能正确反映 `crop` / `CroppedPage` 的结果，但**无法体现 `filter` / `FilteredPage` 做的改动**。
 
 ## 九、加载参数
 
@@ -280,7 +280,7 @@ pdfplumber.open(
 | `unicode_norm` | 预归一化 Unicode 文本。取值 `"NFC"` / `"NFD"` / `"NFKC"` / `"NFKD"`（Unicode 标准附件 15 的四种形式） |
 | `strict_metadata` | 默认非法元数据只**警告**；设为 `True` 则解析失败时直接抛异常 |
 
-`open()` 返回 `pdfplumber.PDF`，有两个主属性：`.metadata`（来自 PDF `Info` 尾部的键值对，通常含 `CreationDate`、`ModDate`、`Producer` 等）与 `.pages`。
+`open` 返回 `pdfplumber.PDF`，有两个主属性：`.metadata`（来自 PDF `Info` 尾部的键值对，通常含 `CreationDate`、`ModDate`、`Producer` 等）与 `.pages`。
 
 **推荐用 `with` 语句**，确保文件流被关闭。
 
@@ -295,7 +295,7 @@ from pdfplumber.utils.pdfinternals import resolve_and_decode, resolve
 pdf = pdfplumber.open("document_with_form.pdf")
 
 def parse_field_helper(form_data, field, prefix=None):
-    resolved_field = field.resolve()
+    resolved_field = field.resolve
     field_name = '.'.join(filter(lambda x: x, [prefix,
                           resolve_and_decode(resolved_field.get("T"))]))
     if "Kids" in resolved_field:
@@ -318,4 +318,4 @@ for field in fields:
 
 `form_data` 的每个元素是三元素列表：`[字段名, 备用字段名, 字段值]`。
 
-这条路依赖 `pdfplumber.utils.pdfinternals` 的内部实现，**跨版本可能变动**。要稳定读写表单，PyMuPDF 的 `page.widgets()` 更直接。
+这条路依赖 `pdfplumber.utils.pdfinternals` 的内部实现，**跨版本可能变动**。要稳定读写表单，PyMuPDF 的 `page.widgets` 更直接。

@@ -166,7 +166,6 @@ python3 scripts/run.py gen --plan plan.json --outdir ./out \
 
 给了 `--photo-url` 就是 `action=edit`（图生图），`image_urls` 直接透传给上游。
 
-> ⚠️ **上游只接受公网可访问的 HTTP/HTTPS 图片地址。**
 > 算力集市 api.a7w.cn 的 nano_banana 插件**没有提供本地文件上传接口**
 > （它的 2 个接口是 `submit` 与 `query`，没有 upload）。
 > 所以本地照片必须**先自己放到一个公网可访问的位置**（对象存储、图床等）再传 URL。

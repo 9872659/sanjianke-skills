@@ -19,8 +19,6 @@ Word 文档要进网页、进后台编辑器、进知识库，直接复制粘贴
 
 所以它对"用样式规范写出来的文档"效果很好，对"全靠手动加粗、手动调字号堆出来的文档"效果一般。这一点决定了它该不该用，比它的参数更重要。
 
-**上游项目**：`mammoth.js`　**仓库**：https://github.com/mwilliamson/mammoth.js
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -29,7 +27,7 @@ Word 文档要进网页、进后台编辑器、进知识库，直接复制粘贴
 - "批量把一批 docx 转成 HTML 存进知识库 / CMS。"——CLI 一条命令一个文件，适合脚本循环。
 - "我的文档有自定义样式（比如 `WarningHeading`），要映射成我自己的 CSS 类。"——`--style-map` 或 API 的 `styleMap` 选项就是干这个的。
 - "图片不要内联成一坨 base64，要单独存文件。"——加 `--output-dir`，图片会另存为独立文件。
-- "我只要纯文本，不要任何格式。"——用 `mammoth.extractRawText()`，比 convertToHtml 更直接。
+- "我只要纯文本，不要任何格式。"——用 `mammoth.extractRawText`，比 convertToHtml 更直接。
 - "我要在浏览器里直接转，不想传服务器。"——仓库自带 web demo，也有 `mammoth.browser.js` 独立文件。
 
 **不要用它**：
@@ -134,7 +132,7 @@ mammoth.extractRawText({path: "path/to/document.docx"})
 ```javascript
 var options = {
     convertImage: mammoth.images.imgElement(function(image) {
-        return image.readAsBase64String().then(function(base64) {
+        return image.readAsBase64String.then(function(base64) {
             return { src: "data:" + image.contentType + ";base64," + base64 };
         });
     })
@@ -142,7 +140,7 @@ var options = {
 mammoth.convertToHtml({path: "document.docx"}, options);
 ```
 
-`image` 对象提供 `contentType` 以及 `readAsArrayBuffer()` / `readAsBuffer()` / `readAsBase64String()` 三种读法。
+`image` 对象提供 `contentType` 以及 `readAsArrayBuffer` / `readAsBuffer` / `readAsBase64String` 三种读法。
 
 **7. 用样式映射控制加粗、斜体、下划线、删除线的输出标签**
 
@@ -162,7 +160,7 @@ comment-reference => sup   # 让被默认忽略的批注显示出来
 mammoth.embedStyleMap({path: sourcePath},
     "p[style-name='Section Title'] => h1:fresh")
     .then(function(docx) {
-        fs.writeFile(destinationPath, docx.toBuffer(), callback);
+        fs.writeFile(destinationPath, docx.toBuffer, callback);
     });
 ```
 
@@ -224,7 +222,6 @@ mammoth.embedStyleMap({path: sourcePath},
 
 ## 依赖条件
 
-- Node.js 环境（CLI 与 Node 库用法），上游 `package.json` 标注 `engines.node >= 12.0.0`；浏览器端需要支持 Promise 与相应模块系统
 - `npm install mammoth`（库）或 `npm install -g mammoth`（命令）
 - 无账号、无 Key、无外部服务依赖
 - 转换本身离线；只有 `npm install` 需要联网

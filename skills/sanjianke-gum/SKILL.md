@@ -18,8 +18,6 @@ tags:
 
 它的定位是「脚本的零件」而不是「应用框架」：`gum choose` 给一个选择列表，`gum input` 收一行字，`gum spin` 给长命令套个转圈，`gum style` 给提示加个框。你要做的只是把它们的标准输出接起来。
 
-**上游项目**：`gum`　**仓库**：https://github.com/charmbracelet/gum
-
 ## 什么时候用 / 不用
 
 **用它**：

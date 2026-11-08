@@ -19,8 +19,6 @@ tags:
 
 适合做外语资料的日常阅读、跨语言沟通草稿，以及在浏览器和桌面软件中都想要同一套快捷键的人。
 
-**上游项目**：`nextai-translator`　**仓库**：https://github.com/nextai-translator/nextai-translator
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -39,7 +37,6 @@ tags:
 - 没有可用的模型服务：它自己不带模型，必须配置服务商与对应凭证才能出结果。
 - 要离线、不出网：默认走云端接口，涉密内容也会发往你配置的服务商，先过一遍合规判断。
 - 想离线识别图片文字且不依赖模型看图：截图翻译走的是模型识图，不是纯本地的传统 OCR 引擎。
-- 期待稳定的官方技术支持：这是社区开源项目，出问题走上游 Issues。
 
 ## 安装
 桌面端与浏览器插件是两条独立路线，按需装；先看 [Latest Release](https://github.com/nextai-translator/nextai-translator/releases/latest) 页面上的实际文件名与版本。
@@ -52,11 +49,7 @@ tags:
 sudo xattr -d com.apple.quarantine /Applications/NextAI\ Translator.app
 ```
 
-**Linux**：从 Release 页面取对应发行版产物安装（上游 README 未给出 Linux 的包管理器命令，以 Release 页面说明为准）。
-
 **浏览器插件**：在 Chrome 应用商店或 Firefox 附加组件商店搜索并安装，装完点插件图标，把 API Key 填进弹出的配置界面，然后刷新页面生效。
-
-**从源码构建（开发者）**：仓库是 TypeScript + Rust 的双形态工程，包管理器锁定 `pnpm@9.1.3`，桌面端外壳用 Tauri，浏览器插件用 Vite 构建。脚本名以 `package.json` 为准，上游 README 没有给完整的源码构建步骤。
 
 ```bash
 git clone https://github.com/nextai-translator/nextai-translator.git
@@ -83,8 +76,6 @@ pnpm dev-chromium     # 浏览器插件开发（Chromium）
 **1）配好服务商与凭证**（第一步，不做这步快捷键按了也没结果）
 
 打开设置，选服务商，填 API Key。上游列出支持的服务商包括 OpenAI、Azure OpenAI Service、MiniMax，以及内置的 TeamoRouter（一个 OpenAI 兼容网关，选中它再填 Key 即可）。要接自建或第三方兼容端点，在设置里改接口地址。
-
-**2）配置 Azure OpenAI Service**：上游给出的三条地址规则如下，照着填就不会拼错。
 
 ```text
 API_URL      = https://{resourceName}.openai.azure.com
@@ -159,7 +150,6 @@ Windows ：装 SnipDo 后，下载 nextai-translator.pbar，双击安装并在 S
 
 - 划词翻译、输入翻译、截图翻译三类交互入口
 - 翻译 / 润色 / 总结三种模式
-- 上游说明的 55 种语言之间的互译、润色与总结
 - 流式输出、一键复制、文本朗读
 - 生词本与基于生词本的记忆内容生成
 - 多服务商接入：OpenAI、Azure OpenAI Service、MiniMax，以及内置的 OpenAI 兼容网关
@@ -174,7 +164,6 @@ Windows ：装 SnipDo 后，下载 nextai-translator.pbar，双击安装并在 S
 - 不做语音识别、不做实时语音同传；语音能力限于把文本读出来
 - 不做翻译记忆库、术语库、团队协作等翻译项目管理能力
 - 不承诺离线可用：默认形态是联网调用云端接口
-- 不提供官方技术支持与 SLA，问题走上游仓库 Issues
 
 ## 依赖条件
 
@@ -192,7 +181,6 @@ Windows ：装 SnipDo 后，下载 nextai-translator.pbar，双击安装并在 S
 - 截图翻译是把图交给模型看，识别质量受图像清晰度与排版影响，表格类内容容易错位
 - 输出质量等于所配模型的质量，同一段话换模型结果差异明显
 - 桌面端「当前选中文本」没有跨系统统一方案，因此强依赖 PopClip / SnipDo 这类外部软件
-- 上游 README 未提供完整的源码构建与命令行使用说明，二次开发需自行阅读仓库代码
 - 项目在历史上改过名，检索资料时旧名与新名指向同一产品，看到旧名不必认为装错了
 
 ## 自检清单

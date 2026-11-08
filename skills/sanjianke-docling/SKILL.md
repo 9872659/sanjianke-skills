@@ -22,7 +22,6 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 把 PDF、Word、PPT、Excel、HTML、EPUB 这些"给人看的文档"，变成**机器能直接吃**的结构化数据。
 
 它解决的不是"把 PDF 转成文本"这么浅的问题，而是**版式理解**：一份财报 PDF 里，哪一段是标题、哪一块是表格、表格的第几行第几列、这段文字在页面的哪个坐标、正文的阅读顺序是什么、公式和代码块分别在哪。它把这些统一成一种内部表示（DoclingDocument），再导出成 Markdown、HTML、JSON、DocTags、纯文本，或者**直接切成 RAG 能用的 chunk**。
@@ -218,7 +217,7 @@ docling --help
 
 ```bash
 docling convert report.pdf
-# 或省略子命令（上游 README 的写法，两者等价）
+# 或省略子命令
 docling report.pdf
 
 # 输入也可以是 URL，或整个目录
@@ -312,9 +311,9 @@ docling convert report.pdf --artifacts-path /path/to/models
 ```python
 from docling.document_converter import DocumentConverter
 
-converter = DocumentConverter()
+converter = DocumentConverter
 result = converter.convert("report.pdf")          # 本地路径或 URL
-print(result.document.export_to_markdown())
+print(result.document.export_to_markdown)
 ```
 
 更完整的 API 用法（管线选项、批量转换、chunking、遍历表格与图片、离线配置）见 `references/python-api.md`。

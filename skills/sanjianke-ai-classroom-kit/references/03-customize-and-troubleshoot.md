@@ -123,7 +123,7 @@ MODEL_ROUTES='{"maic-agent-driver":{"model":"openai:gpt-5.5","api":"openai-compl
 
 ## 3. 内置技能包
 
-仓库 `skills/agent-runtime/` 下是一批可复用的教学技能，每个是一个带 `SKILL.md` 的目录，目前有 **23 个**（上游 README 的口径是「20 个内置技能」，实际目录数更多）：
+仓库 `skills/agent-runtime/` 下是一批可复用的教学技能，每个是一个带 `SKILL.md` 的目录，目前有 **23 个**：
 
 | 类别 | 技能目录 |
 |---|---|

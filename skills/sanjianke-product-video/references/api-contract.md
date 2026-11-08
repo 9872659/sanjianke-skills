@@ -20,7 +20,7 @@
 | 价格源 | `GET /api/v1/pricing`（返回 115 条规则，只读） |
 | 目录源 | `GET /api/v1/apps`（22 个应用，只读，cost:0） |
 
-两套错误风格并存，所以 `run.py` 的 `err_text()` 两边都认。
+两套错误风格并存，所以 `run.py` 的 `err_text` 两边都认。
 
 ---
 
@@ -69,14 +69,11 @@ seedance      name=Seedance 2.0     billing_mode=1  category=video
 
 ## 三、价目原文（`GET /api/v1/pricing` 实测，2026-11-07）
 
-顶层：`{"currency":"points","markupPercent":20,"site":"api","pricing":{…115 条…}}`
-
 ### 3.1 full_video：按秒 + 按分辨率（本包的定价核心）
 
 ```json
 "/api/v1/apps/full_video/submit": {
   "mode": "per_second",
-  "markupPercent": 1e-07,
   "resolutionRates": {"480P": 14, "768P": 28, "1080P": 60, "2K": 80, "4K": 80},
   "note": "2026-11-06 站主定价：480P 0.14 元/秒、768P 0.28、1080P 0.60、2K/4K 0.80（1 元=100 点，价格已含利润，不再叠加上游倍率）"
 }
@@ -86,7 +83,6 @@ seedance      name=Seedance 2.0     billing_mode=1  category=video
 
 ```json
 "/api/v1/apps/nano_banana/submit": {
-  "mode": "flat", "cost": 72, "markupPercent": 0,
   "note": "★★ Q52（2026-10-05 站主指定定价「商品多角度是视角选项每一个选择25点，AI商品图固定价格72点」）：AI商品图 = 固定 72 点/次；商品多角度 = 25 点 × 选中视角数（请求体带 views[] 时生效，不带 views 时仍按本固定价 72）。"
 }
 ```
@@ -96,10 +92,8 @@ seedance      name=Seedance 2.0     billing_mode=1  category=video
 ### 3.3 seedance：固定按次，且通配整条线
 
 ```json
-"/api/v1/apps/seedance/create": {"mode": "flat", "cost": 11000, "markupPercent": 0,
-  "note": "固定 11000 点/次（上游约 5500 点 ×2）"}
-"/api/v1/apps/seedance/*":      {"mode": "flat", "cost": 11000, "markupPercent": 0,
-  "note": "固定 11000 点/次（上游约 5500 点 ×2）"}
+  "note": "固定 11000 点/次"}
+  "note": "固定 11000 点/次"}
 ```
 
 `/api/v1/apps/seedance/*` 覆盖了 5 个素材管理接口 —— 官方文档写「免费」，站内价目表按 11,000 点/次落。
@@ -107,16 +101,12 @@ seedance      name=Seedance 2.0     billing_mode=1  category=video
 ### 3.4 voice_tts：按上游真实点数 × 3
 
 ```json
-"/api/v1/apps/voice_tts/*": {"mode": "flat", "cost": 0, "markupPercent": 200,
-  "note": "语音 TTS / 克隆合成 / 语音识别（2026-10-03 决策 A：语音/音频线 ×5 → ×3；一律按上游**真实**点数计费，不用估值）。对外价 = 上游实际点数（响应 usage.points_cost / actual_points，单位是点）× 3，单笔保底 > 0。实测：voice_tts/stt 上游真实 40 点 → 我方 120 点；tts_live 33 字上游真实 1.98 点 → 我方 5.94 点。"}
 ```
 
 ### 3.5 两条免费路径（本包自检全靠它们）
 
 ```json
-"/api/v1/apps":   {"mode": "flat", "cost": 0, "markupPercent": 0,
   "note": "★应用目录（只读）不计费（2026-10-04）…"}
-"/api/v1/upload": {"mode": "flat", "cost": 0, "markupPercent": 0,
   "note": "★上传不计费（2026-10-04 站主批准）… 计费引擎对 cost:0 有显式语义：server.js isFreePath 里 ruleCost === 0 即视为免费路径。"}
 "/api/v1/tasks":  {"mode": "per_module", "cost": 50, "unitFrom": "module_codes",
   "note": "按模块计价：仅当请求体带非空 module_codes[] 时 = 50 点 × 模块数；不带则退回模型线。"}
@@ -125,8 +115,6 @@ seedance      name=Seedance 2.0     billing_mode=1  category=video
 ### 3.6 兜底通配（没专属规则的接口落这里）
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 ---
@@ -164,7 +152,6 @@ Content-Type: application/json
 - 计费：按分辨率 SKU × 生成时长；**默认前 5 张 reference_image 免费，超出每张加 20 点**。
 
 `run.py` 的 `clip` / `make` 就把 `text` + `first_frame` 拼成这个 `content`，`--ref-image` 追加
-`role=reference_image` 的项（前 5 张不加价）。
 
 ---
 
@@ -198,8 +185,7 @@ POST /api/v1/apps/nano_banana/submit      （JSON，异步，返回 task_id）
   "completed_at":"2026-10-08T15:14:41Z"}}
 ```
 
-**价格口径对上账**：上游 `points_cost` = 24，站内固定 72 = 24 × 3。图片地址在三个位置都有
-（`result.image_url` / `result.data[].image_url` / `result.results[].image_url`），`pick_asset()` 按
+（`result.image_url` / `result.data[].image_url` / `result.results[].image_url`），`pick_asset` 按
 扩展名兜一层，三处任意一处命中都能取到。
 
 ---
@@ -284,8 +270,7 @@ POST /api/v1/apps/seedance/create
 | 假 id | `200 {"code":0,"msg":"任务不存在","data":null}` |
 | 真任务 | `200 {"code":1,"msg":"success","data":{"task_id","model","type","call_type","status","result","usage","completed_at"}}` |
 
-`status` 取值实测见过：`completed` / `failed` / `processing` / `SUCCESS`（大小写都出现过，本包统一 `lower()`）；
-另有 `progress` 字段（如 `"100%"`）。`usage.points_cost` 是**上游真实点数**，站内实扣 = 它 × 加价率。
+`status` 取值实测见过：`completed` / `failed` / `processing` / `SUCCESS`（大小写都出现过，本包统一 `lower`）；
 
 为什么不用应用层 `query`：
 
@@ -302,7 +287,7 @@ POST /api/v1/apps/seedance/create
 1. **成功提交的返回体**。`clip` / `scene` / `make` 提取 `task_id` 的字段名是
    `task_id` / `taskId` / `id` 三个都试；文档示例是 `data.task_id`（nano-banana 的官方示例原文：
    `{"code":1,"msg":"success","data":{"task_id":"task_xxxxxxxxxxxx","status":"pending","app":"nano_banana","api":"submit","frozen_points":24}}`）。
-2. **full_video 成功任务的 `result` 里成片字段名**。本包用 `pick_asset()` 按 `.mp4/.mov/.webm/.m4v`
+2. **full_video 成功任务的 `result` 里成片字段名**。本包用 `pick_asset` 按 `.mp4/.mov/.webm/.m4v`
    扩展名 + 字段名含 `video` 两层兜底，不赌某一个键。
 3. **字幕是否需要烧进画面**。接口只出无水印成片，字幕是本地生成的 SRT，烧录要靠本机 ffmpeg。
 4. **seedance 素材管理是否真的按 11,000 点收费**。价目表是这么写的（`/seedance/*` 通配），

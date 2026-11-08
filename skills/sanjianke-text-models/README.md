@@ -60,8 +60,6 @@ POST /api/v1/chat/completions  {"model":"claude-sonnet-4-5","messages":[]}
 `GET /api/v1/pricing` 的 **115 条规则**里没有 `/api/v1/chat/completions`，命中的是通配 `*`：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}
 ```
 
 实测每次调用都是先冻后结，失败自动全额退回：
@@ -299,7 +297,6 @@ $ python3 scripts/run.py cost --models kimi-k3,GLM-5.2 --prompt "给一条 15 �
 ## 免责
 
 - 单价按「每百万 token」计，实际以响应里的 `usage` 与 `GET /user/balance/logs` 的净额为准。
-- 上游按次预冻结，失败全额退回；模型上下架由平台决定，`check` 随时可复核。
 - 生成内容的合规责任在使用者：用在合法、有授权的素材与用途上。
 ## 许可证
 

@@ -41,14 +41,11 @@
 ### 计费（`/pricing` 原文，规则键 `/api/v1/apps/voice_tts/*`）
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":200,
- "note":"…对外价 = 上游实际点数（usage.points_cost）× 3，单笔保底 > 0。
           实测：voice_tts/stt 上游真实 40 点 → 我方 120 点；
           tts_live 33 字上游真实 1.98 点 → 我方 5.94 点。"}
 ```
 
-折算 **0.18 点/字 = 180 点/千字**。`doctor` 用 `markupPercent == 200` 这条卡自检。
-`clone_voice` 是 600 点/次（上游 200 × 3），本包不自动调用。
+`clone_voice` 是 600 点/次，本包不自动调用。
 
 > 另一条音频线 `media_services_33`（29 个接口：ElevenLabs / Gemini TTS / Suno 音乐）不在本包范围，
 > 配音统一走 `voice_tts` —— 矩阵只需要「一段文本 → 一个音频地址」，同步接口最省事。
@@ -85,8 +82,6 @@
 ### 计费（`/pricing` 原文，键 `/api/v1/apps/pic_lipsync/submit`）
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":400,"minPoints":50,
- "note":"对外 = 上游实际点数 × 5。上游不发 quality 时按 standard 3 点/秒收，
          所以成本固定 3 点/秒 ⇒ 我方 15 点/秒。cost 必须为 0。minPoints:50 目前是声明性字段。"}
 ```
 
@@ -120,10 +115,8 @@
 ### 计费（`/pricing` 原文，键 `/api/v1/apps/image_human/submit`）
 
 ```json
-{"mode":"per_second","markupPercent":400,
  "modelRates":{"fast":{"*":10},"standard":{"*":15},"2k":{"*":30},"4k":{"*":60}},
  "defaultModel":"fast",
- "note":"快速 10 / 标准 15 / 2K 30 / 4K 60 点/输入秒（= 上游成本 2/3/6/12 ×5）"}
 ```
 
 `doctor` 会把 live 的 `modelRates` 与本地这张卡逐档比对。
@@ -157,7 +150,7 @@
 
 `status` 枚举：`pending` / `processing` / `completed` / `failed` / `cancelled`。
 
-两个形态坑（本包已处理，见 `dig_task()`）：
+两个形态坑（本包已处理，见 `dig_task`）：
 
 1. **`result` 是双重身份字段**：完成任务里也有一个 `result`，和中转包装层的 `result` 同名。
    一路往下钻会丢掉 `status`，轮询就永远等不到终态。

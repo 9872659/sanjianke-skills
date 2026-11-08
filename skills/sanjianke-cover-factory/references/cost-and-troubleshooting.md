@@ -84,11 +84,11 @@ a7w._request("GET", url, None, raw=True)     # ❌ 两个错
 
 - `raw=True` → `headers["Content-Type"] = None` → `putheader` 抛
   `TypeError: expected string or bytes-like object, got 'NoneType'`
-- 就算绕过去，`_request` 末尾做的是 **`json.loads(resp.read())`** —— **PNG 不是 JSON**
+- 就算绕过去，`_request` 末尾做的是 **`json.loads(resp.read)`** —— **PNG 不是 JSON**
 - `key=None` → `"Bearer " + None` → `TypeError: can only concatenate str (not "NoneType") to str`
 
 **最亏的地方**：这两个错都发生在**图已经出好、24 点已经扣了之后**。
-所以本包的 `download()` 自带一小段 urllib 下载（拿字节、不解析 JSON、Key 走
+所以本包的 `download` 自带一小段 urllib 下载（拿字节、不解析 JSON、Key 走
 `a7w.load_key` 兜底、网络错误退避重试），**不污染共用的 `a7w.py`**。
 
 并且断点里**先存 `task_id` 和 `image_url`、再下载** —— 于是"下载崩了"重跑会
@@ -119,13 +119,11 @@ a7w._request("GET", url, None, raw=True)     # ❌ 两个错
 |---|---|---|
 | `鉴权失败（401）` | Key 无效 / 过期 / 写错 | 到 https://api.a7w.cn/ 重新领取；确认没把 `Bearer` 重复写进环境变量 |
 | `点数不足（402）` | 点数用完 | 充值后重试 |
-| 上游 `502` / `upstream timeout` | 网关到上游抖动，**实测很频繁** | 脚本内置退避重试；连续失败就换模型或降低批次 |
 | 轮询一直 `processing` | 上游排队 | `--poll-timeout` 默认 600 秒；重跑会按 `task_id` **续查、不重新提交** |
 | `当前请求未命中可用计费规格` | `model` 与 `resolution` 组合不支持 | 普通 `nano-banana` 只支持 `1K`；要高清换 `nano-banana-2:official` |
 | `大字标题 N 字，超过 上限 M 字（多出 …）` | 叠字可读性闸门（exit 3） | 把超出的字移到正文或拆两张；**不接受 `--allow-prompt-hits` 放行** |
 | `没有找到可用的中文字体` | 系统里没中文字体 | `--font` 指一个 `.ttf/.ttc/.otf`；`specs` 会打印可用字体表 |
 | `本地叠字需要 PIL` | 没装 pillow | `pip install pillow` 后**原样重跑**（背景图不重出、不重复扣费） |
-| `真实像素 864x1184 … 偏差 2.70%` | 上游按 32 对齐，**不是错误** | 加 `--snap`；容差内不会拦 |
 | `2K 档没有实测单价，拒绝凭猜估算` | 我们没测过 2K/4K | 给 `--points-per-image`，或先用 1K |
 | `输出目录 … 在 Skill 包内` | `--outdir` 指到包里了 | 换到包外 |
 | `!! 已花 … 点，再出下一张会超过 --budget` | 真实扣费累计超了 | 已完成的产出仍在，从断点继续 |

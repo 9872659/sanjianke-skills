@@ -105,16 +105,12 @@ Key 走 `Authorization: Bearer sk-…`。
 顶层是**裸对象**（不套 `code/data`）：
 
 ```json
-{"currency": "points", "markupPercent": 20, "site": "api",
- "note": "User price = upstream points x (1 + markup%). 实际成本以上游响应标记为准。",
  "pricing": { … 115 条 … }}
 ```
 
 通配规则原文：
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 **115 条规则里没有 `/api/v1/images/*`**（`GET /api/v1/pricing` 里搜不到这个键）。
@@ -285,7 +281,6 @@ HTTP 502
 | 出图 | 按型号计次，`n` 张 = n 倍；单价从 me/tasks 的 actualPrice 反推 |
 | 图片线 | 价目表 115 条里没有 `/api/v1/images/*`，走型号计价 |
 | 参数错 | 422 / 400 停在提交前，不扣费 |
-| 上游未激活 | 先 `reserve_sync` 冻结，再 `refund` 全额退，净 0 |
 | 异步失败 | `refunded` + `netPoints = 0`，钱包短暂冻结 |
 | 查任务 | `GET /api/v1/tasks/<id>` 免费；应用层 `query` 每次 72 点 |
 | 余额口径 | `available_points` 是可用点数，`frozen` 是冻结点数 |

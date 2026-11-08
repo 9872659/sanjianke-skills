@@ -19,8 +19,6 @@ tags:
 
 所以它的定位不是「又一个向量数据库」，而是**一个带界面的文档理解 + 检索问答引擎**：切片过程可视化、可人工干预，检索走多路召回加融合重排，对上层再暴露一套 OpenAI 兼容接口，让业务系统几乎不用改代码就能接。
 
-**上游项目**：`RAGFlow`　**仓库**：https://github.com/infiniflow/ragflow
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -146,7 +144,7 @@ dataset = rag_object.create_dataset(name="kb_1")
 
 with open("1.txt", "rb") as file:
     documents = dataset.upload_documents([
-        {"display_name": "1.txt", "blob": file.read()}
+        {"display_name": "1.txt", "blob": file.read}
     ])
 
 dataset.async_parse_documents([documents[0].id])
@@ -181,7 +179,7 @@ dataset = rag_object.create_dataset(
 ```python
 rag_object = RAGFlow(api_key="<YOUR_API_KEY>", base_url="http://<YOUR_BASE_URL>:9380")
 assistant = rag_object.create_chat("Miss R", dataset_ids=[dataset.id])
-session = assistant.create_session()
+session = assistant.create_session
 
 for ans in session.ask("安装方式是什么？", stream=True):
     print(ans.content)
@@ -237,7 +235,7 @@ Linux/arm64 上切 Infinity 官方尚不支持。
 | 填模型名报错 | 模型 id 必须遵循 `model_name@model_factory` 格式 | 按这个格式填，例如 `BAAI/bge-large-zh-v1.5@SILICONFLOW` |
 | 切到 Infinity 后数据全没了 | `down -v` 会删除容器数据卷，这是官方明确警告的行为 | 切引擎前先备份/导出；生产环境不要随手 `-v` |
 | 接口 HTTP 200 但结果不对 | RAGFlow 同时返回 HTTP 状态码和响应体业务码，业务码 `0` 才是成功 | 两个都判：HTTP 通不代表业务成功，要读响应体里的 `code` |
-| 上传文档报参数错误 | `upload_documents` 的每一项必须同时有 `display_name` 和 `blob`（二进制内容） | 用 `open(path, "rb").read()` 传 `blob`，别传路径字符串 |
+| 上传文档报参数错误 | `upload_documents` 的每一项必须同时有 `display_name` 和 `blob`（二进制内容） | 用 `open(path, "rb").read` 传 `blob`，别传路径字符串 |
 | 拉解析模型很慢或失败 | DeepDoc 等依赖从 HuggingFace 拉取，国内网络容易超时 | 源码开发模式可设 `export HF_ENDPOINT=https://hf-mirror.com` |
 
 ## 权限与用途说明
@@ -301,7 +299,6 @@ Linux/arm64 上切 Infinity 官方尚不支持。
 - v0.22.0 起官方只发布 slim 镜像（不含 Embedding 模型），镜像 tag 不再带 `-slim` 后缀；更早版本有「带模型」与「slim」两种，体积差别很大。
 - 切换文档引擎要清数据卷，属于破坏性操作。
 - 改嵌入模型前必须 `chunk_count` 为 0，已有切片的库不能直接改。
-- 上游迭代快（解析引擎、Agent 能力、渠道集成都在持续加），配置项与界面位置可能变。执行前以仓库 README 与官方文档当前内容为准；本 Skill 不声明 star 数、发布日期等易变数值，文档中出现的版本号（如 `v0.27.2`）是抓取时官方示例值，实际以 releases 为准。
 
 ## 自检清单
 

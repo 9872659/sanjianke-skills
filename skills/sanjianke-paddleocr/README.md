@@ -35,7 +35,7 @@ Python 里取结构化结果：
 ```python
 from paddleocr import PPStructureV3
 
-pipeline = PPStructureV3()
+pipeline = PPStructureV3
 for res in pipeline.predict("./pp_structure_v3_demo.png"):
     res.save_to_json(save_path="output")
     res.save_to_markdown(save_path="output")

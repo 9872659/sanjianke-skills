@@ -107,7 +107,6 @@ stderr 会打印一行「本地放过 N 处疑似绝对化用语……请人工�
 | `Missing or invalid relay API key`（HTTP 401） | Key 无效/过期/写错 | 到 https://api.a7w.cn/ 重新领取；确认没把 `Bearer` 重复写进环境变量 |
 | 点数不足（HTTP 402） | 账号点数用完 | 充值后重试 |
 | 模型不存在（HTTP 404） | 模型名写错或已下架 | `run.py models` 现查在架模型名 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 已内置退避重试（最多 4 次）。连续失败就换模型 |
 | 样本不足 3 篇（exit=2） | 有效样本 < 3 篇 | 补样本，或 `--samples` 多指一个目录。**这是硬闸门** |
 | `--outdir 指到了技能包内部`（exit=2） | 产出目录在包里 | 换包外目录 |
 | `给了 --budget 就必须给单价`（exit=2） | 预算没有单价就没意义 | 补 `--price-in` / `--price-out` |
@@ -117,7 +116,7 @@ stderr 会打印一行「本地放过 N 处疑似绝对化用语……请人工�
 | **照抄示例**（exit=3） | 新稿有句子与样本首尾句太近 | 重跑。三层判据 + 片段级判据都会报，看 stderr 里的 `rule` |
 | 合规命中「最X」但你看不出问题 | 程度副词作描述 | §2 的豁免覆盖了"数据极值"形态；其余靠人工确认（**这是已知的过度报告**） |
 | 合规命中「第一」，但那是"第一次/第一步" | 序数用法 | 已排除 `次/步/天/周/月/年/时间`；仍有残留就人工确认 |
-| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符 | 已用 `json.JSONDecoder().raw_decode()` 扫第一个完整对象。仍失败就 `--no-json-mode` 并换模型 |
+| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符 | 已用 `json.JSONDecoder.raw_decode` 扫第一个完整对象。仍失败就 `--no-json-mode` 并换模型 |
 | 模型没返回 `choices` / 产出为空 | 被 `max_tokens` 截断 | 加大 `--max-tokens`（长篇建议 4096 以上） |
 | 换在架模型后正文被截断 / 只吐出一段思考 | `models` 列表里有推理模型，先花 completion token 出思维链 | 用默认 `deepseek-chat`；非要用推理模型就把 `--max-tokens` 提高 1.5~2 倍 |
 | HTTP 200 但 `model:null`、内容为空、usage 为空 | 把 `deepseek-flash`（路由**目标名**）当**请求名**用 → **静默失败**，状态码骗人 | 请求名用 `deepseek-chat`；换模型用 `models` 列表里的名字 |

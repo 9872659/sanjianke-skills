@@ -41,8 +41,8 @@ tags:
 
 - "网页里要一个能搜索、能翻页、能看目录的 PDF 阅读界面，但我不要浏览器默认那个样式"——用 viewer 组件或官方 viewer 改皮。
 - "把 PDF 第一页渲染成缩略图/封面图"——`getPage` + `render` 到 canvas。
-- "要在文档里做全文搜索、关键词高亮、跳到命中位置"——`getTextContent()` 拿文本项与坐标。
-- "只想要元数据（标题、作者、页数）和大纲"——`getMetadata()` / `getOutline()`。
+- "要在文档里做全文搜索、关键词高亮、跳到命中位置"——`getTextContent` 拿文本项与坐标。
+- "只想要元数据（标题、作者、页数）和大纲"——`getMetadata` / `getOutline`。
 - "前端直接读用户选的文件，不上传服务器"——浏览器端 `getDocument({ data })` 本地解析。
 - "Node 里批量抽 PDF 的文字做索引"——`legacy` 构建 + `getDocument`，不需要 canvas。
 - "大文件不想整份下载就想先看第一页"——服务器开 Range 支持，它会自动分段取。
@@ -54,7 +54,7 @@ tags:
 
 1. **网页里自建 PDF 阅读体验**。要自定义工具栏、水印、权限提示、埋点、内嵌到自己的应用里，这是最主流的选择。
 2. **前端做纯客户端解析**。文件不出浏览器：合规上很舒服，用户也不必先上传。
-3. **抽文本与元数据**。`getTextContent()` 给出每个文本片段的字符串、变换矩阵与宽高，能做搜索、高亮、定位、简单版面判断。
+3. **抽文本与元数据**。`getTextContent` 给出每个文本片段的字符串、变换矩阵与宽高，能做搜索、高亮、定位、简单版面判断。
 4. **渲染成图像**。缩略图、封面图、页面预览、canvas 上再叠自己的图层。
 5. **大文件按需加载**。服务器支持 HTTP Range 时自动分段取，配合"只渲染可见页"的策略体验很好。
 6. **跨浏览器一致的渲染**。不想依赖各家浏览器内置查看器的差异（或想覆盖内置查看器行为的场景）。
@@ -63,7 +63,7 @@ tags:
 **不要用它**：
 
 1. **要生成 / 编辑 / 合并 / 拆分 / 加密 / 签名 PDF**。它不是写入端工具；批注也只支持很有限的一部分类型。这类需求换专门的 PDF 处理库。
-2. **扫描件要出文字**。没有文字层时 `getTextContent()` 只会给你空结果——它不 OCR。先过 OCR，再谈文本。
+2. **扫描件要出文字**。没有文字层时 `getTextContent` 只会给你空结果——它不 OCR。先过 OCR，再谈文本。
 3. **Node 里要跑重型批量渲染流水线**。官方 FAQ 明确写的支持矩阵里，Node 属于"mostly / limited"，渲染还需要额外的 canvas 实现（带原生编译依赖）。服务端大批量出图，用更对口的工具更稳。
 4. **只想让浏览器显示一个 PDF**。`<embed>` / `<iframe>` 或浏览器内置查看器更快更省事，别为了"显示"引入一个库。
 5. **要精确还原排版结构（转 HTML / Markdown / 表格）**。它渲染的是视觉画面、抽的是文本片段；版式语义重建不是它的目标。
@@ -139,7 +139,7 @@ import * as pdfjsLib from "pdfjs-dist";
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.mjs",
   import.meta.url
-).toString();
+).toString;
 
 const loadingTask = pdfjsLib.getDocument({ url: "/files/demo.pdf" });
 const pdf = await loadingTask.promise;
@@ -157,7 +157,7 @@ const renderTask = page.render({
 });
 await renderTask.promise;          // 必须 await，否则图片是空的
 
-page.cleanup();                    // 释放该页资源
+page.cleanup;                    // 释放该页资源
 ```
 
 ### 2. Node 里抽元数据与文本（官方示例的写法）
@@ -170,18 +170,18 @@ const pdfDoc = await loadingTask.promise;
 
 console.log("页数:", pdfDoc.numPages);
 
-const { info, metadata } = await pdfDoc.getMetadata();
+const { info, metadata } = await pdfDoc.getMetadata;
 
 for (let i = 1; i <= pdfDoc.numPages; i++) {
   const pdfPage = await pdfDoc.getPage(i);
   const viewport = pdfPage.getViewport({ scale: 1.0 });   // 拿页面尺寸
-  const { items } = await pdfPage.getTextContent();
+  const { items } = await pdfPage.getTextContent;
   console.log(`第 ${i} 页 ${viewport.width}x${viewport.height}`);
   console.log(items.map((item) => item.str).join(" "));
-  pdfPage.cleanup();
+  pdfPage.cleanup;
 }
 
-await loadingTask.destroy();       // 用完销毁，长进程里很重要
+await loadingTask.destroy;       // 用完销毁，长进程里很重要
 ```
 
 用内存里的数据加载（比如从数据库/上传流拿到的 Buffer）：
@@ -225,7 +225,7 @@ const renderTask = page.render({
 await renderTask.promise;
 
 fs.writeFileSync("output.png", canvasAndContext.canvas.toBuffer("image/png"));
-page.cleanup();
+page.cleanup;
 ```
 
 **前置条件**：Node 侧要有一个可用的 canvas 实现（官方示例依赖仓库里的 canvas 包）。canvas 有原生编译依赖，装不上时更省事的替代是走无头浏览器渲染。
@@ -269,7 +269,7 @@ const loadingTask = getDocument({
 });
 ```
 
-配合"只渲染可见页 + 及时 `cleanup()` / `destroy()`"，能显著降低一个坏文件带来的影响与资源占用。
+配合"只渲染可见页 + 及时 `cleanup` / `destroy`"，能显著降低一个坏文件带来的影响与资源占用。
 
 ## 常见坑
 
@@ -281,10 +281,10 @@ const loadingTask = getDocument({
 | 从别的域加载 PDF 失败 | 浏览器同源策略；PDF.js 与普通 JS 权限相同，不能跨域请求 | 目标服务器开 CORS；或在自己域下做代理；注意官方 demo viewer 部署在非自家域时**会主动拦截** `?file=` 以防内容伪装 |
 | 中文/日文显示成乱码或缺字 | PDF 用了外部 cmap 或标准字体，而库自带的 `cmaps/`、`standard_fonts/` 没指过去 | 配 `cMapUrl` + `cMapPacked: true` + `standardFontDataUrl`，路径指向 `pdfjs-dist` 对应目录 |
 | 渲染出来是空白 canvas | 没 `await renderTask.promise` 就去取图/显示；或 canvas 尺寸没按 viewport 设 | 先 `await renderTask.promise`，再读 canvas；`canvas.width/height` 用 viewport 的宽高（HiDPI 场景按 `devicePixelRatio` 放大并配合 `transform`） |
-| 页面开久了内存一直涨 | 没释放页资源与文档 | 每页处理完 `page.cleanup()`；整份用完 `loadingTask.destroy()`；只渲染可见页 |
+| 页面开久了内存一直涨 | 没释放页资源与文档 | 每页处理完 `page.cleanup`；整份用完 `loadingTask.destroy`；只渲染可见页 |
 | 一次渲染几十上百页高分辨率，浏览器卡死或崩 | 每个 canvas 都占数 MB 内存（HiDPI 下乘以 4） | 只创建/渲染可见页；离开视口即销毁；需要整本导出就走 Node 侧流水线而不是浏览器 |
 | 自己压缩后的产物运行不正常 | 某些高级压缩选项会破坏 PDF.js 代码 | 用官方 `npx gulp minified`（Terser）；若坚持用别的压缩器，**必须保留原始类名/函数名**，只做空白与注释清理 |
-| `getTextContent()` 返回空 | 该 PDF 是纯扫描图片，没有文字层 | 它不做 OCR；先过 OCR 生成文字层，或改用 OCR 方案 |
+| `getTextContent` 返回空 | 该 PDF 是纯扫描图片，没有文字层 | 它不做 OCR；先过 OCR 生成文字层，或改用 OCR 方案 |
 | 大文件加载慢、迟迟不出第一页 | 服务器没开 HTTP Range 支持，无法分段按需取 | 让服务器返回 Range 相关头；PDF.js 会自动利用它只取渲染可见页所需的部分 |
 | 想设置默认打开哪个 PDF，改了没生效 | viewer 的默认地址由应用选项控制 | 改 `web/app_options.js` 里的 `defaultUrl`；或直接用 `?file=` 查询参数（记得 `encodeURIComponent`）；想"先空着再手动打开"就把它设成空字符串 |
 
@@ -353,7 +353,7 @@ const loadingTask = getDocument({
 
 - [ ] 渲染结果非空白，尺寸与方向正确（viewport 缩放、旋转都验一下）。
 - [ ] 文本抽取结果抽查：中文有没有乱码，页序是否正确，文本片段顺序是否可用。
-- [ ] 释放到位：每页 `cleanup()`，整份 `destroy()`；长时间会话下内存曲线平稳。
+- [ ] 释放到位：每页 `cleanup`，整份 `destroy`；长时间会话下内存曲线平稳。
 - [ ] 是"只渲染可见页"而不是一次全渲染；页数多的文档尤其要确认。
 - [ ] 加密文档确认口令路径可用，失败时有明确错误处理而不是静默空白。
 - [ ] 生产构建用的是压缩产物（官方 `npx gulp minified`），且页面只引 `pdf.js` 不重复引 worker。

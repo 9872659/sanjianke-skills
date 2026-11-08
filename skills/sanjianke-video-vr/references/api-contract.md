@@ -23,7 +23,6 @@
 **已下线，不要做**：`interp` / `/api/v1/video/viapi/interp`（`InterpolateVideoFrame`，25 点/秒）
 —— 线上档位说明原文写着「视频插帧 60fps（**已下线**）」，`tiers` 里也没有它。
 
-> `colorize` 的上游 action 是 **`AdjustVideoColor`**（色调校正），不是"黑白上色"。
 > 有些老注释写成"黑白上色"，是错的。
 
 ---
@@ -283,7 +282,7 @@ GET /api/v1/video/viapi/tools
 `GET .../tools/x` 仍正常回 `404 not_found`（查询路由还在）。
 
 → 说明 relay 的 `tools` **GET 路由掉了**。本包因此**优雅降级**到内置档位表，
-并如实打印"在线源当前不可达"。**如果这条恢复了，把 `fetch_tiers()` 的注释更新一下即可，代码无需改。**
+并如实打印"在线源当前不可达"。**如果这条恢复了，把 `fetch_tiers` 的注释更新一下即可，代码无需改。**
 
 对照（同一时刻全部正常）：`/health` 200、`/api/v1/apps` 200、`/api/v1/me/tasks` 200、
 `POST /api/v1/video/viapi/superres` 400 `url_not_allowed`（提交链路与闸门都正常）。

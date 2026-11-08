@@ -4,7 +4,6 @@ slug: sanjianke-longform-factory
 displayName: 三剪客 · 长文自动生产线
 description: "给一个主题，一条链路产出**可发布的长文**：选题角度 → 大纲 → 正文（3000 字级）→ 配图（自动决定画什么、几张）→ 平台适配（公众号 / 头条 / 知乎）。不是单点生成，是**多步流水线**：`outline` 出角度与大纲，`write` 写正文，`images` 先报价再出图，`adapt` 改平台版，`all` 串全链路并**断点续跑**。走 api.a7w.cn 的 OpenAI 兼容端点，零依赖。八道本地闸门都是**拦截**：违禁词、占位符、照抄示例、字数区间、结构、比例真伪、成本、包内 outdir。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 version: 1.0.6
-summary: "单点生成一段文字容易，难的是「一条链路跑完还能直接发」。本包把长文生产拆成可单独交付的步骤，每步都做**本地闸门**。链路：`outline` 给 4 个不重叠的选题角度并展开成带计划字数的分节大纲；`write` 写 2500~4500 字正文（标题 + 摘要 + 正文 + 结尾引导）；`images` 读正文决定画什么、几张、什么比例，先报价再出图；`adapt` 改写成公众号 / 头条 / 知乎版；`all` 串全链路并**断点续跑**。接入走 api.a7w.cn 的 OpenAI 兼容端点；出图走 `POST /api/v1/apps/nano_banana/submit` 加 `GET /api/v1/tasks/<task_id>` 轮询。实测口径：文本成功响应**不带 `code`**；出图 `status` 在 **`data` 顶层**（文档写错）；上游按 32 对齐，只认**真实像素**、容差 3%。成本：出图实测 1K = 24 点/张；文本**只出 token**，金额要你自己传 `--yuan-per-ktok`。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -433,8 +432,7 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/<task_id>" \
 | `Missing or invalid relay API key`（HTTP 401） | Key 无效、已过期或写错 | 重新到 https://api.a7w.cn/ 领取；确认没把 `Bearer` 重复写进环境变量 |
 | 点数不足（HTTP 402） | 账号点数用完 | 到 https://api.a7w.cn/ 充值后重试 |
 | 模型不存在（HTTP 404） | 模型名写错或已下架 | `python3 scripts/run.py models --type text` 现查在架模型名 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 脚本已内置退避重试（最多 4 次）。连续失败就换模型，或分批跑 |
-| 模型返回的不是合法 JSON | 模型在 JSON 前后多吐了字符或解释 | 脚本已用 `json.JSONDecoder().raw_decode()` 扫描第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
+| 模型返回的不是合法 JSON | 模型在 JSON 前后多吐了字符或解释 | 脚本已用 `json.JSONDecoder.raw_decode` 扫描第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
 | 正文命中违禁词 / 字数越界（退出码 3） | 模型写了「最好」这类词，或字数不在区间 | 命中项会在 stderr 与 JSON 里逐条列出。是误伤就改对应那句重跑；字数不够就让模型重写，脚本**不会**替你截断 |
 | `有结尾引导` 被判不合格 | 正文最后几段与 `ending` 字段里都没有引导词 | 让模型重写结尾，或在 `--from-file` 复检前手工补一句 |
 | 出图比例不合格（退出码 3） | 真实像素与请求比例偏差超容差 | 看 stderr 打印的真实像素与偏差。加 `--snap` 本地裁准，或调 `--ratio-tolerance` |

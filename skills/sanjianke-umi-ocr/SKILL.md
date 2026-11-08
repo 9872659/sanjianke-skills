@@ -17,8 +17,6 @@ Umi-OCR 是一个解压即用的离线 OCR 桌面程序：批量拖入几百张�
 
 它对 Agent 的价值不在 GUI，而在**两个可编程入口**：一条 `umi-ocr` 命令行，和一套跑在 `127.0.0.1:1224` 的本地 HTTP 接口。搞清楚「命令是转发给正在运行的 GUI 进程」这件事，后面就顺了。
 
-**上游项目**：`Umi-OCR`　**仓库**：https://github.com/hiroi-sora/Umi-OCR
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -109,7 +107,7 @@ import base64, json, requests
 
 # 图片 OCR：POST /api/ocr，base64 不带 data:image/... 前缀
 with open("page.png", "rb") as f:
-    b64 = base64.b64encode(f.read()).decode()
+    b64 = base64.b64encode(f.read).decode
 
 res = requests.post("http://127.0.0.1:1224/api/ocr", json={
     "base64": b64,
@@ -118,7 +116,7 @@ res = requests.post("http://127.0.0.1:1224/api/ocr", json={
         "tbpu.parser": "multi_para",     # 排版解析：多栏-按自然段换行
         "ocr.limit_side_len": 4320,      # 大图/长图调高边长上限
     },
-}).json()
+}).json
 print(res["code"], res["data"])          # code 100 成功，101 无文本，其余为失败
 ```
 

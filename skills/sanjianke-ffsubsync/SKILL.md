@@ -20,8 +20,6 @@ ffsubsync 干的事很具体：**把「什么时候有人在说话」变成两�
 
 它的杀手锏是**多语言无关**——不认字、不做语音识别，只看「有没有人在说话」，所以任何语种的字幕都能对齐，而且大部分情况几十秒内跑完；如果手头有一份已同步的参照字幕，几秒就能出结果。
 
-**上游项目**：`ffsubsync`　**仓库**：https://github.com/smacke/ffsubsync
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -55,7 +53,7 @@ brew install ffmpeg
 pip install ffsubsync
 ```
 
-想跟最新代码（上游自己说这是「live dangerously」路线）：
+想跟最新代码：
 
 ```bash
 pip install git+https://github.com/smacke/ffsubsync@latest
@@ -191,7 +189,7 @@ def on_progress(info):
     if info.fraction is not None:
         print("{:.0%}".format(info.fraction))
 
-args = make_parser().parse_args(["ref.mkv", "-i", "in.srt", "-o", "out.srt"])
+args = make_parser.parse_args(["ref.mkv", "-i", "in.srt", "-o", "out.srt"])
 result = ffsubsync.run(args, progress_handler=on_progress)
 ```
 
@@ -205,7 +203,7 @@ result = ffsubsync.run(args, progress_handler=on_progress)
 | 中文/俄文/日文字幕对齐后变成乱码或直接解析失败 | 现实中的字幕编码五花八门（GBK、Big5、Windows-1251、Shift-JIS、带 BOM 的 UTF-16 等） | 默认 `--encoding infer` 会自动探测；猜错时显式指定，如 `--encoding windows-1251`。注意输出默认写 UTF-8，想保留原编码用 `--output-encoding same` |
 | 同一份字幕，Python 3.13 上自动探测的编码结果和 3.12 不一样 | 上游最快的探测器只在 Python < 3.13 时作为依赖安装，3.13+ 上静默缺失，退回纯 Python 实现；遇到模糊的遗留编码可能给出不同猜测 | 显式传 `--encoding`，或改到 Python 3.12 及更早版本运行 |
 | 开头对上了，中间开始越差越远 | 片子被剪过（去掉广告、插入/删减场景、两张碟拼成一个文件），**任何单一全局偏移都救不了** | 用 `--split-penalty` 打开片段级对齐（实验性，但能覆盖很多中段断裂的情况）；配合 `--split-length-penalty`、`--split-subsample` 微调 |
-| 默认跑发现偏移超过 60 秒，结果没对齐 | `--max-offset-seconds` 默认 60；超出范围就不在搜索空间里 | `--max-offset-seconds 300` 之类放宽（上游说实践里超 60 秒不常见，但确实可能） |
+| 默认跑发现偏移超过 60 秒，结果没对齐 | `--max-offset-seconds` 默认 60；超出范围就不在搜索空间里 | `--max-offset-seconds 300` 之类放宽 |
 | 加了 `--vad=fused` 却报错说缺依赖 | fused 系列要把 webrtc 和神经网络 VAD 合起来用，需要可选的 silero 依赖，而 silero 又需要 torch；torch 不在默认安装里 | `pip install ffsubsync[torch]`，或干脆 `pip install torch` |
 | 批量跑完发现有几集被「对歪了」，比不对还糟 | 默认策略是「算出结果就写」，低质量对齐也会照样平移 | 批处理统一加 `--skip-sync-on-low-quality`；需要更严就调 `--min-score`、`--quality-max-offset-seconds`、`--max-framerate-deviation` |
 | 去掉了 `-i` 想让它自动找字幕，结果什么也没做 | 同名兄弟字幕自动发现只对**本地参照**生效，远程参照会跳过；另外 stdin 有管道输入时也会跳过自动发现 | 本地跑，且不要同时用管道喂字幕；或用 `-i` 显式列出多个文件（多个输入文件必须配合 `--overwrite-input`，否则会报错） |
@@ -243,7 +241,6 @@ result = ffsubsync.run(args, progress_handler=on_progress)
 - 参照物可以是本地路径，也可以是 ffmpeg 能直读的远程 URL。
 - 字幕格式：`srt`、`ass`、`ssa`、`sub`（按扩展名识别）。
 - 编码鲁棒性：默认自动探测输入与参照字幕的编码，输出默认 UTF-8，也可指定为与输入一致。
-- 分段/断裂对齐：`--split-penalty` 允许偏移随时间轴变化，处理中段被剪的情况（上游标注为实验性）。
 - 批量模式：省略 `-i` 时自动发现同名字幕并逐个输出 `.synced.srt`，重复运行安全。
 - 质量门禁：分数、偏移量、帧率偏差三重阈值，可让可疑对齐保持原样不改。
 - 形态：CLI 三个入口名、Docker 镜像、Python 库（`ffsubsync.run` + `make_parser`，带进度回调）。
@@ -259,7 +256,6 @@ result = ffsubsync.run(args, progress_handler=on_progress)
 ## 依赖条件
 
 - **ffmpeg 必须单独安装并在 PATH 中**，这是硬前置；`--ffmpeg-path` 只能改查找目录，不能替代安装。
-- Python 环境（上游 README 写兼容 Python >= 3.6；具体可用区间以 PyPI 页面为准）。想用最快的编码探测器，建议 Python 3.12 及更早。
 - 数值计算依赖（numpy 等）随包安装，无需手动处理。
 - `--vad=fused` 系列和 `--vad` 里的 silero 选项需要可选的 torch 依赖：`pip install ffsubsync[torch]`。
 - `--whisper-weights` 需要 ffmpeg >= 8.0 且构建时启用 whisper 滤镜，并自备 whisper.cpp 的 ggml 模型文件。
@@ -268,12 +264,10 @@ result = ffsubsync.run(args, progress_handler=on_progress)
 
 ## 已知限制
 
-- 上游自述：视频与字幕不一致绝大多数发生在片头片尾（例如字幕里有前情提要而正片剪掉了），这类情况它处理得很好；但中段的断裂（广告被剪、场景增减、碟片拼接）单个全局偏移无解，只能靠实验性的分段模式，效果仍在打磨。
 - 参数较多且部分为实验性（`--split-penalty` 及配套的 split 系列、`--multi-segment-sync` 系列），行为可能随版本演进。
 - 自动编码探测在不同 Python 版本上可能给出不同猜测（3.13+ 少了 C 探测器）。
 - Docker 预构建镜像与 PyPI 最新版之间可能有滞后；自己构建时可用 `FFSUBSYNC_VERSION` 指定版本。
 - 具体版本号、发布日期与 star 数请以仓库页面与 PyPI 实时信息为准，此处不做断言。
-- 参数名与默认值可能随后续版本调整：执行前请以 `ffs --help` 和上游文档站的当前内容为准。
 
 ## 自检清单
 

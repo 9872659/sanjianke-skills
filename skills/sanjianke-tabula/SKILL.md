@@ -25,8 +25,6 @@ tags:
 也就是说，Python 里 `pip install tabula-py` 之后，本机仍然必须有一个 Java 运行时，
 底层跑的还是那个 Java 引擎。
 
-**上游项目**：`tabula`　**仓库**：https://github.com/tabulapdf/tabula-java
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -89,7 +87,7 @@ import tabula
 
 # 1. 读出 DataFrame 列表：默认只抽第 1 页，要全部必须显式写 pages="all"
 dfs = tabula.read_pdf("test.pdf", pages="all")
-print(len(dfs), dfs[0].head())
+print(len(dfs), dfs[0].head)
 # 传 URL 也可以，tabula-py 会先下载
 dfs2 = tabula.read_pdf("https://example.com/report.pdf", pages="all")
 ```
@@ -165,7 +163,7 @@ java -jar $JAR -s 'secret' -p all -o out.csv report.pdf
 | 只抽出了第 1 页，后面的表格都没了 | `pages` 默认值是 `1`，不是 `all`，命令行 `-p` 同样默认第 1 页 | Python 传 `pages="all"` 或 `'1-3,5'`；命令行传 `-p all` |
 | 报 `JavaNotFoundError` 或 `java` 不是内部命令 | tabula-py 是 Java 引擎的封装，只装了 Python 包不够 | 装 Java 8+ 并确保 `java -version` 在 PATH 里可执行；JVM 路径异常时设置 `JAVA_HOME` |
 | 明明有表却抽不出来 / 抽出一堆碎块 | 抽取模式选错：lattice 靠框线，stream 靠文字位置 | 有框线用 `lattice=True`（`-l`），无框线用 `stream=True`（`-t`），两种都试一遍对比结果 |
-| `multiple_tables=True` 时 `pandas_options` 报参数错误 | 该模式下走的是 `pd.DataFrame()` 而不是 `pd.read_csv()`，两者接受的选项不同 | 改用 `pd.DataFrame()` 支持的选项；或设 `multiple_tables=False` 走 `read_csv` 路径 |
+| `multiple_tables=True` 时 `pandas_options` 报参数错误 | 该模式下走的是 `pd.DataFrame` 而不是 `pd.read_csv`，两者接受的选项不同 | 改用 `pd.DataFrame` 支持的选项；或设 `multiple_tables=False` 走 `read_csv` 路径 |
 | 报 `CSVParseError`，提示列数不一致 | 不同表格列数不同，合并解析失败 | 按提示设 `multiple_tables=True`，或给 `pandas_options` 传 `names` 显式指定列名 |
 | 抽出来的数字是字符串 / 表头跑到第一行 | 结果由 `pd.DataFrame` 组装，列名可能变成 `Unnamed: 0` | 用 `pandas_options={'header': None}` 或 `names=[...]` 控制表头；数值列后面自己 `astype` 转换 |
 | 指定了 `area` 但 `guess` 好像没生效 | 传了 `area` 时 `guess` 会被自动置为 `False` | 这是预期行为；想自动猜区域就不要传 `area` |

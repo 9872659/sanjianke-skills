@@ -18,8 +18,6 @@ tags:
 
 它的第二个价值是**网页控制台**。插件装在哪个分组、哪条指令要什么权限、机器人现在活着没有、日志报了什么错，都在一个浏览器页面里点，不必记一堆命令行参数。第三个价值是**插件生态**：官方和社区的插件覆盖平台适配、数据库、资源存储、图片渲染、状态管理等常见需求，多数场景不用从零写。
 
-**上游项目**：`Koishi`　**仓库**：https://github.com/koishijs/koishi
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -126,7 +124,7 @@ import console from '@koishijs/plugin-console'
 import * as sandbox from '@koishijs/plugin-sandbox'
 import * as echo from '@koishijs/plugin-echo'
 
-const ctx = new Context()
+const ctx = new Context
 
 ctx.plugin(server, { port: 5140 })   // 后端服务
 ctx.plugin(console)                  // 网页控制台
@@ -138,7 +136,7 @@ ctx.plugin(echo)                     // 回声指令
 node -r esbuild-register .
 ```
 
-社区插件按 `koishi-plugin-foo` / `@koishijs/plugin-foo` / `@your-scope/koishi-plugin-foo` 这类命名发布在 npm 上，装完同样用 `ctx.plugin()` 加载。
+社区插件按 `koishi-plugin-foo` / `@koishijs/plugin-foo` / `@your-scope/koishi-plugin-foo` 这类命名发布在 npm 上，装完同样用 `ctx.plugin` 加载。
 
 ## 常用操作
 
@@ -214,7 +212,7 @@ server {
 
 **7. 自己写一段消息逻辑**
 
-不想为一个小功能发插件，可以直接监听消息事件；想收纳得整齐一点，就写成一个插件文件再 `ctx.plugin()` 加载：
+不想为一个小功能发插件，可以直接监听消息事件；想收纳得整齐一点，就写成一个插件文件再 `ctx.plugin` 加载：
 
 ```ts
 import { Context } from 'koishi'
@@ -237,7 +235,7 @@ ctx.plugin(myReply)
 
 **8. 依赖服务要用 `inject` 声明，不要靠 if 判断**
 
-需要数据库、资源存储、控制台这类服务时，用 `inject` 声明依赖关系：必需依赖会让插件等该服务就绪后才加载、服务变化时自动回滚重载；只在运行时判断用法的依赖放 `optional`；只影响部分功能的依赖用 `ctx.inject()` 拆成子插件。
+需要数据库、资源存储、控制台这类服务时，用 `inject` 声明依赖关系：必需依赖会让插件等该服务就绪后才加载、服务变化时自动回滚重载；只在运行时判断用法的依赖放 `optional`；只影响部分功能的依赖用 `ctx.inject` 拆成子插件。
 
 ```ts
 export const name = 'dialogue'
@@ -296,7 +294,7 @@ export function apply(ctx: Context) {
 - 跨平台适配：官方维护钉钉、Discord、KOOK、飞书、LINE、邮件、Matrix、QQ、Slack、Telegram、微信公众号、企业微信、WhatsApp、Zulip 等适配器插件；一个应用可同时接多个平台、每个平台可配多个账号。
 - 网页控制台：插件市场、插件配置（含分组与启用停用）、依赖管理、指令管理、本地化文案编辑、沙盒对话、状态监控与日志。
 - 插件化架构：插件可声明配置构型、可热重载、可声明 `reusable`，也可通过 `fork` 事件在不可重用插件内提供可重用逻辑。
-- 服务与依赖：`inject` 声明必需 / 可选依赖，服务可自定义并由插件提供；`ctx.inject()` 把部分功能拆成子插件。
+- 服务与依赖：`inject` 声明必需 / 可选依赖，服务可自定义并由插件提供；`ctx.inject` 把部分功能拆成子插件。
 - 会话治理：触发前缀、过滤器（平台 / 用户 / 群组 / 频道 / 机器人，与 / 或两级组合）、计算属性、用户权限等级（0–4 级，登录插件可拿到 5 级管理员）。
 - 数据与国际化：数据模型、数据库服务（由具体实现插件提供）、用户 / 频道级语言偏好与文案覆盖。
 - 部署形态：图形化启动器（含 `koi` 命令行）、Docker 镜像（含轻量版）、模板项目、作为依赖嵌入已有工程。
@@ -327,7 +325,6 @@ export function apply(ctx: Context) {
 - 插件依赖的服务由别的插件实现，缺哪个服务就缺哪块能力，功能是否可用取决于当前装的插件组合。
 - 配置文件的结构官方标注为**未来可能变化**；控制台能覆盖绝大多数配置，少数项仍需手改文件。
 - 启动器对各操作系统的版本支持是有清单的，不在清单里的系统官方不背书（可用社区版本或模板项目代替）。
-- 上游在持续演进，具体版本号、命令行参数与插件包名请以官网文档与 `koi` 帮助输出为准，本文不做版本断言。
 
 ## 自检清单
 

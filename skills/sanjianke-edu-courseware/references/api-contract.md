@@ -16,8 +16,6 @@
 | 环节 | 端点 | 单价 |
 |---|---|---|
 | 课件图 | `POST /api/v1/images/generations` | 6 点/张 |
-| 分节配音 | `POST /api/v1/apps/voice_tts/tts_async` | 上游实际点数 ×3，约 0.18 点/字 |
-| 一图口播 | `POST /api/v1/apps/pic_lipsync/submit` | 上游实际点数 ×5，15 点/秒 |
 | 课件出片 | `POST /api/v1/apps/image_human/submit` | 10 / 15 / 30 / 60 点/输入秒 |
 
 ---
@@ -93,8 +91,6 @@ GET  /user/balance/logs?limit=1             条数与最新一条时间前后不
 计费（`/pricing` 命中 `/api/v1/apps/voice_tts/*`）：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":200,
- "note":"…对外价 = 上游实际点数 ×3，单笔保底 > 0。实测 tts_live 33 字上游真实 1.98 点 → 我方 5.94 点。"}
 ```
 
 ⇒ 本包按 **0.18 点/字**估算（33 字 → 5.94 点折出来），单笔按 6 点起。
@@ -135,9 +131,6 @@ Gemini 2.5 / 3.8 文生语音、Suno 音乐与音色、人声分离、WAV 转换
 计费（`/pricing`）：
 
 ```json
-"/api/v1/apps/pic_lipsync/submit":{"mode":"flat","cost":0,"markupPercent":400,"minPoints":50,
- "note":"对外 = 上游实际点数 ×5；档位参数真名是 quality ⇒ 费率卡从未生效；
-  10-07 实测不发 quality ⇒ 上游按 standard 3 点/秒 收 ⇒ ×5 = 15 点/秒。"}
 ```
 
 ⇒ 对外 **15 点/秒**，单笔 50 点起。本包 `talk` 按 15 点/秒预估，`--quality` 必填。
@@ -173,12 +166,9 @@ Gemini 2.5 / 3.8 文生语音、Suno 音乐与音色、人声分离、WAV 转换
 ### 计费（live 定价原文）
 
 ```json
-{"mode":"per_second","markupPercent":400,"rateFrom":"mode",
  "modelRates":{"fast":{"*":10},"standard":{"*":15},"2k":{"*":30},"4k":{"*":60}},
  "defaultModel":"fast"}
 ```
-
-= 上游成本 2 / 3 / 6 / 12 点/秒 ×5。
 
 ---
 
@@ -211,7 +201,7 @@ Gemini 2.5 / 3.8 文生语音、Suno 音乐与音色、人声分离、WAV 转换
 | 路径 | 形态 | 计费 | 本包 |
 |---|---|---|---|
 | `GET /api/v1/tasks/{task_id}` | 平台任务线 | **免费**（只读） | ✅ 唯一轮询路径 |
-| `POST /api/v1/apps/{code}/query` | 应用级查询 | **每轮询一次就是一次的钱** | ⛔ 在 `http_json()` 里拦死 |
+| `POST /api/v1/apps/{code}/query` | 应用级查询 | **每轮询一次就是一次的钱** | ⛔ 在 `http_json` 里拦死 |
 
 历史流水（`GET /user/balance/logs`，2026-11-03 至 11-07）：
 
@@ -257,4 +247,4 @@ sync:/api/v1/apps/nano_banana/query      108 次   -72 点/次   合计 -7,776 �
 1. `doctor` 只发只读请求，端点存在性用 `/apps` + `/pricing` 证明；
 2. 任何 submit 只出现在付费子命令里，且必须先过 `--budget` 与 `--yes` 两道闸门；
 3. `GET /api/v1/apps/<app>`（单个应用）命中通配计价即时扣费且不退 —— 本包在
-   `guard_path()` 里拦死，只允许 `GET /api/v1/apps` 列表。
+   `guard_path` 里拦死，只允许 `GET /api/v1/apps` 列表。

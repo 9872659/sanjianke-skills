@@ -12,7 +12,7 @@
 |---|---|---|---|
 | `/api/v1/upload` | flat | **0** | 「上传不计费（2026-10-04 站主批准）。上传是生成的前置动作、不是可计费服务」 |
 | `/api/v1/apps/nano_banana/*` | flat | **72** | 「AI 商品图 = 固定 72 点/次；商品多角度 = 25 点 × 选中视角数（请求体带 views[] 时生效，不带 views 时仍按本固定价 72）」 |
-| `/api/v1/apps/dressing_diffusion/*` | flat | **200** | 「固定 200 点/次（上游约 100 点 ×2）」 |
+| `/api/v1/apps/dressing_diffusion/*` | flat | **200** | 「固定 200 点/次」 |
 | `/api/v1/tasks/*` | — | — | 任务查询，只读 |
 
 **`/api/v1/images/generations` 不在价目表里。** 115 条规则中没有这一条，

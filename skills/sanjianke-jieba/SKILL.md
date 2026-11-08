@@ -21,8 +21,6 @@ tags:
 
 除了分词本身，它还顺手带了三样常被用到的能力：关键词抽取（TF-IDF 与 TextRank 两套算法）、词性标注、以及把每个词的**起止位置**吐出来——最后这个在做高亮、做对齐、做标注工具时很关键。
 
-**上游项目**：`jieba`　**仓库**：https://github.com/fxsjy/jieba
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -70,7 +68,7 @@ python setup.py install
 pip install paddlepaddle-tiny==1.6.1
 ```
 
-注意这是**上游 README 明确标注的版本**。官方说明 paddle 模式需要 jieba v0.40 及以上；低于 0.40 的先 `pip install jieba --upgrade`。paddle 模式是延迟加载的，要先调 `jieba.enable_paddle()` 才会去装和 import 相关代码。
+注意这是**上游 README 明确标注的版本**。官方说明 paddle 模式需要 jieba v0.40 及以上；低于 0.40 的先 `pip install jieba --upgrade`。paddle 模式是延迟加载的，要先调 `jieba.enable_paddle` 才会去装和 import 相关代码。
 
 **没有 Docker 官方镜像**——本仓库是纯 Python 包，容器场景直接 `pip install jieba` 打进自己的镜像即可。
 
@@ -171,7 +169,7 @@ print("/".join(jieba.cut("「台中」正确应该不会被切开", HMM=False)))
 import jieba.analyse
 
 # TF-IDF，默认取权重最高的 20 个
-print(jieba.analyse.extract_tags(text, topK=20, withWeight=False, allowPOS=()))
+print(jieba.analyse.extract_tags(text, topK=20, withWeight=False, allowPOS=))
 
 # TextRank，换一套算法，接口一样
 print(jieba.analyse.textrank(text, topK=20, withWeight=False, allowPOS=('ns', 'n', 'vn', 'v')))
@@ -195,7 +193,7 @@ for w in words:
 # 我 r / 爱 v / 北京 ns / 天安门 ns
 ```
 
-采用与 ictclas 兼容的标记法。paddle 模式另有自己的一套标签集合（24 个词性标签 + 4 个专名类别标签），要 `jieba.enable_paddle()` 之后传 `use_paddle=True`。
+采用与 ictclas 兼容的标记法。paddle 模式另有自己的一套标签集合（24 个词性标签 + 4 个专名类别标签），要 `jieba.enable_paddle` 之后传 `use_paddle=True`。
 
 **9. 拿词语在原文里的位置**
 
@@ -230,7 +228,7 @@ python -m jieba -d " " -u userdict.txt news.txt
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | 打印生成器对象，看到的是 `<generator object ...>` 而不是词 | `jieba.cut` / `cut_for_search` 返回的是**生成器**，不是列表 | 用 `for` 循环消费，或直接 `"/".join(gen)`，要么改用 `jieba.lcut` / `lcut_for_search` |
-| 第一次调用卡了 1~3 秒 | 官方设计的**延迟加载**：`import jieba` 不触发词典加载，第一次真正分词时才建前缀字典 | 这是预期行为，只发生一次。要提前预热就在启动时调 `jieba.initialize()` |
+| 第一次调用卡了 1~3 秒 | 官方设计的**延迟加载**：`import jieba` 不触发词典加载，第一次真正分词时才建前缀字典 | 这是预期行为，只发生一次。要提前预热就在启动时调 `jieba.initialize` |
 | Windows 上调 `enable_parallel` 报错 | 并行分词基于 multiprocessing，**官方明确说暂不支持 Windows** | Windows 上别开并行；真要提速就自己按行拆给多个进程跑 |
 | 传入 GBK 编码的 bytes 得到乱码 | 官方提示：不建议直接输入 GBK 字符串，**可能无法预料地错误解码成 UTF-8** | 输入统一成 unicode（UTF-8 解码后再传），别把 bytes 直接丢进去 |
 | 「台中」这类词怎么都切不开 | 词频不够：P(台中) < P(台)×P(中)，成词概率偏低 | `jieba.add_word('台中')` 或 `jieba.suggest_freq('台中', True)` 强制调高词频 |
@@ -238,9 +236,9 @@ python -m jieba -d " " -u userdict.txt news.txt
 | 用 `suggest_freq` 调完没效果 | 自动计算的词频在 HMM 新词发现下可能不生效 | 配合 `HMM=False` 调用 `cut`，或改用 `add_word` 显式给词频 |
 | 全模式 + 词性标注一起用结果不对 | 官方 CLI 帮助里写明 `-a` 全模式**与词性标注互斥**（ignored with POS tagging） | 要词性就用精确模式，两者别叠加 |
 | 算词频时同一个词被数了很多次 | 用了搜索引擎模式，长词与其子串会同时出现在结果里 | 统计词频用精确模式 `jieba.cut(text)`；搜索引擎模式只为建索引、提召回 |
-| 内存占用比预期大 | 默认词典之外还有 `dict.txt.big`（支持繁体更好）和 `dict.txt.small`（内存更小）两个可选词典 | 受限环境换 `dict.txt.small`，重繁体场景换 `dict.txt.big`，用 `jieba.set_dictionary()` 或直接覆盖 |
+| 内存占用比预期大 | 默认词典之外还有 `dict.txt.big`（支持繁体更好）和 `dict.txt.small`（内存更小）两个可选词典 | 受限环境换 `dict.txt.small`，重繁体场景换 `dict.txt.big`，用 `jieba.set_dictionary` 或直接覆盖 |
 | 受限文件系统上启动报缓存写入失败 | 分词器默认要写缓存文件 | 改 `jieba.dt.tmp_dir` 和 `jieba.dt.cache_file` 指向可写目录（官方 README 专门提到这点） |
-| 装了 paddle 却调不了 paddle 模式 | paddle 模式需先装 `paddlepaddle-tiny` 并调 `enable_paddle()`，且 jieba 需 v0.40 以上 | 按官方给的版本装 `paddlepaddle-tiny==1.6.1`，升级 jieba 到 0.40+，代码里先 `jieba.enable_paddle()` |
+| 装了 paddle 却调不了 paddle 模式 | paddle 模式需先装 `paddlepaddle-tiny` 并调 `enable_paddle`，且 jieba 需 v0.40 以上 | 按官方给的版本装 `paddlepaddle-tiny==1.6.1`，升级 jieba 到 0.40+，代码里先 `jieba.enable_paddle` |
 | 想同时用两套词典互相污染 | 全局函数都映射到默认分词器 `jieba.dt`，词典是共享的 | 用 `jieba.Tokenizer(dictionary=...)` 新建独立分词器实例，各用各的 |
 
 ## 权限与用途说明
@@ -301,8 +299,8 @@ python -m jieba -d " " -u userdict.txt news.txt
 ## 已知限制
 
 1. `jieba.cut` 与 `cut_for_search` 返回生成器，忘了消费就等于什么都没做——最容易被忽略的一条。
-2. 首次分词有 1~3 秒的词典加载开销；虽然只发生一次，但对短生命周期脚本不友好，必要时用 `jieba.initialize()` 预热。
-3. 全局分词函数共享默认分词器 `jieba.dt` 的词典状态，多套词典场景必须自己用 `jieba.Tokenizer()` 隔离。
+2. 首次分词有 1~3 秒的词典加载开销；虽然只发生一次，但对短生命周期脚本不友好，必要时用 `jieba.initialize` 预热。
+3. 全局分词函数共享默认分词器 `jieba.dt` 的词典状态，多套词典场景必须自己用 `jieba.Tokenizer` 隔离。
 4. 官方给出的中文分词速度参考：全模式约 1.5 MB/s，默认模式约 400 KB/s；并行分词在 4 核 Linux 上约为单进程的 3.3 倍。这是上游测试环境下的数字，实际以你的机器为准。
 5. 词频调整对 HMM 新词发现不一定生效，这是官方专门标注的注意事项。
 6. 默认词典是「中间档」：`dict.txt.big` 繁体支持更好但更占内存，`dict.txt.small` 省内存但覆盖面更窄。
@@ -314,8 +312,8 @@ python -m jieba -d " " -u userdict.txt news.txt
 - [ ] 确认调用的是 `cut`（生成器）还是 `lcut`（列表），后面接的代码要匹配
 - [ ] 明确用哪一档模式：精确 / 全 / 搜索引擎 / paddle；算词频千万别用搜索引擎模式
 - [ ] 领域术语多就先准备自定义词典，确认文件是 UTF-8、格式是「词语 词频 词性」
-- [ ] 需要稳定复现的场合，提前 `jieba.initialize()` 预热，避免首调卡顿影响时序
-- [ ] 多词典并存的场景，用 `jieba.Tokenizer()` 建独立实例，别动全局状态
+- [ ] 需要稳定复现的场合，提前 `jieba.initialize` 预热，避免首调卡顿影响时序
+- [ ] 多词典并存的场景，用 `jieba.Tokenizer` 建独立实例，别动全局状态
 - [ ] 用 paddle 模式前确认依赖装好、版本对得上
 
 执行后：

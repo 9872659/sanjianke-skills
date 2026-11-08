@@ -35,17 +35,16 @@
 
 ## 2. `GET /api/v1/pricing` 里的超分规则
 
-顶层：`{"currency":"CNY","markupPercent":20,"note":"...","site":"...","pricing":{...}}`，
 共 115 条规则。超分相关原文：
 
 ```json
 "/api/v1/video/viapi/superres":   {"mode":"per_second","perSecond":9,  "note":"标准超分 1080P"},
 "/api/v1/video/viapi/superres2k": {"mode":"per_second","perSecond":15, "note":"高清超分 2K/60帧"},
 "/api/v1/video/viapi/superres4k": {"mode":"per_second","perSecond":20, "note":"超清 4K"},
-"/api/v1/video/tencent1080":      {"mode":"per_second","perSecond":2, "minPoints":10, "note":"腾讯云 MPS 超分：2 点/秒（上游价 x2），单笔保底 10 点"},
-"/api/v1/video/tencent2k":        {"mode":"per_second","perSecond":4, "minPoints":10, "note":"腾讯云 MPS 超分：4 点/秒（上游价 x2），单笔保底 10 点"},
-"/api/v1/video/tencent4k":        {"mode":"per_second","perSecond":8, "minPoints":10, "note":"腾讯云 MPS 超分：8 点/秒（上游价 x2），单笔保底 10 点"},
-"/api/v1/video/upscale":          {"mode":"per_second","perSecond":30,"note":"4K旗舰版：30 点/秒（上游成本 0.15 元/秒，毛利 +100%）"},
+"/api/v1/video/tencent1080":      {"mode":"per_second","perSecond":2, "minPoints":10, "note":"腾讯云 MPS 超分：2 点/秒，单笔保底 10 点"},
+"/api/v1/video/tencent2k":        {"mode":"per_second","perSecond":4, "minPoints":10, "note":"腾讯云 MPS 超分：4 点/秒，单笔保底 10 点"},
+"/api/v1/video/tencent4k":        {"mode":"per_second","perSecond":8, "minPoints":10, "note":"腾讯云 MPS 超分：8 点/秒，单笔保底 10 点"},
+"/api/v1/video/upscale":          {"mode":"per_second","perSecond":30,"note":"4K旗舰版：30 点/秒"},
 "/api/v1/apps/flashvsr/submit":   {"mode":"per_second","perSecond":10,"minPoints":20, "note":"视频超分(flashvsr/likeadmin)：对外 10 点/秒，单笔保底 20 点"},
 "/api/v1/apps/flashvsr/query":    {"mode":"flat","cost":0,"note":"查询不计费"}
 ```
@@ -54,8 +53,6 @@
 **没有**专属规则。它们命中通配键 `*`：
 
 ```json
-"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-      "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}
 ```
 
 所以模型层单价**不在价目表里**，只能从 `/api/v1/me/tasks` 的 `actualPrice` 反推。

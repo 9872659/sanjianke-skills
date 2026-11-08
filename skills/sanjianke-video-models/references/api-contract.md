@@ -139,7 +139,6 @@ HTTP 200
 | 端点 | 实测返回 |
 |---|---|
 | `GET /api/v1/models` | 316 条 = 221 条目录 + 95 条裸模型层 ID；`type_code=video` 47 个；kling 家族 14 条 |
-| `GET /api/v1/pricing` | 115 条规则；没有 `/api/v1/videos/generations`；没有 `modelPricing` 键；通配 `*`：`markupPercent 100` / `minPoints 50` |
 | `GET /api/v1/apps` | 22 个应用；`seedance` 7 个接口、`wan` / `grok_video` / `full_video` 各 2 个 |
 | `GET /api/v1/me/tasks?limit=2000&page=N` | 每页固定 20 条，共 1,398 条（70 页） |
 | `GET /api/v1/tasks/<id>` | 真实任务给状态；假 id 回 `{"code":0,"msg":"任务不存在"}` |
@@ -163,8 +162,6 @@ HTTP 200
 `/api/v1/pricing` 里模型层没有专属规则，命中通配：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 真实单价只在 `GET /api/v1/me/tasks` 的 `actualPrice` 里。归集规则：
@@ -185,7 +182,6 @@ volcengine/doubao-seedance-2-5-260628 3 笔   762.30 / 3000 / 3045.71
 ```
 
 16 笔合计就是本包对「没有样本的型号」用的同路区间 **44 - 3,045.71 点**。
-区间里的 `refunded` 记录也计入（它们同样反映了上游报价水位），预算一律按上界。
 
 ---
 

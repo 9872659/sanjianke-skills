@@ -23,7 +23,6 @@
 
 ## 三条干货
 
-**① 腾讯 502 是上游凭据坏了，不是价格问题。**
 完整参数提交 → `502 FailedOperation.InvalidMpsUser`。本账号 3 条腾讯 4K 任务全部 `refunded`、`chargedPoints=0`、`refundedPoints=120/48`。钱全额退回，路暂时走不通；空 body 仍回 `400 video_url_required`，端点本身在架。
 
 **② 模型层单价不在价目表里。**

@@ -23,7 +23,7 @@ MP4
 由此推出三条必须记住的结论：
 
 1. **你写的是网页，不是视频**。任何能在浏览器里显示的东西都能进画面；反过来，浏览器不支持的东西也进不去。
-2. **时间是帧号，不是秒**。组件不会「播放」，它被反复以不同帧号求值。`useCurrentFrame()` 返回的就是「现在是第几帧」。
+2. **时间是帧号，不是秒**。组件不会「播放」，它被反复以不同帧号求值。`useCurrentFrame` 返回的就是「现在是第几帧」。
 3. **每一帧都是独立求值的结果**。所以同一帧必须每次算出一样的东西，否则并行渲染拼接出来的片子会出现画面跳变。所有随机、时间、顺序依赖都是雷区。
 
 「渲染」这个词在上游有两层含义，别混：**Studio 里拖动时间轴叫预览**，几乎瞬时、不产出文件；**跑渲染命令产出文件才叫 Render**，这一步在许可条款里是有计量意义的（详见 `SKILL.md` 的许可段落）。
@@ -37,7 +37,7 @@ my-video/
 ├─ package.json
 ├─ remotion.config.ts        # 渲染与打包的全局默认值
 ├─ tsconfig.json
-├─ public/                   # 静态资源，用 staticFile() 引用
+├─ public/                   # 静态资源，用 staticFile 引用
 │  ├─ logo.png
 │  └─ bgm.mp3
 ├─ data/                     # 批量任务的 props 数据（自己建的）
@@ -45,7 +45,7 @@ my-video/
 │  └─ item-002.json
 ├─ out/                      # 渲染产物（自己建的，记得进 .gitignore）
 └─ src/
-   ├─ index.ts               # 入口：registerRoot()
+   ├─ index.ts               # 入口：registerRoot
    ├─ Root.tsx               # 注册所有 Composition
    ├─ ProductCard.tsx        # 一个具体画面
    └─ components/            # 可复用零件
@@ -67,7 +67,7 @@ import {Root} from './Root';
 registerRoot(Root);
 ```
 
-`registerRoot()` 告诉 Remotion「从哪个组件开始找 Composition」。一个项目只有一个入口，`Root` 里可以挂任意多个 Composition。
+`registerRoot` 告诉 Remotion「从哪个组件开始找 Composition」。一个项目只有一个入口，`Root` 里可以挂任意多个 Composition。
 
 ### 注册表：所有 Composition 都在这里
 
@@ -78,7 +78,7 @@ import {Composition, Folder} from 'remotion';
 import {ProductCard} from './ProductCard';
 import {EpisodeIntro} from './EpisodeIntro';
 
-export const Root: React.FC = () => {
+export const Root: React.FC =  => {
   return (
     <>
       <Folder name="竖屏-商品">
@@ -121,7 +121,7 @@ export const Root: React.FC = () => {
 | `fps` | 帧率 | 改动会同时改变时长（帧数不变时）。国内投放常见 25/30，动画类常用 60 |
 | `width` / `height` | 像素尺寸 | 竖屏 1080×1920，横屏 1920×1080，方屏 1080×1080 |
 
-秒数换算很简单：`帧数 = 秒数 × fps`。给一个 `seconds()` 小工具能少犯错：
+秒数换算很简单：`帧数 = 秒数 × fps`。给一个 `seconds` 小工具能少犯错：
 
 ```ts
 // src/lib/timing.ts
@@ -219,12 +219,12 @@ npx remotion still ProductCard out/cover.png --frame=45
 import {useEffect, useState} from 'react';
 import {continueRender, delayRender, staticFile} from 'remotion';
 
-export const WithFont: React.FC = () => {
-  const [handle] = useState(() => delayRender('加载字体'));
+export const WithFont: React.FC =  => {
+  const [handle] = useState( => delayRender('加载字体'));
 
-  useEffect(() => {
+  useEffect( => {
     const font = new FontFace('MyFont', `url(${staticFile('font.woff2')})`);
-    font.load()
+    font.load
       .then((loaded) => {
         document.fonts.add(loaded);
         continueRender(handle);          // 必须被调用，否则 30 秒后超时
@@ -242,17 +242,17 @@ export const WithFont: React.FC = () => {
 
 同一套机制适用于：远程图片、音视频元数据、远程数据、任何异步准备。
 
-**必须成对出现**：每一个 `delayRender()` 都要有一条 `continueRender(handle)` 的路径，包括失败分支。漏了就是 30 秒超时 + 报出卡住的帧号。
+**必须成对出现**：每一个 `delayRender` 都要有一条 `continueRender(handle)` 的路径，包括失败分支。漏了就是 30 秒超时 + 报出卡住的帧号。
 
 ### 2. 报「Timeout / A frame took too long」
 
 - 看错误里报的帧号，定位到那一帧在等什么。
-- 数据接口慢就加 `--timeout=60000`，但更好的做法是加请求超时并在超时后 `continueRender()` 放行。
+- 数据接口慢就加 `--timeout=60000`，但更好的做法是加请求超时并在超时后 `continueRender` 放行。
 - 偶尔是死循环：检查组件里有没有在渲染期间 `setState` 又依赖帧号的写法。
 
 ### 3. 字体渲染出来跟预览不一样
 
-除了上面的 `delayRender()`，还要注意：**渲染机器上必须能访问到字体文件**。用 Google Fonts 这类远程字体时，内网渲染机会静默回退到系统字体。生产环境一律把字体文件放进 `public/`。
+除了上面的 `delayRender`，还要注意：**渲染机器上必须能访问到字体文件**。用 Google Fonts 这类远程字体时，内网渲染机会静默回退到系统字体。生产环境一律把字体文件放进 `public/`。
 
 ### 4. 图片/视频不显示，控制台报 CORS
 

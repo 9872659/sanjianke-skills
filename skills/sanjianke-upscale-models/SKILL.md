@@ -52,8 +52,6 @@ tags:
 `/api/v1/images/generations`。它们命中通配：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}
 ```
 
 所以模型层只能读自己的 `GET /api/v1/me/tasks`（免费），按 `model` 归集 `actualPrice`。

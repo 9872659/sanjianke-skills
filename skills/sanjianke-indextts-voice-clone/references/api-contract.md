@@ -1,23 +1,20 @@
-# 接口契约（实测）
-
-> 来源：`GET /api/v1/gpu/apps` 返回的 69 个应用之一（`total: 69`，`markup: 1.5`）。
+# 接口契约
 
 ## 应用
 
 | 字段 | 值 |
 |---|---|
 | workflow_id | `wf_b972fe24e79cafd7f47d` |
-| 标题 | IndexTTS_2声音克隆-支持各种情绪编辑 |
+| 名称 | IndexTTS_2声音克隆-支持各种情绪编辑 |
 | 类型 | 文本 |
-| 上游报价 | ¥0.1 |
-| 本站 | 15.0 点（¥0.15）|
+| **每次** | **15.0 点（0.15 元）** |
 
-## 四个端点
+## 端点
 
 ```
 GET  /api/v1/gpu/apps                        应用清单（69 个）
 GET  /api/v1/gpu/apps/<workflow_id>/schema    参数
-POST /api/v1/gpu/assets                       上传素材（免费）
+POST /api/v1/gpu/assets                       上传素材
 POST /api/v1/gpu/apps/<workflow_id>/run       提交 {"inputs":{...}}
 GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 ```
@@ -26,8 +23,8 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n12_audio` | 音色参考 | audio | 是 |  |
-| `n18_audio` | 情感参考 | audio | - |  |
+| `n12_audio` | 音色参考 | audio | 是 | |
+| `n18_audio` | 情感参考 | audio | - | |
 | `n3_text` | 输入文本 | string | 是 | I can't believe what |
 | `n8_afraid` | 害怕 | float | - | 0 |
 | `n8_angry` | 生气 | float | - | 0 |

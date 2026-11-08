@@ -20,8 +20,6 @@ tags:
 
 这个项目把这件事做成了服务：后台进程定时去若干公开代理站采集，逐个校验可用性，把通过的塞进 Redis 或 SSDB；你的爬虫只要向本机一个 HTTP 接口要一个 IP 就行，用完或失败再调接口把它删掉，池子会自己补货。
 
-**上游项目**：`proxy_pool`　**仓库**：https://github.com/jhao104/proxy_pool
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -150,14 +148,14 @@ import requests
 
 API = "http://127.0.0.1:5010"
 
-def get_proxy():
-    return requests.get(f"{API}/get/").json()
+def get_proxy:
+    return requests.get(f"{API}/get/").json
 
 def delete_proxy(proxy):
     requests.get(f"{API}/delete/", params={"proxy": proxy})
 
 def fetch(url, retry=5):
-    proxy = get_proxy().get("proxy")
+    proxy = get_proxy.get("proxy")
     while retry > 0:
         try:
             return requests.get(url, timeout=10,
@@ -166,7 +164,7 @@ def fetch(url, retry=5):
         except Exception:
             retry -= 1
             delete_proxy(proxy)          # 失败的代理立刻移出池子
-            proxy = get_proxy().get("proxy")
+            proxy = get_proxy.get("proxy")
     return None
 ```
 
@@ -176,7 +174,7 @@ Redis / SSDB 里用 hash 结构存放，hash 名就是 `setting.py` 里的 `TABL
 
 **8. 新增一个自己的代理源**
 
-在 `fetcher/sources/` 下建一个 `.py` 文件，继承 `BaseFetcher`，声明 `name` / `url` / `enabled`，实现 `fetch()` 并以 `"host:port"` 字符串形式 yield：
+在 `fetcher/sources/` 下建一个 `.py` 文件，继承 `BaseFetcher`，声明 `name` / `url` / `enabled`，实现 `fetch` 并以 `"host:port"` 字符串形式 yield：
 
 ```python
 from fetcher.baseFetcher import BaseFetcher
@@ -188,7 +186,7 @@ class MySourceFetcher(BaseFetcher):
     enabled = True
 
     def fetch(self):
-        r = WebRequest().get(self.url, timeout=10)
+        r = WebRequest.get(self.url, timeout=10)
         for proxy in self.parseProxiesFromText(r.text):
             yield proxy
 ```

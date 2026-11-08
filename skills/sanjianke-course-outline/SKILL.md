@@ -401,8 +401,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | `Missing or invalid relay API key`（HTTP 401） | Key 无效、已过期或写错 | 重新到 https://api.a7w.cn/ 领取；确认没把 `Bearer` 重复写进环境变量 |
 | 点数不足（HTTP 402） | 账号点数用完 | 到 https://api.a7w.cn/ 充值后重试 |
 | 模型不存在（HTTP 404） | 模型名写错或已下架 | `python3 scripts/run.py models --type text` 现查在架模型名 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 脚本已内置退避重试（最多 4 次）。连续失败就换模型，或降低 `--count` 分批跑 |
-| 模型返回的不是合法 JSON | 模型在 JSON 前后多吐了字符或解释 | 脚本已用 `json.JSONDecoder().raw_decode()` 扫描第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
+| 模型返回的不是合法 JSON | 模型在 JSON 前后多吐了字符或解释 | 脚本已用 `json.JSONDecoder.raw_decode` 扫描第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
 | 大纲结构校验未通过（退出码 3） | 缺章节 / 缺小节 / 缺学习目标 / 目标是"了解 XX"这种套话 | 脚本会逐项打印哪一节缺什么。加大 `--max-tokens` 重跑，或直接手工补 `outline.json`（补完 `lesson` / `quiz` 会再校验一遍） |
 | 讲义命中违禁词 / 字数越界（退出码 3） | 模型写了"最好"这类词，或字数不在 1500~3000 | 命中项会在 stderr 逐条列出。是误伤就改对应那句重跑；字数不够就让模型重写，脚本**不会**替你截断 |
 | 习题命中"第 N 题没有解析"（退出码 3） | 模型漏写解析 | 加大 `--per-tier` 或减少节数减轻单次输出压力；也可以只对该节重跑 |
@@ -437,7 +436,6 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
   （例如跑到一半才发现比例不合格），`ok` 就写在那个结果里，退出码不变
 - 人读文案照旧走 stderr；**退出码语义一个都不变**；非 `--json` 模式输出与以前完全一致
 - `--json` 写在子命令**前面或后面都可以**
-
 
 `3` 与 `4` 分开是有意的：`3` = "上游没问题，是被本地规则拦了"，
 `4` = "上游/网络有问题"。CI 里这两种要采取完全不同的动作。

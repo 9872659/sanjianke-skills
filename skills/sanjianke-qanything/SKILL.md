@@ -18,8 +18,6 @@ tags:
 
 它跟「调一个云端大模型 API」最大的区别在于**检索是它自己的活**：先用向量召回一批候选，再用重排模型精排，所以数据量越大，效果优势越明显——这是它两阶段检索的设计目标。代价是你得自己把它跑起来，而且**要先决定用哪个版本**，两个版本的能干活范围并不一样。
 
-**上游项目**：`QAnything`　**仓库**：https://github.com/netease-youdao/QAnything
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -234,7 +232,7 @@ data = {
     "rerank": True,
     "streaming": False,
 }
-res = requests.post(url, headers={"content-type": "application/json"}, json=data, timeout=60).json()
+res = requests.post(url, headers={"content-type": "application/json"}, json=data, timeout=60).json
 print(res["response"])            # 答案
 print(res["source_documents"])    # 命中原文：file_name / content / score
 ```

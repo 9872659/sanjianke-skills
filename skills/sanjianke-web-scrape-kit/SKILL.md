@@ -31,8 +31,6 @@ tags:
 | 凭证 | 是（云端模式） | 从环境变量读取 `FIRECRAWL_API_KEY`，以 `Authorization: Bearer` 发送；自托管模式可关闭鉴权 |
 | 子进程 / 后台常驻 | 视需要 | 执行 CLI（`npx firecrawl-cli@latest`）或 `docker compose up` 拉起自托管栈；长抓取任务应放后台运行 |
 
-**密钥与费用**：本 Skill 不内嵌任何密钥，不代理转发你的请求，也不代收任何费用。云端模式下请求产生的额度消耗由使用者自己的上游账号承担，Key 从上游控制台自行获取；自托管模式下所有流量与成本都落在你自己的机器上。请勿把 Key 写进 SKILL.md、脚本源码或提交记录，一律走环境变量。
-
 ## 触发场景
 
 - 「把这个网页的内容抓下来，转成干净的 Markdown 给模型用」——单页抓取与正文净化。
@@ -182,7 +180,6 @@ curl --fail-with-body --silent --show-error --max-time 75 \
 - **响应体上限 10MB**，超了要跟着 `next` 翻页。
 - **计费口径**：抓取基础 1 credit/页，PDF 解析 +1 credit/PDF 页，JSON 格式 +4 credits/页，Prompt 注入检测 +4 credits/页，ZDR +1 credit/页，可叠加（JSON + ZDR 即 6 credits/页）。**返回了文档就算钱**——目标站返回 403/404 也照样计 1 credit，因为 Firecrawl 确实拿到了那个响应；彻底失败、没有任何文档返回才不计费。Crawl 和 Search 的每页都按同一套 scrape 计费规则叠加。
 - **并发与限流**：瓶颈通常是并发浏览器数而非每分钟请求数。免费档 2 并发，Hobby 5，Standard 25，Growth 50，Scale/Enterprise 100+；排队中的任务最多等 48 小时后超时。超限返回 429，需要按 `Retry-After` 退避。
-- **许可证**：上游主项目为 AGPL-3.0，SDK 与部分 UI 组件为 MIT。自托管后若对外提供修改过的服务，AGPL 的传染性条款需要你自行评估。
 - **自托管不是生产架构**。官方给的 Compose 文件不含持久化卷、TLS、认证与高可用；把 API 放公网前必须补齐鉴权、TLS、网络策略、备份恢复与容量规划。
 
 ## 自检清单

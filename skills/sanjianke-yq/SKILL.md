@@ -18,8 +18,6 @@ tags:
 
 它服务的是「结构化配置文件的命令行读写与格式转换」这个场景，前提是文件本身是合法 YAML / JSON / XML 之类，而不是随意的文本。
 
-**上游项目**：`yq`　**仓库**：https://github.com/mikefarah/yq
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -146,7 +144,7 @@ yq -N '.items[]' multi-doc.yaml
 | `yes` / `no` 被当成字符串而不是布尔值 | YAML 1.2 把 `yes`/`no` 归为字符串，而它按 1.2 处理 | 需要布尔就写 `true` / `false` |
 | 输出 JSON 带缩进换行，塞给别的工具不方便 | `-o=json` 默认会排版 | 用 `-I=0` 输出紧凑 JSON：`yq -o=json -I=0 f.yaml` |
 | Windows 下表达式里的引号总是被吃掉 | PowerShell 对引号有自己的处理规则，和 POSIX shell 不同 | 优先用单引号；需要在双引号里写字面量时转义 `\"`；细节以官方 Tips 页为准 |
-| 用 `load()` / `strenv()` 时提示文件或环境变量操作被禁用 | 这两类能力受安全开关控制 | 检查是否带了 `--security-disable-file-ops` / `--security-disable-env-ops`，按需调整 |
+| 用 `load` / `strenv` 时提示文件或环境变量操作被禁用 | 这两类能力受安全开关控制 | 检查是否带了 `--security-disable-file-ops` / `--security-disable-env-ops`，按需调整 |
 | 管道给 `head` 之后出现 broken pipe 报错 | 下游提前关闭了管道 | 不是数据错误，可以忽略；或调低输出详细程度 |
 | 表达式明明看着对，却被当成文件名去读了 | 参数检测把它误判成了文件路径 | 用 `--expression` 强制指定表达式，或把表达式写在文件名前面 |
 | 从 stdin 读 XML / JSON 时按 YAML 解析了 | 不给文件名就无法靠扩展名判断格式，默认按 YAML 处理 | 显式指定 `-p=xml` / `-p=json`；可用的格式列表以 `yq --help` 为准 |
@@ -156,7 +154,7 @@ yq -N '.items[]' multi-doc.yaml
 | 能力 | 是否申请 | 用途 |
 |---|---|---|
 | 网络访问 | 否 | 纯本地文件处理，不联网（安装阶段除外） |
-| 读取文件 | 是 | 读取用户指定的 YAML / JSON / XML / INI / props / CSV 等；`load()` 会读表达式里点名的其它文件 |
+| 读取文件 | 是 | 读取用户指定的 YAML / JSON / XML / INI / props / CSV 等；`load` 会读表达式里点名的其它文件 |
 | 写入文件 | 是 | `-i / --inplace` 直接改写目标文件；`-s / --split-exp` 会按表达式结果在磁盘上新建文件与目录 |
 | 凭证 | 否 | 不需要账号或 Key。但配置文件里可能含密钥，读出来的内容会进入命令输出 |
 | 子进程 / 后台常驻 | 否 | 一次性进程，不驻留；容器方式下会启动一个容器，用完即退出 |

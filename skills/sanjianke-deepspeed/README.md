@@ -20,7 +20,7 @@
 
 1. 装：先 PyTorch 后 `pip install deepspeed`。
 2. 自检：`ds_report` 确认本机可用的扩展/ops。
-3. 接代码：把训练入口换成 `deepspeed.initialize(...)`，训练循环保持 forward / backward / step 三步；原来手写的 `init_process_group` 换成 `deepspeed.init_distributed()`。
+3. 接代码：把训练入口换成 `deepspeed.initialize(...)`，训练循环保持 forward / backward / step 三步；原来手写的 `init_process_group` 换成 `deepspeed.init_distributed`。
 4. 写配置：准备 `ds_config.json`（batch size、optimizer、fp16/bf16、`zero_optimization`）。
 5. 启动：单机 `deepspeed --include localhost:0,1 ...`；多机加 `--hostfile`；无免密 SSH 用 `--no_ssh --node_rank --master_addr --master_port`。
 6. 检查点：`save_checkpoint` / `load_checkpoint` 必须所有进程都调用，不能只在 rank 0。

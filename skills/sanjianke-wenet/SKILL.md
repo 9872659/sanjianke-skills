@@ -17,8 +17,6 @@ tags:
 
 wenet 是一套面向落地的端到端语音识别工具包：装好之后既能用一条命令把音频转成文字，也能拿它做数据准备、训练、导出、部署的整条链路。中文侧提供多个可选模型（通用中文、方言/口音优化的版本），英文侧接了 Whisper 系列。做视频字幕、会议记录、口播稿转写时，它最实用的点是**同一套代码从实验走到上线**，不用中途换框架。
 
-**上游项目**：`wenet`　**仓库**：https://github.com/wenet-e2e/wenet
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -50,7 +48,7 @@ pip install git+https://github.com/wenet-e2e/wenet.git
 装完先验证显卡有没有被真正用上（这一步很关键，默认不是 GPU）：
 
 ```bash
-python -c "import torch; print(torch.cuda.is_available())"
+python -c "import torch; print(torch.cuda.is_available)"
 ```
 
 如果机器有显卡却打印 `False`，说明装的 torch 和驱动不匹配，需要重装对应 CUDA 版本的 torch，例如：
@@ -172,7 +170,7 @@ wenet -m paraformer audio.wav --device cuda
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | 有显卡但转写还是很慢 | `--device` 与 `wenet.load_model(device=...)` 默认都是 `cpu`，且**不会给任何提示** | 显式加 `--device cuda`（Python 侧传 `device='cuda'`）；上游在 T4 上实测 CUDA 比 CPU 快约 2.84 倍 |
-| `pip install` 之后 `torch.cuda.is_available()` 是 False | 安装会拉一个不设上限的 torch，可能装成比驱动新的版本，于是静默退回 CPU | 按驱动对应的 CUDA 版本重装 torch/torchaudio（例如 `+cu121` 系列） |
+| `pip install` 之后 `torch.cuda.is_available` 是 False | 安装会拉一个不设上限的 torch，可能装成比驱动新的版本，于是静默退回 CPU | 按驱动对应的 CUDA 版本重装 torch/torchaudio（例如 `+cu121` 系列） |
 | 想开 fp16 但 pip 装的命令行没有 `--dtype` 参数 | `wenet` 控制台命令固定走 fp32，没有 dtype 开关；训练配方里的 `recognize.py` 才有 `--dtype {fp16,fp32,bf16}` | 走 pip 包就别指望半精度；要调 dtype 就切到仓库里的训练脚本入口 |
 | 在 T4 这类显卡上开 bf16 反而更慢 | Turing 架构没有 bf16 张量核加速，上游实测同模型 bf16 比 fp32 慢约 47% | T4 上老老实实用 fp32；要提速先看下面的 sdpa |
 | 改 `use_sdpa: true` 却没生效 | 预训练模型自带的 `train.yaml` 没写这个键，默认按 `false` 加载 | 在 `encoder_conf` / `decoder_conf` 里显式加 `use_sdpa: true`；它只对自家 Conformer 模型有效，Paraformer 走的是另一种注意力，没有这条代码路径 |
@@ -196,7 +194,7 @@ wenet -m paraformer audio.wav --device cuda
 - 「把这段录音转成文字」
 - 「用 wenet 跑一下这个中文音频，要出时间戳」
 - 「批量转写这个文件夹里的音频」
-- 「装了 wenet 但显卡没用上，`torch.cuda.is_available()` 是 False」
+- 「装了 wenet 但显卡没用上，`torch.cuda.is_available` 是 False」
 - 「想用预训练模型微调自己的方言数据」
 - 「要导出成部署用的运行时」
 
@@ -223,9 +221,7 @@ wenet -m paraformer audio.wav --device cuda
 
 ## 依赖条件
 
-- Python 3.10 是上游训练环境示例用的版本；pip 包未在元数据里声明 Python 版本上限
 - torch 与 torchaudio（pip 安装时会拉 `torch>=1.13.0` 且无上限，注意与驱动匹配）
-- 训练环境建议 CUDA 12.1，torch/torchaudio 上游推荐 2.2.2+cu121
 - 其他 Python 依赖由仓库 `requirements.txt` 与包元数据列出（含 numpy、requests、tqdm、librosa、pyyaml、jieba、sentencepiece、openai-whisper、langid 等）
 - Windows 上会额外需要 PySoundFile
 - sox（conda 环境用 `conda-forge::sox`；系统级需 sox 及开发头文件）
@@ -247,7 +243,7 @@ wenet -m paraformer audio.wav --device cuda
 
 执行前：
 
-- [ ] `python -c "import torch; print(torch.cuda.is_available())"` 是否符合预期（有卡要 True）
+- [ ] `python -c "import torch; print(torch.cuda.is_available)"` 是否符合预期（有卡要 True）
 - [ ] 确认会用到的模型名，先跑 `wenet -h` 看当前版本的真实参数
 - [ ] 确认音频格式能被读取（采样率、声道、是否损坏），必要时先转成常见 wav
 - [ ] 批量任务先估算：拿 3~5 个文件试跑，测出单条耗时再决定要不要上 GPU

@@ -70,7 +70,7 @@
 | 环节 | 端点 | 单价 | 一节 3 分钟 |
 |---|---|---|---|
 | 课件图 | `POST /api/v1/images/generations` | 6 点/张 | 4 张 = 24 点 |
-| 配音 | `apps/voice_tts/tts_async` | 0.18 点/字（上游实际点数 ×3） | 450 字 ≈ 81 点 |
+| 配音 | `apps/voice_tts/tts_async` | 0.18 点/字 | 450 字 ≈ 81 点 |
 | 一图口播 | `apps/pic_lipsync/submit` | 15 点/秒，单笔 50 点起 | 180 秒 = 2,700 点 |
 | 课件出片 | `apps/image_human/submit` | fast 10 / standard 15 / 2k 30 / 4k 60 点/秒 | 180 秒 fast = 1,800 点 |
 
@@ -85,7 +85,6 @@
 
 `mode` 只切 `audio` / `text`；`quality` 才是 `standard` / `fast` / `max`。
 `mode=text` 省掉录音，但**省不掉参考音色**：`audio_url` 仍必填，给 3–10 秒清晰人声最稳。
-不传 quality 时上游按 standard 3 点/秒 收，我方 ×5 = 15 点/秒 —— 所以 `talk --quality` 必填。
 
 ### 二：`image_human` 省略 mode，会「出片标准档、收钱快速档」
 

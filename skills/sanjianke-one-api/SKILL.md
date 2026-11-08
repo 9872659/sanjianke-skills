@@ -21,8 +21,6 @@ tags:
 它解决的是「Key 管理」和「成本可见」两个问题，不是模型能力问题。它自己不推理、不训练、
 不做向量检索，只是把请求中继到真正的上游并把返回体转换回来。
 
-**上游项目**：`One API`　**仓库**：https://github.com/songquanpeng/one-api
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -38,7 +36,6 @@ tags:
 - 只想调一次模型——直接用厂商 SDK，多一层中继只会多一个故障点。
 - 要自部署模型做推理——One API 不含权重和推理引擎，自部署推理该找 SGLang / vLLM / Ollama。
 - 想要 RAG、知识库、会话管理、前端聊天界面——它是网关不是应用，聊天前端要另配客户端。
-- 上游厂商没有 OpenAI 兼容接口，且 One API 的适配列表里也没有——转发会直接失败。
 - 要绕开厂商风控或做额度套利——这属于违规用法，本 Skill 不支持也不提供做法。
 
 ## 安装
@@ -51,7 +48,7 @@ docker run --name one-api -d --restart always -p 3000:3000 \
   -v /home/ubuntu/data/one-api:/data \
   justsong/one-api
 
-# 若启动失败，先补 --privileged=true 再试（上游 issue 区对此有说明）
+# 若启动失败，先补 --privileged=true 再试
 docker run --name one-api -d --restart always --privileged=true -p 3000:3000 \
   -e TZ=Asia/Shanghai -v /home/ubuntu/data/one-api:/data justsong/one-api
 
@@ -225,7 +222,6 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtow
 - 不做模型推理、不下载权重、不做微调，没有 GPU 相关能力。
 - 不做 RAG、知识库、向量检索、会话历史管理。
 - 不提供现成的聊天前端，需要自己接客户端。
-- 不做上游厂商未开放或未适配的私有协议转换。
 - 不做破解、绕过风控、额度套利等违规用途。
 
 ## 依赖条件
@@ -233,7 +229,6 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtow
 - Docker 方式：宿主机有 Docker；生产环境建议再准备 MySQL（或 PostgreSQL，适配仍在完善中）。
 - 源码编译方式：需要 Go 工具链与 Node/npm，先构建前端再编译后端。
 - 默认使用 SQLite，单机小流量够用；并发量大时必须切 MySQL。
-- 需要至少一个上游厂商的 API Key 才能建渠道；上游厂商账号自行准备。
 - 多机部署需要有共享数据库，推荐同时具备 Redis。
 - 首次启动会联网拉取 tiktoken 词表，网络不稳或纯离线环境需提前准备 `TIKTOKEN_CACHE_DIR`。
 
@@ -243,8 +238,6 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtow
 - 模型映射开启后请求体被重新构造，未支持的字段会丢失。
 - 启用 Redis 或内存缓存后，额度与配置更新存在延迟，属于设计取舍而非故障。
 - SQLite 模式在容器重启且未挂载卷时必然丢数据。
-- 部分非 OpenAI 协议的渠道是靠改写请求体和返回体实现的，上游接口变动时可能需要等适配更新。
-- 按 MIT 协议开源，但要求页面底部保留署名与指向上游仓库的链接；二开项目同样适用。
 
 ## 自检清单
 
@@ -258,7 +251,6 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtow
   - `docker logs -f one-api` 无报错，`http://localhost:3000/` 能打开登录页。
   - 立刻修改首次登录用的默认密码。
   - 建一个渠道并测试通过，再建一个令牌。
-  - 用 `curl` 打通一次 `/v1/chat/completions`，确认返回的是上游模型结果。
   - 故意重启容器一次，确认渠道与令牌还在（验证持久化真的生效）。
   - 核对 `GLOBAL_API_RATE_LIMIT`、`RELAY_TIMEOUT` 是否符合实际并发。
 

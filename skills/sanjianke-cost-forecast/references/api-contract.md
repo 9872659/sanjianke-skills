@@ -4,7 +4,6 @@
 
 | 端点 | 返回 | 用途 |
 |---|---|---|
-| `GET /api/v1/pricing` | 裸对象 `{currency, markupPercent, note, site, pricing{115}}` | 应用层与视频档单价 |
 | `GET /api/v1/models` | `{object, code, msg, data[316]}` | 模型目录 + 模型层 ID |
 | `GET /api/v1/apps` | `{code, msg, data[22]}` | 应用目录 + 接口清单 |
 | `GET /api/v1/me/tasks?limit=2000&page=N` | `{tasks[20/页], total, sumPoints, ...}` | 模型层真实成交价 |
@@ -21,8 +20,6 @@
 ```json
 {
  "currency": "points",
- "markupPercent": 20,
- "note": "User price = upstream points x (1 + markup%). 实际成本以上游响应标记为准。",
  "site": "api",
  "pricing": { "/api/v1/...": { ...规则... }, ... }
 }
@@ -35,7 +32,6 @@
 | 字段 | 次数 | 类型 | 含义 |
 |---|---|---|---|
 | `mode` | 115 | str | `flat` / `per_second` / `per_module` |
-| `markupPercent` | 115 | int / float | 加价率；`cost:0` + 非 0 表示「按上游实际点数 ×(1+n%)」 |
 | `note` | 115 | str | 人写的中文说明 |
 | `cost` | 65 | int | `flat` 的一口价（点） |
 | `perSecond` | 46 | int / float | 每秒点数 |
@@ -53,8 +49,6 @@
 ### 全局兜底
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 `/api/v1/images/generations`、`/api/v1/images/edits`、`/api/v1/videos/generations`、
@@ -94,11 +88,9 @@ tsc_shortplay_hd 6  tsc_uhd 3  tsc_oldsd 3  tsc_oldsd_hd 6  tsc_teshd 2  tsc_qua
 | `/api/v1/apps/smart_clip/submit` | 45 |
 | `/api/v1/apps/music_search/*` | 30 |
 
-### 按上游点数加成的（`cost: 0` + `markupPercent`）
+### 按上游点数加成的（`cost: 0` + `Percent`）
 
-| 路径 | markup | 保底 | 说明 |
 |---|---|---|---|
-| `/api/v1/apps/voice_tts/*` | 200 | — | 上游实际点数 ×3，换算约 0.18 点/字 |
 | `/api/v1/apps/indextts/*` | 200 | — | 同上 |
 | `/api/v1/apps/music_generation/*` | 200 | — | 同上 |
 | `/api/v1/apps/lipsync/*` | 200 | 1 | 上游 ×3 |
@@ -110,13 +102,11 @@ tsc_shortplay_hd 6  tsc_uhd 3  tsc_oldsd 3  tsc_oldsd_hd 6  tsc_teshd 2  tsc_qua
 
 ```json
 "/api/v1/apps/full_video/submit": {
-  "mode": "per_second", "markupPercent": 1e-07,
   "resolutionRates": {"480P": 14, "768P": 28, "1080P": 60, "2K": 80, "4K": 80},
   "note": "2026-11-06 站内定价：480P 0.14 元/秒、768P 0.28、1080P 0.60、2K/4K 0.80，1 元=100 点"
 }
 
 "/api/v1/apps/image_human/submit": {
-  "mode": "per_second", "markupPercent": 400,
   "rateFrom": "mode", "defaultModel": "standard",
   "modelRates": {"fast": {"*": 10}, "standard": {"*": 15},
                  "2k": {"*": 30}, "4k": {"*": 60}},
@@ -229,7 +219,6 @@ tsc_shortplay_hd 6  tsc_uhd 3  tsc_oldsd 3  tsc_oldsd_hd 6  tsc_teshd 2  tsc_qua
 | `image_human` | `/api/v1/apps/image_human/submit` | 3,279.60 |
 | `smart_clip` | `/api/v1/apps/smart_clip/realman_broadcast` | 22.44 |
 
-模型层任务的 `rateNote` 恒为「官方价 × 2.00（≈ +100%）」，正好对应通配 `*` 的 `markupPercent: 100`；
 但 `minPoints: 50` 在模型层实测**没有落地**（15.60 / 26 / 44 点都低于 50）。
 
 ---
@@ -241,7 +230,6 @@ tsc_shortplay_hd 6  tsc_uhd 3  tsc_oldsd 3  tsc_oldsd_hd 6  tsc_teshd 2  tsc_qua
 | ① | `/api/v1/video/tsc_*` 11 条 `per_second`，带 `definition`，路由提交 404 | 2~6 点/秒，保底 10 |
 | ② | `/api/v1/video/tencent1080|2k|4k` 路由在，上游 502 `InvalidMpsUser` | 2 / 4 / 8 点/秒，保底 10 |
 | ③ | note 写「点/次」而 `mode` 是 `per_second` | 6 条：`shot` 20、`castcrew` 25、`delogo` 25，各扁平 + viapi |
-| ④ | 六条模型层路径无专属规则，落 `*` | `cost 0` + `markupPercent 100` + `minPoints 50` |
 | ⑤ | 应用层 vs 模型层 | Seedance 11,000 vs 145.73 = 75.5 倍；762.30 = 14.4 倍 |
 
 免费判据（判断端点是否存在的四条）：

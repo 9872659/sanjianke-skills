@@ -23,12 +23,9 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 手里有一段两三个小时的录音——访谈、播客、会议、课程，或者刚扒下来的视频音轨——你要的是文字稿，而且不想等它慢慢跑。insanely-fast-whisper 解决的就是这个：它把 Whisper 系列的语音识别模型套上批量推理、半精度和 Flash Attention 这套加速组合，在本机显卡上把长音频一次性转完，输出带时间戳的 JSON。
 
 它的定位很明确——**一个「有主见」的命令行封装**，不追求可调性拉满，而是把「跑得快」这件事的默认值都替你调好。代价是它默认只认 NVIDIA 显卡和 Apple Silicon，手上没有对应硬件的机器不该指望它。
-
-**上游项目**：`insanely-fast-whisper`　**仓库**：https://github.com/Vaibhavs10/insanely-fast-whisper
 
 ## 零安装用法（推荐先看这个）
 
@@ -82,8 +79,6 @@ checkpoint、或者就是要说话人分离时。日常「把这段访谈转成�
 
 **不要用它**：
 
-- **机器上既没有 NVIDIA 显卡也不是 Apple Silicon**。上游说明写得很直接：这个 CLI 高度有主见，只在 NVIDIA GPU 和 Mac 上工作。纯 CPU、或者只有 AMD / Intel 显卡的机器请换别的方案，别在这里耗时间。
-- **Windows 上想省事**。Windows 能跑，但上游自己的 FAQ 就收录了 `AssertionError: Torch not compiled with CUDA enabled` 这类问题，需要手工按 CUDA 版本重装 torch。如果只是想尽快拿到文字稿，走云端 API 或带 Web 界面的方案更省心。
 - **要精细控制解码参数**。它没有暴露 beam search、温度、VAD 阈值这类细粒度开关；要调这些参数就得绕开 CLI。
 - **要实时 / 流式转写**。这是离线批处理工具：喂一个文件、等它跑完、吐一个 JSON，不提供边录边出的能力。
 - **只是想知道「这段音频里有没有人说话」**。那是语音活动检测或音频分类的活，不需要动用语音识别模型。
@@ -211,7 +206,7 @@ pipe = pipeline(
     torch_dtype=torch.float16,
     device="cuda:0",          # Mac 用 "mps"
     model_kwargs={"attn_implementation": "flash_attention_2"}
-    if is_flash_attn_2_available()
+    if is_flash_attn_2_available
     else {"attn_implementation": "sdpa"},
 )
 
@@ -227,7 +222,7 @@ print(outputs["text"])
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| `pipx install` 之后命令能跑，但结果明显不对或者直接崩 | Python 3.11.x 下 pipx 版本解析出错，静默装了老版本（上游点名 0.0.8，与当前 BetterTransformers 不兼容） | 加 `--force --pip-args="--ignore-requires-python"` 重装；装完用 `pipx list` 核对版本 |
+| `pipx install` 之后命令能跑，但结果明显不对或者直接崩 | Python 3.11.x 下 pipx 版本解析出错，静默装了老版本 | 加 `--force --pip-args="--ignore-requires-python"` 重装；装完用 `pipx list` 核对版本 |
 | Windows 上报 `AssertionError: Torch not compiled with CUDA enabled` | 装进来的 torch 是 CPU 版，与 CUDA 环境不匹配 | 在这个工具的环境里按对应 CUDA 版本重装 torch，例如 `python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121`（CUDA 版本号按你的驱动选） |
 | macOS 上不带参数直接跑就报设备相关错误 | 默认设备是 CUDA 的 `0` 号卡 | 每条命令都带上 `--device-id mps` |
 | Mac 上显存吃紧、进程被杀（OOM） | mps 后端优化程度不如 CUDA，同样 batch 下更吃显存 | 把 `--batch-size` 降到 4 左右；上游 README 提到这样大约占用 12GB 显存 |
@@ -274,7 +269,6 @@ print(outputs["text"])
 - 不做音频编辑、降噪、重采样、格式转换——需要预处理请先用专门的音视频工具。
 - 不生成字幕文件。输出是 JSON，转 SRT / VTT 需要自己再写一步。
 - 不提供细粒度解码参数（beam size、温度、VAD 等）的命令行开关，要调就得绕开 CLI。
-- 不承诺在无 NVIDIA 显卡、非 Apple Silicon 的机器上可用；上游明确说明它面向这两类设备。
 - 不提供 Docker 镜像或服务端形态。
 
 **走零安装路线（`scripts/run.py` → 平台 `voice_tts/stt`）时额外不覆盖**：
@@ -288,7 +282,6 @@ print(outputs["text"])
 
 ## 依赖条件
 
-- Python 环境（上游打包元数据声明 `requires-python >= 3.8`；但 3.11.x 搭配 pipx 有已知的版本误判问题，见「安装」一节）。
 - 核心依赖包括 `transformers`、`accelerate`、`pyannote-audio`、`rich`、`setuptools`，安装时由包管理器自动拉取。
 - 硬件：NVIDIA 显卡并装好匹配的 CUDA 版 PyTorch，或 Apple Silicon 的 Mac（走 mps）。
 - 首次运行需要联网下载模型权重；模型越大，下载体积和显存占用越高。
@@ -297,10 +290,8 @@ print(outputs["text"])
 
 ## 已知限制
 
-- 上游自述这是高度有主见的 CLI，可调参数有意做得少；它不是通用语音识别框架的替代品。
 - 平台支持窄：README 明确写的是只支持 NVIDIA GPU 与 Mac，Windows 可用但问题更多。
 - 默认 `batch-size` 为 24，是按大显存卡设的值，小显存机器必须手动下调。
-- 上游仓库处于活跃演进中，CLI 参数与依赖清单可能随版本调整；执行前请以 `insanely-fast-whisper --help` 和仓库 README 的当前内容为准。
 - 零安装路线（`scripts/run.py`）返回的字段只有 `text` / `language` / `language_code` / `duration` / `segments`（逐字），**没有 speaker 字段**，也没有翻译结果字段——用它做不到「区分说话人」与「翻成英文」这两件事。
 - 零安装路线上传上限约 50MB / 单条 30 分钟（以平台实时限制为准），超长素材必须先切片再送，否则会失败。
 - 零安装路线的字幕换行：平台的字符级时间戳本身不带标点，脚本靠整段 `text` 回填标点，再按标点与停顿合并；如果平台不返回标点或回填对不齐，字幕会退化成按字数（默认 18 字）硬切。

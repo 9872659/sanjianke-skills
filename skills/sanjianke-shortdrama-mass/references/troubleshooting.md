@@ -63,7 +63,6 @@ curl -H "Authorization: Bearer $A7W_API_KEY" \
 **现象：一条任务的预扣比 `cost` 算的高。**
 
 `cost` 给的是**估价**，真实扣费看返回里的 `usage.points_cost`。
-配音是「上游实际点数 × 3」，口播是「上游实际点数 × 5」，都是按上游结算值乘倍率，
 字数 / 秒数只是估算依据。
 
 ---
@@ -167,8 +166,6 @@ python3 scripts/run.py run --step cover --cover 480P --cover-seconds 4 --yes
 
 | 工位 | 本包估价 | 实际结算 |
 |---|---|---|
-| `voice` | 0.18 点/字 | 上游实际点数 × 3 |
-| `avatar` | 15 点/秒 | 上游实际点数 × 5（standard 档 = 3 点/秒 × 5） |
 | `music` / `beat` | 60 点/条 | media_services_33 未配价，预冻 60，按结算 |
 | `cover` | `resolutionRates` × 秒数 | 同左（480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80） |
 

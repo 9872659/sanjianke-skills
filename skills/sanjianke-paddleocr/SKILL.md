@@ -18,8 +18,6 @@ tags:
 
 它的能力分两层。浅层的通用 OCR 只干「图里的字是什么」；深一层的版面解析会把整页拆成标题、正文、表格、公式、印章等元素，保留阅读顺序，最终能吐出一份带坐标的 JSON 或一份能直接用的 Markdown。中文识别准确率是它最强的部分，同时它也覆盖英日韩及大量拉丁、西里尔、阿拉伯、天城文语系。
 
-**上游项目**：`PaddleOCR`　**仓库**：https://github.com/PaddlePaddle/PaddleOCR
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -68,8 +66,8 @@ python -c "import paddleocr; print(paddleocr.__version__)"
 # 若使用本地推理引擎，继续验证 PaddlePaddle 与 GPU
 import paddle
 print(paddle.__version__)
-print(paddle.is_compiled_with_cuda())
-print(paddle.device.cuda.device_count())
+print(paddle.is_compiled_with_cuda)
+print(paddle.device.cuda.device_count)
 ```
 
 除了默认的本地引擎，官方还支持 `transformers` 和 `onnxruntime` 引擎（安装方式见官方「推理引擎与配置说明」文档），以及 OpenVINO、TensorRT 等高性能推理路径与 C++ / C# / Java 的服务化部署。
@@ -138,7 +136,7 @@ ocr = PaddleOCR(
 
 result = ocr.predict("./general_ocr_002.png")
 for res in result:
-    res.print()
+    res.print
     res.save_to_img("output")
     res.save_to_json("output")
 ```
@@ -148,20 +146,20 @@ for res in result:
 ```python
 from paddleocr import PPStructureV3
 
-pipeline = PPStructureV3()
+pipeline = PPStructureV3
 # pipeline = PPStructureV3(lang="en")               # 英文文本识别模型
 # pipeline = PPStructureV3(device="gpu")            # GPU 推理
 # pipeline = PPStructureV3(use_doc_unwarping=True)  # 启用文本图像矫正
 
 output = pipeline.predict("./pp_structure_v3_demo.png")
 for res in output:
-    res.print()                              # 打印结构化输出
+    res.print                              # 打印结构化输出
     res.save_to_json(save_path="output")     # 结构化 JSON（含坐标）
     res.save_to_markdown(save_path="output") # Markdown 结果
     res.save_to_word(save_path="output")     # Word 结果
 ```
 
-同一个 Result 对象还提供 `save_to_html()`（导出表格）与 `save_to_xlsx()`（导出表格）、`concatenate_markdown_pages()`（多页 Markdown 拼接）。
+同一个 Result 对象还提供 `save_to_html`（导出表格）与 `save_to_xlsx`（导出表格）、`concatenate_markdown_pages`（多页 Markdown 拼接）。
 
 **6. 用微调后的模型权重**
 
@@ -177,7 +175,7 @@ paddleocr ocr -i ./general_ocr_002.png \
 from paddleocr import PaddleOCR
 
 # 导出产线配置成 YAML，改完再用 --paddlex_config / paddlex_config 加载
-pipeline = PaddleOCR()
+pipeline = PaddleOCR
 pipeline.export_paddlex_config_to_yaml("PaddleOCR.yaml")
 
 # 也可以直接在初始化时指定本地模型目录
@@ -207,7 +205,7 @@ os.environ['PADDLE_PDX_MODEL_SOURCE'] = 'BOS'  # 使用百度云存储
 | GPU 环境跑不起来 / 速度没提升 | PaddlePaddle 版本与 CUDA 不匹配 | 先 `nvidia-smi` 看 CUDA 版本，再装对应版本的 `paddlepaddle-gpu` |
 | GPU 显存爆了（CUDA out of memory） | 批处理太大或图像太大 | 减小 `batch_size`（极端情况设 1）、把 `det_limit_side_len` 调小（如 640）、启用 `enable_memory_optim=True`、限制显存 `gpu_mem`，或改用 mobile 系列模型 |
 | 用 onnxruntime / transformers 引擎时某些功能异常 | 部分模型在非默认引擎上尚在支持中 | 官方示例里就要求关掉公式识别：`--use_formula_recognition False`；表格相关也有对应降级选项，以官方推理引擎文档为准 |
-| 结果里坐标很细但不知道怎么用 | 版面解析的输出本来就包含文本、表格单元格等细粒度坐标 | 要坐标就解析 JSON；只要可读文本就 `save_to_markdown()`；要喂给下游 RAG 用 JSON 更合适 |
+| 结果里坐标很细但不知道怎么用 | 版面解析的输出本来就包含文本、表格单元格等细粒度坐标 | 要坐标就解析 JSON；只要可读文本就 `save_to_markdown`；要喂给下游 RAG 用 JSON 更合适 |
 | 精度不满意，不知道该调哪里 | 版面解析是多模块串联，问题可能出在检测、识别、表格或公式任一环 | 先看可视化结果定位是哪一模块出问题，再针对该模块做微调；官方文档给了各情形的微调对照表 |
 | PP-OCRv6 和 PP-OCRv5 的精度数字不能直接比 | 官方说明两者评估集不同，指标不可直接对比 | 别照抄数字做选型；按场景实测，或按官方建议：拉丁语系可用 PP-OCRv6，阿拉伯文 / 西里尔文 / 天城文等用 PP-OCRv5 |
 | 处理 PDF 时想把整个目录喂进去 | 目录输入不支持包含 PDF 的预测 | PDF 要指定到具体文件路径；目录方式只适用于图片 |
@@ -218,7 +216,7 @@ os.environ['PADDLE_PDX_MODEL_SOURCE'] = 'BOS'  # 使用百度云存储
 |---|---|---|
 | 网络访问 | 是 | 首次运行下载模型权重；`input` 支持直接传图片 / PDF 的网络 URL |
 | 读取文件 | 是 | 读取待识别的图片与 PDF；读取本地模型权重与产线配置文件 |
-| 写入文件 | 是 | `--save_path` / `save_to_*()` 写出 JSON、Markdown、可视化图片、Word、HTML、XLSX 等结果 |
+| 写入文件 | 是 | `--save_path` / `save_to_*` 写出 JSON、Markdown、可视化图片、Word、HTML、XLSX 等结果 |
 | 凭证 | 否 | 本地推理不需要任何 Key；仅当使用第三方在线服务或托管 API 时才需要，本 Skill 不内嵌任何密钥 |
 | 子进程 / 后台常驻 | 视部署方式 | 命令行与 Python 库调用不需要常驻；做成服务化部署（HTTP / Docker）时才需要常驻进程 |
 

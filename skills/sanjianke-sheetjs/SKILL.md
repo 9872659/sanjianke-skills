@@ -17,8 +17,6 @@ tags:
 
 它的定位很明确：**在代码里把表格当数据结构处理**。凡是「读表格 → 拿数据 → 或生成新表格」的任务，它是首选；凡是「保留原表样式、图表、公式结果」的任务，它不合适——那部分在社区版里不做。
 
-**上游项目**：`SheetJS`　**仓库**：https://github.com/SheetJS/sheetjs
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -120,7 +118,7 @@ const aoa  = XLSX.utils.sheet_to_json(ws, { header: 1 });  // [["姓名","数量
 **3）组一张新表并写成 xlsx**：
 
 ```js
-const wb2 = XLSX.utils.book_new();
+const wb2 = XLSX.utils.book_new;
 const ws2 = XLSX.utils.aoa_to_sheet([["姓名", "数量"], ["A", 1], ["B", 2]]);
 XLSX.utils.book_append_sheet(wb2, ws2, "统计");
 XLSX.writeFile(wb2, "out.xlsx", { compression: true });
@@ -139,7 +137,7 @@ XLSX.writeFile(XLSX.readFile("old.xls"), "new.xlsx");
 **5）从网络/内存读**，显式给 `type`，别让它猜：
 
 ```js
-const ab = await (await fetch(url)).arrayBuffer();
+const ab = await (await fetch(url)).arrayBuffer;
 const wb4 = XLSX.read(ab, { type: "array", cellDates: true });
 
 const fs = require("fs");

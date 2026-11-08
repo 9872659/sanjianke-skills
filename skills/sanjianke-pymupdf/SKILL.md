@@ -22,8 +22,6 @@ tags:
 
 **但有一件事必须在动手前搞清楚：它是 AGPL-3.0 / 商业双授权。** 详细说明见下方「能力边界」，闭源商用前请务必读完那一节。
 
-**上游项目**：`PyMuPDF`　**仓库**：https://github.com/pymupdf/PyMuPDF
-
 ## 权限与用途说明
 
 | 能力 | 是否申请 | 用途 |
@@ -40,15 +38,14 @@ tags:
 
 **该用**：
 
-- 「几千份 PDF 要转成 Markdown 进 RAG」——`pymupdf4llm.to_markdown()`，或 `page.get_text()`。
+- 「几千份 PDF 要转成 Markdown 进 RAG」——`pymupdf4llm.to_markdown`，或 `page.get_text`。
 - 「把 PDF 每页渲染成图给视觉模型看」——`page.get_pixmap(dpi=150).save(...)`。
-- 「把几个 PDF 合并 / 拆开 / 重排页面」——`insert_pdf()` + `save()`。
-- 「合同里的敏感信息要**永久**抹掉，不是盖个黑框」——`add_redact_annot()` + `apply_redactions()`。
-- 「扫描件要 OCR 出文字」——`page.get_textpage_ocr()`（需另装 Tesseract 语言数据）。
-- 「给文档批量加水印 / 页码 / 高亮」——`insert_text()` / `add_highlight_annot()`。
-- 「读 PDF 表单填了什么 / 要自动填表」——`page.widgets()`。
-- 「提取 PDF 里的图片、书签目录、超链接、元数据」——`get_images()` / `get_toc()` / `get_links()` / `metadata`。
-
+- 「把几个 PDF 合并 / 拆开 / 重排页面」——`insert_pdf` + `save`。
+- 「合同里的敏感信息要**永久**抹掉，不是盖个黑框」——`add_redact_annot` + `apply_redactions`。
+- 「扫描件要 OCR 出文字」——`page.get_textpage_ocr`（需另装 Tesseract 语言数据）。
+- 「给文档批量加水印 / 页码 / 高亮」——`insert_text` / `add_highlight_annot`。
+- 「读 PDF 表单填了什么 / 要自动填表」——`page.widgets`。
+- 「提取 PDF 里的图片、书签目录、超链接、元数据」——`get_images` / `get_toc` / `get_links` / `metadata`。
 
 **不该用**：
 
@@ -56,11 +53,11 @@ tags:
 - 想靠多线程提速度 —— 官方立场明确：PyMuPDF 不支持多线程，批量处理必须用多进程。
 - 要抓网页、爬取或做正文提取 —— 不做这些。
 - 指望它自带 OCR 能力 —— 它只是调用 Tesseract，语言数据要你自己装；受限环境里自动发现语言还可能失败或被禁止。
-- 要提取 matplotlib / Excel / R 生成的矢量图表 —— `get_images()` 只列嵌入的位图，矢量图只能整页栅格化。
+- 要提取 matplotlib / Excel / R 生成的矢量图表 —— `get_images` 只列嵌入的位图，矢量图只能整页栅格化。
 - 要把 PDF 转回 docx / xlsx —— 能读 Office（还要 Pro），但不能反向转 Office。
 - 面对没有 CMap 的 PDF 却期望拿到可读文本 —— 这是 PDF 自身的缺陷，PyMuPDF 只能靠 OCR 兜底。
 - 不买 Pro 却要 Office / HWP 支持 —— 未解锁时只能访问任意文档的前 3 页，且有评估期时限。
-- 对无框线表格要求最佳效果 —— 这种场景 `find_tables()` 不如 pdfplumber 的可调策略。
+- 对无框线表格要求最佳效果 —— 这种场景 `find_tables` 不如 pdfplumber 的可调策略。
 - 在同一个环境里装名为 `fitz` 的 PyPI 包并以为那是旧版 PyMuPDF —— 那是另一个包，会得到完全不同的东西；新代码请 `import pymupdf`。
 
 ## 安装
@@ -109,7 +106,7 @@ import pymupdf
 
 doc = pymupdf.open("document.pdf")
 for page in doc:
-    print(page.get_text())
+    print(page.get_text)
 ```
 
 **2. 提取带版面元数据的文本**（字体、字号、位置）
@@ -130,7 +127,7 @@ for block in blocks:
                 print(f"{span['text']!r}  font={span['font']}  size={span['size']:.1f}")
 ```
 
-`get_text()` 的输出格式：`"text"`（默认）、`"dict"`（富结构）、`"words"`、`"blocks"`、`"html"`、`"xml"`、`"rawdict"`、`"rawjson"` 等。
+`get_text` 的输出格式：`"text"`（默认）、`"dict"`（富结构）、`"words"`、`"blocks"`、`"html"`、`"xml"`、`"rawdict"`、`"rawjson"` 等。
 
 **复用 TextPage 提速**：同一页上反复提取时，创建 `TextPage` 才是贵的部分，切格式很便宜。官方给的数字是**能省 50–95% 时间**：
 
@@ -140,7 +137,7 @@ import pymupdf
 doc = pymupdf.open("document.pdf")
 page = doc[0]
 
-tp = page.get_textpage()                       # 只建一次
+tp = page.get_textpage                       # 只建一次
 text  = page.get_text("text",  textpage=tp)
 words = page.get_text("words", textpage=tp)
 data  = page.get_text("dict",  textpage=tp)
@@ -154,10 +151,10 @@ import pymupdf
 doc = pymupdf.open("spreadsheet.pdf")
 page = doc[0]
 
-tables = page.find_tables()
+tables = page.find_tables
 for table in tables:
-    print(table.to_markdown())      # 直接出 GitHub 风格 Markdown 表格
-    df = table.to_pandas()          # 或转成 DataFrame（需要 pandas）
+    print(table.to_markdown)      # 直接出 GitHub 风格 Markdown 表格
+    df = table.to_pandas          # 或转成 DataFrame（需要 pandas）
 ```
 
 **4. 页面渲染成图片**
@@ -226,12 +223,12 @@ rect = page.search_for("confidential")[0]
 page.add_redact_annot(rect, fill=(1, 1, 1))     # 白色填充
 
 # 第二步：应用——底层内容被永久移除
-page.apply_redactions()
+page.apply_redactions
 
 doc.save("contract_redacted.pdf")
 ```
 
-`apply_redactions()` 之后**原始内容从保存的文件里永久消失，无法恢复**。两步分离就是为了让你先审阅再执行。
+`apply_redactions` 之后**原始内容从保存的文件里永久消失，无法恢复**。两步分离就是为了让你先审阅再执行。
 
 **8. 合并 / 拆分**
 
@@ -239,7 +236,7 @@ doc.save("contract_redacted.pdf")
 import pymupdf
 
 # 合并
-merger = pymupdf.open()
+merger = pymupdf.open
 for path in ["part1.pdf", "part2.pdf", "part3.pdf"]:
     merger.insert_pdf(pymupdf.open(path))
 merger.save("merged.pdf")
@@ -247,7 +244,7 @@ merger.save("merged.pdf")
 # 拆成单页文件
 doc = pymupdf.open("document.pdf")
 for i, page in enumerate(doc):
-    out = pymupdf.open()
+    out = pymupdf.open
     out.insert_pdf(doc, from_page=i, to_page=i)
     out.save(f"page_{i + 1}.pdf")
 ```
@@ -269,7 +266,7 @@ doc.set_metadata({
 doc.save("output.pdf")
 
 # 书签：列表项是 [层级, 标题, 页码]
-toc = doc.get_toc()
+toc = doc.get_toc
 for level, title, page in toc:
     print(" " * level, title, "→ 第", page, "页")
 
@@ -307,7 +304,7 @@ doc = pymupdf.open("scanned.pdf")
 page = doc[0]
 
 # 需要装好 Tesseract 且在 PATH 上
-text = page.get_textpage_ocr(language="eng").extractText()
+text = page.get_textpage_ocr(language="eng").extractText
 print(text)
 ```
 
@@ -320,7 +317,7 @@ md = pymupdf4llm.to_markdown("report.pdf")
 print(md)
 ```
 
-它会把文本和表格一起输出成**整合的 Markdown**：表格被检测出来转成 GitHub 兼容语法，并按正确阅读顺序穿插在正文里。还支持多栏版面、自然阅读顺序与分页 chunk。同族的还有 `to_json()` 与 `to_text()`。
+它会把文本和表格一起输出成**整合的 Markdown**：表格被检测出来转成 GitHub 兼容语法，并按正确阅读顺序穿插在正文里。还支持多栏版面、自然阅读顺序与分页 chunk。同族的还有 `to_json` 与 `to_text`。
 
 **13. 读 / 填表单**
 
@@ -330,14 +327,14 @@ import pymupdf
 doc = pymupdf.open("form.pdf")
 page = doc[0]
 
-for field in page.widgets():
+for field in page.widgets:
     print(f"{field.field_name}: {field.field_value}")
 
 # 填表
-for field in page.widgets():
+for field in page.widgets:
     if field.field_name == "First Name":
         field.field_value = "Ada"
-        field.update()
+        field.update
 
 doc.save("filled_form.pdf")
 ```
@@ -353,7 +350,7 @@ out = Path("images")
 out.mkdir(exist_ok=True)
 
 for page_index, page in enumerate(doc):
-    for img_index, img in enumerate(page.get_images()):
+    for img_index, img in enumerate(page.get_images):
         xref = img[0]
         pix = pymupdf.Pixmap(doc, xref)
         if pix.n > 4:                       # CMYK 要转一下
@@ -366,18 +363,18 @@ for page_index, page in enumerate(doc):
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | **多线程跑起来直接崩 / 结果错乱** | PyMuPDF **明确不支持多线程**，连 Python 新的 free-threading 模式也不行——底层 MuPDF 只有部分线程安全，做成全线程安全反而会引入单线程开销、把收益抵消掉 | **改用多进程**：每个进程独立打开文件、处理自己的页范围（见下方示例）。不要用 `ThreadPoolExecutor` |
-| 提取出来是空的 | 扫描件 PDF 里没有文字层，只有图片 | 走 OCR：`page.get_textpage_ocr()`。**扫描件做文本提取永远返回空，这是预期行为** |
-| 文字是乱码 / 提取不到 | PDF 用了**自定义字体编码但没有正确的 CMap**——字形在，但映射不回 Unicode | 用 OCR 兜底（`page.get_textpage_ocr()`）。这是字体层面的问题，没有纯解析的解 |
-| `get_images()` 返回空，但页面上明明有图表 | 图表是**矢量图形**（PDF 绘图指令），不是嵌入的位图。`get_images()` 只列嵌入的位图对象 | 想拿到图表就整页栅格化：`page.get_pixmap()` |
-| 反复提取同一页很慢 | 每次都重新建 `TextPage` | 建一次 `tp = page.get_textpage()`，之后用 `textpage=tp` 复用。官方称可省 50–95% 时间 |
+| 提取出来是空的 | 扫描件 PDF 里没有文字层，只有图片 | 走 OCR：`page.get_textpage_ocr`。**扫描件做文本提取永远返回空，这是预期行为** |
+| 文字是乱码 / 提取不到 | PDF 用了**自定义字体编码但没有正确的 CMap**——字形在，但映射不回 Unicode | 用 OCR 兜底（`page.get_textpage_ocr`）。这是字体层面的问题，没有纯解析的解 |
+| `get_images` 返回空，但页面上明明有图表 | 图表是**矢量图形**（PDF 绘图指令），不是嵌入的位图。`get_images` 只列嵌入的位图对象 | 想拿到图表就整页栅格化：`page.get_pixmap` |
+| 反复提取同一页很慢 | 每次都重新建 `TextPage` | 建一次 `tp = page.get_textpage`，之后用 `textpage=tp` 复用。官方称可省 50–95% 时间 |
 | 装不上 / 导入报错说找不到 `fitz` | 或者反过来，装了 `pip install fitz` 那个**同名的老包** | 认准 `pip install pymupdf`，导入用 `import pymupdf`。`fitz` 只是仍可用的旧别名 |
 | 处理完 Office 文档报错或只出前 3 页 | **Office 支持属于 PyMuPDF Pro**，开源版不含。未解锁 / 无 Key 时**只能访问前 3 页**，且有评估期限制 | 要么买 Pro 许可证并 `pymupdf.pro.unlock("你的Key")`，要么先用 LibreOffice 转成 PDF 再用开源版处理 |
 | OCR 报找不到语言 | PyMuPDF 用的是 MuPDF 内置的 Tesseract 支持（**不需要 Python 层的 `pytesseract`**），但仍需 **Tesseract 的语言数据文件 `tessdata`**；不给路径时自动发现**可能调用 `tesseract` 可执行文件**来列语言 | 装上 Tesseract 让自动发现生效，或用 `tessdata=` 参数 / `TESSDATA_PREFIX` 环境变量显式指定路径。支持 100 多种语言 |
 | 对图片做 OCR 失败 | 图片带 alpha 通道，OCR 不支持 | 先去 alpha：`if pix.alpha: pix = pymupdf.Pixmap(pix, 0)`，再插进一个单页 PDF 里 OCR |
-| 脱敏之后用复制粘贴还能把内容抠出来 | 只调 `add_redact_annot()` 没调 `apply_redactions()`——此时只是画了个框，内容还在 | **必须调 `apply_redactions()`**。调用后内容从保存的文件里永久消失，不可恢复 |
+| 脱敏之后用复制粘贴还能把内容抠出来 | 只调 `add_redact_annot` 没调 `apply_redactions`——此时只是画了个框，内容还在 | **必须调 `apply_redactions`**。调用后内容从保存的文件里永久消失，不可恢复 |
 | 加中文水印出方块 / 报错 | 用内置基础字体写非拉丁字符 | 用支持中文的字体：装 `pymupdf-fonts` 扩展字体集，或显式指定字体文件路径建 `Font` 对象 |
-| 大批量处理内存一直涨 | `Document` 对象没关闭 | 用 `with pymupdf.open(...) as doc:`，或显式 `doc.close()`。多进程场景下每个进程只开自己那一段 |
-| 保存时报文件被占用 | 目标路径和源文件是同一个，或文件被别的进程锁着 | 存到新文件名；`save()` 默认会做增量保存的尝试，同名覆盖容易出问题 |
+| 大批量处理内存一直涨 | `Document` 对象没关闭 | 用 `with pymupdf.open(...) as doc:`，或显式 `doc.close`。多进程场景下每个进程只开自己那一段 |
+| 保存时报文件被占用 | 目标路径和源文件是同一个，或文件被别的进程锁着 | 存到新文件名；`save` 默认会做增量保存的尝试，同名覆盖容易出问题 |
 
 ### 多进程的正确写法
 
@@ -390,7 +387,7 @@ def process_pages(args):
     doc = pymupdf.open(path)                  # 每个进程开自己的句柄
     results = []
     for i in range(start, end):
-        results.append(doc[i].get_text())
+        results.append(doc[i].get_text)
     return results
 
 if __name__ == "__main__":                    # Windows 上必须加这个保护
@@ -425,7 +422,7 @@ Windows 上 `multiprocessing` 用 spawn 启动，**没有 `if __name__ == "__mai
 ### 覆盖
 
 - **文本提取**：纯文本、富字典（含字体、字号、颜色、边界框）、HTML、XML、原始块、词级、块级。
-- **表格**：`find_tables()` 定位、提取，并可导出为 Markdown（`to_markdown()`）或 pandas DataFrame（`to_pandas()`）。
+- **表格**：`find_tables` 定位、提取，并可导出为 Markdown（`to_markdown`）或 pandas DataFrame（`to_pandas`）。
 - **图片**：提取嵌入图片、把任意页面渲染成高分辨率 `Pixmap`。
 - **渲染**：页面栅格化到图片或 `Pixmap`，供 UI 或其他流程使用。输出还支持 SVG 矢量。
 - **OCR**：Tesseract 集成，支持整页或局部 OCR、语言可配、100+ 语言。
@@ -440,14 +437,14 @@ Windows 上 `multiprocessing` 用 spawn 启动，**没有 `if __name__ == "__mai
 - **元数据**：标题、作者、创建日期、生成器、主题，以及自定义条目。
 - **色彩空间**：RGB、CMYK、灰度，以及相互转换。
 - **输入格式**：PDF、XPS、EPUB、CBZ、MOBI、FB2、SVG、TXT、MD，以及 PNG / JPEG / BMP / TIFF / GIF 等图片。
-- **LLM 输出**（需 `pymupdf4llm`）：`to_markdown()` / `to_json()` / `to_text()`，支持多栏版面、自然阅读顺序、分页 chunk。
+- **LLM 输出**（需 `pymupdf4llm`）：`to_markdown` / `to_json` / `to_text`，支持多栏版面、自然阅读顺序、分页 chunk。
 
 ### 不覆盖
 
 - **不抓网页**。不做下载、爬取、正文提取。
 - **不做 OCR 引擎本身**。它调用 Tesseract，语言数据要你自己装。
 - **不提供云端能力**。没有 SaaS、没有托管 API——这是优点也是边界。
-- **不能识别所有图表**。`get_images()` 拿不到矢量图形；`find_tables()` 对无框线表格的效果不如 pdfplumber 的可调策略。
+- **不能识别所有图表**。`get_images` 拿不到矢量图形；`find_tables` 对无框线表格的效果不如 pdfplumber 的可调策略。
 - **不做 PDF 转 Office**。能读 Office（需 Pro），但不能把 PDF 转回 docx / xlsx。
 - **不支持多线程**（见「已知限制」）。
 - **不含 PyMuPDF Pro 的能力**（Office / HWP 支持）——那要单独付费。
@@ -467,9 +464,9 @@ Windows 上 `multiprocessing` 用 spawn 启动，**没有 `if __name__ == "__mai
 - **许可证是 AGPL-3.0 或商业授权，二选一**。闭源商用与网络服务场景需要认真评估，详见「能力边界」。这是选型时**第一个**要确认的事，不是最后一个。
 - **不支持多线程**。官方立场很明确：即使 Python 有了 free-threading，PyMuPDF 也不支持——MuPDF 只提供部分线程安全，做成全线程安全会带来单线程开销，收益被抵消。**批量处理必须用多进程**。
 - **OCR 依赖外部语言数据**。不给 tessdata 路径时，自动发现机制**可能调用 `tesseract` 可执行文件**来枚举可用语言——这在受限环境里可能失败或被禁止。
-- **矢量图表拿不到**。`get_images()` 只列嵌入的位图；matplotlib / Excel / R 生成的图表是绘图指令，只能整页栅格化。
+- **矢量图表拿不到**。`get_images` 只列嵌入的位图；matplotlib / Excel / R 生成的图表是绘图指令，只能整页栅格化。
 - **没有 CMap 的 PDF 提取不出可读文本**。这是 PDF 本身的问题，PyMuPDF 只能靠 OCR 兜底。
-- **PyMuPDF Pro 有明确的评估限制**：不带 Key 调用 `pymupdf.pro.unlock()` 时**只能访问前 3 页**，且功能会在评估期后过期。
+- **PyMuPDF Pro 有明确的评估限制**：不带 Key 调用 `pymupdf.pro.unlock` 时**只能访问前 3 页**，且功能会在评估期后过期。
 - **`fitz` 别名终将被移除**。v1.24.0+ 仍可用，但新代码应该用 `import pymupdf`。
 - **PyPI 上的 `fitz` 是另一个包**，不是 PyMuPDF 的旧版本。误装会得到完全不同的东西。
 - 版本号、性能倍数、平台覆盖范围以你实际安装的版本与官方文档为准。
@@ -480,11 +477,11 @@ Windows 上 `multiprocessing` 用 spawn 启动，**没有 `if __name__ == "__mai
 - [ ] 装的是 `pip install pymupdf`，导入的是 `import pymupdf`，没有误装 PyPI 上那个同名的 `fitz` 包。
 - [ ] 批量处理用的是**多进程**（`multiprocessing.Pool`），**没有用线程池**。
 - [ ] Windows 上的多进程代码包在 `if __name__ == "__main__":` 保护里。
-- [ ] `Document` 对象用 `with` 或显式 `close()`，长跑任务里内存没有单调增长。
+- [ ] `Document` 对象用 `with` 或显式 `close`，长跑任务里内存没有单调增长。
 - [ ] 提取结果为空时，第一步先确认**是不是扫描件**，而不是去调参数。
 - [ ] 需要 OCR 时，Tesseract 与对应语言数据已装好，并验证了 `get_textpage_ocr(language=...)` 能跑通。
-- [ ] 要提取图表时确认了它是位图还是矢量——矢量的走 `get_pixmap()`。
-- [ ] 脱敏场景**调用了 `apply_redactions()`**，并且用复制粘贴 / 文本提取验证过内容确实取不出来了。
+- [ ] 要提取图表时确认了它是位图还是矢量——矢量的走 `get_pixmap`。
+- [ ] 脱敏场景**调用了 `apply_redactions`**，并且用复制粘贴 / 文本提取验证过内容确实取不出来了。
 - [ ] 同一页要反复提取多个格式时，复用了 `TextPage` 对象。
 - [ ] 加中文文本 / 水印时用了支持中文的字体，验证过输出没有方块。
 - [ ] 用 `pymupdf4llm` 时确认它已单独安装，并且知道它和核心包是分开授权的。

@@ -2,7 +2,7 @@
 name: sanjianke-portrait-studio
 slug: sanjianke-portrait-studio
 displayName: 三剪客 · 头像写真工坊
-description: "给人像照或人设描述加一个内置风格包，批量产出成套的头像与写真：头像 1:1、社交封面 3:4、横版 16:9，按「风格包 × 比例 × 变体」展开成矩阵。走 api.a7w.cn 的 nano_banana，零依赖，成本前置，断点续跑跳过已完成图，改提示词会重出重扣。六道本地硬闸门：比例真伪（读真实像素不信自报值，上游按 32 对齐、3:4 与 16:9 给不出精确比例，配 --snap 裁剪）、人物合规（公众人物/政治人物/明星的姓名与特征词拦截，未成年人一律不做）、恶俗与违背物理词表、成本上限、照抄示例检测、--outdir 指到包内直接拒绝。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+description: "给人像照或人设描述加一个内置风格包，批量产出成套的头像与写真：头像 1:1、社交封面 3:4、横版 16:9，按「风格包 × 比例 × 变体」展开成矩阵。走 api.a7w.cn 的 nano_banana，零依赖，成本前置，断点续跑跳过已完成图，改提示词会重出重扣。六道本地硬闸门：比例真伪（读真实像素不信自报值，配 --snap 裁剪）、人物合规（公众人物/政治人物/明星的姓名与特征词拦截，未成年人一律不做）、恶俗与违背物理词表、成本上限、照抄示例检测、--outdir 指到包内直接拒绝。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 version: 1.0.8
 summary: "头像与写真最难的不是能不能生成，而是怎么成套：单张好看的图谁都能出，但个人 IP 主页要的是头像、封面、横图摆在一起像一个人的作品。本包把它做成矩阵：六个内置风格包（商务、文艺、黑白棚拍、霓虹、胶片、国风）各自钉死光线、背景、着装、后期；三种比例（1:1 / 3:4 / 16:9）各带安全区口径。styles 看风格包、plan 出方案、cost 只算钱都零网络零成本，只有 gen 真花钱且先报价。真机实测：走 nano_banana 的两步异步任务（submit + /api/v1/tasks/<task_id>）；1K = 24 点/张 = 0.24 元，结算只认 usage.points_cost（提交时 frozen_points=31.2 是预冻结，实扣 24）。比例闸门读文件头真实像素：3:4 实得 864x1184（偏差 2.70%）、16:9 实得 1344x768（1.56%），--snap 后偏差均 0.00%。人物合规是本包特有的硬闸门：公众人物、政治人物、明星一律拦，未成年人不做。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
@@ -173,7 +173,6 @@ python3 scripts/run.py gen --plan plan.json --outdir ./out \
 
 给了 `--photo-url` 就是 `action=edit`（图生图），参考图地址直接透传给上游。
 
-> ⚠️ **上游只接受公网可访问的 HTTP/HTTPS 图片地址。**
 > api.a7w.cn 的 nano_banana 插件只有 `submit` 与 `query` 两个接口，
 > **没有本地文件上传接口**，所以本地照片必须先自己放到可访问的位置再传 URL。
 > 用别人的照片做图生图必须事先取得本人授权——闸门不能替你判断你有没有这个权利。
@@ -368,7 +367,6 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
 结果那个真该被判命的标题恰好漏判——**闸门是假绿的**。同一个错误在出图场景的形态是：
 自报 `aspect_ratio=3:4`，真实像素却是 `1024x1024`。
 
-**实测到的上游特性（重要，这决定了容差怎么定）**：上游不是按比例给像素，
 而是先定总像素、再把每边向下对齐到 32 的倍数。所以 10 种比例里有 5 种拿不到
 像素级精确比例——**本包用到的三种里占两种**：
 
@@ -488,9 +486,7 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
 | `code: 0` 但 HTTP 是 200 | **网关信封里 `code == 1` 才是成功，不是 0** | 看 body 里的 `msg`；脚本已按这个口径判断，别改成 `code == 0` |
 | 轮询一直读不到状态、最后超时 | **`status` 在 `data` 顶层，不在 `data.result` 里**（平台文档写错） | 脚本已按实测结构取；别看文档改回去 |
 | `当前请求未命中可用计费规格` | `model` 与 `resolution` 组合不支持（如普通模型传 `2K`） | 普通 `nano-banana` 只支持 `1K`；要高清档换 `nano-banana-2:official` 之类 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很频繁** | 脚本已内置退避重试（4 次）。连续失败就换模型或降低批次 |
 | 轮询一直 `processing` | 任务卡住了 | 已设 `--poll-timeout`（默认 600 秒）上限；超时会报出来并保留 `task_id`，可 `python3 scripts/a7w.py task <task_id>` 续查 |
-| 图片真实像素和请求比例对不上（差 1%~3%） | **上游按 32 对齐**，不是 bug | 加 `--snap` 精确裁；或把 `--ratio-tolerance` 放宽 |
 | `读不出真实像素` | 下载被截断，或不是图片 | 删掉那条断点记录重出（`--force`），或检查网络 |
 | `预估 N 点超过预算上限` | 超了 `--budget` | 提高预算、减少张数，或先 `cost` 试算 |
 | `2K 档没有实测单价，拒绝凭猜估算` | 我们没有 2K/4K 的实测价 | 给 `--points-per-image` 指定单价，或先用 1K 出 |
@@ -527,7 +523,6 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
   （例如跑到一半才发现比例不合格），`ok` 就写在那个结果里，退出码不变
 - 人读文案照旧走 stderr；**退出码语义一个都不变**；非 `--json` 模式输出与以前完全一致
 - `--json` 写在子命令**前面或后面都可以**
-
 
 ## 成本口径
 
@@ -593,7 +588,6 @@ sanjianke-portrait-studio/
 
 - 算力集市 api.a7w.cn（注册领 Key）：https://api.a7w.cn/
 - 风格包与提示词写法：`references/style-packs.md`
-- 平台尺寸规范与上游像素实测：`references/platform-specs.md`
 - 计费口径与排错：`references/cost-and-troubleshooting.md`
 
 ---

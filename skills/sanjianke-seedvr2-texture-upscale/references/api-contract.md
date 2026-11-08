@@ -1,23 +1,20 @@
-# 接口契约（实测）
-
-> 来源：`GET /api/v1/gpu/apps` 返回的 69 个应用之一（`total: 69`，`markup: 1.5`）。
+# 接口契约
 
 ## 应用
 
 | 字段 | 值 |
 |---|---|
 | workflow_id | `wf_793369d0ec928d73a2d9` |
-| 标题 | SeedVR2无缝贴图素材放大 |
+| 名称 | SeedVR2无缝贴图素材放大 |
 | 类型 | 图片 |
-| 上游报价 | ¥0.04 |
-| 本站 | 6.0 点（¥0.06）|
+| **每次** | **13.5 点（0.135 元）** |
 
-## 四个端点
+## 端点
 
 ```
 GET  /api/v1/gpu/apps                        应用清单（69 个）
 GET  /api/v1/gpu/apps/<workflow_id>/schema    参数
-POST /api/v1/gpu/assets                       上传素材（免费）
+POST /api/v1/gpu/assets                       上传素材
 POST /api/v1/gpu/apps/<workflow_id>/run       提交 {"inputs":{...}}
 GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 ```
@@ -26,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n31_image` | 输入图片 | image_input | 是 |  |
+| `n31_image` | 输入图片 | image_input | 是 | |
 
 ## 返回
 

@@ -9,7 +9,6 @@
 POST https://api.a7w.cn/api/v1/apps/<应用代号>/<接口代号>
 ```
 
-> ⚠️ **不要用平台的 `endpoint_path` 字段拼 URL。** 它对某些应用是错的上游路径
 > （如 `seedance` 给的是 `/ant/xxx`、`smart_clip` 给的是 `/v1/clip/xxx`），照着拼打不通。
 > 两个代号都来自接口返回的 `code` 字段。
 
@@ -91,7 +90,6 @@ python3 scripts/a7w.py points
 ```
 
 - 任务列表的结算字段是 **`actual_points`**。
-- **`page_size` 会被上游忽略**，翻页请用 `--page-no`。
 
 ## 参数从哪来
 

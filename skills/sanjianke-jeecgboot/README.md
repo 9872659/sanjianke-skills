@@ -6,11 +6,9 @@
 
 ## 前置条件
 
-- **前端**：Node.js **20+**（上游说明 Vite 不再支持已 EOL 的 Node 18，需要用 20.19+ 或 22.12+），npm 或 pnpm（pnpm 要求 9+）。
 - **后端**：Java（默认 JDK17，同时支持 JDK8 / JDK21）、Maven；IDE 建议 IntelliJ IDEA，**必须安装 lombok 插件**。
 - **数据库**：MySQL 5.7+。平台**只提供 MySQL 建库脚本**，用 PostgreSQL / Oracle / SQL Server / MariaDB / 达梦 / 人大金仓 / TiDB / kingbase8 需要先自行转库。
 - **缓存**：Redis。
-- **分支选择**：新项目从 SpringBoot3 分支起步；基于 SpringBoot2 的分支上游已声明不再维护，仅用于兼容存量项目。
 - **授权认知**：开源版为 Apache-2.0 附加补充条款，允许商用，但不得用于开发可能与本软件竞争的产品。
 
 ---

@@ -19,8 +19,6 @@ tags:
 
 它的形态是一个**集成进 SpringBoot 项目的报表引擎**：引入 starter 依赖、执行一次初始化 SQL、启动项目，就能在设计器里像搭积木一样拖单元格、配数据源、绑字段，做完直接预览和打印。同一套体系下还有大屏与仪表盘设计器，以及一个对话式的数据分析模块。
 
-**上游项目**：`jimureport`　**仓库**：https://github.com/jeecgboot/jimureport
-
 > 版本信息：仓库 README 头部标注的版本号为 v2.5.2。starter 的 artifactId 与版本号在不同 SpringBoot 大版本下**不一样**，务必按你项目的 SpringBoot 版本对照官方集成文档选依赖，不要照抄另一个版本的坐标。
 
 ## 什么时候用 / 不用

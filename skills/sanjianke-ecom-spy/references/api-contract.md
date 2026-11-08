@@ -55,7 +55,6 @@ Content-Type: application/json
 | `page` | string | 否 | 页码，默认 1 |
 | `sort` | string | 否 | `general` / `popularity_descending` / `time_descending` / `comment_descending` / `collect_descending` |
 | `noteType` | string | 否 | 笔记类型：`_0` 通用 / `_1` 视频 / `_2` 图文（也可用 `note_type`） |
-| `noteTime` | string | 否 | 发布时间筛选（按上游约定传值，也可用 `note_time`） |
 
 ### 5. `xhs_note_detail` · 小红书笔记详情 · `xhs-note`
 
@@ -94,16 +93,12 @@ Content-Type: application/json
 
 ```json
 "/api/v1/apps/watermark_removal/*": {
-  "mode": "flat", "cost": 100, "markupPercent": 0,
-  "note": "去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"
+  "note": "去水印/分享链解析：固定 100 点/次"
 }
 "/api/v1/apps/watermark_removal/remove": {
-  "mode": "flat", "cost": 100, "markupPercent": 0,
-  "note": "去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"
+  "note": "去水印/分享链解析：固定 100 点/次"
 }
 "*": {
-  "mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-  "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"
 }
 ```
 
@@ -111,7 +106,6 @@ Content-Type: application/json
 
 - 同一个价：搜一条、搜一百条、看详情、取地址，都是 100 点。
 - 与素材时长、返回条数无关。
-- `note` 里的「上游按请求 20 点」是平台侧成本，「**失败亦计**」意思是上游对失败请求也计点 ——
   本包据此**不做任何 POST 探针**（见第五节）。
 - 应用级还有 `submit` / `create` 两条 `cost:0` 的规则，但该应用**没有**这两个接口
   （`GET /api/v1/apps` 的 8 个 code 里没有它们），属历史遗留键，用不到。
@@ -149,7 +143,7 @@ Content-Type: application/json
 5. 时长优先 `duration`，其次 `video.duration`；大于 1000 视为毫秒，自动除以 1000。
 
 原始响应**整份落盘**在快照里（`raw` 字段），解析不到条目时 `_print_collect` 会打印前 800 字，
-`--json` 能拿到完整 `raw`。需要按真实形状补字段时，改 `norm_item()` 一处即可。
+`--json` 能拿到完整 `raw`。需要按真实形状补字段时，改 `norm_item` 一处即可。
 
 ---
 

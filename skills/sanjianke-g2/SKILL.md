@@ -17,8 +17,6 @@ tags:
 
 它是一套"用声明式语句描述图表"的 JavaScript 可视化引擎：你给数据和一份图形语法声明，它把柱子、折线、散点、饼图等常规统计图表渲染到 Canvas / SVG / WebGL 上，并自带坐标轴、图例、Tooltip、缩放等交互。当你需要在网页或数据看板里把结构化数据画出来，且不想为每种图表写一套渲染逻辑时用它。
 
-**上游项目**：`G2`　**仓库**：https://github.com/antvis/G2
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -86,28 +84,28 @@ const data = [
 const chart = new Chart({ container: 'container' });
 
 chart
-  .interval()            // 造一个 interval（柱 / 条）标记
+  .interval            // 造一个 interval（柱 / 条）标记
   .data(data)            // 给这个标记绑数据
   .encode('x', 'genre')  // 把 genre 列映射到 x 通道
   .encode('y', 'sold')   // 把 sold 列映射到 y 通道
   .encode('color', 'genre');
 
-chart.render();
+chart.render;
 ```
 
 **2. 换图表类型：只改 mark**
 
-折线用 `.line()`、面积用 `.area()`、散点用 `.point()`、饼 / 环用 `.interval()` 配合坐标系变换。G2 不按"图表类型"分类，而是按标记（mark）+ 通道编码（encode）组合，所以换图型通常就是换一个 mark 方法。
+折线用 `.line`、面积用 `.area`、散点用 `.point`、饼 / 环用 `.interval` 配合坐标系变换。G2 不按"图表类型"分类，而是按标记（mark）+ 通道编码（encode）组合，所以换图型通常就是换一个 mark 方法。
 
 ```js
 const chart = new Chart({ container: 'container' });
 chart
-  .line()
+  .line
   .data(data)
   .encode('x', 'date')
   .encode('y', 'value')
   .encode('color', 'series');
-chart.render();
+chart.render;
 ```
 
 **3. 配置坐标轴、图例、Tooltip**
@@ -116,7 +114,7 @@ chart.render();
 
 ```js
 chart
-  .interval()
+  .interval
   .data(data)
   .encode('x', 'genre')
   .encode('y', 'sold');
@@ -124,7 +122,7 @@ chart
 chart.axis('y', { title: '销量' });
 chart.legend('color', { position: 'top' });
 chart.tooltip({ title: 'genre' });
-chart.render();
+chart.render;
 ```
 
 **4. 用数据变换做聚合**
@@ -133,38 +131,38 @@ G2 内置了 transform 机制，可以在声明里直接做分组、堆叠、排
 
 ```js
 chart
-  .interval()
+  .interval
   .data(data)
   .transform({ type: 'stackY' })
   .encode('x', 'month')
   .encode('y', 'value')
   .encode('color', 'category');
-chart.render();
+chart.render;
 ```
 
 **5. 多视图 / 复合视图**
 
-用 `chart.view()` 在同一个容器里组织多个视图，用于分面、双轴、局部放大等场景。示例结构（以官方 API 文档为准）：
+用 `chart.view` 在同一个容器里组织多个视图，用于分面、双轴、局部放大等场景。示例结构（以官方 API 文档为准）：
 
 ```js
 const chart = new Chart({ container: 'container' });
-const view = chart.view();
+const view = chart.view;
 view
-  .interval()
+  .interval
   .data(data)
   .encode('x', 'genre')
   .encode('y', 'sold');
-chart.render();
+chart.render;
 ```
 
 **6. 响应容器尺寸变化**
 
-容器尺寸变化后需要让图表重新计算布局，调用 `chart.forceFit()` 之类的自适应方法（方法名与行为以官方文档为准），或者销毁重建。别只改 DOM 尺寸而不通知图表，否则会出现内容错位或被裁切。
+容器尺寸变化后需要让图表重新计算布局，调用 `chart.forceFit` 之类的自适应方法（方法名与行为以官方文档为准），或者销毁重建。别只改 DOM 尺寸而不通知图表，否则会出现内容错位或被裁切。
 
 **7. 销毁图表释放资源**
 
 ```js
-chart.destroy();
+chart.destroy;
 ```
 
 在单页应用里切换路由或重渲染组件时，务必销毁旧实例，否则旧图表的监听和画布会残留。
@@ -173,11 +171,11 @@ chart.destroy();
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| 图表空白，容器有尺寸但没内容 | 容器元素不存在、尺寸为 0，或 `render()` 之前 DOM 还没挂载 | 确认 `container` 选择器能取到元素且宽高非 0；在 DOM 就绪后再创建并渲染 |
+| 图表空白，容器有尺寸但没内容 | 容器元素不存在、尺寸为 0，或 `render` 之前 DOM 还没挂载 | 确认 `container` 选择器能取到元素且宽高非 0；在 DOM 就绪后再创建并渲染 |
 | 从仓库 README 复制的示例跑不通 | 默认分支上的 README 示例与 npm 上 latest 的大版本不是同一套 API（v4 与 v5 的写法差异很大） | 以所装版本的官方文档为准，先 `npm ls @antv/g2` 确认实际装到的大版本 |
 | 容器缩放后图表被裁切或错位 | 图表按创建时的尺寸算布局，容器变化后没有通知它 | 监听容器尺寸变化并调用自适应方法，或销毁后按新尺寸重建 |
 | 图表在弹窗 / 隐藏标签页里初始化后显示异常 | 初始化时容器不可见、宽高为 0，布局算出了 0 尺寸 | 等容器可见后再初始化；或显式传入宽高 |
-| 单页应用反复切换页面后内存持续上涨 | 旧图表实例没有销毁，画布和事件监听被保留 | 组件卸载 / 路由离开前调用 `destroy()` |
+| 单页应用反复切换页面后内存持续上涨 | 旧图表实例没有销毁，画布和事件监听被保留 | 组件卸载 / 路由离开前调用 `destroy` |
 | 升级依赖后整页图表全挂 | 跨大版本升级（v3 → v4 → v5）API 不兼容 | 锁定大版本区间；升级前先读官方迁移说明，逐个图表改造 |
 | 大量数据点导致页面卡顿 | 点数过多或渲染器选择不合适 | 做数据聚合 / 抽样，或切换更合适的渲染方式（Canvas / WebGL），必要时减少动画与交互 |
 | 图例、坐标轴文字被截断 | 边距不足或标签过长 | 调整容器尺寸与边距，或配置标签换行 / 省略策略 |
@@ -251,7 +249,7 @@ chart.destroy();
 
 - [ ] 逐个图型确认渲染结果与数据对得上（尤其是分组、堆叠、时间轴）
 - [ ] 确认容器尺寸变化、弹窗打开、路由切换等场景下图表显示正常
-- [ ] 组件卸载时确认调用了 `destroy()`，无内存泄漏
+- [ ] 组件卸载时确认调用了 `destroy`，无内存泄漏
 - [ ] 确认没有把示例里的占位容器 ID 直接留在生产代码里
 - [ ] 记录实际使用的版本号，便于后续排查
 

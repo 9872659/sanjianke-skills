@@ -18,8 +18,6 @@ tags:
 
 它的核心承诺是「像在笔记本上写模型一样写分布式模型」：并行策略写在一个配置文件里，模型结构基本不动，靠 `colossalai run` 拉起进程组，由框架去处理张量怎么切、流水线怎么分、显存怎么省。
 
-**上游项目**：`ColossalAI`　**仓库**：https://github.com/hpcaitech/ColossalAI
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -166,8 +164,8 @@ parallel = dict(
 ```python
 import colossalai
 
-parser = colossalai.legacy.get_default_parser()
-args = parser.parse_args()
+parser = colossalai.legacy.get_default_parser
+args = parser.parse_args
 colossalai.legacy.launch_from_torch(config=args.config)
 ```
 
@@ -262,7 +260,6 @@ colossalai run --nproc_per_node 4 auto_parallel_with_resnet.py
 - `gemini_auto` 那类显存兜底方案是拿速度换显存，卸载比例越高越慢，别把它当免费的显存扩容。
 - 自动并行与自动激活检查点属于实验性特性，官方明确不保证在你手上的版本可用。
 - 并行策略选型本身需要并行计算经验：切分维度、流水线层数、微批次数量之间互相牵制，框架不会替你自动选到最优解。
-- 上游仓库演进较快，示例目录结构、脚本名与配置字段可能随版本调整；执行以仓库当前 README 与 `colossalai --help`（以及对应版本的官方文档）为准。具体版本号与发布时间不做断言。
 
 ## 自检清单
 

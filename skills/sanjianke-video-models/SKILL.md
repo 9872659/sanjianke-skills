@@ -61,7 +61,6 @@ POST /api/v1/videos/generations  {"model":"kling-4-0"}
 
 **三、单价只能反推，价目表里没有。** `GET /api/v1/pricing` 的 115 条规则里没有
 `/api/v1/videos/generations`，整张表没有 `modelPricing` 键；模型层命中的是通配
-`*`：对外 = 上游实际点数 x 2、单笔保底 50 点。所以真实单价只在
 `GET /api/v1/me/tasks` 的 `actualPrice` 里 —— 按 `model` 归集，跑过标 `source=live`，
 没跑过用同路 16 笔区间标 `source=baseline`，**不编单价**。
 
@@ -150,7 +149,6 @@ run-20261108-101500/
 ## 免责
 
 - 单价按「点/条」计，实际以 `GET /user/balance/logs` 与 `me/tasks` 的 `actualPrice` 为准。
-- 上游按模型预冻结，任务失败全额退回；成片链接约 30 分钟有效，`--wait` 会直接下载到本地。
 - 生成内容的合规责任在使用者：用在合法、有授权的素材与用途上。
 
 ## 联系我们

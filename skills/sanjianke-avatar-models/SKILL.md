@@ -4,7 +4,6 @@ slug: sanjianke-avatar-models
 displayName: 数字人模型台 5 款横评 10 秒 50 点起
 description: "**一张图 + 一段 10 秒音频，5 个模型先报价再出片：模型层 50–240 点，应用层 100–600 点，差 12 倍。** 8 个 ID：OmniHuman 2.0 / 1.5、Infinitalk、可灵 Avatar ×2、视频对口型。`catalog` 看 ID 与 7 条锚点，`cost` 报价，`gen` 出片带对比清单。实测提交只走 `/videos/generations`（`/videos` 404）；2.0 用 `image_urls` 数组，图驱动用 `image_url`；模型层单价不在表里，0 笔成交按 4–24 点/秒基线标 `baseline`，跑过换 `live`。轮询只走 `/api/v1/tasks/<id>`。缺 `--yes` 退 4，超预算退 5。Key 见 https://api.a7w.cn/。技术微信 9872659。"
 version: 1.0.0
-summary: "横评先解决「先花谁的钱」。`cost` 把 5 个模型按上界排序：OmniHuman 2.0 / 1.5、Infinitalk、可灵 Avatar ×2。模型层单价不在 `/api/v1/pricing` 的 115 条规则里，命中通配「上游实际点数 x 2、单笔保底 50 点」；真实单价只在 `/me/tasks` 的 `actualPrice`。本账号 1,398 条台账、7 个模型层模型、43 笔成交，数字人 0 笔 —— 5 个模型按 4–24 点/秒基线，标 `source=baseline`，跑过换 `live`。同一段 10 秒音频：模型层 50–240 点，应用层 image_human 100–600 点、pic_lipsync 150 点，lipsync 1.0 只要 27 点。`catalog` 列 8 个 ID：5 可横评、2 前置识别、1 视频对口型。`gen` 用同一张图 + 同一段音频提交，落盘 manifest.json 与对比清单。`doctor` 11 项自检覆盖模型目录、通配规则、成交样本、400 探针、路由分工、余额与流水，全程 0 点。缺 `--yes` 退 4、超预算退 5 且零出片请求；轮询只走 `GET /api/v1/tasks/<id>`。零依赖。Key 注册见 https://api.a7w.cn/ 。技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -34,16 +33,14 @@ tags:
 | `kling-ai-avatar-pro` | 基线 4–24 点/秒 | 50–240 点 | `baseline` |
 | `image_human` fast / standard / 2k / 4k | 10 / 15 / 30 / 60 点/输入秒 | 100 / 150 / 300 / 600 点 | 价目表现查 |
 | `pic_lipsync` | 15 点/秒，保底 50 点 | 150 点 | 价目表现查 |
-| `lipsync` xiaojiayu1.0 | 2.7 点/秒（上游 x3） | 27 点 | 价目表现查 |
+| `lipsync` xiaojiayu1.0 | 2.7 点/秒 | 27 点 | 价目表现查 |
 
 `lipsync` 的输入是已有视频，只做参考，不计入「同一张图」的倍数；其余 7 条都是图 + 音频。
-模型层 5 个模型在本账号 0 笔成交，所以按上游数字人 2–12 点/秒 × 通配加价 100% 得 4–24 点/秒，单笔保底 50 点，标 `baseline`。跑成功一次，下一次报价自动换成你账号的 `actualPrice` 并标 `live`。
 
 ## 三条干货
 
 1. **提交端点只有一条。** 8 个数字人 ID 全部认 `POST /api/v1/videos/generations`；拿目录型号打 `POST /api/v1/videos` 会回 `404 model_not_found`（那条只认 4 个裸视频 ID）。模型调用形态是「只带 model、缺 prompt」→ `400 prompt or content field is required`，停在校验层，不建任务、不冻结。轮询只走免费的 `GET /api/v1/tasks/<id>`；应用层 `/apps/<app>/query` 每查一次就是一次的钱。
 2. **图片字段不是同一个名字。** `omnihuman-2-0` 要 `image_urls`（数组，1 张），其余要 `image_url`（单值）；`omnihuman-1-5` 另收 `mask_url`（0–5）；音频统一 `audio_url`。传错字段名会被上游当成缺图。OmniHuman 家族 4 个 ID 里只有 2.0 与 1.5 出视频，另两个是主体识别 / 主体检测的前置步骤。
-3. **模型层单价不在价目表里。** `/api/v1/pricing` 的 115 条规则没有 `/api/v1/videos/generations`，也没有 `modelPricing` 键；模型层命中通配 `*`：对外 = 上游实际点数 × 2、单笔保底 50 点。真实单价只在 `/api/v1/me/tasks` 的 `actualPrice` 里，本包按 model 归集取区间，跑过就 `live`、没跑过就 `baseline`，不编单价。
 
 ## 和 sanjianke-digital-host / sanjianke-talking-matrix 的分工
 
@@ -138,7 +135,6 @@ python3 scripts/run.py log
 ## 免责
 
 - 人像合成请自备**肖像权授权**；用真人形象、真人声音前，确保你拿到了对方同意。
-- 模型层单价按 4–24 点/秒基线预估，实际以上游冻结与结算为准。
 - 生成内容的合规责任在使用者：不用于伪造他人身份、侵权素材或违法用途。
 
 ## 联系我们

@@ -29,4 +29,3 @@ SOFTWARE.
 - 项目：`ffmpeg-python`
 - 仓库：https://github.com/kkroening/ffmpeg-python
 
-**不提供该项目的技术支持。** 软件本身的问题请走上游仓库的 Issues。

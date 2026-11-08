@@ -8,18 +8,18 @@
 
 - Python 环境（本文实测 Python 3.11.9）；官方支持的最低版本以官方安装文档为准。
 - 有本地数据文件（CSV / Parquet / JSON 等）或已在内存里的数据需要处理。
-- 想用 `to_pandas()` 过桥、或读取 Excel / 数据库 / 云存储时，需要额外安装对应的可选依赖。
+- 想用 `to_pandas` 过桥、或读取 Excel / 数据库 / 云存储时，需要额外安装对应的可选依赖。
 - 不需要账号、Key 或注册；核心计算全程本地。
 
 ---
 
 ## 使用
 
-1. 先判断数据量级：小数据用 `read_*` 即时读取最省心；大数据先走 `pl.scan_*` 或 `.lazy()`。
-2. 惰性计划写完一定要 `.collect()`，不然拿到的是查询而不是结果；不确定时先 `.explain()` 看优化后的计划。
+1. 先判断数据量级：小数据用 `read_*` 即时读取最省心；大数据先走 `pl.scan_*` 或 `.lazy`。
+2. 惰性计划写完一定要 `.collect`，不然拿到的是查询而不是结果；不确定时先 `.explain` 看优化后的计划。
 3. 内存吃紧或数据大于内存时，把收集方式改成 `collect(engine="streaming")`。
 4. 变换用表达式写（`pl.col(...)`、`df.select(...)`、`df.filter(...)`、`df.with_columns(...)`），这些方法返回新的 DataFrame，记得接住返回值。
-5. 要和别的库交换数据，用 `to_pandas()` / `to_arrow()` / `to_numpy()`；大结果集转换前先裁剪规模。
+5. 要和别的库交换数据，用 `to_pandas` / `to_arrow` / `to_numpy`；大结果集转换前先裁剪规模。
 6. 要配合 Python `multiprocessing` 时，必须显式用 `get_context("spawn")`。
 
 完整的六块说明（什么时候用 / 不用、安装、常用操作、常见坑、权限与用途说明、能力边界）见 `SKILL.md`。
@@ -32,7 +32,7 @@
 |---|---|
 | Python | `pip install polars` |
 | 平台 | Windows / macOS / Linux |
-| pandas（可选） | 只有 `to_pandas()` / `from_pandas()` 这类互操作才需要 |
+| pandas（可选） | 只有 `to_pandas` / `from_pandas` 这类互操作才需要 |
 | pyarrow / NumPy（可选） | Arrow、NumPy 互操作时使用 |
 | 其它 optional extras | Excel、数据库、云存储、GPU 等按官方安装文档的 Feature flags 一节选择 |
 | 网络 | 核心计算不需要；仅安装可选依赖或读取远端存储时需要 |

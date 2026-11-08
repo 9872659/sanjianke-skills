@@ -10,7 +10,6 @@
 
 | 事实 | 实测值 |
 |---|---|
-| 上传价格 | `POST /api/v1/upload` 的规则是 `{"mode":"flat","cost":0,"markupPercent":0}`，明文写着「上传不计费」 |
 | 上传返回 | `url` / `path` / `name` / `size` / `mime_type` / `type`；实测 252 B 假 mp4 → `video/mp4`、`type=video` |
 | 地址有效期 | **最长 24 小时**，平台可提前回收（文档原文） |
 | 缺 file 探针 | `HTTP 200 {"code":0,"msg":"请使用 file 字段提交一个文件","data":null}` |
@@ -43,7 +42,6 @@
 
 ### 一、`remove` 清理不是免费动作
 
-10 个应用的 remove 是 `cost:0 + markupPercent:100` ——「按上游实际点数 ×2」，价目表不写死单价。
 `watermark_removal/remove` 更特殊：它是这个应用的**主业务**「去水印 / 分享链解析」，固定 **100 点/次**。
 
 所以本包把清理拆成两条命令：`prune` 免费只动本地台账，`release` 计费且必须 `--yes`。
@@ -57,7 +55,6 @@
 
 `createGroup` / `createAsset` / `deleteAsset` 在应用目录里登记了，但 `/pricing` 里没有专属规则，命中 `/api/v1/apps/seedance/*` 这条通配规则 = 固定 11,000 点/次。
 真正入库的字段是文档级的：`createAsset` 要 `URL` + `GroupId` + `AssetType`，先 `createGroup` 拿 `GroupId`。
-其余没有专属规则的接口命中全局通配 `*`：上游实际点数 ×2，单笔保底 50 点。
 
 ---
 

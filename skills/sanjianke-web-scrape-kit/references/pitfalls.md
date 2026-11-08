@@ -151,7 +151,7 @@ async function callWithBackoff(fn, maxAttempts = 5) {
   let delay = 1000;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      return await fn();
+      return await fn;
     } catch (err) {
       const status = err?.status ?? err?.response?.status;
       if (!RETRYABLE.has(status) || attempt === maxAttempts) throw err;
@@ -169,7 +169,7 @@ async function callWithBackoff(fn, maxAttempts = 5) {
 
 要点：
 
-- **加上随机抖动**（`wait * (0.5 + Math.random())`），否则多进程同时退避会在同一时刻一起重试，把限流踩得更死。
+- **加上随机抖动**（`wait * (0.5 + Math.random)`），否则多进程同时退避会在同一时刻一起重试，把限流踩得更死。
 - **异步作业提交失败时不要重复提交。** crawl / batch / agent 支持幂等键，但更稳的做法是先在本地记录「已提交的请求指纹 → jobId」，重试时先查 jobId 而不是重新 POST。
 - **`402` 绝不重试。** 它是额度耗尽，重试一万次也是 402，正确动作是开启按量付费或升级档位。
 
@@ -209,7 +209,6 @@ curl -s -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
 
 ### 3.2 附加费会叠加
 
-| 附加项 | 加价 |
 |---|---|
 | PDF 解析 | +1 credit / PDF 页 |
 | JSON format（LLM 抽取） | +4 credits / 页 |

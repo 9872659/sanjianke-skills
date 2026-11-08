@@ -31,7 +31,7 @@ const loadingTask = getDocument({
 });
 ```
 
-加载任务对象本身有两个常用点：`loadingTask.promise`（拿到文档）和 `loadingTask.destroy()`（用完销毁）。
+加载任务对象本身有两个常用点：`loadingTask.promise`（拿到文档）和 `loadingTask.destroy`（用完销毁）。
 
 ## 二、文档对象（PDFDocumentProxy）
 
@@ -42,13 +42,13 @@ const pdfDoc = await loadingTask.promise;
 
 pdfDoc.numPages                       // 页数
 await pdfDoc.getPage(1)               // 取某一页（从 1 开始）
-await pdfDoc.getMetadata()            // { info, metadata }：info 是文档信息字典，metadata 是 XMP
+await pdfDoc.getMetadata            // { info, metadata }：info 是文档信息字典，metadata 是 XMP
 pdfDoc.canvasFactory                  // canvas 工厂（Node 渲染示例用它创建画布）
 ```
 
-其他与"文档级信息"相关的常用方法（不同版本可能增删，按官方 API 文档核对）：`getOutline()`（书签/大纲）、`getDestinations()`、`getAttachments()`、`getData()`、`getFingerprints()`、`cleanup()`、`destroy()`。
+其他与"文档级信息"相关的常用方法（不同版本可能增删，按官方 API 文档核对）：`getOutline`（书签/大纲）、`getDestinations`、`getAttachments`、`getData`、`getFingerprints`、`cleanup`、`destroy`。
 
-**销毁别忘**：`loadingTask.destroy()` 会释放 worker 与相关资源；长时间运行的服务或单页应用里，不销毁会累积内存。
+**销毁别忘**：`loadingTask.destroy` 会释放 worker 与相关资源；长时间运行的服务或单页应用里，不销毁会累积内存。
 
 ## 三、页面对象（PDFPageProxy）
 
@@ -67,13 +67,13 @@ const renderTask = page.render({
 await renderTask.promise;
 
 // 3) 取文本
-const { items } = await page.getTextContent();
+const { items } = await page.getTextContent;
 
 // 4) 批注、操作符列表（需要更底层处理时用）
-const annotations = await page.getAnnotations();
-const ops = await page.getOperatorList();
+const annotations = await page.getAnnotations;
+const ops = await page.getOperatorList;
 
-page.cleanup();   // 用完释放本页资源
+page.cleanup;   // 用完释放本页资源
 ```
 
 **文本项（items）里有什么**：每个元素是一个文本片段，常用字段包括 `str`（字符串）、`dir`（书写方向）、`width` / `height`（尺寸）、`transform`（变换矩阵，用来算位置与字号）、`fontName`，以及 `hasEOL` 之类的行信息。
@@ -91,7 +91,7 @@ const canvasAndContext = pdfDoc.canvasFactory.create(viewport.width, viewport.he
 
 await page.render({ canvasContext: canvasAndContext.context, viewport }).promise;
 fs.writeFileSync("output.png", canvasAndContext.canvas.toBuffer("image/png"));
-page.cleanup();
+page.cleanup;
 ```
 
 要点：
@@ -174,5 +174,5 @@ PDFViewerApplication.open({ data: new Uint8Array(arrayBuffer) });
 ## 十、容错与不可信输入
 
 - **损坏 PDF**：官方 FAQ 明确会尝试恢复可用数据（页、内容、字体）后显示。恢复结果不保证正确，生产链路里要做好失败兜底。
-- **不可信 PDF**：关掉 `isEvalSupported`；只渲染需要的页；处理完及时 `cleanup()` / `destroy()`；跨域来源要确认对方可信。
+- **不可信 PDF**：关掉 `isEvalSupported`；只渲染需要的页；处理完及时 `cleanup` / `destroy`；跨域来源要确认对方可信。
 - **加密 PDF**：只支持用口令"读"，不涉及解密导出或移除保护。

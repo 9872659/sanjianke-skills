@@ -6,10 +6,9 @@ MoviePy：Python 视频剪辑库 的安装、常用命令与避坑要点
 
 ## 前置条件
 
-- Python 3.9+（上游 `pyproject.toml` 中为 `requires-python=">=3.9"`，README 与 PyPI 表述一致）
 - 装的是 **2.x** 版本：v2 与 v1 的 API 不兼容，代码必须与版本对应；v1 已不再维护
 - ffmpeg 用于视频读写，通常由 imageio 首次使用时自动下载；若要完全离线或指定路径，预先装好并设 `FFMPEG_BINARY`
-- 只有需要 `preview()` 预览播放时才需要 ffplay（通过 `FFPLAY_BINARY` 指定）
+- 只有需要 `preview` 预览播放时才需要 ffplay（通过 `FFPLAY_BINARY` 指定）
 - 需要写字的场景准备一个 OpenType 字体文件（`.ttf` / `.otf`），v2 的 `TextClip` 要的是字体文件路径
 - 服务器环境注意：预览不可用，只能导出；长任务用后台方式跑
 

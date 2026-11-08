@@ -23,12 +23,9 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 拿到一条视频或一段录音，要把它变成文字稿、字幕文件、或者后续做解说的底稿——faster-whisper 就是干这件事的本地识别引擎。它把 Whisper 模型搬到 CTranslate2 这个推理引擎上重写了一遍，官方 README 给的口径是：同等精度下比原版 OpenAI Whisper 快最多约 4 倍，占用内存更低，还能在 CPU 和 GPU 上开 8 位量化再压一截。
 
 它不是一个命令行程序，而是一个 Python 库：写十几行脚本就能批量跑整个素材目录，也能接进自己的出片流水线。要现成的命令行客户端，社区有独立的 CLI 项目，不在这个仓库里。
-
-**上游项目**：`faster-whisper`　**仓库**：https://github.com/SYSTRAN/faster-whisper
 
 ## 零安装用法（推荐先看这个）
 
@@ -142,7 +139,7 @@ for segment in segments:
     print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
 ```
 
-`model.transcribe()` 返回 `(segments, info)`：`segments` 是**生成器**，不遍历就不会真正开始转写（见「常见坑」）。
+`model.transcribe` 返回 `(segments, info)`：`segments` 是**生成器**，不遍历就不会真正开始转写（见「常见坑」）。
 
 **2. 转写并输出 SRT 字幕**
 
@@ -151,19 +148,17 @@ from faster_whisper import WhisperModel
 
 model = WhisperModel("large-v3", device="cuda", compute_type="float16")
 
-
 def ts(t):
     h = int(t // 3600)
     m = int((t % 3600) // 60)
     s = t % 60
     return "%02d:%02d:%06.3f" % (h, m, s)
 
-
 lines = []
 segments, info = model.transcribe("audio.mp3", language="zh", vad_filter=True)
 for i, seg in enumerate(segments, 1):
     lines.append("%d\n%s --> %s\n%s\n" % (
-        i, ts(seg.start).replace(".", ","), ts(seg.end).replace(".", ","), seg.text.strip()))
+        i, ts(seg.start).replace(".", ","), ts(seg.end).replace(".", ","), seg.text.strip))
 
 with open("out.srt", "w", encoding="utf-8") as f:
     f.write("\n".join(lines))
@@ -233,7 +228,7 @@ model = WhisperModel("username/whisper-large-v3-ct2")   # 或 Hub 上的仓库�
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| 代码跑完什么都没输出，或耗时远超预期 | `transcribe()` 返回的 `segments` 是**生成器**，不迭代就不真正开始转写 | 用 `for` 循环消费，或先 `segments = list(segments)`（README 专门标了 Warning） |
+| 代码跑完什么都没输出，或耗时远超预期 | `transcribe` 返回的 `segments` 是**生成器**，不迭代就不真正开始转写 | 用 `for` 循环消费，或先 `segments = list(segments)`（README 专门标了 Warning） |
 | 转写结果出现大段重复、时间轴跑飞 | 长音频里 `condition_on_previous_text` 默认 True，模型被自己的上文带进复读循环 | 长音频或含静音素材设 `condition_on_previous_text=False`；README 的蒸馏模型示例也是这么配的 |
 | GPU 上报找不到 cuBLAS / cuDNN 或版本错 | 只装了 `faster-whisper`，没装 CUDA 12 对应的 cuBLAS 与 cuDNN 9；或本地是 CUDA 11 / cuDNN 8 | 按 README 装 `nvidia-cublas-cu12` 与 `nvidia-cudnn-cu12==9.*` 并设好 `LD_LIBRARY_PATH`；老环境按 README 降级 `ctranslate2` 到 `3.24.0`（CUDA 11 + cuDNN 8）或 `4.4.0`（CUDA 12 + cuDNN 8） |
 | Linux 上 pip 装了 NVIDIA 库仍然报错 | `LD_LIBRARY_PATH` 必须在启动 Python **之前**导出，运行中设置无效 | 在 shell 里先 `export LD_LIBRARY_PATH=...` 再 `python your_script.py` |
@@ -308,7 +303,7 @@ model = WhisperModel("username/whisper-large-v3-ct2")   # 或 Hub 上的仓库�
 
 ## 已知限制
 
-1. `transcribe()` 的 `segments` 是生成器，忘记消费就等于没跑——这是最容易踩的一条。
+1. `transcribe` 的 `segments` 是生成器，忘记消费就等于没跑——这是最容易踩的一条。
 2. 精确时间戳依赖 `word_timestamps=True`，而它的默认值是 `False`；分段级时间戳默认就有。
 3. `vad_filter` 在 `WhisperModel.transcribe` 里默认关闭，但在批处理管线里默认开启，两处默认值不一致，换接口时要重新确认。
 4. `condition_on_previous_text=True` 的默认设置在长音频上容易复读，README 建议这类场景关掉。

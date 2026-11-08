@@ -435,7 +435,7 @@ mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt
 retryPolicy.maxAttempts(3)
            .backoff(base, multiplier, jitter)
            .retryOn(IOException.class)      // 只重试网络类
-           .build();
+           .build;
 ```
 
 **和模型侧的关系**：把模型侧统一指向一个兼容网关之后，网关本身可能有自己的重试与限流行为。

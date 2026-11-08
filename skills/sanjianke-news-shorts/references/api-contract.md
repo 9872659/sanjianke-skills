@@ -50,8 +50,6 @@
 
 ```json
 "/api/v1/apps/smart_clip/*": {
-  "mode": "per_second", "perSecond": 4.5, "estimate": 45, "markupPercent": 0,
-  "note": "…实测上游按秒… realman_broadcast 实测 1.5 点/秒（body 带 duration=15 → 上游 22.5 点），
            对外价 = 1.5 x 3 = 4.5 点/秒（15 秒 = 67.5 点）；body 不带 duration 时用 estimate 45 点预冻结…
            四个 api（template / template_detail / realman_broadcast / broadcast_mixcut / news_mixcut）同价"
 }
@@ -141,8 +139,6 @@
 
 返回 `data.audio_url`。
 
-**计费**：`/api/v1/pricing` 里 `/api/v1/apps/voice_tts/*` 是 `mode=flat, cost=0, markupPercent=200`，note 原文「对外价 = 上游实际点数 x 3，单笔保底 > 0」。实测基准：`tts_live` 33 字上游 1.98 点 → 我方 5.94 点，本包按 **0.18 点/字**估，实际以返回的 `usage.points_cost` 为准。
-
 ---
 
 ## 五、`POST /api/v1/apps/media_services_33/music_generate` · 配乐
@@ -151,8 +147,6 @@
 {"model": "V6", "custom_mode": false, "instrumental": true,
  "prompt": "新闻快讯片头感：短促电子鼓点加铜管重音，118 BPM，8 秒一个循环，收尾干净"}
 ```
-
-**计费**：该路径没有专属规则，落通配 `*`：`{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50}`，即 **上游实际点数 x 2、单笔保底 50 点**。返回里可能有 `audio_url`，也可能只有 `task_id`（用 `GET /api/v1/tasks/<id>` 取）。
 
 ### media_services_33 在架的 29 个接口（`GET /api/v1/apps` 现查）
 
@@ -220,8 +214,7 @@
 
 ```json
 "/api/v1/apps/watermark_removal/*": {
-  "mode": "flat", "cost": 100, "markupPercent": 0,
-  "note": "去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"
+  "note": "去水印/分享链解析：固定 100 点/次"
 }
 ```
 

@@ -18,8 +18,6 @@ tags:
 
 对 Agent 来说它最实用的两个面：一是**给人看**的默认输出，二是 `--structure` 挑模块和 `--format json` 出机器可读结果——后者可以直接接进后续处理，比截图靠谱。
 
-**上游项目**：`fastfetch`　**仓库**：https://github.com/fastfetch-cli/fastfetch
-
 ## 什么时候用 / 不用
 
 **用它**：

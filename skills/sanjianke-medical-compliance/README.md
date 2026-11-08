@@ -51,8 +51,8 @@ python3 scripts/run.py check --text "一次见效，永久不反弹，有效率 
 | 工序 | 接口 | 单价 |
 |---|---|---|
 | 出图 | `POST /api/v1/images/generations` | **6 点/张**（与尺寸、格式无关） |
-| 配音 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字**（上游真实点数 x3） |
-| 图片口播 | `POST /api/v1/apps/pic_lipsync/submit` | **15 点/秒**（上游 3 点/秒 x5，声明保底 50 点） |
+| 配音 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字** |
+| 图片口播 | `POST /api/v1/apps/pic_lipsync/submit` | **15 点/秒** |
 | 成片 | `POST /api/v1/apps/full_video/submit` | 480P 14 / 768P 28 / **1080P 60** / 2K 80 / 4K 80 点/秒 |
 | 上传 | `POST /api/v1/upload` | **0 点**（cost:0） |
 | 查任务 | `GET /api/v1/tasks/<task_id>` | **0 点** |

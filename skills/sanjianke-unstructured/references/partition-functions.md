@@ -1,6 +1,6 @@
 # 各格式的分区函数与参数
 
-`unstructured` 里每种格式都有自己的分区函数；不确定格式就用 `partition()`，
+`unstructured` 里每种格式都有自己的分区函数；不确定格式就用 `partition`，
 它靠 libmagic 探测类型（探测不到时退回扩展名）再路由到对应函数。
 
 ## 格式 → 函数对照
@@ -95,5 +95,5 @@ pptx_elements = partition_pptx(filename="b.pptx")
 xlsx_elements = partition_xlsx(filename="c.xlsx")
 ```
 
-多格式混批时，先按扩展名映射到函数表，或统一走 `partition()`——
+多格式混批时，先按扩展名映射到函数表，或统一走 `partition`——
 记得把那批文件里出现过的所有 extras 都装上。

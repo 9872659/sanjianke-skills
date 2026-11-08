@@ -101,12 +101,11 @@ Content-Type: multipart/form-data   ← curl 用 -F 自动设置，不要手写
 | `prompt` | 是 | 想怎么改图 |
 | `image` | 是 | 参考图文件；多张时重复传 `image[]`，**每次最多 20 张** |
 | `mask` | 否 | 蒙版文件（当提示，不保证严格贴合边界）|
-| `markup` | 否 | 标注层文件（透明背景 PNG，只对第一张生效）|
 | 其他 | 否 | `size`/`n`/`response_format`/`output_format`/`output_compression`/`background`/`quality` 同文生图 |
 
 整个请求建议 **不超过 50 MB**。
 
-### 标注层（`markup`）要求
+### 标注层（``）要求
 
 - 只对**第一张图**生效，其他图仍作参考图
 - 必须是**含透明像素的 PNG**，宽高与第一张图相同
@@ -200,7 +199,6 @@ data: {"type":"image_generation.completed","b64_json":"iVBORw0KGgo...","usage":{
 | `output_format=gif` | 支持；帧数/时长/尺寸由模型决定；偶尔只出静态 PNG |
 | `output_format=svg` | 返回 **400**；**不支持 SVG** |
 | `complexity` / `frame_count` / `frame_duration_ms` / `moderation` / `partial_images` / `input_fidelity` | **传了不报错，但不起作用** |
-| `markup` 的 `file_id` | 不支持 |
 
 ---
 
@@ -215,7 +213,6 @@ data: {"type":"image_generation.completed","b64_json":"iVBORw0KGgo...","usage":{
 | `n` 超范围 | 400 | `n` | expected an integer in [1, 4] |
 | `output_compression` 超范围 | 400 | `output_compression` | expected an integer in [0, 100] |
 | 图片无法解析 | 400 | `image` | Invalid input image: ... |
-| 标注层不合格 | 400 | `markup` | markup must be a PNG with transparent pixels |
 | **缺 `prompt`** | **422** | | **String should have at least 1 character** |
 | 模型名写错 / 无权限 | 404 | | The model `xxx` does not exist or you do not have access to it |
 

@@ -20,8 +20,6 @@ tags:
 
 `zoxide` 的做法是持续记录你去过哪些目录、去了多少次、最近一次是什么时候，然后按这个排名让你用关键词跳转。它不是把 `cd` 换掉，而是叠在 `cd` 之上：装一个二进制、在 shell 配置里加一行初始化、之后正常 `cd`，剩下的交给它自己学。
 
-**上游项目**：`zoxide`　**仓库**：https://github.com/ajeetdsouza/zoxide
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -217,7 +215,6 @@ zoxide query --list | wc -l   # 记录条数
 
 ## 依赖条件
 
-- 官方提供 Linux（含 musl 静态构建）、macOS、Windows 各架构的预编译包，以及官网/上游给出的安装脚本；走包管理器时版本以该仓库为准（先用 `zoxide --version` 确认）
 - 从源码构建需要 Rust 工具链（`cargo install zoxide --locked`）
 - 必须做一次 shell 初始化，且初始化行要加在**实际被加载**的 shell 配置文件里
 - `zi` 及 `query --interactive` 需要一个模糊选择器（如 fzf），且版本要满足官方最低要求

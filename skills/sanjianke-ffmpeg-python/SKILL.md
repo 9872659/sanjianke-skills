@@ -18,8 +18,6 @@ FFmpeg 几乎什么都能干，但它的命令行在滤镜图上会迅速失控�
 
 它是个**纯 Python 封装**，自己不含任何编解码能力，FFmpeg 本体必须另外装好并在 `PATH` 里。它的长处也不是「支持更多格式」——格式多少完全取决于你装的 FFmpeg——而是**让复杂信号图变得可读、可组合、可复用**。
 
-**上游项目**：`ffmpeg-python`　**仓库**：https://github.com/kkroening/ffmpeg-python
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -100,9 +98,9 @@ import ffmpeg
 (
     ffmpeg
     .input('input.mp4')
-    .hflip()
+    .hflip
     .output('output.mp4')
-    .run()
+    .run
 )
 ```
 
@@ -122,16 +120,16 @@ overlay_file = ffmpeg.input('overlay.png')
         in_file.trim(start_frame=10, end_frame=20),
         in_file.trim(start_frame=30, end_frame=40),
     )
-    .overlay(overlay_file.hflip())
+    .overlay(overlay_file.hflip)
     .drawbox(50, 50, 120, 120, color='red', thickness=5)
     .output('out.mp4')
-    .run()
+    .run
 )
 ```
 
-**3. 用内置简写之外的滤镜：`.filter()`**
+**3. 用内置简写之外的滤镜：`.filter`**
 
-库内只给一部分常用滤镜做了函数简写，其余滤镜统一走 `.filter()`：
+库内只给一部分常用滤镜做了函数简写，其余滤镜统一走 `.filter`：
 
 ```python
 stream = ffmpeg.input('dummy.mp4')
@@ -148,7 +146,7 @@ ffmpeg.run(stream)
     .input('dummy.mp4')
     .filter('fps', fps=25, round='up')
     .output('dummy2.mp4')
-    .run()
+    .run
 )
 ```
 
@@ -161,7 +159,7 @@ ffmpeg.run(stream)
     ffmpeg
     .input('in.mp4')
     .output('out.mp4', **{'qscale:v': 3})
-    .run()
+    .run
 )
 ```
 
@@ -175,11 +173,11 @@ logo = ffmpeg.input('logo.png')
     ffmpeg
     .filter([main, logo], 'overlay', 10, 10)
     .output('out.mp4')
-    .run()
+    .run
 )
 ```
 
-**6. 多输出滤镜：`.filter_multi_output()` / `.split()`**
+**6. 多输出滤镜：`.filter_multi_output` / `.split`**
 
 拆分出来的多路可以用下标分别引用：
 
@@ -192,13 +190,13 @@ split = (
 
 (
     ffmpeg
-    .concat(split[0], split[1].reverse())
+    .concat(split[0], split[1].reverse)
     .output('out.mp4')
-    .run()
+    .run
 )
 ```
 
-这种场景下 `.split()` 是等价的简写；通用写法适用于其他多输出滤镜。
+这种场景下 `.split` 是等价的简写；通用写法适用于其他多输出滤镜。
 
 **7. 字符串表达式：直接引用 FFmpeg 的变量名**
 
@@ -216,16 +214,16 @@ split = (
 **8. 先看会执行什么命令，再决定跑不跑**
 
 ```python
-stream = ffmpeg.input('in.mp4').hflip().output('out.mp4')
-print(stream.get_args())    # 只列出传给 ffmpeg 的参数
-print(stream.compile())     # 第一个元素是可执行文件名
+stream = ffmpeg.input('in.mp4').hflip.output('out.mp4')
+print(stream.get_args)    # 只列出传给 ffmpeg 的参数
+print(stream.compile)     # 第一个元素是可执行文件名
 ```
 
-实测输出形态如下，`compile()` 比 `get_args()` 多了最前面的可执行文件名：
+实测输出形态如下，`compile` 比 `get_args` 多了最前面的可执行文件名：
 
 ```
-get_args()  -> ['-i', 'in.mp4', '-filter_complex', '[0]hflip[s0]', '-map', '[s0]', 'out.mp4']
-compile()   -> ['ffmpeg', '-i', 'in.mp4', '-filter_complex', '[0]hflip[s0]', '-map', '[s0]', 'out.mp4']
+get_args  -> ['-i', 'in.mp4', '-filter_complex', '[0]hflip[s0]', '-map', '[s0]', 'out.mp4']
+compile   -> ['ffmpeg', '-i', 'in.mp4', '-filter_complex', '[0]hflip[s0]', '-map', '[s0]', 'out.mp4']
 ```
 
 排查「参数怎么拼成这样」的时候，这两个方法比翻文档快。
@@ -238,12 +236,12 @@ compile()   -> ['ffmpeg', '-i', 'in.mp4', '-filter_complex', '[0]hflip[s0]', '-m
 input_video = ffmpeg.input('input.mp4')
 input_audio = input_video.audio
 
-processed_video = input_video.video.hflip()
+processed_video = input_video.video.hflip
 
 (
     ffmpeg
     .output(processed_video, input_audio, 'out.mp4')
-    .run()
+    .run
 )
 ```
 
@@ -257,12 +255,12 @@ processed_video = input_video.video.hflip()
 | 脚本跑起来报找不到可执行文件 | 这个库是纯封装，FFmpeg 本体没装或不在 `PATH` 里 | 先在终端敲 `ffmpeg` 验证；没有就按平台装好并配置 `PATH` |
 | 输出视频没有声音 | 某些 FFmpeg 滤镜会丢掉音频流，这是 FFmpeg 本身的行为 | 用 `.audio` / `.video` 分别引用后重新合并；对照 FFmpeg 官方文档确认该滤镜对音频的影响 |
 | 参数名带冒号（`-b:v`、`-qscale:v`）写不出来 | Python 关键字参数不允许冒号 | 用字典展开：`output('out.mp4', **{'qscale:v': 3})` |
-| 调 `.filter()` 时提示没有这个属性 | 只有部分常用滤镜有函数简写，其余要走通用入口 | 用 `ffmpeg.filter(stream, '滤镜名', 参数...)`；滤镜名与参数以 FFmpeg 官方滤镜文档为准 |
-| 多输出滤镜的结果取不出来 | 多输出要用 `filter_multi_output` 才能拿到可下标引用的对象 | 改用 `.filter_multi_output('split')` 或对应的 `.split()` 简写，再用 `split[0]` / `split[1]` 引用 |
-| 命令行为跟预期不符，但看不出哪里错 | 生成的参数是动态拼出来的，肉眼不好判断 | 先 `get_args()` 看参数，再 `compile()` 看完整命令（含可执行文件名），确认无误再 `run()` |
+| 调 `.filter` 时提示没有这个属性 | 只有部分常用滤镜有函数简写，其余要走通用入口 | 用 `ffmpeg.filter(stream, '滤镜名', 参数...)`；滤镜名与参数以 FFmpeg 官方滤镜文档为准 |
+| 多输出滤镜的结果取不出来 | 多输出要用 `filter_multi_output` 才能拿到可下标引用的对象 | 改用 `.filter_multi_output('split')` 或对应的 `.split` 简写，再用 `split[0]` / `split[1]` 引用 |
+| 命令行为跟预期不符，但看不出哪里错 | 生成的参数是动态拼出来的，肉眼不好判断 | 先 `get_args` 看参数，再 `compile` 看完整命令（含可执行文件名），确认无误再 `run` |
 | 路径里有空格或特殊字符导致失败 | 参数是原样传给 FFmpeg 的 | 不要手工拼引号，直接把完整路径作为 Python 字符串传入，交给它处理 |
 | 升级 FFmpeg 后原来能跑的脚本报滤镜参数错误 | 滤镜的参数名与可用性随 FFmpeg 版本变化，这个库只做透传 | 对照你当前 FFmpeg 版本的官方滤镜文档核对参数；必要时锁住 FFmpeg 版本 |
-| 想调的滤镜在这个库里找不到 | 库内只封装了部分滤镜简写 | 用 `.filter()` 直接按 FFmpeg 的滤镜名调用即可，不必等封装补上 |
+| 想调的滤镜在这个库里找不到 | 库内只封装了部分滤镜简写 | 用 `.filter` 直接按 FFmpeg 的滤镜名调用即可，不必等封装补上 |
 
 ## 权限与用途说明
 
@@ -270,9 +268,9 @@ processed_video = input_video.video.hflip()
 |---|---|---|
 | 网络访问 | 否 | 库本身不联网；只有你自己在流程里下载素材或安装 FFmpeg 时才需要网络 |
 | 读取文件 | 是 | 通过 FFmpeg 读取输入的音视频、图片等素材 |
-| 写入文件 | 是 | 通过 FFmpeg 写出输出文件，路径由 `output()` 指定 |
+| 写入文件 | 是 | 通过 FFmpeg 写出输出文件，路径由 `output` 指定 |
 | 凭证 | 否 | 不需要账号或 API Key。本 Skill 不内嵌任何密钥 |
-| 子进程 / 后台常驻 | 是 | `run()` 会启动 FFmpeg 子进程；长转码任务会持续占用 CPU / GPU 直到结束 |
+| 子进程 / 后台常驻 | 是 | `run` 会启动 FFmpeg 子进程；长转码任务会持续占用 CPU / GPU 直到结束 |
 
 ## 触发场景
 
@@ -289,10 +287,10 @@ processed_video = input_video.video.hflip()
 
 - 用 Python 表达式拼装 FFmpeg 调用：输入、输出、滤镜、参数。
 - 复杂有向无环滤镜图，包括多输入与多输出场景。
-- 常用滤镜的函数简写（如裁剪、翻转、叠加、绘制、拼接、拆流等），以及通过 `.filter()` 调用任意 FFmpeg 滤镜。
+- 常用滤镜的函数简写（如裁剪、翻转、叠加、绘制、拼接、拆流等），以及通过 `.filter` 调用任意 FFmpeg 滤镜。
 - 带冒号的特殊参数名（字典展开）与交给 FFmpeg 求值的字符串表达式。
 - 音视频分流处理（`.audio` / `.video`）后再合并。
-- 命令自查：`get_args()` 与 `compile()`。
+- 命令自查：`get_args` 与 `compile`。
 - 链式与逐步两种等价写法。
 
 **不覆盖**：
@@ -300,13 +298,12 @@ processed_video = input_video.video.hflip()
 - 不包含 FFmpeg 本体，也不负责下载或安装它；编解码能力完全取决于你装的 FFmpeg。
 - 不做任何自动化的剪辑决策（自动卡点、智能裁切、场景识别等）。
 - 不解析媒体文件内容，不是 `ffprobe` 的替代品（需要探测信息就用 `ffprobe`）。
-- 不封装 FFmpeg 的全部选项；未封装的部分要自己用通用参数写法或 `.filter()` 表达。
+- 不封装 FFmpeg 的全部选项；未封装的部分要自己用通用参数写法或 `.filter` 表达。
 - 不保证跨 FFmpeg 版本的兼容性：滤镜参数随 FFmpeg 变化，它只做透传。
 - 不提供图形界面或服务端形态。
 
 ## 依赖条件
 
-- Python 环境（用 pip 安装即可；上游 README 未强调特定的最低 Python 版本要求）。
 - **FFmpeg 本体**必须已安装且在 `PATH` 中可调用——这是硬前提。
 - 安装的包名必须是 `ffmpeg-python`，不要装错成 `ffmpeg` 或 `python-ffmpeg`。
 - Windows 上需要从 FFmpeg 官方下载页面获取构建并配置 `PATH`。
@@ -316,8 +313,7 @@ processed_video = input_video.video.hflip()
 
 - 它只是命令行的封装层：FFmpeg 能做什么由你的 FFmpeg 决定，FFmpeg 的坑它也照旧转达。
 - 音频流被滤镜丢弃是 FFmpeg 的固有行为，这个库有意不插手，需要使用者自己处理。
-- 内置滤镜简写只是子集，其余必须走 `.filter()`，参数正确性靠使用者对照 FFmpeg 文档保证。
-- 上游 README 正文中没有给出确定的版本号与发布日期；本 Skill 也不对 star 数、发布时间作断言，请以仓库页面实时信息为准。
+- 内置滤镜简写只是子集，其余必须走 `.filter`，参数正确性靠使用者对照 FFmpeg 文档保证。
 - 该库接口稳定但演进较慢；遇到问题时以仓库 Issue 区与 FFmpeg 官方文档为准。
 
 ## 自检清单
@@ -325,7 +321,7 @@ processed_video = input_video.video.hflip()
 - [ ] 在终端敲 `ffmpeg` 能出版本信息，确认 FFmpeg 已装且在 `PATH` 中。
 - [ ] `pip show ffmpeg-python` 能查到，确认没装错成 `ffmpeg` / `python-ffmpeg`。
 - [ ] 输入文件路径存在且可读；输出目录可写。
-- [ ] 涉及滤镜的操作，先 `get_args()` / `compile()` 看生成的命令是否合理。
+- [ ] 涉及滤镜的操作，先 `get_args` / `compile` 看生成的命令是否合理。
 - [ ] 涉及会丢音频的滤镜时，用 `.audio` / `.video` 分流再合并，并在输出上确认音轨存在。
 - [ ] 带冒号的参数用字典展开写法，不要试图当关键字参数。
 - [ ] 用到的滤镜名与参数已对照当前 FFmpeg 版本的官方滤镜文档。

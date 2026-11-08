@@ -138,7 +138,7 @@ jobs:
           SQUIRRELSCAN_API_KEY: ${{ secrets.SQUIRRELSCAN_API_KEY }}
 
       - name: 上传报告
-        if: always()                                    # 门禁失败时也要留证据
+        if: always                                    # 门禁失败时也要留证据
         uses: actions/upload-artifact@v4
         with:
           name: squirrelscan-report
@@ -147,7 +147,7 @@ jobs:
 
 两个细节：
 
-- **`if: always()`** 很关键。门禁失败后默认后续步骤跳过，报告就丢了——而那正是你最需要看的时候。
+- **`if: always`** 很关键。门禁失败后默认后续步骤跳过，报告就丢了——而那正是你最需要看的时候。
 - **`echo "$HOME/.local/bin" >> "$GITHUB_PATH"`** 在 GitHub 托管 runner 上通常可以省，在自托管 runner 上不能省。
 
 ---
@@ -236,7 +236,7 @@ export SQUIRRELSCAN_API_KEY=...
 
 - **PR 阶段别跑全量。** 每次 commit 全站爬一遍，既慢又容易被目标站限流，还会逼得团队把门禁关掉。
 - **门槛看「回归」不看「绝对值」。** 一个长期 72 分的站，把门槛定在 70 才有意义。
-- **报告要留档。** 至少存 JSON，才能做 `jq` 对比和趋势图；`if: always()` / `when: always` 别忘了。
+- **报告要留档。** 至少存 JSON，才能做 `jq` 对比和趋势图；`if: always` / `when: always` 别忘了。
 
 ---
 
@@ -443,7 +443,7 @@ render = "off"             # 别让云端去渲染别人的站
 - [ ] `--fail-on` 表达式**加了引号**，本地手跑过一次同样的表达式。
 - [ ] 门槛值是**按当前基线标定的**，不是拍的理想值。
 - [ ] 已确认退出码 `2`（回归）和 `1`（故障）在流水线里被分开告警。
-- [ ] 报告用 `if: always()` / `when: always` 留档，失败时也拿得到证据。
+- [ ] 报告用 `if: always` / `when: always` 留档，失败时也拿得到证据。
 - [ ] `SQUIRRELSCAN_API_KEY` 只存在于 CI secret，仓库里 grep 不到明文。
 - [ ] 明确了要不要发布报告（`--no-publish` 或 `[cloud] publish = false`）。
 - [ ] 修复按「全站级 → 单页级」「模板 → 内容」分批推进，每批都重审且带 `--refresh`。

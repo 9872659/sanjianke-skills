@@ -273,7 +273,6 @@ ffmpeg -y -hide_banner -i input.mp4 \
 
 另外两条工程细节，踩过才知道：
 
-- **上游输出已达目标分辨率时，跳过重编码改用 `-c copy -movflags +faststart`**，CPU 消耗几乎为零
 - 产物要做**大小校验**，小于 10 KB 视为失败（空文件被当成成功是最坑的）
 
 ---

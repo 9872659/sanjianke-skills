@@ -41,7 +41,6 @@ Key 本身的问题。去 [api.a7w.cn](https://api.a7w.cn/) 重新创建。
 - 单边 **≤ 3840**
 - 总像素 **655,360 – 8,294,400**
 
-**本包在本地就校验这四条**，正常不会走到上游；如果走到了，说明你的 `--size` 是 `1k`/`2k`/`4k`
 之外的写法但恰好通过了本地校验 —— 请改用标准写法。
 
 ### `出图失败（HTTP 400）n: expected an integer in [1, 4]`
@@ -60,7 +59,6 @@ Key 本身的问题。去 [api.a7w.cn](https://api.a7w.cn/) 重新创建。
 
 本包会打印原始返回。常见原因：
 
-- 上游内容审核拦了（会带说明，**不扣费**）
 - 返回结构变了
 
 **看 `data` 数组长度**：本包打印「请求 N 张 / 实际返回 M 张」。M 为 0 就是没出图，**不会扣费**。
@@ -101,7 +99,7 @@ Key 本身的问题。去 [api.a7w.cn](https://api.a7w.cn/) 重新创建。
 ```python
 import urllib.request
 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-data = urllib.request.urlopen(req, timeout=180).read()
+data = urllib.request.urlopen(req, timeout=180).read
 ```
 
 ### 链接 404 了

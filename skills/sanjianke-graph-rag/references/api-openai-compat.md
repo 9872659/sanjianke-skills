@@ -117,7 +117,7 @@ def post(path, body):
                  "Content-Type": "application/json"},
         method="POST")
     with urllib.request.urlopen(req, timeout=120) as r:
-        return json.loads(r.read().decode("utf-8"))
+        return json.loads(r.read.decode("utf-8"))
 
 def chat(model, messages, **kw):
     body = {"model": model, "messages": messages}

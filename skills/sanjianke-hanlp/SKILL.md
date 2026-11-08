@@ -21,8 +21,6 @@ tags:
 
 它同时给了两条完全不同的接入路径：**RESTful 客户端**只有几 KB，装上就能发请求，模型跑在服务端，适合移动端和轻量集成；**原生 API** 则是把 PyTorch 模型拉到本地自己跑，适合离线、数据不能出网的场景。两者的接口长得非常像，切换成本很低。
 
-**上游项目**：`HanLP`　**仓库**：https://github.com/hankcs/HanLP
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -104,7 +102,7 @@ docs = HanLP(['In 2021, HanLPv2.1 delivers state-of-the-art multilingual NLP tec
 print(docs)
 ```
 
-`hanlp.load()` 的入参是一个常量，常量名本身就说明了它带哪些任务。返回的是一个 `Document`，可以按任务名取字段：
+`hanlp.load` 的入参是一个常量，常量名本身就说明了它带哪些任务。返回的是一个 `Document`，可以按任务名取字段：
 
 | 字段 | 含义 |
 |---|---|
@@ -123,10 +121,10 @@ print(docs)
 **3. 终端里可视化看结果**
 
 ```python
-docs.pretty_print()
+docs.pretty_print
 ```
 
-`Document` 自带 `pretty_print()`，可以在任意等宽字符终端里画出依存树和各任务的对照表。官方提示：非 ASCII 字符在普通终端里可能对不齐，在 Jupyter Notebook 里显示正常；另外**非投射依存树无法可视化，不会被打印出来**。
+`Document` 自带 `pretty_print`，可以在任意等宽字符终端里画出依存树和各任务的对照表。官方提示：非 ASCII 字符在普通终端里可能对不齐，在 Jupyter Notebook 里显示正常；另外**非投射依存树无法可视化，不会被打印出来**。
 
 **4. 换中文单语模型提准确率**
 
@@ -192,7 +190,7 @@ tokenizer.evaluate(SIGHAN2005_PKU_TEST, save_dir)
 | 以为模型也能免费商用 | **代码是 Apache-2.0 可商用，但模型与 RESTful API 采用 CC BY-NC-SA 4.0 非商业协议** | 商业项目上线前先确认授权范围，必要时走上游的商务途径 |
 | 多语种模型在中文上不如预期 | 官方结论：多任务模型常不如对应的单任务模型，多语种模型常不如单语模型 | 中文任务直接换中文单语单任务模型，官方在文档里反复强调这点 |
 | 拿低资源语言要 NER / 成分句法 / 语义角色，效果很差 | 官方 Zero-Shot 提示：UD 覆盖 104 种语言，但 OntoNotes（含 NER、CON、SRL）只覆盖英语、中文、阿拉伯语；其余语言属于零样本，准确率可能非常低 | 这三种任务的非覆盖语言不要指望开箱效果；要么换任务范围，要么自己准备标注数据训练 |
-| `pretty_print()` 在终端里排版错乱 | 非 ASCII 字符在普通等宽终端里宽度算不准 | 在 Jupyter Notebook 里看，或直接用官方的在线演示页 |
+| `pretty_print` 在终端里排版错乱 | 非 ASCII 字符在普通等宽终端里宽度算不准 | 在 Jupyter Notebook 里看，或直接用官方的在线演示页 |
 | 某个句子的依存树没被打印出来 | 官方说明：**非投射依存树不支持可视化**，当前版本不会打印 | 这是已知限制，不是你的代码错了；要看数据就直接读 `doc['dep']` 字段 |
 | 想复现官方公布的小数点，结果差一点点 | 官方承诺固定 seed 后可复现，但依赖底层库版本与运行环境 | 固定 PyTorch 与依赖版本、对齐硬件环境；复现性问题官方当致命 bug 处理，可以提 issue |
 | 拿它去做情感分析 / 分类 / 翻译 | 这些不在 HanLP 的任务范围内 | 换个工具；HanLP 只做标注类任务（分词、词性、NER、句法、语义等） |
@@ -228,7 +226,7 @@ tokenizer.evaluate(SIGHAN2005_PKU_TEST, save_dir)
 - 两种接入方式：RESTful 客户端（远端）与原生 Python API（本地）
 - 官方公布的联合模型覆盖 130 种语言
 - 提供可复现的训练流程，支持自己微调 / 训练核心任务的模型
-- 输出对象自带 `pretty_print()`，可在终端可视化标注结果
+- 输出对象自带 `pretty_print`，可在终端可视化标注结果
 - 另有 Java 与 Golang 的 RESTful 客户端
 
 **不覆盖**：
@@ -243,12 +241,10 @@ tokenizer.evaluate(SIGHAN2005_PKU_TEST, save_dir)
 
 ## 依赖条件
 
-- **Python 3.6 或更高**（上游 README 明确要求）
 - 路线 A：只需 `pip install hanlp_restful`，依赖极轻
 - 路线 B：`pip install hanlp`，会引入 PyTorch / TensorFlow 2.x 这一整套深度学习依赖
 - GPU 或 TPU 加速是**推荐但非必需**，CPU 也能跑（速度慢）
 - 原生路线首次加载模型需要联网下载权重
-- RESTful 路线需要能访问上游的 API 端点；建议申请 auth key
 - **许可分两套**：代码 Apache-2.0（可商用）；模型与 RESTful API 为 CC BY-NC-SA 4.0（非商业）
 - Java 生态另有 1.x 分支的 Java API，与本版本不是同一套实现
 

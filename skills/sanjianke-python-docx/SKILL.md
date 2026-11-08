@@ -19,8 +19,6 @@ python-docx 是一个纯 Python 库，专门用来读、写、改 Word 2007+ 的
 所以它的典型位置是：批量生成报告/合同/台账、往现成模板里填数、把一堆 docx 里的文字和表格抽出来。
 它不是排版引擎，不负责决定「这页够不够放」，也不帮你把 Word 渲染成图片或 PDF。
 
-**上游项目**：`python-docx`　**仓库**：https://github.com/python-openxml/python-docx
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -66,7 +64,7 @@ pip install -r requirements.txt
 ```python
 from docx import Document
 
-doc = Document()                      # 基于默认模板，相当于 Word 新建空白文档
+doc = Document                      # 基于默认模板，相当于 Word 新建空白文档
 doc.add_heading('季度结算说明', 0)     # level=0 是标题（Title）样式
 doc.add_heading('一、总览', level=1)
 doc.add_paragraph('本期共处理 1,284 笔。')
@@ -78,7 +76,7 @@ doc.save('report.docx')
 ```python
 from docx import Document
 
-doc = Document()
+doc = Document
 p = doc.add_paragraph('本期结论：')
 p.add_run('超时率下降').bold = True   # 字符级格式落在 run 上
 p.add_run('，但退单率上升。')          # run 之间不会自动加空格，要自己补
@@ -90,14 +88,14 @@ doc.save('runs.docx')
 ```python
 from docx import Document
 
-doc = Document()
+doc = Document
 table = doc.add_table(rows=1, cols=3)
 table.style = 'Table Grid'            # 不设样式就没有边框
 hdr = table.rows[0].cells
 hdr[0].text, hdr[1].text, hdr[2].text = '单号', '金额', '状态'
 
 for no, amount, status in [('A001', '120.00', '已结'), ('A002', '88.50', '待结')]:
-    cells = table.add_row().cells
+    cells = table.add_row.cells
     cells[0].text, cells[1].text, cells[2].text = no, amount, status
 
 doc.save('table.docx')
@@ -109,7 +107,7 @@ doc.save('table.docx')
 from docx import Document
 from docx.shared import Inches, Cm
 
-doc = Document()
+doc = Document
 doc.add_picture('logo.png', width=Inches(1.25))
 doc.add_picture('chart.png', width=Cm(12))     # 只给一边，等比缩放
 doc.save('with-image.docx')
@@ -123,7 +121,7 @@ from docx import Document
 doc = Document('input.docx')
 
 for i, p in enumerate(doc.paragraphs):
-    if p.text.strip():
+    if p.text.strip:
         print(i, p.style.name, p.text)
 
 for t_i, table in enumerate(doc.tables):
@@ -136,7 +134,7 @@ for t_i, table in enumerate(doc.tables):
 ```python
 from docx import Document
 
-doc = Document()
+doc = Document
 section = doc.sections[0]
 section.header.paragraphs[0].text = '内部资料 · 请勿外传'
 section.footer.paragraphs[0].text = '第 X 页'
@@ -149,7 +147,7 @@ doc.save('hdrftr.docx')
 |---|---|---|
 | `ModuleNotFoundError: No module named 'docx'` | 装的是名为 `docx` 的另一个包，或根本没装成功 | 先清掉冲突包再装本体：`pip uninstall docx python-docx`，然后 `pip install python-docx` |
 | 打开 `.doc` 报 `PackageNotFoundError` / `BadZipFile` | `.doc` 是二进制格式，不是 zip 容器 | 先用转换器转成 `.docx`（例如 `soffice --headless --convert-to docx in.doc`）再处理 |
-| `KeyError` 或样式不生效，如 `List Bullet` / `Intense Quote` 报错 | 这些样式名必须已在模板中定义；`Document()` 默认模板只带一部分 | 用自备模板 `Document('template.docx')`，先在 Word 里把样式建好；名称要与 Word 界面完全一致（含空格） |
+| `KeyError` 或样式不生效，如 `List Bullet` / `Intense Quote` 报错 | 这些样式名必须已在模板中定义；`Document` 默认模板只带一部分 | 用自备模板 `Document('template.docx')`，先在 Word 里把样式建好；名称要与 Word 界面完全一致（含空格） |
 | 只写 `width=2`，图片小到看不见 | 内部单位是 EMU，914400 EMU = 1 英寸，`2` 几乎等于零宽 | 一律用 `from docx.shared import Inches, Cm` 包一层 |
 | 两个 run 拼起来少了空格 | run 之间不会自动插入空白 | 在前一个 run 的字符串末尾显式写空格 |
 | 读取时漏掉表格里的文字 | `doc.paragraphs` 只返回正文段落，不含表格内文本 | 单独遍历 `doc.tables`；表格嵌套时还要往 `cell.tables` 里再走一层 |

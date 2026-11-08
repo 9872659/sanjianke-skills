@@ -19,14 +19,12 @@ tags:
 
 它和"PDF 转 Word""PDF 编辑"不是一类东西：它只做**解析和读取**，产出文本、HTML、XML 或页面元素对象，从不改写原文件。
 
-**上游项目**：`pdfminer.six`　**仓库**：https://github.com/pdfminer/pdfminer.six
-
 ## 什么时候用 / 不用
 
 **用它**：
 
 - "把这个 PDF 的正文抽成 txt，我要丢给大模型做摘要"——`pdf2txt.py` 一条命令就够。
-- "找出这份合同里所有加粗的条款"——`extract_pages()` 能拿到每个字符的 `fontname`、`size`、`bbox`，按属性筛。
+- "找出这份合同里所有加粗的条款"——`extract_pages` 能拿到每个字符的 `fontname`、`size`、`bbox`，按属性筛。
 - "PDF 里的文字按阅读顺序排乱了，我要自己控制段落顺序"——`LAParams` 的 `boxes_flow`、`line_margin` 这类参数就是给这种情况留的。
 - "把 PDF 每页转成带坐标的 XML / HTML 方便做后续抽取"——`--output_type xml` 或 `html`。
 - "是加密 PDF，我知道密码"——`--password` / `extract_text(password=...)` 直接支持 RC4 与 AES。
@@ -141,7 +139,7 @@ for page_layout in extract_pages("input.pdf"):
                 for character in text_line:
                     if isinstance(character, LTChar):
                         # bbox 是 (x0, y0, x1, y1)，y 轴原点在页面左下角
-                        print(character.get_text(), character.fontname,
+                        print(character.get_text, character.fontname,
                               round(character.size, 1), character.bbox)
 ```
 
@@ -161,7 +159,7 @@ dumppdf.py -T input.pdf                   # 只看大纲 / 目录结构
 | 段落顺序乱、左右分栏被串成一坨 | 默认 `boxes-flow=0.5` 是横竖位置折中，双栏排版容易误判 | 双栏且内容以竖排流为主时试 `--boxes-flow 1.0`；只按水平位置排时试 `-1.0`；也可用 `--boxes-flow disabled` 退化成按文本框左下角排序。逐个值试，没有通解 |
 | 单词之间没有空格，或者每个字母被拆成一行 | `word-margin`（默认 0.1）和 `char-margin`（默认 2.0）与这份 PDF 的字距不匹配 | 空格丢失就把 `--word-margin` 调大（如 0.2~0.5）；被拆行就调小 `--char-margin`。CJK 文档尤其常见，中文之间本就没有空格，属正常 |
 | 抽图时报错或一张图都没有 | 没装 `pdfminer.six[image]`，或者忘了传 `--output-dir` | 两件事都要做：先 `pip install 'pdfminer.six[image]'`，再 `pdf2txt.py input.pdf --output-dir out-images` |
-| 大 PDF 跑到内存爆掉 | `extract_text()` 会把整份文档的文本攒在内存里一次性返回 | 大文件用 `extract_text_to_fp()` 流式写文件，或分段处理：`extract_text(pdf, page_numbers=range(0, 100))` 一页页拿；也可以设 `caching=False` 关掉资源缓存换内存 |
+| 大 PDF 跑到内存爆掉 | `extract_text` 会把整份文档的文本攒在内存里一次性返回 | 大文件用 `extract_text_to_fp` 流式写文件，或分段处理：`extract_text(pdf, page_numbers=range(0, 100))` 一页页拿；也可以设 `caching=False` 关掉资源缓存换内存 |
 
 ## 权限与用途说明
 
@@ -216,7 +214,7 @@ dumppdf.py -T input.pdf                   # 只看大纲 / 目录结构
 2. 扫描件与纯图片 PDF 完全抽不出文字，官方定位就是文本解析器而非 OCR 工具。
 3. 版面分析是启发式的，复杂双栏、图文混排、表格排版经常需要手工调 `LAParams` 参数，且参数值随文档而异，没有一组通用最优解。
 4. 纯 Python 实现，解析速度慢于 poppler 的 `pdftotext`，超大文件或海量文件场景要权衡。
-5. `extract_text()` 会把全文读进内存，超大 PDF 应改用流式接口或分批调用，否则可能 OOM。
+5. `extract_text` 会把全文读进内存，超大 PDF 应改用流式接口或分批调用，否则可能 OOM。
 6. 在 pdfminer.six 里 `extract_text_to_fp` 的 `output_type` 虽然列出 html / xml / hocr / tag，但官方注明只有 `text` 能正常工作，其他格式的稳定性以实际版本为准。
 
 ## 自检清单

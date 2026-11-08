@@ -2,9 +2,9 @@
 name: sanjianke-text-to-image
 slug: sanjianke-text-to-image
 displayName: 文生图 15.0点一次
-description: "**文生图，一次 15.0 点（¥0.15）。** 走 api.a7w.cn 的工作流应用「文生图」，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "文生图 是平台 69 个按次调用应用之一，上游报价 ¥0.1/次，本站 15.0 点（¥0.15）。它的原始参数名是 ComfyUI 的节点 id（n57_27_text / n57_13_batch_size / n57_13_height 这种），本包把它翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配到对应参数，`--set 名=值` 兜底任意参数。素材走 `POST /api/v1/gpu/assets` 自动上传换 `asset://`，提交走 `POST /api/v1/gpu/apps/wf_3573f69dbd587a814192/run`，轮询走 `GET /api/v1/gpu/workflows/execution`。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+description: "**文生图，一次 15.0 点（0.15 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 4 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "文生图 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 15.0 点（0.15 元）**。它的原始参数名是节点 id（n57_27_text, n57_13_batch_size, n57_13_height 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -25,17 +25,14 @@ tags:
 
 ## 一句话
 
-**文生图，一次 15.0 点 = ¥0.15。**
-
-上游报价 ¥0.1，本站按 1.5 倍计 —— 用一次 = 1.5 分钱起。
+**文生图，一次 15.0 点 = 0.15 元。**
 
 ## 价目
 
 | 项 | 值 |
 |---|---|
 | 类型 | 文本 |
-| 上游报价 | ¥0.1 / 次 |
-| **本站** | **15.0 点（¥0.15）** |
+| **每次** | **15.0 点（0.15 元）** |
 | 参数 | 4 个（必填 4 个）|
 | 端点 | `POST /api/v1/gpu/apps/wf_3573f69dbd587a814192/run` |
 
@@ -65,7 +62,7 @@ python3 scripts/run.py run --image 你的图.png --yes
 
 | 参数 | 对应什么 |
 |---|---|
-| `--image 图.png` | 自动匹配第一个必填的图片参数（本地文件会自动上传换 `asset://`）|
+| `--image 图.png` | 自动匹配第一个必填的图片参数（本地文件会自动上传）|
 | `--video 视频.mp4` | 视频参数 |
 | `--audio 音频.mp3` | 音频参数 |
 | `--text "…"` | 文本 / 提示词 |
@@ -76,7 +73,7 @@ python3 scripts/run.py run --image 你的图.png --yes
 | 子命令 | 扣费吗 | 干什么 |
 |---|---|---|
 | `info` | 免费 | 应用信息 + 自检 |
-| `params` | 免费 | 参数表（label 对照）|
+| `params` | 免费 | 参数表（中文含义对照）|
 | `run` | **15.0 点/次** | 提交任务（要 `--yes`）|
 
 ## 退出码

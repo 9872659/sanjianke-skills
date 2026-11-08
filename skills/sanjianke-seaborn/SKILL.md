@@ -19,8 +19,6 @@ tags:
 
 这个库做的事情是提供一层高层封装：拿到 DataFrame 后，用「把哪些列映射到 x / y / 颜色 / 分面」的方式描述你要看的关系，它负责把统计变换和图形元素补齐，出来的图默认就有配色和样式。它底层仍然是 matplotlib，所以画完之后照样能用 matplotlib 的 API 继续改、继续存。
 
-**上游项目**：`seaborn`　**仓库**：https://github.com/mwaskom/seaborn
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -79,10 +77,10 @@ python -c "import seaborn as sns; print(sns.__version__)"
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-sns.set_theme()                       # 一次性设定配色与样式上下文
+sns.set_theme                       # 一次性设定配色与样式上下文
 df = sns.load_dataset("penguins")     # 内置示例数据集，需要联网下载
 sns.scatterplot(data=df, x="bill_length_mm", y="bill_depth_mm", hue="species")
-plt.show()
+plt.show
 ```
 
 **2. 看单列分布**
@@ -103,7 +101,7 @@ sns.boxplot(data=df, x="species", y="body_mass_g", hue="species", legend=False)
 **4. 相关性矩阵**
 
 ```python
-corr = df.select_dtypes("number").corr()
+corr = df.select_dtypes("number").corr
 sns.heatmap(corr, annot=True, cmap="vlag", center=0)
 ```
 
@@ -120,8 +118,8 @@ import seaborn.objects as so
 
 (
     so.Plot(df, x="bill_length_mm", y="bill_depth_mm", color="species")
-    .add(so.Dot())
-    .add(so.Line(), so.PolyFit())
+    .add(so.Dot)
+    .add(so.Line, so.PolyFit)
     .label(x="喙长 (mm)", y="喙深 (mm)")
 )
 ```
@@ -138,8 +136,8 @@ fig.savefig("dist.png", dpi=200, bbox_inches="tight")
 **8. 内置数据集相关工具**
 
 ```python
-sns.get_dataset_names()    # 列出可用的示例数据集名
-sns.get_data_home()        # 看示例数据集的缓存目录
+sns.get_dataset_names    # 列出可用的示例数据集名
+sns.get_data_home        # 看示例数据集的缓存目录
 ```
 
 ## 常见坑
@@ -151,16 +149,16 @@ sns.get_data_home()        # 看示例数据集的缓存目录
 | 传了 `palette` 但颜色没生效，还伴随告警 | 新版不再支持「不指定 `hue` 就传 `palette`」这种写法 | 显式指定 `hue` 再配 `palette`；想按单色做渐变改用 `palette="dark:{color}"` / `palette="light:{color}"` 这类写法 |
 | 报错提示没有 `scipy` / `statsmodels` | 部分统计功能（如回归拟合、核密度等）依赖可选包，基础安装不带 | `pip install seaborn[stats]`，或按报错提示单独装缺失的包 |
 | 中文标签变成方块 | matplotlib 默认字体不含中文字形，这是 matplotlib 的问题而不是库的问题 | 在绘图前设定支持中文的字体：`plt.rcParams["font.sans-serif"] = ["..."]`（按系统已装字体填），并按需设 `axes.unicode_minus=False` |
-| 图上元素看着正常，但 `plt.show()` 没反应 | 在无图形界面的环境（服务器、容器、CI）里没有可用的显示后端 | 不要依赖 `show()`；直接保存文件（`fig.savefig(...)`），或显式使用非交互后端 |
+| 图上元素看着正常，但 `plt.show` 没反应 | 在无图形界面的环境（服务器、容器、CI）里没有可用的显示后端 | 不要依赖 `show`；直接保存文件（`fig.savefig(...)`），或显式使用非交互后端 |
 | 图级函数返回的对象不能当坐标轴用 | 带 `relplot` / `displot` / `catplot` 这类名字的是**图级接口**，返回的是带多个子图的网格对象，不是单个 Axes | 需要单张坐标轴时用 `scatterplot` / `histplot` / `boxplot` 这类轴级函数；确实要用网格时按网格对象的 API 操作 |
-| 重复绘图时图上叠了上一次的内容 | 在同一 Axes 上反复调用相当于叠加图层 | 每次画新图前建新图：`plt.figure()` / `plt.subplots()`；或在 notebook 里分单元格画 |
-| 传给 `data=` 的列名不存在，报 KeyError | 列名拼写或类型不对（例如把索引当列用） | 先 `print(df.columns)` 核对；需要索引参与时先 `df.reset_index()` |
+| 重复绘图时图上叠了上一次的内容 | 在同一 Axes 上反复调用相当于叠加图层 | 每次画新图前建新图：`plt.figure` / `plt.subplots`；或在 notebook 里分单元格画 |
+| 传给 `data=` 的列名不存在，报 KeyError | 列名拼写或类型不对（例如把索引当列用） | 先 `print(df.columns)` 核对；需要索引参与时先 `df.reset_index` |
 
 ## 权限与用途说明
 
 | 能力 | 是否申请 | 用途 |
 |---|---|---|
-| 网络访问 | 视情况 | 仅在使用 `load_dataset()` 等内置数据集接口时需要联网下载并缓存；用自己传入的 DataFrame 画图不需要网络 |
+| 网络访问 | 视情况 | 仅在使用 `load_dataset` 等内置数据集接口时需要联网下载并缓存；用自己传入的 DataFrame 画图不需要网络 |
 | 读取文件 | 视情况 | 读取待分析的数据文件（通常由 pandas 读取后再交给本库） |
 | 写入文件 | 视情况 | 通过 matplotlib 的 `savefig` 把图落盘成 PNG / PDF / SVG 等 |
 | 凭证 | 否 | 不需要任何账号或密钥 |

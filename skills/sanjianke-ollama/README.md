@@ -29,7 +29,6 @@
 
 - Ollama 本体（macOS / Windows / Linux 官方安装包，或 `ollama/ollama` 镜像）。
 - 可选：Python `ollama` 包、Node `ollama` 包。
-- 上游文档：<https://docs.ollama.com/>
 
 ---
 

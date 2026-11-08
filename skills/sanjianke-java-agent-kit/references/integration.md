@@ -158,14 +158,14 @@ import <base-pkg>.model.chat.openai.OpenAiChatConfig;
 
 public class MinimalChat {
     public static void main(String[] args) {
-        ChatModel chatModel = OpenAiChatConfig.builder()
+        ChatModel chatModel = OpenAiChatConfig.builder
                 // 模型侧统一指向算力网关（OpenAI 兼容）
                 .endpoint("https://api.a7w.cn/api/v1")
                 // 填你的 Key；示例里也不写死，走环境变量
                 .apiKey(System.getenv("A7W_API_KEY"))
                 // 换模型就是换这个字符串
-                .model(System.getenv().getOrDefault("LLM_MODEL", "DeepSeek-V4-Flash"))
-                .buildModel();
+                .model(System.getenv.getOrDefault("LLM_MODEL", "DeepSeek-V4-Flash"))
+                .buildModel;
 
         System.out.println(chatModel.chat("用一句话说明这个服务是干什么的"));
     }
@@ -228,11 +228,11 @@ curl -s "https://api.a7w.cn/api/v1/models" -H "Authorization: Bearer $A7W_API_KE
 **A. 框架的模型配置项直接填 base_url（首选）**
 
 ```java
-ChatModel chatModel = OpenAiChatConfig.builder()
+ChatModel chatModel = OpenAiChatConfig.builder
         .endpoint("https://api.a7w.cn/api/v1")   // base_url
         .apiKey(System.getenv("A7W_API_KEY"))    // Bearer <你的 API Key>
         .model("Qwen3.6-Plus")                   // 换这一行就是换模型
-        .buildModel();
+        .buildModel;
 ```
 
 **B. 走框架约定的环境变量（多数 OpenAI 兼容实现都认这两个）**
@@ -259,18 +259,18 @@ your-framework:
 
 ```java
 // 调研用快的
-ChatModel fast = OpenAiChatConfig.builder()
+ChatModel fast = OpenAiChatConfig.builder
         .endpoint("https://api.a7w.cn/api/v1")
         .apiKey(System.getenv("A7W_API_KEY"))
         .model("DeepSeek-V4-Flash")
-        .buildModel();
+        .buildModel;
 
 // 评审用强的
-ChatModel strong = OpenAiChatConfig.builder()
+ChatModel strong = OpenAiChatConfig.builder
         .endpoint("https://api.a7w.cn/api/v1")
         .apiKey(System.getenv("A7W_API_KEY"))
         .model("Qwen3.6-Plus")
-        .buildModel();
+        .buildModel;
 ```
 
 **关键性质**：`endpoint` 和 `apiKey` 一个字都不用改。这意味着你可以把"用哪个模型"
@@ -301,11 +301,11 @@ import <base-pkg>.core.model.chat.StreamResponseListener;
 import <base-pkg>.core.model.chat.response.AiMessageResponse;
 import <base-pkg>.core.model.client.StreamContext;
 
-chatModel.chatStream("解释一下责任链模式在网关里的作用", new StreamResponseListener() {
+chatModel.chatStream("解释一下责任链模式在网关里的作用", new StreamResponseListener {
     @Override
     public void onMessage(StreamContext context, AiMessageResponse response) {
         // 逐段取增量内容
-        String piece = response.getMessage().getContent();
+        String piece = response.getMessage.getContent;
         if (piece != null) {
             System.out.print(piece);
         }
@@ -357,11 +357,11 @@ prompt.addToolsFromClass(OrderTools.class);   // 扫描类上的工具注解
 
 AiMessageResponse first = chatModel.chat(prompt);
 
-if (first.hasToolCalls()) {
+if (first.hasToolCalls) {
     // 执行模型要求的工具，把结果包成工具消息塞回提示词
-    prompt.setToolMessages(first.executeToolCallsAndGetToolMessages());
+    prompt.setToolMessages(first.executeToolCallsAndGetToolMessages);
     // 再请求一次，这次模型拿到工具结果后给最终回答
-    System.out.println(chatModel.chat(prompt).getMessage().getContent());
+    System.out.println(chatModel.chat(prompt).getMessage.getContent);
 }
 ```
 
@@ -376,15 +376,15 @@ if (first.hasToolCalls()) {
 import <base-pkg>.core.model.chat.tool.Tool;
 
 // 结构示意：名、描述、参数 schema、执行体
-Tool dynamicTool = Tool.builder()
+Tool dynamicTool = Tool.builder
         .name("tenant_lookup")
         .description("按租户名查询租户 ID")
         .addParameter("tenantName", "string", "租户名称", true)
         .handler(args -> tenantService.findIdByName((String) args.get("tenantName")))
-        .build();
+        .build;
 ```
 
-> `Tool.builder()` 的具体方法名以你引入的版本为准。编程式构建的价值在于
+> `Tool.builder` 的具体方法名以你引入的版本为准。编程式构建的价值在于
 > **工具集合可以来自数据库或配置中心**，代价是描述质量没人替你保证。
 
 ---
@@ -403,9 +403,9 @@ ToolGroup orderGroup = ToolGroup.builder("order")
         .addTools(ToolScanner.scan(OrderTools.class))
         .systemPrompt("涉及订单状态、物流、退款的问题必须使用订单工具。")
         .matcher(ToolGroupMatchers.promptContains("订单", "物流", "退款"))
-        .build();
+        .build;
 
-MemoryPrompt prompt = new MemoryPrompt();
+MemoryPrompt prompt = new MemoryPrompt;
 prompt.addToolGroup(orderGroup);
 prompt.addUserMessage("我上周买的东西到哪了");
 chatModel.chat(prompt);
@@ -430,11 +430,11 @@ import <base-pkg>.core.model.chat.interceptor.ChatInterceptor;
 import <base-pkg>.core.model.chat.ChatContext;
 import <base-pkg>.core.model.chat.SyncChain;
 
-ChatInterceptor auditInterceptor = new ChatInterceptor() {
+ChatInterceptor auditInterceptor = new ChatInterceptor {
     @Override
     public AiMessageResponse intercept(BaseChatModel<?> model, ChatContext context, SyncChain chain) {
-        context.getOptions().setTemperature(0.2f);                 // 影响最终请求参数
-        context.getRequestSpec().addHeader("X-Tenant", tenantId);  // 影响请求头
+        context.getOptions.setTemperature(0.2f);                 // 影响最终请求参数
+        context.getRequestSpec.addHeader("X-Tenant", tenantId);  // 影响请求头
         return chain.proceed(model, context);
     }
 };
@@ -449,10 +449,10 @@ ChatInterceptor auditInterceptor = new ChatInterceptor() {
 import <base-pkg>.core.model.chat.interceptor.ChatInterceptorRegistration;
 
 chatModel.addInterceptorRegistration(
-        ChatInterceptorRegistration.builder("premium-audit", new AuditChatInterceptor())
+        ChatInterceptorRegistration.builder("premium-audit", new AuditChatInterceptor)
                 .matcher(context -> "premium".equals(context.getAttribute("plan")))
                 .order(0)
-                .build()
+                .build
 );
 ```
 

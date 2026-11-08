@@ -20,8 +20,6 @@ tags:
 Go、Java 都行，Scrapy、Puppeteer、Selenium 也都能接——它只负责「把爬虫放上去、跑起来、
 盯住它、把数据收回来」。
 
-**上游项目**：`crawlab`　**仓库**：https://github.com/crawlab-team/crawlab
-
 ## 什么时候用 / 不用
 
 **用它**：

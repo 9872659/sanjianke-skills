@@ -4,7 +4,6 @@ slug: sanjianke-medical-compliance
 displayName: 医疗合规素材 一条 9.35 元 · 出片前先过合规
 description: "**一条 30 秒医美短视频 9.35 元，合规检查 0 元、0 请求。** 出片前先跑本地合规检查器：15 类 226 条红线表述（疗效承诺 / 前后对比 / 患者名义 / 绝对化用语 / 容貌焦虑 / AI 图作疗效示意）逐条扫，命中句与替代写法一起给；6 项必标（执业许可证登记号 / 广告审查文号 / 广告标识 / 风险提示 / 机构全称 / 项目与价格）缺一项就点名；AI 图与 AI 片另加「AI 生成 · 场景示意」角标。改完才花钱：出图 6 点/张、配音约 0.18 点/字、图片口播 15 点/秒、成片 1080P 60 点/秒。一天 3 条 28.05 元。四道闸门：合规不过 exit 2（一个请求都不发）、缺 --yes 退 4、超 --budget 退 5、--dry-run 只看请求。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "本包管「医美内容岗一天 / 一单交什么，哪句话会被罚」。**一单 935 点 = 9.35 元**：口播 300 + 空镜 600 + 图 24 + 旁白 11。**价目**（1 元 = 100 点，11-08 现查 /pricing）：images/generations 6 点/张；voice_tts/* markupPercent 200 = 上游 x3，约 0.18 点/字；pic_lipsync/submit markupPercent 400、minPoints 50 = 15 点/秒；full_video/submit 480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒。**流程**：check 过红线 → checklist 取必标与交付清单 → image → tts → lipsync → video → status。**三条规矩**：不要 GET /api/v1/apps/<app>（命中通配计价、即时扣费不退）；不要拿缺参的 /submit 当探针；轮询只走 GET /api/v1/tasks/<id>。**闸门**：合规退 2、缺 --yes 退 4、超预算退 5，都不发请求。自备 api.a7w.cn 的 Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -87,8 +86,8 @@ AI 素材三条：① 只做环境 / 器械 / 空间示意，不当疗效示意�
 | 工序 | 接口 | 单价 |
 |---|---|---|
 | 出图 | `POST /api/v1/images/generations` | **6 点/张**（与尺寸无关） |
-| 配音 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字**（上游 x3） |
-| 图片口播 | `POST /api/v1/apps/pic_lipsync/submit` | **15 点/秒**（上游 3 x5，声明保底 50） |
+| 配音 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字** |
+| 图片口播 | `POST /api/v1/apps/pic_lipsync/submit` | **15 点/秒** |
 | 成片 | `POST /api/v1/apps/full_video/submit` | 480P 14 / 768P 28 / **1080P 60** / 2K 80 / 4K 80 点/秒 |
 | 免费四项 | `POST /api/v1/upload` · `GET /api/v1/tasks/<id>` · `check` · `checklist` | **0 点** |
 

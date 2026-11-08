@@ -46,7 +46,7 @@ ya --version
 进界面后，`hjkl` 或方向键移动，`q` 退出，`F1`（或 `~`）打开帮助菜单。想让退出时把 shell 的当前目录也带过去，把官方的 shell wrapper 写进 shell 配置（Bash 示例）：
 
 ```bash
-function y() {
+function y {
 	local tmp cwd; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	command yazi "$@" --cwd-file="$tmp"
 	IFS= read -r -d '' cwd < "$tmp"

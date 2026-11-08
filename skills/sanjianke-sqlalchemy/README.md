@@ -31,7 +31,7 @@ engine = create_engine("sqlite+pysqlite:///:memory:")
 
 with Session(engine) as session:
     session.add_all([User(name="a"), User(name="b")])
-    session.commit()
+    session.commit
 
     stmt = select(User).order_by(User.id)
     print([u.name for u in session.scalars(stmt)])
@@ -56,9 +56,9 @@ with Session(engine) as session:
 
 - 不内嵌任何密钥
 - 数据库连接串含用户名与密码，请走环境变量或密钥管理服务，不要硬编码进代码或提交到仓库
-- 服务端 SQL 一律用绑定参数（`text()` 的命名参数或表达式语言），不要用字符串拼接
-- `create_all()` 会建表，`drop_all()` 会**删表**，`update` / `delete` 漏写 WHERE 会作用于全表——执行前确认目标库并做好备份
-- 连接与会话必须用 `with` 上下文或显式 `close()` 释放，否则会耗尽连接池
+- 服务端 SQL 一律用绑定参数（`text` 的命名参数或表达式语言），不要用字符串拼接
+- `create_all` 会建表，`drop_all` 会**删表**，`update` / `delete` 漏写 WHERE 会作用于全表——执行前确认目标库并做好备份
+- 连接与会话必须用 `with` 上下文或显式 `close` 释放，否则会耗尽连接池
 - 生产环境连接池总量（进程数 ×（`pool_size` + `max_overflow`））不要超过数据库的 `max_connections`
 - 数据库账号按最小权限授予，只读分析场景不要给写权限
 

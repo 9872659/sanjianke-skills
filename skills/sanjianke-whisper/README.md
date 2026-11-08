@@ -41,8 +41,6 @@ result = model.transcribe("audio.mp3")
 print(result["text"])
 ```
 
-**选型提醒**：`turbo` 精度接近 `large-v3`、速度快，但没有翻译能力；要翻译必须换多语言模型（`medium` 或 `large` 效果最好）。参数名与可选输出格式请以当前版本的 `whisper --help` 与上游仓库 README 为准。
-
 ---
 
 ## 依赖

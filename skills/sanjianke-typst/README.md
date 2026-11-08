@@ -63,7 +63,6 @@ typst init @preview/charged-ieee my-paper
 | 磁盘 | 二进制很小；包缓存与字体目录另行占用 |
 | Docker（可选） | 官方镜像 `ghcr.io/typst/typst`；容器内缺字体，需挂载字体目录 |
 | 账号 / Key | 不需要，无费用 |
-| 上游仓库 | https://github.com/typst/typst （Apache-2.0，独立于本 Skill 的第三方项目） |
 
 本 Skill 只提供使用说明与流程编排，**不打包、不修改、不重新分发上游的任何代码或二进制**。
 

@@ -311,7 +311,6 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
 | `douyin` | 抖音 | 9:16 | `9:16` | 1080x1920 | **14 字** | 96px / 6px | 居中（避开底部/右侧） |
 | `bilibili` | B站 | 16:9 | `16:9` | 1146x717 | **16 字** | 78px / 5px | 居中偏下 |
 
-**公众号的 2.35:1 上游给不了**：`nano_banana` 的 `aspect_ratio` 可选值最宽只到 `21:9`
 （= 2.333:1）。所以本包用 `21:9` 生成、再用 `--snap` 裁到 2.35:1。这是明确的设计取舍。
 
 ## 七道本地硬闸门
@@ -445,9 +444,9 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
 
 本包的做法：
 
-1. **`prompt_digest()` 对全文取 sha1**，绝不用 `prompt[:N]`
+1. **`prompt_digest` 对全文取 sha1**，绝不用 `prompt[:N]`
 2. `resolution` / `gen_ratio` / `model` **直接进 key**
-3. **叠字内容与样式也进 key**（`overlay_style_sig()`：文本 + 平台 + 字号 + 描边 + 位置 + 字体）
+3. **叠字内容与样式也进 key**（`overlay_style_sig`：文本 + 平台 + 字号 + 描边 + 位置 + 字体）
 4. 命中 key 之后**逐维复核**记录里的值；对不上就打印一行「不复用旧图」并重出
 5. 跳过的那张也要**重新读一遍真实像素**过比例闸门（断点文件可能被手工改过）
 6. **任务已完成但下载崩了**：断点里存了 `task_id` 与 `image_url`，
@@ -461,19 +460,17 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
 | 点数不足（HTTP 402） | 账号点数用完 | 到 https://api.a7w.cn/ 充值后重试 |
 | `code: 0` 但 HTTP 是 200 | **网关信封里 `code == 1` 才是成功，不是 0** | 看 body 里的 `msg`；脚本已按这个口径判断，别改成 `code == 0` |
 | `当前请求未命中可用计费规格` | `model` 与 `resolution` 组合不支持 | 普通 `nano-banana` 只支持 `1K`；要高清档换 `nano-banana-2:official` 之类 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很频繁** | 脚本内置退避重试。连续失败就换模型或降低批次 |
 | 轮询一直 `processing` | 上游排队 | 有 `--poll-timeout`（默认 600 秒）与断点；重跑会用 `task_id` **续查、不重新提交** |
 | `这是一次真花钱的操作…确认后加 --yes`（exit 4） | 成本前置生效，**这是正常的**，不是错误 | 看过报价后加 `--yes` 或 `--budget` 重跑 |
 | `大字标题 N 字，超过 X 上限 M 字（多出 …）`（exit 3） | 叠字可读性闸门 | 把超出的部分移到正文，或拆成两张。**不接受 `--allow-prompt-hits` 放行** |
 | `没有找到可用的中文字体`（exit 2） | 系统里没有中文字体 | 用 `--font` 指一个 `.ttf/.ttc/.otf`；`specs` 会打印可用字体 |
 | `本地叠字需要 PIL`（exit 2） | 没装 pillow | `pip install pillow` 后**原样重跑**（背景图不会重出、不重复扣费）；或只用 `images` 出无字底图 |
-| `真实像素 864x1184 … 偏差 2.70%` | 上游按 32 对齐，**不是错误** | 想要像素级精确加 `--snap`（裁到 864x1152）。容差内不会拦 |
 | `2K 档没有实测单价，拒绝凭猜估算` | 我们没有 2K/4K 的实测价 | 给 `--points-per-image` 指定单价，或先用 1K 出 |
 | `输出目录 … 在 Skill 包内`（exit 2） | `--outdir` 指到了包里的目录 | 换到包外（`./out`、`%TEMP%\...`）。包内放图片会让上传 400 |
 | `!! 已花 … 点，再出下一张会超过 --budget`（exit 3） | 真实扣费累计超了 | 已完成的产出仍在，从断点继续 |
 | 重跑又扣了一次钱 | 提示词/叠字样式/分辨率改了 → 断点 key 变了 | 这是设计如此（改了就该重画）。想省钱就别改，直接重跑即可跳过 |
 | 改了 `overlay.text` 但图上的字是旧的 | 正常情况会重出（叠字内容进了 key） | 仍拿到旧图：断点文件是旧版本生成的，重跑一次；要无条件重出加 `--force` |
-| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符 | 脚本已用 `json.JSONDecoder().raw_decode()` 扫第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
+| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符 | 脚本已用 `json.JSONDecoder.raw_decode` 扫第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
 | Windows 下中文乱码 | 控制台代码页不是 UTF-8 | 先 `chcp 65001`，或设 `PYTHONIOENCODING=utf-8` |
 
 **收集排错信息时请附上**：完整命令、`plan --dry-run` 的输出、`--report` 产出的证据 JSON、原始报错文本。
@@ -543,7 +540,7 @@ sanjianke-cover-factory/
 > 「包内副本 SHA256 == 规范版」批量校验各包的客户端有没有被意外改坏。
 > 所以本包**没有**为了自己的业务去改它——需要读图片像素就独立出 `imgprobe.py`，
 > 需要下载图片就在 `run.py` 里自带一小段 urllib（`a7w._request` 是给 JSON 用的，
-> 它的 `raw=` 参数是**原始请求体**、不是"要原始响应"，拿它下 PNG 会踩两个坑，见 `download()` 的注释）。
+> 它的 `raw=` 参数是**原始请求体**、不是"要原始响应"，拿它下 PNG 会踩两个坑，见 `download` 的注释）。
 
 ## 端点速查
 

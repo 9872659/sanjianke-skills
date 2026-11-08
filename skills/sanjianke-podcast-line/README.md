@@ -51,12 +51,9 @@ python3 scripts/run.py chapters --script ep01.md --srt ep01.srt --out ep01.chapt
 价格口径**如实写**：`/api/v1/pricing` 共 115 条规则，**没有 `media_services_33` 的专属条目**，落通配：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 实测每次 POST 先 `reserve_sync` **预冻结 60 点**、失败全额退，所以 `cost` 给的是**下限估算**；
-成交价 = 上游实际点数 × 2、保底 50 点，准确点数看任务详情里的 `usage`。
 
 ```bash
 python3 scripts/run.py cost                        # 最少一次请求 → 60 点（0.60 元）

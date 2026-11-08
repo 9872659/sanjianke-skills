@@ -41,13 +41,13 @@ def ask(prompt, model="DeepSeek-V4-Flash", timeout=25):
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 512,
-    }).encode()
+    }).encode
     req = urllib.request.Request(
         "https://api.a7w.cn/api/v1/chat/completions", data=body,
         headers={"Authorization": "Bearer " + os.environ["A7W_API_KEY"],
                  "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read())["choices"][0]["message"]["content"]
+        return json.loads(r.read)["choices"][0]["message"]["content"]
 ```
 
 包内零依赖客户端（库 + 命令行）：

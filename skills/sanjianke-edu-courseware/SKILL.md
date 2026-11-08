@@ -4,7 +4,6 @@ slug: sanjianke-edu-courseware
 displayName: 教育课件 · 一节课 5 样交付物
 description: "**一节课 60 分钟，交 5 样东西**：分节讲稿、16:9 课件图（6 点/张）、配音（0.18 点/字）、口播视频（10 点/秒起）、字幕与章节索引。`lesson` 读一份大纲 Markdown，直接写出知识点 / 分节 / 讲稿 / 配图提示 / 字幕 / 章节索引 / 测验点；`deck` 用一张风格卡把整套课件图的色板、字体、构图钉死；`board` 给出这个行业一节课的交付清单与命名规则。三个钱上的坑做成了默认动作：pic_lipsync 的档位参数真名是 quality、image_human 省略 mode 会「出片标准档、收钱快速档」、应用层 /query 每调一次都是一次的钱。零依赖，先 `cost` 再 `--yes`。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "教育课件的难点不在生成，而在「一节课」这个交付单位：教研要交讲稿、要交图、要交配音、要交视频、还要交章节索引和测验点，学员进度得跟着走。本包把这套活拆成 13 个命令，四条能力线全部走 api.a7w.cn 的官方接口：课件图用 gpt-image-2.6（6 点/张，与尺寸质量无关）、配音用 voice_tts/tts_async（按上游实际点数 ×3，约 0.18 点/字，单笔 6 点起）、一图口播用 pic_lipsync/submit（mode=text，quality 才是档位真名，15 点/秒、单笔 50 点起，text 模式省录音但 audio_url 参考音色仍必填）、课件出片用 image_human/submit（10/15/30/60 点/输入秒，mode 与 duration 都必填，否则出片与收钱走两个档）。本地三步 0 点：lesson 拆课、deck 统一风格、board 出交付清单与合规项。两道闸门在本地：cost 先算钱，超 --budget 直接退 5 且一个请求都不发，缺 --yes 退 4。轮询只走 GET /tasks/{id}，应用层 /query 在 http 层拦死。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -70,7 +69,6 @@ tags:
 
 **一：`pic_lipsync` 的档位参数叫 `quality`，不叫 mode。** `mode` 只切 `audio` / `text`；
 `quality` 才是 `standard` / `fast` / `max`。`mode=text` 省掉录音，但**省不掉参考音色**：
-`audio_url` 仍必填，给 3–10 秒清晰人声最稳。不传 quality 时上游按 standard 3 点/秒 收，
 我方 ×5 = 15 点/秒，所以 `talk --quality` 必填。
 
 **二：`image_human` 省略 mode，会「出片标准档、收钱快速档」。** schema 默认 `standard`，

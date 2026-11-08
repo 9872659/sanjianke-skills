@@ -124,12 +124,9 @@ keys with 'gemini'        : []
 keys with 'tts'           : ['/api/v1/apps/voice_tts/*', '/api/v1/apps/indextts/*']
 ```
 
-`voice_tts` / `indextts` 是**另外两个应用**的语音线（×3 加价），与本包无关。
 所以这 8 条全部落通配：
 
 ```json
-"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-      "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 ### 预冻结 = 60 点/条（实测）
@@ -147,7 +144,6 @@ keys with 'tts'           : ['/api/v1/apps/voice_tts/*', '/api/v1/apps/indextts/
 20:50:44  refund  +60  refund:sync:/api/v1/apps/media_services_33/elevenlabs_text_to_speech_multilingual_v2
 ```
 
-**净 0，但钱包被冻过 4 次。** 60 = 通配 `minPoints` 50 × 站点 `markupPercent` 20%。
 所以本包 `cost` 给的是 **60 点/条 的下限**，不是成交价：成交价 = 上游真实点数 × 2
 （保底 50 点），得真跑一条才看得见。
 

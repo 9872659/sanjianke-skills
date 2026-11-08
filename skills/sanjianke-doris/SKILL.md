@@ -18,8 +18,6 @@ tags:
 
 它的另一个重点是「连得上生态」：对象存储 / 数据湖上的表能直接查，结构化的过滤、全文检索、向量检索可以写进同一条 SQL。所以它常出现在实时看板、日志分析、用户行为分析、以及给 AI 应用当检索底座这几类场景里。
 
-**上游项目**：`doris`　**仓库**：https://github.com/apache/doris
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -108,10 +106,10 @@ mysql -uroot -P9030 -h127.0.0.1
 
 ```bash
 # FE 是否已入集群、是否存活
-mysql -uroot -P9030 -h127.0.0.1 -e 'SELECT `host`, `join`, `alive` FROM frontends()'
+mysql -uroot -P9030 -h127.0.0.1 -e 'SELECT `host`, `join`, `alive` FROM frontends'
 
 # BE 是否在正常心跳
-mysql -uroot -P9030 -h127.0.0.1 -e 'SELECT `host`, `alive` FROM backends()'
+mysql -uroot -P9030 -h127.0.0.1 -e 'SELECT `host`, `alive` FROM backends'
 ```
 
 FE 期望 `Alive` 为真、BE 期望 `Alive` 为 1。也可以直接用 `SHOW FRONTENDS;` / `SHOW BACKENDS;` 看完整信息。
@@ -212,7 +210,6 @@ Doris 提供 Flink Connector、Spark Connector、Kafka Connector、Stream Loader
 **不覆盖**：
 
 - 不是 OLTP 事务数据库；不要拿它做订单、账务这类强事务业务的主库。
-- 不负责数据采集与 ETL 编排；它提供导入通道与连接器，上游怎么产出数据是另一套系统的事。
 - 不做可视化。看板要接 BI 工具或自己写前端。
 - 不自带账号体系之外的安全合规能力；权限、脱敏、审计要按官方管理章节自己配。
 - 不保证把任意规模、任意 schema 的数据都塞进单机就能跑得好；容量规划与表设计是使用者的责任。
@@ -234,7 +231,6 @@ Doris 提供 Flink Connector、Spark Connector、Kafka Connector、Stream Loader
 - 官方文档站点对「未发布版本」有明确标注，查阅时要选对版本线（文档站提供多条版本线）；照着 unreleased 文档操作可能与你装的版本对不上。
 - 集群是多进程系统，FE 与 BE 都有各自的配置文件和端口，排障需要同时看两侧日志。
 - 具体性能数字（延迟、QPS、存储规模）以官方「Overview」章节的表述为准；实际表现取决于表设计、分区分桶、硬件与查询形态，不要把它当成承诺值。
-- 本文命令来自抓取时的官方快速上手与安装文档；上游迭代中参数与脚本可能调整，执行前请以官方文档当前版本与 `--help` 输出为准。具体版本号、发布日期与 star 数不做断言。
 
 ## 自检清单
 

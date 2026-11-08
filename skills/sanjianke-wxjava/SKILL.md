@@ -19,8 +19,6 @@ tags:
 
 WxJava 把这些杂活封成一套 Java API：公众号、小程序、微信支付、企业微信、开放平台、视频号小店各有独立模块，可以按需只引一个，也能用 BOM 或多个模块一起引。它**只提供 SDK，不提供 Web 界面**——你的项目负责暴露接口，它负责把微信那侧的协议细节处理干净。
 
-**上游项目**：`WxJava`　**仓库**：https://github.com/binarywang/WxJava
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -118,36 +116,34 @@ implementation 'com.github.binarywang:weixin-java-mp:4.8.0'
 
 已有的 starter 覆盖：小程序（含多账号）、公众号（含多账号）、支付（含多账号）、开放平台（含多账号）、企业微信（含多账号、第三方多账号）、视频号/小店（含多账号）、企点、Store。多账号场景选带 `multi` 的那个。
 
-**JDK 要求**：当前主线要求 JDK 8 及以上（上游模块的编译目标就是 1.8）。仍在使用 JDK 7 的项目只能用很早的旧版本，JDK 6 及更早需要自行改造。
-
 ## 常用操作
 
 **1. 纯 Java 方式初始化公众号服务并拿令牌**
 
 ```java
-WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
+WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl;
 config.setAppId("your-app-id");
 config.setSecret("your-secret");
 
-WxMpService wxMpService = new WxMpServiceImpl();
+WxMpService wxMpService = new WxMpServiceImpl;
 wxMpService.setWxMpConfigStorage(config);
 
-String accessToken = wxMpService.getAccessToken();
+String accessToken = wxMpService.getAccessToken;
 System.out.println(accessToken);
 ```
 
 **2. 小程序服务端换取会话信息**
 
 ```java
-WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl;
 config.setAppid("your-app-id");
 config.setSecret("your-secret");
 
-WxMaService wxMaService = new WxMaServiceImpl();
+WxMaService wxMaService = new WxMaServiceImpl;
 wxMaService.setWxMaConfig(config);
 
-WxMaJscode2SessionResult result = wxMaService.getUserService().getSessionInfo("js-code");
-System.out.println(result.getOpenid());
+WxMaJscode2SessionResult result = wxMaService.getUserService.getSessionInfo("js-code");
+System.out.println(result.getOpenid);
 ```
 
 **3. Spring Boot 里写配置就自动装配**
@@ -185,28 +181,28 @@ private WxMpConfigStorage wxMpConfigStorage;
 
 **4. 被动消息路由（公众号）**
 
-路由器按规则把消息分发给处理类，规则要**从细到粗**排列，且每条规则必须以 `end()` 收尾：
+路由器按规则把消息分发给处理类，规则要**从细到粗**排列，且每条规则必须以 `end` 收尾：
 
 ```java
 WxMpMessageRouter router = new WxMpMessageRouter(wxMpService);
 
 router
-  .rule()
+  .rule
       .msgType("text").content("帮助")
       .handler((wxMessage, context, service, sessionManager) ->
-          WxMpXmlOutMessage.TEXT().content("这是帮助信息").fromUser(wxMessage.getToUser())
-              .toUser(wxMessage.getFromUser()).build())
-  .end()
-  .rule()
+          WxMpXmlOutMessage.TEXT.content("这是帮助信息").fromUser(wxMessage.getToUser)
+              .toUser(wxMessage.getFromUser).build)
+  .end
+  .rule
       .event("subscribe")
       .handler(subscribeHandler)
-  .end();
+  .end;
 
 // 收到回调后交给路由器，返回的 XML 直接回给微信
 WxMpXmlOutMessage outMessage = router.route(wxMessage);
 ```
 
-要点：默认每条消息只被处理一次；想让后面的规则继续处理要用 `next()` 而不是 `end()`；进程退出前应调用 `router.shutDownExecutorService()` 收掉内部线程池。
+要点：默认每条消息只被处理一次；想让后面的规则继续处理要用 `next` 而不是 `end`；进程退出前应调用 `router.shutDownExecutorService` 收掉内部线程池。
 
 **5. 微信支付（V3）配置**
 
@@ -250,10 +246,10 @@ mvn -DskipTests install
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | 按 starter 说明配了 Redis 存储但令牌仍在内存里、多实例各刷各的 | 说明里 `wx.mp.config-storage.type` 那一行的示例值有笔误（写成了 `edis`），照抄会填错类型名 | 按同段注释里给出的类型名填写：`Memory`（默认）/ `Jedis` / `RedisTemplate`，填错时不会报错但存储不生效 |
-| 消息路由规则写了却完全不生效 | 规则没有以 `end()`（或 `next()`）收尾 | 每条规则都必须显式结束；需要继续匹配后续规则时用 `next()` |
+| 消息路由规则写了却完全不生效 | 规则没有以 `end`（或 `next`）收尾 | 每条规则都必须显式结束；需要继续匹配后续规则时用 `next` |
 | 关键词规则被更宽的规则先吃掉 | 规则排列顺序不对 | 按「从细到粗」排列：先精确内容/事件，再宽泛的类型兜底 |
 | 消息偶尔被处理两次或重复回复 | 默认的重复消息检查器是进程内内存实现，多实例部署时各存一份 | 多实例场景自定义去重实现（如基于 Redis），并替换 `WxMessageDuplicateChecker` |
-| 服务优雅下线时卡住或线程泄漏 | 路由器内部有固定大小线程池，默认不会自己关 | 退出前调用 `shutDownExecutorService()`，需要限时用带秒数参数的重载 |
+| 服务优雅下线时卡住或线程泄漏 | 路由器内部有固定大小线程池，默认不会自己关 | 退出前调用 `shutDownExecutorService`，需要限时用带秒数参数的重载 |
 | 线上频繁触发令牌刷新限制 | 使用默认的 Memory 存储，实例多、重启多，令牌各存一份且互相覆盖 | 生产环境把配置存储切到 Redis（Jedis 或 RedisTemplate），并设置统一的 key 前缀 |
 | 老项目升级后编译不过 | 当前主线要求 JDK 8 及以上 | 升级 JDK；确实只能停在 JDK 7 的项目用很早的旧版本，新接口用不了 |
 | 移动端 App 里做微信登录 / 分享，用这个库搞不定 | 客户端能力不在服务端 SDK 范围内 | 客户端集成微信官方移动端 SDK；服务端只用本库处理 OAuth 授权码与支付 |
@@ -299,14 +295,12 @@ mvn -DskipTests install
 - 不做客户端（iOS / Android / 小程序前端）能力：微信登录、分享、拉起支付的客户端部分必须用官方对应 SDK。
 - 不替使用者处理微信平台的资质、类目、接口权限申请与频率限制。
 - 不保证覆盖微信官方全部接口，也不保证新接口第一时间跟进；缺失接口需要自行调用或按贡献流程补充。
-- 不提供托管服务与技术支持，使用问题走向上游仓库的 Issues / Wiki。
 - 非 JVM 技术栈不在适用范围内。
 
 ## 依赖条件
 
 - JDK 8 及以上（当前主线；JDK 7 只能用很早的旧版本）。
 - Maven 或 Gradle 构建工具，能访问 Maven Central。
-- 使用 Spring Boot Starter 时需要一个 Spring Boot 工程；starter 自身的自动配置依赖按上游 pom 管理，遇到自动装配不生效先核对依赖版本是否被覆盖。
 - 可选：Redis（Jedis 或 Spring Data Redis 的 RedisTemplate）用于集中存放令牌；使用 Jedis / RedisTemplate 类型存储时需引入对应依赖。
 - 可选：lombok（仅在阅读或从源码构建时需要）。
 - 支付相关：商户号、API 密钥 / V3 密钥、API 证书与私钥文件。
@@ -330,7 +324,7 @@ mvn -DskipTests install
 - [ ] JDK 版本满足要求（8 及以上）。
 - [ ] 令牌存储已从默认内存切到 Redis（多实例或频繁重启的部署必做），且类型名填写正确。
 - [ ] HTTP 客户端类型按需要选好（推荐 HttpComponents 5.x），有代理时已配对应项。
-- [ ] 被动消息路由的规则已按从细到粗排列，每条都以 `end()` 或 `next()` 收尾。
+- [ ] 被动消息路由的规则已按从细到粗排列，每条都以 `end` 或 `next` 收尾。
 - [ ] 多实例部署时已自定义消息去重实现。
 - [ ] 服务退出路径里会调用路由器的线程池关闭方法。
 - [ ] 支付证书文件路径有效且已随部署产物一起发布；密钥与证书不进代码仓库。

@@ -18,8 +18,6 @@ tags:
 
 它在你每次敲回车之前检查当前目录及各级父目录里有没有 `.envrc`，有就先交给你信任过的授权流程，再放进一个 bash 子进程里执行，只把"环境变量发生了哪些增减"回传到当前 shell。所以它支持 bash / zsh / fish / tcsh / elvish / pwsh / murex / nushell 等一票 shell，而且因为只回传 diff，退出目录时能精确地把你带进去的变量原样撤回。
 
-**上游项目**：`direnv`　**仓库**：https://github.com/direnv/direnv
-
 ## 什么时候用 / 不用
 
 **用它**：

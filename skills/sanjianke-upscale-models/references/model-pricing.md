@@ -32,12 +32,7 @@
 它们命中通配键 `*`：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}
 ```
-
-翻译成一句话：**模型层对外价 = 上游实际点数 x 2，单笔最低 50 点**。
-`x 2` 是加价率，`50` 是保底。具体一个 Topaz 视频任务上游收多少点，价目表不写。
 
 ---
 
@@ -78,7 +73,7 @@
 | `netPoints` | 净额（点） | 真实花费看这个 |
 | `rateNote` | 计费说明 | 常见「官方价 x 2.00」 |
 
-### 归集算法（本包 `layer_prices()` 的实现）
+### 归集算法（本包 `layer_prices` 的实现）
 
 ```python
 agg = {}
@@ -86,7 +81,7 @@ for page in range(1, pages + 1):
     d = GET("/api/v1/me/tasks?limit=2000&page=%d" % page)
     for t in d["tasks"]:
         path  = t.get("path") or ""
-        model = (t.get("model") or "").strip()
+        model = (t.get("model") or "").strip
         if not model or "/apps/" in path:     # 应用层不是模型层
             continue
         v = float(t.get("actualPrice") or 0)
@@ -151,7 +146,6 @@ MODEL_BASELINE = {
 ```
 
 `low=50` 来自 `/api/v1/pricing` 的通配 `minPoints: 50`，不是猜的。
-`high=None` 表示上限取决于上游实际点数，价目表没有封顶。
 
 输出里会标：
 

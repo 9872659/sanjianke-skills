@@ -17,8 +17,6 @@ tags:
 
 pycorrector 解决的是「中文写错了怎么自动改回来」：同音字（因该→应该）、形近字（高心→高兴）、成语与专名（带带相传→代代相传）、语法与多字少字。它把统计语言模型（KenLM）到 MacBERT、T5、ERNIE、Qwen 系列一串方案收在同一个接口下，`correct` / `correct_batch` 返回统一的「原句 / 纠后句 / 错误位置」结构。适合做字幕错字清洗、OCR 结果校对、客服话术质量门禁这类批处理。
 
-**上游项目**：`pycorrector`　**仓库**：https://github.com/shibing624/pycorrector
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -93,7 +91,7 @@ docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 ```python
 from pycorrector import Corrector
 
-m = Corrector()
+m = Corrector
 print(m.correct_batch(['少先队员因该为老人让坐', '你找到你最喜欢的工作，我也很高心。']))
 ```
 
@@ -103,14 +101,14 @@ print(m.correct_batch(['少先队员因该为老人让坐', '你找到你最喜�
 {'source': '原句子', 'target': '纠正后的句子', 'errors': [('错误词', '正确词', 起始位置), ...]}
 ```
 
-`correct()` 处理单句返回 dict，`correct_batch()` 处理多句返回 list。
+`correct` 处理单句返回 dict，`correct_batch` 处理多句返回 list。
 
 ### 2. 只检测不改（拿到错误位置）
 
 ```python
 from pycorrector import Corrector
 
-m = Corrector()
+m = Corrector
 print(m.detect('少先队员因该为老人让坐'))
 ```
 
@@ -185,7 +183,7 @@ print(pycorrector.traditional2simplified('憂郁的臺灣烏龜'))
 print(pycorrector.simplified2traditional('忧郁的台湾乌龟'))
 
 from pycorrector import EnSpellCorrector
-m = EnSpellCorrector()
+m = EnSpellCorrector
 print(m.correct('what happending? how to speling it, can you gorrect it?'))
 ```
 
@@ -193,9 +191,9 @@ print(m.correct('what happending? how to speling it, can you gorrect it?'))
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| 第一次 `Corrector()` 卡住很久或直接失败 | 它默认从 `~/.pycorrector/datasets/` 下找语言模型，找不到会尝试联网自动下载，而那个文件体积很大 | 提前手动下载放到位，或把 `language_model_path` 指向本地的轻量模型；离线机器必须预置文件 |
+| 第一次 `Corrector` 卡住很久或直接失败 | 它默认从 `~/.pycorrector/datasets/` 下找语言模型，找不到会尝试联网自动下载，而那个文件体积很大 | 提前手动下载放到位，或把 `language_model_path` 指向本地的轻量模型；离线机器必须预置文件 |
 | 专名被人名/品牌名被改错 | 统计模型只看语言概率，不认识你的业务专名 | 用 `proper_name_path` 挂专名词典，或用 `custom_confusion_path_or_dict` 把该词加白（两边写成同一个词即可） |
-| `correct_batch` 返回里 errors 为空，但句子确实有错 | 召回不足，或者错误不在模型覆盖的类型里 | 先用 `detect()` 看检出情况；再决定是补混淆集还是换更强的模型路线 |
+| `correct_batch` 返回里 errors 为空，但句子确实有错 | 召回不足，或者错误不在模型覆盖的类型里 | 先用 `detect` 看检出情况；再决定是补混淆集还是换更强的模型路线 |
 | 装了 MacBERT 那套却报缺 torch / transformers | pip 主包不带深度学习依赖，需要按模型自装 | 按所选模型路线单独装 torch、transformers（ERNIE 路线则是 PaddlePaddle） |
 | ModelScope 路线 import 报错或版本冲突 | 该路线对 modelscope / fairseq 版本有明确口径，且仓库标注过测试环境的 Python 小版本 | 严格按仓库说明的版本装，并尽量在独立环境里跑 |
 | 整文件纠错跑完中文乱码 | 输入文件不是 UTF-8 | 统一转成 UTF-8 再跑；输出也按 UTF-8 读 |
@@ -275,7 +273,7 @@ print(m.correct('what happending? how to speling it, can you gorrect it?'))
 执行后：
 
 - [ ] 抽样对比原句与纠后句，确认没有把正确内容改错（重点看专名）
-- [ ] 用 `detect()` 核对错误位置与原文下标是否对得上（做字幕回写时必须核对）
+- [ ] 用 `detect` 核对错误位置与原文下标是否对得上（做字幕回写时必须核对）
 - [ ] 记录本批次使用的模型名、语言模型路径、版本与参数，便于复现与回滚
 - [ ] 若产生新的误杀样本，回填到混淆集白名单，形成闭环
 

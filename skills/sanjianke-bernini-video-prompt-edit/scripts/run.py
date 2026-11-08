@@ -3,7 +3,7 @@
 """三剪客 · Bernini视频编辑-描述词编辑视频
 
 走 api.a7w.cn 的**工作流应用**（69 个按次调用应用之一）。
-上游报价 ￥1.16/次，本站 174.0 点（￥1.74）。
+
 
 端点：
   GET  /api/v1/gpu/apps                        应用清单（68 个兄弟应用也在这里）
@@ -211,7 +211,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：上游 ￥%s/次 · 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

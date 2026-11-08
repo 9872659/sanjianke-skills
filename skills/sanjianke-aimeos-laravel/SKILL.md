@@ -16,8 +16,6 @@ tags:
 
 `aimeos-laravel` 是给 Laravel 应用加一整套电商能力的方式：商品目录、购物车、结算、订单、支付与配送服务、优惠券、多语言多站点后台，以及面向单页应用和移动端的 JSON REST API 与管理端的 GraphQL API。它替你解决的问题是"我已有的 Laravel 站点要长出商城，而不是把商城重写一遍"——装进去、跑一次初始化、建一个管理员账号，前后台就都有了。
 
-**上游项目**：`aimeos-laravel`　**仓库**：https://github.com/aimeos/aimeos-laravel
-
 ## 什么时候用 / 不用
 
 **用它**：

@@ -24,10 +24,7 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 EmotiVoice 是一个开源的文字转语音引擎，同时说中文和英文，预置音色上千个，最突出的能力是**可以用提示词控制情绪**——同一句话可以合成开心、兴奋、悲伤、愤怒等不同语气。它还支持用自己的几秒录音克隆音色，不需要重训模型。适合需要给短剧、口播、解说批量配人声，又不想被云端 API 按字数计费的场景。
-
-**上游项目**：`EmotiVoice`　**仓库**：https://github.com/netease-youdao/EmotiVoice
 
 ## 零安装用法（推荐先看这个）
 
@@ -212,7 +209,7 @@ uvicorn openaiapi:app --reload
 | 跑推理报找不到模型文件 | 预训练权重不会自动下载，且目录名/文件名有严格约定 | 先确认 `outputs/style_encoder/ckpt` 和 `outputs/prompt_tts_open_source_joint/ckpt` 两个目录存在，且 `g_*`、`do_*`、`checkpoint_*` 分别放对位置 |
 | 直接拿中文原文去合成，出来的是乱读或报错 | 推理入口吃的是音素序列，不是原始汉字 | 先用 `frontend.py` 把文本转成音素，再喂给推理脚本 |
 | 装完 transformers 后一堆 API 报错 | 该项目对 transformers 版本做过锁定（README 曾指定 4.26.1） | 不要用最新版 transformers 去顶，按 README 指定的版本装；即使 README 写的比元数据宽松，也先按 README 来 |
-| `import torch` 后 `torch.cuda.is_available()` 是 False | 装成了 CPU 版 torch，推理会退化到 CPU 上慢慢跑 | 按显卡驱动对应的 CUDA 版本重装 torch/torchaudio；GPU 上单句合成与 CPU 差距很大 |
+| `import torch` 后 `torch.cuda.is_available` 是 False | 装成了 CPU 版 torch，推理会退化到 CPU 上慢慢跑 | 按显卡驱动对应的 CUDA 版本重装 torch/torchaudio；GPU 上单句合成与 CPU 差距很大 |
 | 起 OpenAI 兼容接口报缺包 | 兼容层依赖不在基础依赖里 | 先 `pip install fastapi pydub uvicorn[standard] pyrubberband` 再 `uvicorn openaiapi:app` |
 | 显存不够（OOM） | 联合模型 + 声码器 + 风格编码器一起吃显存，长文本更吃 | 用单句或短句切分后批量跑；关掉网页界面再跑命令行推理，别让两个进程抢同一块卡 |
 | Windows 上 Docker 那步起不来 | 需要 WSL2 + NVIDIA 容器工具链 | 要么先把 WSL2 的 GPU 透传配通，要么走完整本地安装（原生 Windows 上 conda 环境可用） |
@@ -243,7 +240,6 @@ uvicorn openaiapi:app --reload
 **覆盖**：
 
 - 中英双语文字转语音，含中英混排
-- 预置多说话人音色（官方口径为两千以上，具体清单以上游音色列表页为准）
 - 提示词控制情绪与风格（开心、兴奋、悲伤、愤怒等）
 - 零样本音色克隆，以及用自有数据继续训练（仓库提供数据配方）
 - 命令行批处理、网页试听界面、OpenAI 兼容接口三种使用形态

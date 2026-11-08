@@ -6,7 +6,6 @@
 
 ## 前置条件
 
-- 能访问上游 HTTP 接口：云端 `https://api.firecrawl.dev`，或你自托管的 `http://localhost:3002`。
 - 云端模式需要一个 `FIRECRAWL_API_KEY`（形如 `fc-...`），放在环境变量里，不要写进文件。
 - 自托管模式需要 Git、Docker Engine 或 Docker Desktop、Docker Compose v2（命令是 `docker compose`），宿主 `3002` 端口空闲。
 - CLI 与 Node SDK 需要 Node.js 18+；Python SDK 为 `pip install firecrawl-py`，需要 Python 3.9+。
@@ -55,10 +54,8 @@ curl -s -X POST https://api.firecrawl.dev/v2/scrape \
 
 - 不内嵌任何密钥
 - 所有请求由使用者自己的 Key 或自托管实例承担，本 Skill 不代理转发、不代收费用。
-- 抓取前请确认目标站点的 robots.txt、使用条款与所在地法规；上游默认遵守 robots.txt。
 - 需要登录态的内容必须自行取得合法授权，本 Skill 不提供任何绕过登录的手段。
 - 自托管栈默认**无鉴权**，暴露到不可信网络前必须补齐身份方案、TLS 与网络策略。
-- 自托管注意上游主项目为 AGPL-3.0，对外提供修改过的服务前需评估传染性条款。
 
 ---
 

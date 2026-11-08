@@ -18,8 +18,6 @@ tags:
 
 它是一套完整的 Web 应用，不是一个命令行小工具——装完之后真正的操作在浏览器后台里完成，命令行的主要用途是**初始化、定时任务和运维**。理解这一点很重要：把它的命令背熟并不能替代对「分群—活动—邮件」这条链路的理解。
 
-**上游项目**：`Mautic`　**仓库**：https://github.com/mautic/mautic
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -193,7 +191,7 @@ php /path/to/mautic/bin/console mautic:segments:update --no-interaction --no-ans
 |---|---|---|
 | 分群人数不更新、活动不推进、邮件不发 | 三个必需 cron 没配，或配了但没在执行 | 先确认 crontab 里有 `mautic:segments:update`、`mautic:campaigns:update`、`mautic:campaigns:trigger`，再把三条错开分钟 |
 | cron 跑了但联系人不进分群 | 三条任务挤在同一分钟，互相争资源 | 按官方建议错峰：分群 `0,15,30,45`、活动更新 `5,20,35,50`、活动触发 `10,25,40,55` |
-| cron 报 `Invalid argument supplied for foreach()` 之类错误，或日志没时间戳、输出混乱 | `php` 被宿主配成会丢弃命令行参数（需要 `register_argc_argv`），以及没启用非交互 + 禁 ANSI 模式 | 改用 `php-cli` 或加 `php -d register_argc_argv=On`；命令末尾一律加 `--no-interaction --no-ansi` |
+| cron 报 `Invalid argument supplied for foreach` 之类错误，或日志没时间戳、输出混乱 | `php` 被宿主配成会丢弃命令行参数（需要 `register_argc_argv`），以及没启用非交互 + 禁 ANSI 模式 | 改用 `php-cli` 或加 `php -d register_argc_argv=On`；命令末尾一律加 `--no-interaction --no-ansi` |
 | `messenger:consume email` 一直不退出 | 没给 `--memory-limit` / `--limit` / `--time-limit` 任一参数 | 至少补一个，例如 `--time-limit=160` |
 | Composer 装完访问站点报错 | Recommended Project 把核心文件放在 `docroot` 下，Web 根目录还指着上级 | 把虚拟主机 / Nginx 的 root 指向 `<项目目录>/docroot` |
 | 装到一半失败，提示内存或超时 | PHP `memory_limit` 偏低、`max_execution_time` 不足 240 秒 | 按官方要求调高这两项；大批量任务时给命令单独加内存参数 |

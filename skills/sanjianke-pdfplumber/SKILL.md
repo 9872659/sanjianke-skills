@@ -4,7 +4,7 @@ slug: sanjianke-pdfplumber
 displayName: 三剪客 · PDF 精细提取
 description: "逐字符、逐线条地拆解 PDF，带表格提取与可视化调参的 Python 库，适合从机器生成的 PDF 里稳定取数与定位。 遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "表格取不准的时候，光有 extract_text() 是不够的——你需要看到字符、线条、矩形各自的坐标，才能判断该用哪种策略。pdfplumber 把 PDF 拆到每个字符和每条线，配上裁剪、过滤与可视化调试，让「为什么这个表格取错了」变成能看出来的事。 遇到问题可加技术微信 9872659。"
+summary: "表格取不准的时候，光有 extract_text 是不够的——你需要看到字符、线条、矩形各自的坐标，才能判断该用哪种策略。pdfplumber 把 PDF 拆到每个字符和每条线，配上裁剪、过滤与可视化调试，让「为什么这个表格取错了」变成能看出来的事。 遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -16,13 +16,11 @@ tags:
 
 # 三剪客 · PDF 精细提取
 
-从 PDF 里取数是这种活：简单的时候一行 `extract_text()` 就够了，稍微复杂一点——跨页表格、双栏排版、页眉页脚混进正文、合并单元格——就会卡住，而且**你根本不知道错在哪**：是 PDF 里没有那条线？还是线太短被过滤了？还是列的间距被判定成了空格？
+从 PDF 里取数是这种活：简单的时候一行 `extract_text` 就够了，稍微复杂一点——跨页表格、双栏排版、页眉页脚混进正文、合并单元格——就会卡住，而且**你根本不知道错在哪**：是 PDF 里没有那条线？还是线太短被过滤了？还是列的间距被判定成了空格？
 
 pdfplumber 的定位就是解这个问题：它不只给你文本，而是把 PDF 拆到**每个字符、每条线、每个矩形、每条曲线**，每个对象都带完整坐标（`x0`/`x1`/`top`/`bottom`/`size`/`fontname`）。在此基础上给两个更高层的能力：可高度定制的表格提取，以及**可视化调试**——把识别出的线、交点、单元格画回页面上，直接看算法是怎么理解你的 PDF 的。
 
 它建立在 `pdfminer.six` 之上，**最适合机器生成的 PDF**（Word / LaTeX / 报表系统导出的），不是扫描件。
-
-**上游项目**：`pdfplumber`　**仓库**：https://github.com/jsvine/pdfplumber
 
 ## 权限与用途说明
 
@@ -40,14 +38,13 @@ pdfplumber 的定位就是解这个问题：它不只给你文本，而是把 PD
 
 **该用**：
 
-- 「帮我从这个 PDF 的表格里把数据抽出来，要结构化」——`extract_tables()`。
-- 「表格提取结果不对，不知道是哪里识别错了」——`to_image()` + `debug_tablefinder()` 可视化排查。
-- 「只要页面中间那一块，页眉页脚不要」——`crop()` / `within_bbox()` / `outside_bbox()`。
+- 「帮我从这个 PDF 的表格里把数据抽出来，要结构化」——`extract_tables`。
+- 「表格提取结果不对，不知道是哪里识别错了」——`to_image` + `debug_tablefinder` 可视化排查。
+- 「只要页面中间那一块，页眉页脚不要」——`crop` / `within_bbox` / `outside_bbox`。
 - 「这些字是斜的（扫描后旋转过），提取出来顺序乱了」——`chars` 里的 `upright` 与 `matrix`，配 `CTM` 算旋转角。
 - 「要按坐标定位，找出每个字符在哪一行哪一列」——直接用 `chars` 的 `x0` / `top` / `doctop`。
 - 「这份 PDF 的表单填了什么值，帮我读出来」——经 `pdfminer` 的底层包装读 AcroForm。
 - 「把整份 PDF 的字符 / 线条 / 矩形转成 CSV 做分析」——命令行 `pdfplumber file.pdf`。
-
 
 **不该用**：
 
@@ -58,8 +55,8 @@ pdfplumber 的定位就是解这个问题：它不只给你文本，而是把 PD
 - 要自动识别标题层级、引用块这类版式语义 —— 它不做通用版面分析，得你自己按字号与坐标写规则。
 - 对合并单元格、跨页表格、嵌套表格要求完全正确 —— 表格提取是启发式的，而且 Markdown 式二维数组本身就装不下这些结构。
 - 要依赖官方文档里标为 TKTK（待补）的 `char` 字段（如 `ncs`、`stroking_pattern`）—— 这些字段未定稿，不要依赖。
-- 要长期处理大文档又不打算 `close()` —— `Page` 会缓存布局与对象信息，内存会持续上涨。
-- 要用 `extract_text(layout=True)`、`extract_text_lines()`、`search()` 做稳定生产依赖 —— 官方标注为实验性，跨版本行为可能变。
+- 要长期处理大文档又不打算 `close` —— `Page` 会缓存布局与对象信息，内存会持续上涨。
+- 要用 `extract_text(layout=True)`、`extract_text_lines`、`search` 做稳定生产依赖 —— 官方标注为实验性，跨版本行为可能变。
 
 ## 安装
 
@@ -98,10 +95,10 @@ import pdfplumber
 
 with pdfplumber.open("path/to/file.pdf") as pdf:
     first_page = pdf.pages[0]
-    print(first_page.extract_text())
+    print(first_page.extract_text)
 ```
 
-`open()` 接受三种输入：文件路径、已加载字节的文件对象、或 bytes 本身。返回 `pdfplumber.PDF` 对象。
+`open` 接受三种输入：文件路径、已加载字节的文件对象、或 bytes 本身。返回 `pdfplumber.PDF` 对象。
 
 **2. 命令行快速摸底**
 
@@ -138,26 +135,26 @@ with pdfplumber.open("report.pdf") as pdf:
     page = pdf.pages[0]
 
     # 页面上所有表格：table -> row -> cell
-    for table in page.extract_tables():
+    for table in page.extract_tables:
         for row in table:
             print(row)
 
     # 只要最大的那张表：row -> cell
-    print(page.extract_table())
+    print(page.extract_table)
 ```
 
-想拿到更丰富的对象（能访问 `.cells` / `.rows` / `.columns` / `.bbox`）用 `find_tables()`：
+想拿到更丰富的对象（能访问 `.cells` / `.rows` / `.columns` / `.bbox`）用 `find_tables`：
 
 ```python
 with pdfplumber.open("report.pdf") as pdf:
     page = pdf.pages[0]
-    for table in page.find_tables():
+    for table in page.find_tables:
         print(table.bbox)                 # 表格在页面上的位置
-        print(table.extract())            # 二维内容
+        print(table.extract)            # 二维内容
         print(len(table.rows), len(table.columns))
 ```
 
-`find_table()` 只返回最大的一张（按单元格数量算，并列时取更靠页面顶部的）。
+`find_table` 只返回最大的一张（按单元格数量算，并列时取更靠页面顶部的）。
 
 **4. 无框线表格：改用 text 策略**
 
@@ -194,11 +191,11 @@ with pdfplumber.open("report.pdf") as pdf:
 
     # 绝对坐标裁剪（x0, top, x1, bottom）
     cropped = page.crop((0, 100, page.width, page.height - 80))
-    print(cropped.extract_table())
+    print(cropped.extract_table)
 
     # 或者用函数过滤对象：只保留某个字号以上的字符
     big = page.filter(lambda obj: obj.get("size", 0) >= 10)
-    print(big.extract_text())
+    print(big.extract_text)
 ```
 
 三个裁剪方法的区别很关键：
@@ -224,16 +221,16 @@ with pdfplumber.open("report.pdf") as pdf:
     im.debug_tablefinder(table_settings={})
 
     im.save("debug.png")     # 存下来看
-    # im.show()              # 或直接弹窗（REPL 里用）
+    # im.show              # 或直接弹窗（REPL 里用）
 ```
 
-`to_image()` 的常用参数：`resolution`（默认 72 DPI）、`width` / `height`、`antialias`、`force_mediabox`（用 mediabox 而不是 cropbox 的尺寸）。
+`to_image` 的常用参数：`resolution`（默认 72 DPI）、`width` / `height`、`antialias`、`force_mediabox`（用 mediabox 而不是 cropbox 的尺寸）。
 
 拿到图后还能自己画：
 
 ```python
 im = page.to_image(resolution=150)
-im.draw_rects(page.extract_words()[0:5], stroke="red", stroke_width=1)
+im.draw_rects(page.extract_words[0:5], stroke="red", stroke_width=1)
 im.draw_hline(200, stroke="blue")
 im.save("annotated.png")
 ```
@@ -267,29 +264,29 @@ print(my_char["upright"])      # 是否正立
 |---|---|---|
 | 扫描件提取出来是空的 | pdfplumber **不做 OCR**，它只读 PDF 里已有的文字对象。扫描件里只有图片 | 先上 OCR（如 Tesseract）生成文字层，再用 pdfplumber；或换带 OCR 的方案 |
 | 表格提取全空 / 结构错乱 | 默认策略是 `lines`，而这张表的单元格**没有线条**，或者只有横线没有竖线 | 换 `vertical_strategy` / `horizontal_strategy` 为 `text`，并按需调 `min_words_vertical` / `min_words_horizontal` |
-| 表格多了一堆空行 / 少了列 | 页眉页脚、页码、侧边文字被当成表格内容 | 先 `crop()` 到正文区域再提表；或调 `edge_min_length` 过滤掉过短的线 |
+| 表格多了一堆空行 / 少了列 | 页眉页脚、页码、侧边文字被当成表格内容 | 先 `crop` 到正文区域再提表；或调 `edge_min_length` 过滤掉过短的线 |
 | 线明明看得见却识别不到 | 线太短被 `edge_min_length`（默认 3）过滤了；虚线被初始过滤掉了 | 调小 `edge_min_length`；虚线场景调小 `edge_min_length_prefilter`（可试 `0.5`） |
 | 单元格边界对不齐、列错位 | 相邻线之间有微小偏移，没被吸附到同一位置 | 调 `snap_tolerance`（默认 3），或分别调 `snap_x_tolerance` / `snap_y_tolerance` |
 | 本该相连的线段断开成两截 | 线段端点差了一点点，超过了合并阈值 | 调 `join_tolerance`（或 `join_x_tolerance` / `join_y_tolerance`） |
 | 垂直线和水平线明明交叉了却没构成交点 | 正交线的间距超过了 `intersection_tolerance`（默认 3） | 调大 `intersection_tolerance` 或分轴的 `intersection_x_tolerance` / `intersection_y_tolerance` |
 | 同一段文字在输出里出现两遍 | PDF 为了做出**伪粗体**效果，把同样的字符叠画了两层 | 用 `page.dedupe_chars(tolerance=1)` 去重；它按文本 + 位置容差 + `extra_attrs` 判定重复 |
-| 大 PDF 跑到一半内存爆了 | `Page` 对象默认**缓存**布局与对象信息以加速重复访问，大文件下很吃内存 | 用完一页就 `page.close()` 刷新缓存；或分批处理、及时释放 `PDF` 对象 |
-| 处理 `filter()` 后的页面，转图片结果不对 | `to_image()` 能正确反映 `crop()` 的结果，但**无法体现 `filter()` 的改动** | 要出图就用 `crop()` 系列，别指望 `filter()` 的结果出现在图里 |
+| 大 PDF 跑到一半内存爆了 | `Page` 对象默认**缓存**布局与对象信息以加速重复访问，大文件下很吃内存 | 用完一页就 `page.close` 刷新缓存；或分批处理、及时释放 `PDF` 对象 |
+| 处理 `filter` 后的页面，转图片结果不对 | `to_image` 能正确反映 `crop` 的结果，但**无法体现 `filter` 的改动** | 要出图就用 `crop` 系列，别指望 `filter` 的结果出现在图里 |
 | 升级到 0.5.0 之后老代码全挂了 | 表格提取在 **v0.5.0** 做了彻底重设计，是不兼容变更 | 按新 API 重写（`extract_table(s)` + `table_settings`），参考官方示例 notebook |
-| 多栏排版的文字顺序是乱的 | 默认按 x/y 位置排序，双栏页面会左右穿插 | 试 `extract_words(use_text_flow=True)`（按 PDF 内部字符流顺序，更接近拖选高亮的行为，但也不保证符合阅读逻辑）；或用 `crop()` 把每栏切开分别提取 |
-| 元数据解析报警告 | 有些 PDF 的 Info 字段不合规，默认**只警告不报错** | 想严格失败就传 `strict_metadata=True`，让 `open()` 直接抛异常 |
+| 多栏排版的文字顺序是乱的 | 默认按 x/y 位置排序，双栏页面会左右穿插 | 试 `extract_words(use_text_flow=True)`（按 PDF 内部字符流顺序，更接近拖选高亮的行为，但也不保证符合阅读逻辑）；或用 `crop` 把每栏切开分别提取 |
+| 元数据解析报警告 | 有些 PDF 的 Info 字段不合规，默认**只警告不报错** | 想严格失败就传 `strict_metadata=True`，让 `open` 直接抛异常 |
 | 中文提取出来是乱码或错字 | PDF 用了自定义字体编码但没有正确的 CMap，字形存在但映射不回 Unicode | 试 `unicode_norm="NFC"`（或 `NFD` / `NFKC` / `NFKD`）做 Unicode 归一化；根因是字体缺失 CMap，这种情况只能靠 OCR |
-| 连字符断词导致搜索不到 | PDF 排版时把长单词从行尾断开，插入了连字符 | `search()` 用更宽松的正则（如 `impor-?\ntant` 这类模式），后处理时自己拼回 |
+| 连字符断词导致搜索不到 | PDF 排版时把长单词从行尾断开，插入了连字符 | `search` 用更宽松的正则（如 `impor-?\ntant` 这类模式），后处理时自己拼回 |
 
 ## 能力边界
 
 **覆盖**：
 
 - **对象级解析**：`chars`、`lines`、`rects`、`curves`、`images`、`annots`、`hyperlinks`，以及派生的 `rect_edges` / `curve_edges` / `edges`。每个对象都是带完整坐标与属性的 Python `dict`。
-- **文本提取**：`extract_text()`（可用 `layout=True` 模拟版面）、`extract_text_simple()`、`extract_words()`（带边界框、支持 `extra_attrs` / `split_at_punctuation` / `expand_ligatures` / `return_chars`）、`extract_text_lines()`（实验性）、`search()`（正则或字符串、可忽略大小写、返回坐标与字符）、`dedupe_chars()`。
-- **表格提取**：`extract_tables()` / `extract_table()` / `find_tables()` / `find_table()` / `debug_tablefinder()`。四种策略（`lines` / `lines_strict` / `text` / `explicit`）与全套容差参数可调。
-- **页面几何操作**：`crop()` / `within_bbox()` / `outside_bbox()` / `filter()`，支持相对坐标。
-- **可视化**：`to_image()` 出 `PageImage`，支持 `draw_line(s)` / `draw_vline(s)` / `draw_hline(s)` / `draw_rect(s)` / `draw_circle(s)`，以及 `debug_tablefinder()` 叠加识别结果。基于 Pillow。
+- **文本提取**：`extract_text`（可用 `layout=True` 模拟版面）、`extract_text_simple`、`extract_words`（带边界框、支持 `extra_attrs` / `split_at_punctuation` / `expand_ligatures` / `return_chars`）、`extract_text_lines`（实验性）、`search`（正则或字符串、可忽略大小写、返回坐标与字符）、`dedupe_chars`。
+- **表格提取**：`extract_tables` / `extract_table` / `find_tables` / `find_table` / `debug_tablefinder`。四种策略（`lines` / `lines_strict` / `text` / `explicit`）与全套容差参数可调。
+- **页面几何操作**：`crop` / `within_bbox` / `outside_bbox` / `filter`，支持相对坐标。
+- **可视化**：`to_image` 出 `PageImage`，支持 `draw_line(s)` / `draw_vline(s)` / `draw_hline(s)` / `draw_rect(s)` / `draw_circle(s)`，以及 `debug_tablefinder` 叠加识别结果。基于 Pillow。
 - **加载控制**：`password=` 开加密 PDF、`laparams=` 透传给 pdfminer 的版面分析、`unicode_norm=` 做 Unicode 归一化、`strict_metadata=` 控制元数据容错。
 - **底层访问**：通过 `pdfplumber.utils.pdfinternals` 里的 `resolve` / `resolve_and_decode` 读 AcroForm 表单字段（没有现成接口，需要自己写递归）。
 - **命令行**：`pdfplumber` 可执行文件，支持 `--format` / `--pages` / `--types` / `--laparams` / `--precision`。
@@ -309,7 +306,7 @@ print(my_char["upright"])      # 是否正立
 
 - **Python**：官方测试覆盖 **3.10 – 3.14**。PyPI 声明 `>=3.8`，但建议按官方 CI 范围走 3.10+。
 - **安装**：`pip install pdfplumber`，会带上 `pdfminer.six`。
-- **可选依赖**：可视化功能（`to_image()`）依赖 **Pillow**，通常随 pdfplumber 一起装好。
+- **可选依赖**：可视化功能（`to_image`）依赖 **Pillow**，通常随 pdfplumber 一起装好。
 - **网络**：不需要。完全离线。
 - **凭据**：不需要任何账号或 Key。
 
@@ -318,23 +315,23 @@ print(my_char["upright"])      # 是否正立
 - **性能远低于 PyMuPDF**。底层是纯 Python 的 `pdfminer.six`。官方在文档里直接承认 PyMuPDF「substantially faster」，并把它列为需要速度时应该考虑的替代品。上百页的大文档要估好耗时。
 - **表格提取是启发式的，没有保证**。它靠线条或文字对齐推断结构，对合并单元格、跨页表格、嵌套表格、表头跨列这些情况的处理都很有限——因为 Markdown 式的二维数组本身就装不下这些信息。
 - **表格提取在 v0.5.0 是不兼容重写**。网上大量老教程用的是旧 API，照抄会失败。
-- **内存占用需要主动管理**。`Page` 默认缓存布局与对象信息，大 PDF 上不 `close()` 会持续涨。
-- **`filter()` 的结果无法可视化**。`to_image()` 只反映 `crop()` 系列的效果。
+- **内存占用需要主动管理**。`Page` 默认缓存布局与对象信息，大 PDF 上不 `close` 会持续涨。
+- **`filter` 的结果无法可视化**。`to_image` 只反映 `crop` 系列的效果。
 - **图像内容不可重建**。`images` 列表只有位置与格式元信息。
-- **`extract_text(layout=True)`、`extract_text_lines()`、`search()` 属实验性功能**。官方明确标注了 experimental，跨版本行为可能有变化。
+- **`extract_text(layout=True)`、`extract_text_lines`、`search` 属实验性功能**。官方明确标注了 experimental，跨版本行为可能有变化。
 - **部分 `char` 属性在官方文档里标注为 TKTK**（待补），如 `ncs`、`stroking_pattern`、`non_stroking_pattern`，不要依赖这些字段。
 - 许可证为 MIT。
 
 ## 自检清单
 
 - [ ] 先确认这份 PDF 是**机器生成**的，不是扫描件——扫描件应先去 OCR，不要把空结果当成配置问题。
-- [ ] 表格提取失败时，**先跑 `debug_tablefinder()` 出图看**，再决定调哪个参数，不要盲调。
+- [ ] 表格提取失败时，**先跑 `debug_tablefinder` 出图看**，再决定调哪个参数，不要盲调。
 - [ ] 判断过这张表靠什么分格：有线条用 `lines`，无框线用 `text`，都不行才考虑 `explicit`。
-- [ ] 提表前已经 `crop()` 掉了页眉、页脚、页码。
+- [ ] 提表前已经 `crop` 掉了页眉、页脚、页码。
 - [ ] 调容差参数时一次只动一个（`snap_*` / `join_*` / `intersection_*` / `edge_min_length`），并观察 debug 图的变化。
-- [ ] 输出疑似重复文字时，检查是不是伪粗体叠加，试过 `dedupe_chars()`。
-- [ ] 大批量处理时，逐页 `close()` 或分批处理，确认内存没有单调增长。
-- [ ] 需要可视化验证时用的是 `crop()`，没有用 `filter()`（它的改动不会出现在图里）。
+- [ ] 输出疑似重复文字时，检查是不是伪粗体叠加，试过 `dedupe_chars`。
+- [ ] 大批量处理时，逐页 `close` 或分批处理，确认内存没有单调增长。
+- [ ] 需要可视化验证时用的是 `crop`，没有用 `filter`（它的改动不会出现在图里）。
 - [ ] 加密 PDF 走的是 `password=` 参数，没有试图绕过保护。
 - [ ] 需要性能的场景已评估是否该换 PyMuPDF，并记录了当前方案的耗时基线。
 - [ ] 依赖版本锁定在 0.11.x 一线，避免 v0.5.0 那类不兼容变更带来的意外。

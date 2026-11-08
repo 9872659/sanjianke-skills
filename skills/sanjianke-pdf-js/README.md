@@ -43,7 +43,7 @@ import * as pdfjsLib from "pdfjs-dist";
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.mjs",
   import.meta.url
-).toString();
+).toString;
 
 const pdf = await pdfjsLib.getDocument({ url: "/files/demo.pdf" }).promise;
 const page = await pdf.getPage(1);
@@ -54,7 +54,7 @@ canvas.width = viewport.width;
 canvas.height = viewport.height;
 
 await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
-page.cleanup();
+page.cleanup;
 ```
 
 Node 里抽元数据与文本（官方示例写法）：
@@ -65,14 +65,14 @@ import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 const loadingTask = getDocument({ url: "demo.pdf" });
 const pdfDoc = await loadingTask.promise;
 
-const { info, metadata } = await pdfDoc.getMetadata();
+const { info, metadata } = await pdfDoc.getMetadata;
 for (let i = 1; i <= pdfDoc.numPages; i++) {
   const p = await pdfDoc.getPage(i);
-  const { items } = await p.getTextContent();
+  const { items } = await p.getTextContent;
   console.log(items.map((item) => item.str).join(" "));
-  p.cleanup();
+  p.cleanup;
 }
-await loadingTask.destroy();
+await loadingTask.destroy;
 ```
 
 加载参数、页面对象方法、viewer 集成、构建产物、性能与内存建议见 `references/api-and-viewer.md`。
@@ -99,7 +99,7 @@ await loadingTask.destroy();
 - **PDF 是不可信输入**：加载来路不明的文件时建议设 `isEvalSupported: false`，并只渲染需要的页面。
 - 纯前端解析的好处是文件不必上传到你的服务器，但同样意味着没有服务端校验兜底；对外提供"预览任意 PDF"的功能时，注意跨域与来源限制。
 - **跨域加载受同源策略限制**，需要目标服务器开 CORS 或自己域内做代理；官方 demo viewer 在非自家域会主动拦截外部 `?file=`，这是防内容伪装的设计。
-- 资源释放要及时：每页 `cleanup()`、整份 `destroy()`；不要一次渲染大量页面（单页在高分屏下可能占用十几 MB 内存）。
+- 资源释放要及时：每页 `cleanup`、整份 `destroy`；不要一次渲染大量页面（单页在高分屏下可能占用十几 MB 内存）。
 - 本 Skill 不代理任何在线转换/渲染服务，不转发请求，不代收费用。
 
 ---

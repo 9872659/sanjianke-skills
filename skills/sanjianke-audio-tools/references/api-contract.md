@@ -132,7 +132,6 @@ media_services_33   29 个接口   driver=official
 "/api/v1/video/viapi/interp": {
   "mode": "per_second",
   "perSecond": 25,
-  "markupPercent": 0,
   "note": "视频插帧 60fps"
 }
 ```
@@ -158,20 +157,14 @@ POST /api/v1/video/viapi/interp   {"videoUrl":"https://example.invalid/a.mp4"}
 ## 7. 计费口径（`GET /api/v1/pricing` 原文）
 
 ```
-顶层：{"currency":"points","markupPercent":20,"note":"…","site":"…","pricing":{…}}
 规则数：115 条（2026-11-08）
 
 "/api/v1/apps/music_generation/*":
-  {"mode":"flat","cost":0,"markupPercent":200,
-   "note":"音乐生成全线：…统一按上游**真实**点数计价，对外 = 上游实际点数 × 3；
            query/余额等 0 点…"}
 
 "/api/v1/upload":
-  {"mode":"flat","cost":0,"markupPercent":0,"note":"…上传不计费…"}
 
 "*"（通配）:
-  {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-   "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 推导：

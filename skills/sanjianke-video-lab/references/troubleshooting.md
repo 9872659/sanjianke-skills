@@ -24,7 +24,6 @@ python3 scripts/a7w.py login --key sk-你的key
 
 Key 本身的问题。到 [api.a7w.cn](https://api.a7w.cn/) 重新创建。
 
-> `/user/balance` 是唯一免费的用户接口；`/user`、`/user/usage`、`/balance` 这些是上游账号级路径，
 > 平台会直接 403 并告诉你该用哪个（`upstream_account_scope_blocked`）。
 
 ---

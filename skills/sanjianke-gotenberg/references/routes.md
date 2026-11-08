@@ -74,8 +74,8 @@
 
 ```js
 window.status = "loading"
-fetchData().then(() => {
-  renderCharts()
+fetchData.then( => {
+  renderCharts
   window.status = "ready"
 })
 ```

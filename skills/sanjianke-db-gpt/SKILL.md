@@ -18,8 +18,6 @@ tags:
 
 它不是一个 pip 装完就能 import 的小库，而是一整套**可自托管的 AI 数据助手应用**——自带 Web 前端、模型接入层（SMMF）、RAG 知识库、AWEL 工作流和沙箱执行。这意味着能力上限很高，也意味着它有自己的服务、端口、配置和数据目录，装之前要先接受这一点。
 
-**上游项目**：`DB-GPT`　**仓库**：https://github.com/eosphoros-ai/DB-GPT
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -289,7 +287,6 @@ dbgpt model chat --model_name Qwen2.5-Coder-0.5B-Instruct --system "你是数据
 
 ## 已知限制
 
-- 上游迭代很快，命令与参数会随版本变化；执行前建议用 `dbgpt <子命令> --help` 和官方文档核对当前写法。
 - 文档内部存在默认值不一致的情况（例如 webserver 端口、`--local_doc_path` 默认值），不要照抄示例里的占位路径。
 - 生成 SQL 的质量高度依赖所选模型；小模型或弱模型上错误率明显上升，需要人工复核。
 - 集群与分布式部署（controller / worker / apiserver、多卡多机）配置项多，属于进阶用法，官方提供了单独文档。

@@ -33,8 +33,8 @@ tags:
 | 出图 | gpt-image-2.6 | `POST /api/v1/images/generations` | **6 点/张** |
 | 改图 | nano-banana | `POST /api/v1/apps/nano_banana/submit` | 72 点/次 |
 | 动起来 | full_video | `POST /api/v1/apps/full_video/submit` | 480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒 |
-| 旁白 | voice_tts | `POST /api/v1/apps/voice_tts/tts` | 约 0.18 点/字（上游真实点数 x 3） |
-| 配乐 | media_services_33 | `POST /api/v1/apps/media_services_33/music_generate` | 50 点起/首（上游 x 2，保底 50） |
+| 旁白 | voice_tts | `POST /api/v1/apps/voice_tts/tts` | 约 0.18 点/字 |
+| 配乐 | media_services_33 | `POST /api/v1/apps/media_services_33/music_generate` | 50 点起/首 |
 
 ## 一篇 2000 字到底多少钱
 

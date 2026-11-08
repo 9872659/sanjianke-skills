@@ -178,11 +178,9 @@ HTTP 200
 `/api/v1/apps/music_generation/*` 等，后者是另一个应用）。所以本应用落通配：
 
 ```json
-"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-      "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
-对外点数 = `max(50, 上游实际点数 × 2)`。上游真实点数在任务详情的 `usage` 里
+对外点数 = `max(50)`。上游真实点数在任务详情的 `usage` 里
 （本仓同源应用 `music_generation` 的文档示例为 65 点/次，**仅供换算参考，不是本应用的报价**）。
 
 ---
@@ -205,5 +203,5 @@ HTTP 200
   "usage":{"points_cost":65}}}
 ```
 
-各字段位置在不同封装里可能略有差异，`scripts/run.py` 的 `find_audio()` 会递归找
+各字段位置在不同封装里可能略有差异，`scripts/run.py` 的 `find_audio` 会递归找
 `audio_url` / `url` 与 `audio_id` / `id`，并对结果去重；解析不到时原样打印 JSON 不吞掉。

@@ -28,7 +28,6 @@
 
 ## 依赖
 
-- 上游仓库：https://github.com/FunAudioLLM/SenseVoice
 - 推理侧核心依赖：FunASR（版本下限见仓库当前 README）。
 - 音频解码：ffmpeg（免 VAD 脚本路径需要）。
 - 可选后端：ONNX 运行时、libtorch、llama.cpp（GGUF）。

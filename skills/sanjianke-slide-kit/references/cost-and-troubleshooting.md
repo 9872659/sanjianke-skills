@@ -171,25 +171,24 @@ data.result.status = None
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 已内置退避重试（最多 4 次）；连续失败就换模型或 `--count` 分批 |
 | `任务未完成（timeout）` | 出图卡在 processing | `task_id` 已进断点文件，**重跑会续查而不是重新提交（不重复扣费）**；也可调大 `--poll-timeout` |
 | 提交后没拿到 `task_id` | 返回结构变了 | 把原始返回贴出来报 bug（本包不吞异常） |
-| 任务完成但没有图片地址 | 返回结构变了 | 同上；`find_image_urls()` 是深度搜索，结构一变就会暴露 |
+| 任务完成但没有图片地址 | 返回结构变了 | 同上；`find_image_urls` 是深度搜索，结构一变就会暴露 |
 | **重跑又扣了一次钱** | 断点 key 的某一维变了：改了文案 / 换了 `--resolution` / 换了模型 | **设计如此**（内容变了就该重做）。注意：**只改版式不会重出图** |
 | **换了主题再换回来，却报"已渲染，跳过"，磁盘上却是另一个主题的图** | 两个主题写**同一个文件名**，旧断点记录仍然命中 | **已修**：断点命中后会再核**产物身份**（字节数 + mtime），对不上就重做并打印原因 |
 | 改了主题/字号但图没变 | 改了画法却没 bump `LAYOUT_VERSION` | 把源码里那个常量 +1（有醒目注释） |
-| 下载图片失败 | 网络抖动 | `download()` 自带退避重试 3 次；它**不走** `a7w._request`（见下） |
+| 下载图片失败 | 网络抖动 | `download` 自带退避重试 3 次；它**不走** `a7w._request`（见下） |
 
 ### 4.4 三个"为什么这么写"（改代码前必读）
 
-**① `download()` 为什么不用 `a7w._request`。**
+**① `download` 为什么不用 `a7w._request`。**
 `_request(..., raw=X)` 里的 `raw` 是**原始请求体**，**不是**"要原始响应"。
 传 `raw=True` 会让 `headers["Content-Type"] = None`，`putheader` 直接抛
 `TypeError: expected string or bytes-like object, got 'NoneType'`；
-就算绕过去，`_request` 末尾做的是 `json.loads(resp.read())` —— **PNG 不是 JSON**。
+就算绕过去，`_request` 末尾做的是 `json.loads(resp.read)` —— **PNG 不是 JSON**。
 另外传 `key=None` 时它会做 `"Bearer " + key` → `TypeError`，
 而这发生在**图已经出好、钱已经扣了**之后，最亏。
-所以 `download()` 自带一小段 urllib：拿字节、不解析 JSON、Key 走 `a7w.load_key` 兜底。
+所以 `download` 自带一小段 urllib：拿字节、不解析 JSON、Key 走 `a7w.load_key` 兜底。
 
 **② `status` 为什么从 `data` 顶层取。**
 平台文档写的是 `data.result.status`，**实测不对**。照文档写会永远读不到状态、

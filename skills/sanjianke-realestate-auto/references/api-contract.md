@@ -91,8 +91,6 @@
 
 返回 `data.audio_url`。
 
-**计费**：`/api/v1/pricing` 里 `/api/v1/apps/voice_tts/*` 是 `mode=flat, cost=0, markupPercent=200`，note 原文「对外价 = 上游实际点数（响应 `usage.points_cost` / `actual_points`，单位是点）x 3，单笔保底 > 0」。实测基准：`tts_live` 33 字上游 1.98 点 → 我方 5.94 点，所以本包按 **0.18 点/字**估，实际以返回的 `usage.points_cost` 为准。
-
 一单两条片的房源码约 250 字（主片 153 + 快切 98），约 45 点。
 
 ---
@@ -105,8 +103,6 @@
 {"model": "V6", "custom_mode": false, "instrumental": true,
  "prompt": "温暖钢琴加轻弦乐，92 BPM，节奏平稳，适合 30 秒房源漫游"}
 ```
-
-**计费**：该路径没有专属规则，落通配 `*`：`{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50}`，即 **上游实际点数 x 2、单笔保底 50 点**。返回里可能有 `audio_url`，也可能只有 `task_id`（用 `GET /api/v1/tasks/<id>` 取结果）。
 
 ### media_services_33 在架的 29 个接口（`GET /api/v1/apps` 现查）
 
@@ -166,7 +162,6 @@ curl -H "Authorization: Bearer $A7W_API_KEY" \
 `multipart/form-data`，字段名 **`file`**，免费。`/api/v1/pricing` 原文：
 
 ```json
-"/api/v1/upload": {"mode": "flat", "cost": 0, "markupPercent": 0,
   "note": "★上传不计费（2026-10-04 站主批准）…计费引擎对 cost:0 有显式语义：server.js isFreePath 里 ruleCost === 0 即视为免费路径。"}
 ```
 

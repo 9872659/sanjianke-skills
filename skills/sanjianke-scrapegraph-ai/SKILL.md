@@ -18,8 +18,6 @@ tags:
 
 代价是每抓一次都要消耗 LLM 调用、结果带概率性。所以它适合页面结构不固定、抽取需求经常变、数据量不那么大的场景；真正高频、量大、要求结果可复现的抓取，还是手写解析更划算。
 
-**上游项目**：`Scrapegraph-ai`　**仓库**：https://github.com/ScrapeGraphAI/Scrapegraph-ai
-
 > 版本与依赖要求取自 PyPI 项目页（0.x 到 2.x 迭代较快），参数名随版本变化时以官方文档为准。
 
 ## 什么时候用 / 不用
@@ -105,7 +103,7 @@ smart_scraper_graph = SmartScraperGraph(
     config=graph_config,
 )
 
-result = smart_scraper_graph.run()
+result = smart_scraper_graph.run
 print(result)
 ```
 
@@ -138,7 +136,7 @@ multi = SmartScraperMultiGraph(
     source=["https://example.com/a", "https://example.com/b"],
     config=graph_config,
 )
-results = multi.run()
+results = multi.run
 ```
 
 参数名与行为以官方文档为准。
@@ -155,7 +153,7 @@ creator = ScriptCreatorGraph(
     source="https://example.com/article",
     config=graph_config,
 )
-script = creator.run()
+script = creator.run
 ```
 
 **5. 处理本地文档**
@@ -221,7 +219,6 @@ export SCRAPEGRAPHAI_TELEMETRY_ENABLED=false  # bash
 - 不替你管理代理池、验证码破解、反爬对抗——官方明确开源版这部分由使用者自己负责。
 - 不保证抽取结果确定可复现，也不做数据质量担保。
 - 不做分布式调度、不做任务编排与监控告警（那些属于官方云服务的 Crawl / Monitor 能力）。
-- 不负责合规审核；上游自身也声明该库定位为数据探索与研究用途，滥用后果由使用者承担。
 
 ## 依赖条件
 

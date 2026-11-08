@@ -4,7 +4,7 @@ slug: sanjianke-ecom-spy
 displayName: 带货素材侦察 1 元拆一条爆款
 description: "**1 元（100 点）扒一条爆款，30 秒拆出标题公式、3 秒钩子、时长节奏和 3 条能直接换词的仿写标题。** 抖音搜索、小红书笔记搜索、两条详情、三个用户与作品列表、去水印取地址 —— 8 个接口一个命令，走 api.a7w.cn，同步返回、零依赖。三件最容易白花钱的事写进了默认动作：8 个接口**一律 100 点/次**（规则原文 `flat cost:100`），所以「搜 1 次 + 本地拆结构」比「逐条看详情」便宜一个数量级；规则 note 明写**失败亦计**，所以 `doctor` 只发只读 GET、必填缺了本地退 `2`；**结构分析不花钱**，快照落盘后 `rank` / `breakdown` / `clone` / `cover` 全在本地跑。`hunt` 一条命令发 1 次搜索（100 点），当场给热度榜、标题公式、分镜骨架与封面 prompt。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "带货对标的价值在结构：同一套「身份 + 痛点 + 价格锚 + 数字」的骨架，换个品类就能用。**价目**（1 元 = 100 点）：`/api/v1/pricing` 里 `/api/v1/apps/watermark_removal/*` 是 `{"mode":"flat","cost":100}`，8 个接口同价、与返回条数无关，上游按请求 20 点，note 写明「失败亦计」。**接口**（`GET /api/v1/apps` 实测 8 个 code 齐全）：搜索 `douyin_search_video` / `xhs_search_note`，详情 `douyin_video_detail` / `xhs_note_detail`，列表 `douyin_user_video_list` / `xhs_user_note_list`，用户 `xhs_user_detail`，地址 `remove`；参数大小写逐字照 `params_schema`，同步返回、没有 task_id。**本地**：`rank` 按「赞 1 + 藏 2 + 评 3 + 转 4」排序；`breakdown` 拆标题六要素、钩子类型、时长档与逐段节奏；`clone` 出 3 条标题 + 5 段分镜；`cover` 出 3 条封面 prompt 并按实价提示走 nano_banana（72 点/张）。**闸门**：缺 `--yes` 退 `4`，超 `--budget` 退 `5` 且一个请求都不发。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+summary: "带货对标的价值在结构：同一套「身份 + 痛点 + 价格锚 + 数字」的骨架，换个品类就能用。**价目**（1 元 = 100 点）：`/api/v1/pricing` 里 `/api/v1/apps/watermark_removal/*` 是 `{"mode":"flat","cost":100}`，8 个接口同价、与返回条数无关，note 写明「失败亦计」。**接口**（`GET /api/v1/apps` 实测 8 个 code 齐全）：搜索 `douyin_search_video` / `xhs_search_note`，详情 `douyin_video_detail` / `xhs_note_detail`，列表 `douyin_user_video_list` / `xhs_user_note_list`，用户 `xhs_user_detail`，地址 `remove`；参数大小写逐字照 `params_schema`，同步返回、没有 task_id。**本地**：`rank` 按「赞 1 + 藏 2 + 评 3 + 转 4」排序；`breakdown` 拆标题六要素、钩子类型、时长档与逐段节奏；`clone` 出 3 条标题 + 5 段分镜；`cover` 出 3 条封面 prompt 并按实价提示走 nano_banana（72 点/张）。**闸门**：缺 `--yes` 退 `4`，超 `--budget` 退 `5` 且一个请求都不发。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -35,13 +35,11 @@ tags:
 | 去水印取地址 | `strip` | `remove` | `url` |
 
 **每一行都是 100 点/次 = ¥1.00**，flat 计费，与返回几十条还是 1 条、素材多长都无关。
-规则原文：`{"mode":"flat","cost":100,"note":"去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"}`。
+规则原文：`{"mode":"flat","cost":100,"note":"去水印/分享链解析：固定 100 点/次"}`。
 
 ## 三条干货
 
 **一、8 个接口同一个价，所以「少搜、挑着看」才是省钱姿势。** 搜索一次就把几十条对标的标题、时长、点赞、收藏、评论一并带回来 —— 这些字段本身就够拆结构。钱在「详情」上，而详情也是一次 100 点：搜 1 次 + 本地拆结构 = 100 点；搜 1 次 + 20 条全看详情 = 2,100 点，差 21 倍。
-
-**二、失败也计一次，所以探针只走 GET。** 规则 note 末尾四个字是「失败亦计」。参数不全被上游拦下，同样按次计。本包因此把必填卡在本地（缺了退 `2`，一个请求都不发），`doctor` 全用只读 GET —— 余额、模型目录、应用名单、价目、任务路由、流水 6 项，端点存在性靠 `GET /api/v1/apps` 的 8 个 code 名单来证明。
 
 **三、结构分析不用再花一分钱。** 搜索结果存进本地快照，`rank` / `breakdown` / `clone` / `cover` 全是读文件：排序按「赞 1 + 藏 2 + 评 3 + 转 4」（带货看的是想买，不是路过点赞）；拆结构给标题六要素、钩子类型、时长档与逐段节奏；仿写给 3 条标题 + 3 个钩子 + 5 段分镜；出图给 3 条 prompt 并按实价提示走 nano_banana（72 点/张）。
 

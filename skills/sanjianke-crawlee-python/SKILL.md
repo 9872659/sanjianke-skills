@@ -20,20 +20,18 @@ tags:
 
 爬虫跑起来时会在当前目录创建 `storage/`，数据默认落到 `storage/datasets/default/` 下一个一个 JSON 文件，队列和断点状态也在里面。
 
-**上游项目**：`crawlee-python`　**仓库**：https://github.com/apify/crawlee-python
-
 > 版本信息：PyPI 上当前包名为 `crawlee`，本 Skill 撰稿时 PyPI 元数据显示版本为 1.10.0、要求 Python 3.10+。文档站默认展示 1.10 一线。具体以你安装到的版本与官方文档为准。
 
 ## 什么时候用 / 不用
 
 **用它**：
 
-- "我要抓几百上千个页面，还要跟着链接递归爬。"——内置请求队列，`context.enqueue_links()` 把页面上的链接自动排队并去重。
+- "我要抓几百上千个页面，还要跟着链接递归爬。"——内置请求队列，`context.enqueue_links` 把页面上的链接自动排队并去重。
 - "有的页面静态 HTML 就够，有的是 JS 渲染的。"——三种爬虫同一套接口，静态页面用 `BeautifulSoupCrawler` / `ParselCrawler`，渲染页用 `PlaywrightCrawler`。
 - "被限速 / 被封 IP 了。"——内置自动重试、会话与代理轮换的配置入口。
 - "抓一半网络断了，不想从零重来。"——队列和已处理请求有持久化，重启后可以从已有状态继续。
 - "不同页面要用不同解析逻辑。"——路由器（router）可以把 URL 模式映射到不同的处理器函数。
-- "抓到的数据希望能直接给下游用。"——`context.push_data()` 写进数据集，同时还能用键值存储放截图、文件等非表格产物。
+- "抓到的数据希望能直接给下游用。"——`context.push_data` 写进数据集，同时还能用键值存储放截图、文件等非表格产物。
 
 **不要用它**：
 
@@ -87,8 +85,7 @@ import asyncio
 
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
-
-async def main() -> None:
+async def main -> None:
     crawler = BeautifulSoupCrawler(max_requests_per_crawl=10)
 
     @crawler.router.default_handler
@@ -98,13 +95,12 @@ async def main() -> None:
             'url': context.request.url,
             'title': context.soup.title.string if context.soup.title else None,
         })
-        await context.enqueue_links()
+        await context.enqueue_links
 
     await crawler.run(['https://crawlee.dev'])
 
-
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main)
 ```
 
 `max_requests_per_crawl` 是安全阀，测试时先给个小数字，别一上手就全站递归。
@@ -116,23 +112,21 @@ import asyncio
 
 from crawlee.crawlers import PlaywrightCrawler, PlaywrightCrawlingContext
 
-
-async def main() -> None:
+async def main -> None:
     crawler = PlaywrightCrawler(max_requests_per_crawl=10)
 
     @crawler.router.default_handler
     async def request_handler(context: PlaywrightCrawlingContext) -> None:
         await context.push_data({
             'url': context.request.url,
-            'title': await context.page.title(),
+            'title': await context.page.title,
         })
-        await context.enqueue_links()
+        await context.enqueue_links
 
     await crawler.run(['https://crawlee.dev'])
 
-
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main)
 ```
 
 开发和调试时把窗口显示出来、或换浏览器内核：
@@ -149,13 +143,11 @@ crawler = PlaywrightCrawler(
 ```python
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
-crawler = BeautifulSoupCrawler()
-
+crawler = BeautifulSoupCrawler
 
 @crawler.router.default_handler
 async def default_handler(context: BeautifulSoupCrawlingContext) -> None:
-    await context.enqueue_links()
-
+    await context.enqueue_links
 
 @crawler.router.handler(label='detail')
 async def detail_handler(context: BeautifulSoupCrawlingContext) -> None:
@@ -169,8 +161,7 @@ async def detail_handler(context: BeautifulSoupCrawlingContext) -> None:
 ```python
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
-crawler = BeautifulSoupCrawler()
-
+crawler = BeautifulSoupCrawler
 
 @crawler.router.default_handler
 async def handler(context: BeautifulSoupCrawlingContext) -> None:
@@ -180,7 +171,7 @@ async def handler(context: BeautifulSoupCrawlingContext) -> None:
     await context.add_requests(['https://example.com/detail/1'])
 ```
 
-过滤与去重交给框架，不要自己在处理器里维护 `set()` —— 那样重启就丢，也挡不住并发重复。`enqueue_links` 支持的策略名与全部参数、以及按 label 入队的确切写法，请以官方 API 参考页为准。
+过滤与去重交给框架，不要自己在处理器里维护 `set` —— 那样重启就丢，也挡不住并发重复。`enqueue_links` 支持的策略名与全部参数、以及按 label 入队的确切写法，请以官方 API 参考页为准。
 
 **5. 看抓到的结果**
 
@@ -210,10 +201,10 @@ export CRAWLEE_STORAGE_DIR=/data/my-crawl-storage
 | 开着浏览器并发一大就内存飙升、机器卡死 | 每个浏览器上下文都占内存，默认并发是按系统资源自动决定的 | 显式收紧并发与每爬请求数；先用小样本量测出单页内存占用，再算能开多少并发 |
 | 目标站点返回 403 / 429 或跳验证码页 | 触发了风控：请求频率、IP、请求头特征被识别 | 降并发、加请求间隔、补正常请求头；仍不行再上代理轮换。**不要试图绕过依法受限的访问控制** |
 | 爬虫停不下来 / 一直在抓外链 | 默认入队会把页面上找到的链接都排队，容易爬出目标站点 | 用入队时的范围策略把抓取限制在同域 / 同主机（策略名以官方 API 参考为准），并设置 `max_requests_per_crawl` 上限 |
-| 程序被 Ctrl+C 杀掉后 `storage/` 状态混乱或下次启动行为异常 | asyncio 与浏览器进程没有走完正常的清理流程 | 让 `crawler.run()` 自然结束或用框架提供的停止方式；生产环境用信号处理优雅退出，别直接 kill |
-| 脚本在 Windows 上跑起来各种奇怪报错，或在 IDE 里不执行 | asyncio 事件循环在 Windows 与某些交互式环境下的行为差异 | 入口统一写 `asyncio.run(main())` 放在 `if __name__ == '__main__':` 里；用 Playwright 时避免在不支持子进程的环境（如某些在线 notebook）里跑 |
+| 程序被 Ctrl+C 杀掉后 `storage/` 状态混乱或下次启动行为异常 | asyncio 与浏览器进程没有走完正常的清理流程 | 让 `crawler.run` 自然结束或用框架提供的停止方式；生产环境用信号处理优雅退出，别直接 kill |
+| 脚本在 Windows 上跑起来各种奇怪报错，或在 IDE 里不执行 | asyncio 事件循环在 Windows 与某些交互式环境下的行为差异 | 入口统一写 `asyncio.run(main)` 放在 `if __name__ == '__main__':` 里；用 Playwright 时避免在不支持子进程的环境（如某些在线 notebook）里跑 |
 | 请求偶发失败，日志里重试了好几次 | 框架会自动重试失败请求，这是设计行为不是故障 | 区分"会自愈的瞬时错误"和"必然失败的 404 / 解析错误"，把后者在处理器里显式标记为跳过，别让它一直重试 |
-| 抓取结果的 JSON 里字段顺序或类型不稳定 | `push_data()` 支持字典或 Pydantic 模型；随手塞的 dict 没有 schema 约束 | 用 Pydantic 模型定义输出结构（框架支持），字段类型与必填项就固定了 |
+| 抓取结果的 JSON 里字段顺序或类型不稳定 | `push_data` 支持字典或 Pydantic 模型；随手塞的 dict 没有 schema 约束 | 用 Pydantic 模型定义输出结构（框架支持），字段类型与必填项就固定了 |
 
 ## 权限与用途说明
 

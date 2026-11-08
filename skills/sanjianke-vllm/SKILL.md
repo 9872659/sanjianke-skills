@@ -18,8 +18,6 @@ tags:
 
 它有两种用法，都很短：一条 `vllm serve <模型>` 起一个 OpenAI 兼容 HTTP 服务；几行 `LLM(model=...)` 就能离线批量推理。它的价值不在于「能跑模型」，而在于**把显存和算力用干净**，以及对上层应用来说它就是 OpenAI（原样的 `base_url` 换一下就能接）。
 
-**上游项目**：`vLLM`　**仓库**：https://github.com/vllm-project/vllm
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -175,7 +173,7 @@ for output in outputs:
     print(output.prompt, "->", output.outputs[0].text)
 ```
 
-注意：`generate()` **不会**自动套 chat template。Instruct/Chat 模型要么自己用 tokenizer 套模板，要么改用 `llm.chat(messages_list, sampling_params)`。另外 vLLM 默认会读取模型仓库里的 `generation_config.json` 覆盖采样参数；想用 vLLM 自己的默认值就传 `generation_config="vllm"`（服务端对应 `--generation-config vllm`）。
+注意：`generate` **不会**自动套 chat template。Instruct/Chat 模型要么自己用 tokenizer 套模板，要么改用 `llm.chat(messages_list, sampling_params)`。另外 vLLM 默认会读取模型仓库里的 `generation_config.json` 覆盖采样参数；想用 vLLM 自己的默认值就传 `generation_config="vllm"`（服务端对应 `--generation-config vllm`）。
 
 **5. 模型太大 / 显存不够：切卡与限长**
 
@@ -283,7 +281,6 @@ export VLLM_USE_MODELSCOPE=True
 - CUDA/PyTorch 版本敏感：编译出的 kernel 与其他 CUDA/torch 组合二进制不兼容，混装是常见故障源。
 - 首次启动有编译开销；不挂缓存的话每次新容器都要重来一遍。
 - Docker 镜像出于许可证考虑不含部分可选依赖，且 CUDA 兼容模式只覆盖部分专业/数据中心卡。
-- 上游迭代很快，CLI 参数、可选依赖名、镜像 tag 都可能变。执行前以 `vllm serve --help` 和官方文档当前内容为准；本 Skill 不声明任何具体版本号、发布日期或 star 数。
 
 ## 自检清单
 

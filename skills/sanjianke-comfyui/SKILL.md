@@ -23,12 +23,9 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 当你发现自己在反复重复同一套动作——先放大、再重绘、再换脸、再加一遍同样的后处理——问题就不在提示词，而在于流程没有被固化下来。填表式的出图界面适合试参数，不适合把一整套「预处理 → 采样 → 放大 → 后处理」跑成可复用的东西。ComfyUI 就是干这个的：它把出图拆成一个个节点，你用连线决定数据怎么流，整张图可以存档、改一处、批量跑。
 
 它的价值在于**流程可编排 + 可复用 + 可被程序驱动**：节点图既是操作界面，也是配方的存档格式；同一张图能换模型、换尺寸继续用，也能导出成接口格式交给别的程序按批调用。
-
-**上游项目**：`ComfyUI`　**仓库**：https://github.com/comfyanonymous/ComfyUI
 
 ## 零安装用法（推荐先看这个）
 
@@ -231,7 +228,7 @@ prompt["6"]["inputs"]["text"] = "a quiet street after rain"
 data = json.dumps({"prompt": prompt}).encode("utf-8")
 req = urllib.request.Request("http://%s/prompt" % SERVER, data=data,
                              headers={"Content-Type": "application/json"})
-resp = json.loads(urllib.request.urlopen(req).read())
+resp = json.loads(urllib.request.urlopen(req).read)
 print(resp)                      # 成功时给 prompt_id 与排队位置，失败时给 node_errors
 ```
 

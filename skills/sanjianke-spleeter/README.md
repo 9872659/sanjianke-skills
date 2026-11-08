@@ -38,7 +38,6 @@ Separator("spleeter:2stems").separate_to_file("你的音频.mp3", "output")
 ## 依赖
 
 - 运行时：Python `>=3.8,<3.12`
-- Python 包（由上游声明）：`tensorflow==2.12.1`、`numpy<2.0.0`、`ffmpeg-python`、`typer`、`pandas`、`norbert`、`httpx[http2]`、`tensorflow-io-gcs-filesystem==0.32.0`
 - 系统命令：`ffmpeg`；音频读写还需要 `libsndfile`
 - 可选：`pip install spleeter[evaluation]` 拉入 `musdb` 与 `museval`，仅在跑自训练模型的评估时需要
 - 其他安装方式：官方 Docker 镜像，或按仓库 README 用 Poetry 从源码装
@@ -51,7 +50,6 @@ Separator("spleeter:2stems").separate_to_file("你的音频.mp3", "output")
 - 全程本地推理，素材不会上传到任何第三方服务；仅在首次运行时联网下载预训练权重
 - 需要读入原始音频并写出分离结果文件，请自行确认读写目录范围
 - 内部会调用 `ffmpeg` 解码，并默认起多进程池并行写盘
-- 对受版权保护的素材，使用前请自行取得权利人授权；上游明确声明不对非法用途负责
 
 ---
 

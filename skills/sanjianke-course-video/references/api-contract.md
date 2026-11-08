@@ -46,13 +46,10 @@
 **计费**：`/api/v1/pricing` 命中 `/api/v1/apps/voice_tts/*`
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":200,
  "note":"语音 TTS / 克隆合成 / 语音识别（2026-10-03 决策 A：语音/音频线 ×5 → ×3；
   一律按上游真实点数计费）…实测：voice_tts/stt 上游真实 40 点 → 我方 120 点；
   tts_live 33 字上游真实 1.98 点 → 我方 5.94 点。"}
 ```
-
-⇒ 对外 = 上游实际点数 × 3。本包用 `0.18 点/字` 估算（33 字 → 5.94 点折出来），单笔按 6 点起。
 
 ---
 
@@ -84,12 +81,9 @@
 ### 计费（live 定价原文，`/api/v1/apps/image_human/submit`）
 
 ```json
-{"mode":"per_second","markupPercent":400,"rateFrom":"mode",
  "modelRates":{"fast":{"*":10},"standard":{"*":15},"2k":{"*":30},"4k":{"*":60}},
  "defaultModel":"fast"}
 ```
-
-= 上游成本 2 / 3 / 6 / 12 点/秒 ×5。
 
 ### 实测报错原文
 
@@ -126,9 +120,6 @@
 ### 计费（live 定价原文）
 
 ```json
-"/api/v1/apps/pic_lipsync/submit":{"mode":"flat","cost":0,"markupPercent":400,"minPoints":50,
- "note":"对外 = 上游实际点数 × 5；档位参数真名是 quality ⇒ 费率卡从未生效；
-  10-07 实测不发 quality ⇒ 上游按 standard 3 点/秒 收 ⇒ 成本固定 3 点/秒 ⇒ ×5 = 15 点/秒。
   cost 必须为 0。minPoints:50 目前是声明性字段（通用计费不读）。"}
 ```
 
@@ -141,7 +132,7 @@
 | 路径 | 形态 | 计费 | 本包 |
 |---|---|---|---|
 | `GET /api/v1/tasks/{task_id}` | 平台任务线 | **免费**（只读） | ✅ 唯一轮询路径 |
-| `POST /api/v1/apps/{code}/query` | 应用级查询 | **每轮询一次就是一次的钱** | ⛔ 在 `http_json()` 里拦死 |
+| `POST /api/v1/apps/{code}/query` | 应用级查询 | **每轮询一次就是一次的钱** | ⛔ 在 `http_json` 里拦死 |
 
 历史流水（`GET /user/balance/logs`，2026-11-03 至 11-07）：
 

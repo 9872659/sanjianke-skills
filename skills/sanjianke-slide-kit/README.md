@@ -267,7 +267,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | `--every` | 每 N 页配一张图（`1`=每页一图，`2`=数页一图），默认 `1` |
 | `--resolution` | `1K`(默认) / `2K` / `4K`。**只有 1K 有实测价**，2K/4K 拒绝估算（`exit=3`） |
 | `--ratio` | 出图比例，默认按分页方案（`16:9`） |
-| `--snap` | 出图后按请求比例**居中裁准**（上游按 32 对齐，5/10 种比例不精确） |
+| `--snap` | 出图后按请求比例**居中裁准** |
 | `--ratio-tolerance` | 比例容差，默认 `0.03`（实测最大偏差 2.9%） |
 | `--points-per-image` | 覆盖单张单价（点） |
 | `--poll-timeout` | 单张出图轮询上限（秒），默认 `600` |
@@ -350,7 +350,6 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | 重跑又扣了一次钱 | 断点 key 的某一维变了（文案 / resolution / 模型） | 设计如此。**只改版式不会重出图** |
 | 换了主题再换回来，却报"跳过"，磁盘上却是另一个主题的图 | 两个主题写同一文件名，旧断点记录仍命中 | **已修**：命中后再核**产物身份**（字节数 + mtime），对不上就重做并打印原因 |
 | 改了画法但图没变 | 没 bump `LAYOUT_VERSION` | 把它 +1（源码里有醒目注释） |
-| 上游 `502` / `upstream timeout` | 网关到上游瞬时抖动，**实测常见** | 已内置退避重试（最多 4 次）；连续失败换模型或 `--count` 分批 |
 | `任务未完成（timeout）`（`exit=4`） | 出图卡在 processing | `task_id` 已进断点，**重跑续查而不是重新提交（不重复扣费）**；或调大 `--poll-timeout` |
 | Windows 中文乱码 | 控制台代码页不是 UTF-8 | 脚本已切 UTF-8；仍是先 `chcp 65001` 或设 `PYTHONIOENCODING=utf-8` |
 | 想复核产出但不想再花钱 | —— | `outline --from-file` / `pages --from-file` 只跑闸门、不调模型 |
@@ -408,10 +407,10 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | 用途 | 方法与路径 |
 |---|---|
 | 分页方案 / 每页内容（文本） | `POST https://api.a7w.cn/api/v1/chat/completions` |
-| 在架模型清单 | `GET  https://api.a7w.cn/api/v1/models` |
-| 在架生成应用 | `GET  https://api.a7w.cn/api/v1/apps` |
+| 在架模型清单 | `GET https://api.a7w.cn/api/v1/models` |
+| 在架生成应用 | `GET https://api.a7w.cn/api/v1/apps` |
 | 出配图（异步提交） | `POST https://api.a7w.cn/api/v1/apps/nano_banana/submit` |
-| 出图任务轮询 | `GET  https://api.a7w.cn/api/v1/tasks/<task_id>` |
+| 出图任务轮询 | `GET https://api.a7w.cn/api/v1/tasks/<task_id>` |
 
 协议是 **OpenAI 兼容**：`Authorization: Bearer <Key>`，请求体用
 `model` / `messages` / `temperature` / `max_tokens` / `response_format`。

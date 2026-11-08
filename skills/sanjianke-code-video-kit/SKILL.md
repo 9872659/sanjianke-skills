@@ -27,13 +27,11 @@ Remotion 就是这条路线上最成熟的方案。它不做传统的视频编�
 
 | 能力 | 是否申请 | 用途 |
 |---|---|---|
-| 网络访问 | 是（必需） | 首次安装依赖、下载无头浏览器；`calculateMetadata()` 里拉取远程数据；云渲染方案会把打包产物上传到对象存储 |
+| 网络访问 | 是（必需） | 首次安装依赖、下载无头浏览器；`calculateMetadata` 里拉取远程数据；云渲染方案会把打包产物上传到对象存储 |
 | 读取文件 | 是（必需） | 读取 `src/` 下的组件与入口、`remotion.config.ts`、props JSON 文件、字幕/文案/商品数据源 |
 | 写入文件 | 是（必需） | 生成项目骨架、写入中间帧序列、输出 `out/*.mp4`、写批量任务的 props 文件与渲染清单 |
 | 凭证 | 视方案而定 | 本地渲染不需要任何 Key。接入云渲染（Lambda / Cloud Run）时从环境变量读取云厂商凭证；公司许可用户需要 `licenseKey`，一律走环境变量或 CI Secret |
 | 子进程 / 后台常驻 | 是（必需） | `npx remotion studio` 起预览服务并常驻；`npx remotion render` 拉起无头浏览器 + FFmpeg；批量任务应放后台运行并落日志 |
-
-**密钥与费用**：本 Skill 不内嵌任何密钥，不代理任何请求，也不代收费用。本地渲染除机器电费外没有额外开销；云渲染的算力账单和对象存储费用由使用者自己的云账号承担。公司许可的采购、telemetry 上报与 `licenseKey` 配置全部由使用者自己对上游完成，本 Skill 只负责把合规要求讲清楚并要求你在动手前确认。
 
 ## 触发场景
 
@@ -64,7 +62,7 @@ npm run dev          # 等价于 npx remotion studio，默认 http://localhost:3
 
 ### 第 2 步：最小可用模板
 
-入口文件用 `registerRoot()` 告诉 Remotion 从哪开始，再注册一个 Composition：
+入口文件用 `registerRoot` 告诉 Remotion 从哪开始，再注册一个 Composition：
 
 ```tsx
 // src/index.ts
@@ -81,7 +79,7 @@ import {Composition} from 'remotion';
 import {z} from 'zod';
 import {ProductCard, productSchema} from './ProductCard';
 
-export const Root: React.FC = () => {
+export const Root: React.FC =  => {
   return (
     <Composition
       id="ProductCard"
@@ -110,14 +108,14 @@ import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from
 import {z} from 'zod';
 
 export const productSchema = z.object({
-  title: z.string(),
-  price: z.string(),
-  accent: z.string(),
+  title: z.string,
+  price: z.string,
+  accent: z.string,
 });
 
 export const ProductCard: React.FC<z.infer<typeof productSchema>> = ({title, price, accent}) => {
-  const frame = useCurrentFrame();          // 当前帧号
-  const {fps, durationInFrames} = useVideoConfig();
+  const frame = useCurrentFrame;          // 当前帧号
+  const {fps, durationInFrames} = useVideoConfig;
 
   // 入场用弹簧，收尾用线性淡出
   const enter = spring({frame, fps, config: {damping: 14}, durationInFrames: 25});
@@ -152,7 +150,7 @@ export const ProductCard: React.FC<z.infer<typeof productSchema>> = ({title, pri
 };
 ```
 
-`spring()` 和 `interpolate()` 都返回 `0~1` 或你指定区间内的数值，直接拿去喂 `opacity`、`transform`、`scale`、`width` 都行。这个「帧 → 数值 → 样式」的链条就是全部动画原理，没有别的黑魔法。
+`spring` 和 `interpolate` 都返回 `0~1` 或你指定区间内的数值，直接拿去喂 `opacity`、`transform`、`scale`、`width` 都行。这个「帧 → 数值 → 样式」的链条就是全部动画原理，没有别的黑魔法。
 
 ### 第 3 步：预览
 
@@ -162,7 +160,7 @@ npx remotion studio --port 3333     # 换端口
 npx remotion compositions           # 只列出所有 Composition，确认 ID 与时长
 ```
 
-Studio 是本地开发的主要工作台：拖动时间轴逐帧看、改 defaultProps 立刻看效果、按空格播放。**改 props 时 `calculateMetadata()` 会重新执行**，所以数据拉取不要写在这里之外的地方。
+Studio 是本地开发的主要工作台：拖动时间轴逐帧看、改 defaultProps 立刻看效果、按空格播放。**改 props 时 `calculateMetadata` 会重新执行**，所以数据拉取不要写在这里之外的地方。
 
 ### 第 4 步：渲染成 MP4
 
@@ -214,11 +212,11 @@ npx remotion render ProductCard out/probe.mp4 --frames=0-2 --log=verbose
 
 - **项目搭建**：`create-video` 起模板、入口注册、`Root.tsx` 组织多 Composition、`remotion.config.ts` 全局配置。
 - **组件化画面**：用普通 React 组件 + CSS 描述任何能写出来的画面；布局、字体、SVG、Canvas、Three.js、Tailwind、Lottie、任意 npm 包都能用。
-- **帧驱动动画**：`useCurrentFrame()` 取帧号、`useVideoConfig()` 取 fps/尺寸/时长、`interpolate()` 区间映射与缓动、`spring()` 物理入场、`interpolateColors()` 颜色过渡、`random()` 确定性随机。
+- **帧驱动动画**：`useCurrentFrame` 取帧号、`useVideoConfig` 取 fps/尺寸/时长、`interpolate` 区间映射与缓动、`spring` 物理入场、`interpolateColors` 颜色过渡、`random` 确定性随机。
 - **时间与图层**：`<AbsoluteFill>` 铺满层、`<Sequence>` 控制出现时段与偏移、`<Series>` 顺序串场、`<Loop>` 循环、`<Freeze>` 定格、`<Folder>` 归类。
-- **音视频与素材**：`<OffthreadVideo>` 高性能嵌入视频、`<Img>` 图片（等待解码后才出帧）、`<Audio>` 音轨、`staticFile()` 引用 `public/` 资源、转场与字幕包。
-- **参数化与数据驱动**：`defaultProps` 定义形状、`schema` 用 Zod 校验并自动生成可视化控件、`getInputProps()` 在组件里读输入、`calculateMetadata()` 异步拉数据并动态决定时长/尺寸/帧率。
-- **渲染与部署**：CLI 与 Node API（`renderMedia()` / `renderStill()` / `renderFrames()`）、图序列输出、Lambda 与 Cloud Run 云渲染、按数据循环批量出片、CI 定时任务。
+- **音视频与素材**：`<OffthreadVideo>` 高性能嵌入视频、`<Img>` 图片（等待解码后才出帧）、`<Audio>` 音轨、`staticFile` 引用 `public/` 资源、转场与字幕包。
+- **参数化与数据驱动**：`defaultProps` 定义形状、`schema` 用 Zod 校验并自动生成可视化控件、`getInputProps` 在组件里读输入、`calculateMetadata` 异步拉数据并动态决定时长/尺寸/帧率。
+- **渲染与部署**：CLI 与 Node API（`renderMedia` / `renderStill` / `renderFrames`）、图序列输出、Lambda 与 Cloud Run 云渲染、按数据循环批量出片、CI 定时任务。
 - **许可合规**：个人 / 小团队 / 公司的许可分档判定、telemetry 义务、编码器专利风险提示。
 
 **不覆盖**：
@@ -227,8 +225,6 @@ npx remotion render ProductCard out/probe.mp4 --frames=0-2 --log=verbose
 - **不做 AI 生成画面**。本 Skill 只负责「把已有的文案、图片、视频、音频编排成成片」，不生成素材本身。
 - **不做实时推流与直播**。渲染是离线的批处理，产物是文件。
 - **不替代前端工程能力**。「把视频写成代码」不等于「随便写写就好看」，动效审美和排版功底仍然是你自己的。
-- **不提供许可证代购或法律意见**。许可档位、条款解释、编码器专利适用性一律以上游官方条款为准，本 Skill 只做转述并提示你去确认。
-- **不含任何可复制的上游源码**。正文为原创整理，仅引用 API 名称、命令、参数名、许可事实等描述性信息。
 
 ## 依赖条件
 
@@ -251,23 +247,22 @@ npx remotion render ProductCard out/probe.mp4 --frames=0-2 --log=verbose
   - **Creators 口径**：面向「给自己公司做视频、没有搭自动化」的场景，按 **席位** 计价（约 $25/席/月），席位对应亲手写 Remotion 代码或用 AI 编码工具操作它的人。
   - **Automators 口径**：面向「做视频产品、搭自动化管线、嵌入 Player」的场景，按 **渲染次数** 计价（约 **$0.01/次**），并有 **$100/月** 的最低消费。写自动化代码的开发者本身不占席位。
 - **什么算一次 Render**：成功产出一个视频、音频、GIF、PDF 或静图。**Studio 与 Player 里的预览不算**。
-- **什么算 automation**：凡是你自己的代码或命令**程序化调用**渲染入口，都算。被点名的包括 `renderMedia()`、`renderStill()`、`renderFrames()`、各类云渲染封装，以及 `npx remotion render` / `npx remotion still` 命令行。换句话说，**只要你用 CLI 渲染过成片，就已经在做 automation 了**，别再自我判断为「手动低频」。
-- **telemetry（自 5.0 起对公司档强制）**：Automators 与 Enterprise 档必须从许可平台取 `licenseKey` 并配置到渲染里，每次渲染上报一个匿名事件。上报内容仅限触发渲染机器的 IP、是否生产环境、是视频还是静图；**不采集任何画面内容、元数据或用户数据**。客户端渲染（`renderMediaOnWeb()` 那条路）对**所有人**都强制上报。免费档与 Creators 档的服务端渲染属自愿，不配 `licenseKey` 就不发。若因防火墙无法上报，需要走 Enterprise 定制协议并提供可核验的月度渲染报告。telemetry **不会**限流、阻断或让渲染失败。
+- **什么算 automation**：凡是你自己的代码或命令**程序化调用**渲染入口，都算。被点名的包括 `renderMedia`、`renderStill`、`renderFrames`、各类云渲染封装，以及 `npx remotion render` / `npx remotion still` 命令行。换句话说，**只要你用 CLI 渲染过成片，就已经在做 automation 了**，别再自我判断为「手动低频」。
+- **telemetry（自 5.0 起对公司档强制）**：Automators 与 Enterprise 档必须从许可平台取 `licenseKey` 并配置到渲染里，每次渲染上报一个匿名事件。上报内容仅限触发渲染机器的 IP、是否生产环境、是视频还是静图；**不采集任何画面内容、元数据或用户数据**。客户端渲染（`renderMediaOnWeb` 那条路）对**所有人**都强制上报。免费档与 Creators 档的服务端渲染属自愿，不配 `licenseKey` 就不发。若因防火墙无法上报，需要走 Enterprise 定制协议并提供可核验的月度渲染报告。telemetry **不会**限流、阻断或让渲染失败。
 - **商业使用的红线**：允许「用户基于你的模板生成自己的视频」；**不允许**「让用户把自己的 Remotion 工程上传到你的服务器渲染」。用 LLM 生成 Remotion 代码再渲染是允许的，但同样不接受用户自带代码。
 - **代理与外包**：如果客户只拿成片文件、不接触工程代码，客户人数不计入你的门槛；如果客户拥有或继续开发这个工程，或者你引入了外部工作室/自由职业者协作同一工程，**双方人数合并计算**。
 - **编码器专利不含在许可内**。H.264/AVC、HEVC、AAC 等编码的专利授权是另一回事，是否需要额外付费取决于你的使用方式与司法辖区，责任在你自己，不要拿 Remotion 的许可当挡箭牌。
-- **没有退款**。上游明确理由是「可以先评估再商用」。
 - 本 Skill 只做事实转述。价格与条款会变，动手前请以官方 [License & Pricing](https://www.remotion.dev/docs/license/pricing)、[License FAQ](https://www.remotion.dev/docs/license/faq) 与仓库根目录的 `LICENSE.md` 为最终依据。
 
 ### 工程上的硬约束
 
-- **每一帧都必须是确定性的**。同一帧号渲染两次必须完全一样，否则并行渲染出来的片段会拼接错乱。所以不要在组件里用 `Math.random()`（用 `random()`）、不要用 `Date.now()` 或 `performance.now()`、不要依赖真实时钟或网络时序。
-- **props 必须可 JSON 序列化**。函数、类实例、DOM 节点都进不去，渲染时会静默丢失或直接报错。例外是 `Date`、`Map`、`Set` 和 `staticFile()` 的返回值。
-- **`calculateMetadata()` 只执行一次**，独立于渲染并发，在单独的标签页里跑，并且必须在 `delayRender()` 的默认超时（30 秒）内完成。超时长的数据请求要么加超时，要么在组件里用 `delayRender()` 自己控制。
-- **`calculateMetadata()` 返回的字段优先级高于 Composition 上的静态 props**，但低于命令行或 `renderMedia()` 显式传入的同名选项。
+- **每一帧都必须是确定性的**。同一帧号渲染两次必须完全一样，否则并行渲染出来的片段会拼接错乱。所以不要在组件里用 `Math.random`（用 `random`）、不要用 `Date.now` 或 `performance.now`、不要依赖真实时钟或网络时序。
+- **props 必须可 JSON 序列化**。函数、类实例、DOM 节点都进不去，渲染时会静默丢失或直接报错。例外是 `Date`、`Map`、`Set` 和 `staticFile` 的返回值。
+- **`calculateMetadata` 只执行一次**，独立于渲染并发，在单独的标签页里跑，并且必须在 `delayRender` 的默认超时（30 秒）内完成。超时长的数据请求要么加超时，要么在组件里用 `delayRender` 自己控制。
+- **`calculateMetadata` 返回的字段优先级高于 Composition 上的静态 props**，但低于命令行或 `renderMedia` 显式传入的同名选项。
 - **`<Img>` 会阻塞渲染直到图片解码完成**，这是特性不是 bug——少了它就会渲染出空白帧。远程图片要么 CORS 允许，要么先下载到 `public/`。
-- **字体必须等加载完**。用 web 字体时套 `delayRender()` + `continueRender()`，否则会出现字体回退（渲染出来是默认宋体/无衬线）或整段文字消失。这是最常见的「预览正常、渲染翻车」原因。
-- **每帧渲染有时间上限**，默认 30 秒（`--timeout`）。`delayRender()` 没被 `continueRender()` 兑现就会超时失败并报出是哪一帧卡住。
+- **字体必须等加载完**。用 web 字体时套 `delayRender` + `continueRender`，否则会出现字体回退（渲染出来是默认宋体/无衬线）或整段文字消失。这是最常见的「预览正常、渲染翻车」原因。
+- **每帧渲染有时间上限**，默认 30 秒（`--timeout`）。`delayRender` 没被 `continueRender` 兑现就会超时失败并报出是哪一帧卡住。
 - **stdout 保持干净**。渲染时任何 `console.log` 都会混进进度输出，`--log=verbose` 下尤其难读。要打日志写文件或走 stderr。
 - **Windows 下不要用内联 `--props='{...}'`**。shell 会吃掉引号。统一写 JSON 文件用 `--props=./path.json`。
 - **`--crf` 与 `--video-bitrate` 互斥**；开启硬件加速后也不能用 `--crf`，只能指定码率。
@@ -278,10 +273,10 @@ npx remotion render ProductCard out/probe.mp4 --frames=0-2 --log=verbose
 
 - [ ] 已确认组织人数落在哪一档许可，4 人及以上已购买 Company License，并判断清楚是走 Creators 还是 Automators 口径。
 - [ ] 若属公司档 automation 场景，`licenseKey` 已从环境变量注入，telemetry 能正常上报。
-- [ ] 组件里没有 `Math.random()`、`Date.now()`、`performance.now()` 等不确定源，同一帧两次渲染结果一致。
+- [ ] 组件里没有 `Math.random`、`Date.now`、`performance.now` 等不确定源，同一帧两次渲染结果一致。
 - [ ] 所有传入的 props 都是纯 JSON 可序列化的，没有函数或类实例。
-- [ ] 远程数据只在 `calculateMetadata()` 里拉取，并且加了超时与失败兜底。
-- [ ] 用 web 字体时已用 `delayRender()` 等待字体加载完成。
+- [ ] 远程数据只在 `calculateMetadata` 里拉取，并且加了超时与失败兜底。
+- [ ] 用 web 字体时已用 `delayRender` 等待字体加载完成。
 - [ ] 远程图片与视频已确认 CORS 或已落地到 `public/`。
 - [ ] 先用 `--frames=0-2` 渲染几帧验通链路，再跑全量。
 - [ ] 批量任务的 props 一律走 JSON 文件，没有在 Windows 上用内联 JSON。

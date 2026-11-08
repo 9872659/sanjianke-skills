@@ -17,8 +17,6 @@ pandoc 是一个命令行文档转换器：Markdown、Word、HTML、LaTeX、EPUB
 
 对 Agent 来说它是一个**几乎没有学习成本、但很容易踩格式细节坑**的工具：命令不复杂，难的是知道「哪些东西转换后会丢」。这份 Skill 重点写的就是后者。
 
-**上游项目**：`pandoc`　**仓库**：https://github.com/jgm/pandoc
-
 ## 什么时候用 / 不用
 
 **用它**：

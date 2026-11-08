@@ -82,7 +82,7 @@ from surya.layout import LayoutPredictor
 from surya.recognition import RecognitionPredictor
 from surya.table_rec import TableRecPredictor
 
-manager = SuryaInferenceManager()   # 三个 Predictor 共用这一个实例
+manager = SuryaInferenceManager   # 三个 Predictor 共用这一个实例
 ```
 
 - `RecognitionPredictor(manager)(images)` → 整页 OCR

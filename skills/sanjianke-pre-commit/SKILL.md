@@ -18,8 +18,6 @@ tags:
 
 它解决的是「让提交前的检查跟代码一起被版本控制，并且对所有人一致」这个问题。
 
-**上游项目**：`pre-commit`　**仓库**：https://github.com/pre-commit/pre-commit
-
 ## 什么时候用 / 不用
 
 **用它**：

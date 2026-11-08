@@ -176,10 +176,10 @@ req = urllib.request.Request(
 )
 with urllib.request.urlopen(req) as resp:
     for raw in resp:                       # 逐行读 SSE
-        line = raw.decode("utf-8").strip()
+        line = raw.decode("utf-8").strip
         if not line.startswith("data:"):
             continue
-        payload = line[5:].strip()
+        payload = line[5:].strip
         if payload == "[DONE]":
             break
         chunk = json.loads(payload)

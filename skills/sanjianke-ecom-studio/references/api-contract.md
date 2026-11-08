@@ -176,21 +176,15 @@ GET https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx
 `GET /api/v1/pricing` 返回的是**裸对象**（没有 `code`/`data` 信封）：
 
 ```json
-{"currency":"points","markupPercent":20,
- "note":"User price = upstream points x (1 + markup%). 实际成本以上游响应标记为准。",
  "pricing":{ ... }}
 ```
 
 `pricing` 里与本包三条线相关的原文：
 
 ```json
-"/api/v1/apps/dressing_diffusion/*":  {"mode":"flat","cost":200,"markupPercent":0,
-  "note":"固定 200 点/次（上游约 100 点 ×2）"},
-"/api/v1/apps/dressing_diffusion/submit": {"mode":"flat","cost":200,"markupPercent":0,
-  "note":"固定 200 点/次（上游约 100 点 ×2）"},
-"/api/v1/apps/nano_banana/*": {"mode":"flat","cost":72,"markupPercent":0,
+  "note":"固定 200 点/次"},
+  "note":"固定 200 点/次"},
   "note":"★★ Q52（2026-10-05 站主指定定价「商品多角度是视角选项每一个选择25点，AI商品图固定价格72点」）：AI商品图 = 固定 72 点/次；商品多角度 = 25 点 × 选中视角数（请求体带 views[] 时生效，不带 views 时仍按本固定价 72）。"},
-"/api/v1/apps/nano_banana/submit": {"mode":"flat","cost":72,"markupPercent":0}
 ```
 
 两条要记在心里的推论：

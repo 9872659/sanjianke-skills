@@ -1,10 +1,10 @@
 ---
 name: sanjianke-smart-repaint
 slug: sanjianke-smart-repaint
-displayName: 智能重绘 1.5点一次
-description: "**智能重绘，一次 1.5 点（¥0.015）。** 走 api.a7w.cn 的工作流应用「智能重绘」，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
-version: 1.0.0
-summary: "智能重绘 是平台 69 个按次调用应用之一，上游报价 ¥0.01/次，本站 1.5 点（¥0.015）。它的原始参数名是 ComfyUI 的节点 id（n255_image / n1_ckpt_name / n2_sampler_name 这种），本包把它翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配到对应参数，`--set 名=值` 兜底任意参数。素材走 `POST /api/v1/gpu/assets` 自动上传换 `asset://`，提交走 `POST /api/v1/gpu/apps/wf_f5b5964ba0d16e5b1b84/run`，轮询走 `GET /api/v1/gpu/workflows/execution`。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+displayName: 智能重绘 13.5点一次
+description: "**智能重绘，一次 13.5 点（0.135 元）。** 走 api.a7w.cn，按次调用、不用开机器。给素材（图片/视频/音频）和提示词，直接出成品。本包把它的 6 个参数翻成了中文对照表，常用入口只有 --image / --video / --audio / --text 四个。遇到问题可加技术微信 9872659。"
+version: 1.0.2
+summary: "智能重绘 是 api.a7w.cn 上 69 个按次调用应用之一，**每次 13.5 点（0.135 元）**。它的原始参数名是节点 id（n255_image, n1_ckpt_name, n2_sampler_name 这种），本包翻成了人话：`--params` 打全表（参数名 / 含义 / 类型 / 必填 / 默认），`--image` / `--video` / `--audio` / `--text` 按类型自动匹配，`--set 名=值` 兜底任意参数。素材自动上传换 `asset://`，提交与轮询都封好了。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -13,7 +13,7 @@ tags:
   - api.a7w.cn
 ---
 
-# 智能重绘 1.5点一次
+# 智能重绘 13.5点一次
 
 > ## 先申请你自己的 API Key
 >
@@ -25,17 +25,14 @@ tags:
 
 ## 一句话
 
-**智能重绘，一次 1.5 点 = ¥0.015。**
-
-上游报价 ¥0.01，本站按 1.5 倍计 —— 用一次 = 1.5 分钱起。
+**智能重绘，一次 13.5 点 = 0.135 元。**
 
 ## 价目
 
 | 项 | 值 |
 |---|---|
 | 类型 | 图片 |
-| 上游报价 | ¥0.01 / 次 |
-| **本站** | **1.5 点（¥0.015）** |
+| **每次** | **13.5 点（0.135 元）** |
 | 参数 | 6 个（必填 6 个）|
 | 端点 | `POST /api/v1/gpu/apps/wf_f5b5964ba0d16e5b1b84/run` |
 
@@ -67,7 +64,7 @@ python3 scripts/run.py run --image 你的图.png --yes
 
 | 参数 | 对应什么 |
 |---|---|
-| `--image 图.png` | 自动匹配第一个必填的图片参数（本地文件会自动上传换 `asset://`）|
+| `--image 图.png` | 自动匹配第一个必填的图片参数（本地文件会自动上传）|
 | `--video 视频.mp4` | 视频参数 |
 | `--audio 音频.mp3` | 音频参数 |
 | `--text "…"` | 文本 / 提示词 |
@@ -78,8 +75,8 @@ python3 scripts/run.py run --image 你的图.png --yes
 | 子命令 | 扣费吗 | 干什么 |
 |---|---|---|
 | `info` | 免费 | 应用信息 + 自检 |
-| `params` | 免费 | 参数表（label 对照）|
-| `run` | **1.5 点/次** | 提交任务（要 `--yes`）|
+| `params` | 免费 | 参数表（中文含义对照）|
+| `run` | **13.5 点/次** | 提交任务（要 `--yes`）|
 
 ## 退出码
 

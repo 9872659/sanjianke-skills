@@ -125,4 +125,3 @@ AWS KB Retrieval、Brave Search、EverArt、GitHub、GitLab、Google Drive、Goo
 - 各语言 SDK 的完整 API（在各自 SDK 仓库）。
 - MCP 协议的完整规范（在 `modelcontextprotocol.io`）。
 - 社区与第三方服务器清单（在 MCP Registry）。
-- 具体包版本号与发布时间：上游变动频繁，请以 npm / PyPI / 仓库 releases 为准。

@@ -8,12 +8,12 @@
 ```python
 from docling.document_converter import DocumentConverter
 
-converter = DocumentConverter()
+converter = DocumentConverter
 result = converter.convert("report.pdf")      # 本地路径或 http(s) URL
 doc = result.document
 
-print(doc.export_to_markdown())
-print(doc.export_to_text())
+print(doc.export_to_markdown)
+print(doc.export_to_text)
 ```
 
 一次转换的结果对象（`ConversionResult`）里，常用的字段：
@@ -27,7 +27,7 @@ print(doc.export_to_text())
 | `errors` | 错误列表；配套 `has_errors` / `has_parse_errors` / `has_inference_errors` / `has_timeout_errors` |
 | `timings` | 各阶段耗时 |
 | `confidence` | 置信度信息 |
-| `save()` / `load()` | 结果对象的落盘与读回 |
+| `save` / `load` | 结果对象的落盘与读回 |
 
 **判断成功不能只看有没有抛异常**：一条命令里某几页失败时状态可能是 `PARTIAL_SUCCESS`，务必检查 `status` 与 `errors`。
 
@@ -40,9 +40,9 @@ from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import PdfPipelineOptions, TesseractOcrOptions
 from docling.document_converter import DocumentConverter, PdfFormatOption
 
-pipeline_options = PdfPipelineOptions()
+pipeline_options = PdfPipelineOptions
 pipeline_options.do_ocr = True
-pipeline_options.ocr_options = TesseractOcrOptions()        # 换 OCR 引擎
+pipeline_options.ocr_options = TesseractOcrOptions        # 换 OCR 引擎
 pipeline_options.ocr_options.lang = ["zh-Hans", "en"]       # OCR 语言，统一用 BCP-47 词汇表
 pipeline_options.artifacts_path = "/path/to/models"         # 离线：指向本地模型目录
 
@@ -68,7 +68,7 @@ result = converter.convert("scan.pdf")
 from pathlib import Path
 from docling.document_converter import DocumentConverter
 
-converter = DocumentConverter()
+converter = DocumentConverter
 
 # 流式处理：边转换边处理结果，不必把所有文档同时读进内存
 results = converter.convert_all(
@@ -82,7 +82,7 @@ for res in results:
         continue
     out = Path("out") / (Path(str(res.input.file)).stem + ".md")
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(res.document.export_to_markdown(), encoding="utf-8")
+    out.write_text(res.document.export_to_markdown, encoding="utf-8")
 ```
 
 另外两个入口：
@@ -96,9 +96,9 @@ for res in results:
 from docling.document_converter import DocumentConverter
 from docling.chunking import HybridChunker
 
-doc = DocumentConverter().convert("report.pdf").document
+doc = DocumentConverter.convert("report.pdf").document
 
-chunker = HybridChunker()                       # 默认按结构切，再按 token 上限细化
+chunker = HybridChunker                       # 默认按结构切，再按 token 上限细化
 for chunk in chunker.chunk(dl_doc=doc):
     text = chunker.serialize(chunk=chunk)       # 该块的文本
     ctx = chunker.contextualize(chunk=chunk)    # 带上下文/元数据的文本，适合喂 embedding 模型
@@ -118,7 +118,7 @@ for chunk in chunker.chunk(dl_doc=doc):
 
 - `--chunks-max-tokens` 对应 chunker 的 token 上限；不设就用 tokenizer 自身上限。
 - 表格跨块时，`repeat_table_header`（默认 `True`）会把表头重复到每一块；`omit_header_on_overflow`（默认 `False`）允许在"带表头就超限、不带刚好"时省掉表头。`LineBasedTokenChunker` 有对应的 `omit_prefix_on_overflow`。
-- chunk 对象带 `meta`（来源条目、标题层级等信息）。**字段名随版本演进，具体结构以官方 chunking 文档为准**；用于喂模型时优先用 `contextualize()`，它已经把上下文拼进去了。
+- chunk 对象带 `meta`（来源条目、标题层级等信息）。**字段名随版本演进，具体结构以官方 chunking 文档为准**；用于喂模型时优先用 `contextualize`，它已经把上下文拼进去了。
 
 只用 `docling-core` 而不装 `docling` 时，要装 chunking extra：
 
@@ -131,7 +131,7 @@ pip install 'docling-core[chunking-openai]'   # 或 tiktoken
 
 ## 五、遍历文档结构
 
-`DoclingDocument` 上可直接取的集合：`texts`、`tables`、`pictures`、`groups`、`pages`、`body`、`furniture`；另有 `num_pages`、`iterate_items()`（按阅读顺序遍历）、`get_visualization()`、`export_to_element_tree()`、`filter()`、`concatenate()`。
+`DoclingDocument` 上可直接取的集合：`texts`、`tables`、`pictures`、`groups`、`pages`、`body`、`furniture`；另有 `num_pages`、`iterate_items`（按阅读顺序遍历）、`get_visualization`、`export_to_element_tree`、`filter`、`concatenate`。
 
 ```python
 doc = converter.convert("report.pdf").document
@@ -144,15 +144,15 @@ for i, table in enumerate(doc.tables):
 for i, pic in enumerate(doc.pictures):
     print(f"图片 {i}", pic.get_image(doc))  # 取图片对象（用 doc 解析引用）
 
-for item, level in doc.iterate_items():     # 按阅读顺序，level 是层级
+for item, level in doc.iterate_items:     # 按阅读顺序，level 是层级
     print("  " * level, type(item).__name__)
 ```
 
-导出方法（都在 `DoclingDocument` 上）：`export_to_markdown()`、`export_to_html()`、`export_to_text()`、`export_to_dict()`、`export_to_doctags()`、`export_to_vtt()`、`export_to_doclang()`，以及 `save_as_*` / `load_from_json|yaml|doctags` 系列。要把结果落盘，最稳的写法是拿导出字符串自己写文件：
+导出方法（都在 `DoclingDocument` 上）：`export_to_markdown`、`export_to_html`、`export_to_text`、`export_to_dict`、`export_to_doctags`、`export_to_vtt`、`export_to_doclang`，以及 `save_as_*` / `load_from_json|yaml|doctags` 系列。要把结果落盘，最稳的写法是拿导出字符串自己写文件：
 
 ```python
 from pathlib import Path
-Path("out.md").write_text(doc.export_to_markdown(), encoding="utf-8")
+Path("out.md").write_text(doc.export_to_markdown, encoding="utf-8")
 ```
 
 需要多格式产出时，命令行 `--to` 一次给多种格式通常比在 Python 里逐个导出更省事。

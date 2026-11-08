@@ -71,11 +71,7 @@ python3 scripts/run.py voice --action create --verify-url https://…/record.wav
 `/api/v1/pricing` 里**没有 `media_services_33` 的专属规则**，落通配：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
-
-也就是说：**一条歌对外点数 = 上游实际点数 × 2，单笔保底 50 点（¥0.50）**。
 
 上游真实点数要真跑一条才看得到，所以 **`cost` 给的是下限估算**，不是报价：
 
@@ -85,7 +81,6 @@ python3 scripts/run.py cost --upstream 65      # 上游 65 点 → 130 点（¥1
 python3 scripts/run.py cost --upstream 65 --tasks 3
 ```
 
-| 你观察到的上游点数 | 对外下限 | 折合 |
 |---|---|---|
 | 未知 | 50 点 | ¥0.50 |
 | 60 | 120 点 | ¥1.20 |

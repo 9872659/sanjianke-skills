@@ -82,8 +82,6 @@ python3 scripts/run.py gen --models kling-4-0 --prompt "…" --route generations
 
 ### `502` / `503` / `504`
 
-**原因**：上游通道抖动。`gen` 已经对 502/503/504 做过一次退避重试。
-
 **修**：重跑同一个命令。已经拿到 `taskId` 的任务**不要重提** —— 重提就是再花一次钱，
 用 `status` / `wait` 接着取。
 
@@ -140,8 +138,6 @@ python3 scripts/run.py wait task_xxx --outdir . --limit 3600
 跑成功一次之后，下一次 `cost` 就会变成 `实测`（`source=live`）。
 
 ### 为什么闸门按上界判定
-
-上游按模型预冻结，冻结额通常贴着上界。按上界判定，最坏情况也是「刚好不超支」。
 
 ### 报价看着像缓存没更新
 

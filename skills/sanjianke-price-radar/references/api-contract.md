@@ -4,7 +4,6 @@
 
 | 端点 | 返回 | 用途 |
 |---|---|---|
-| `GET /api/v1/pricing` | `{currency, markupPercent, note, site, pricing{...}}` | 应用层与视频档单价 |
 | `GET /api/v1/models` | `{object, data[316], code, msg}` | 模型目录 + 模型层 ID |
 | `GET /api/v1/apps` | `{code, msg, data[22]}` | 应用目录 + 接口清单 |
 | `GET /api/v1/me/tasks?limit=2000&page=N` | `{tasks[20/页], total, sumPoints, ...}` | 模型层真实成交价 |
@@ -18,8 +17,6 @@
 ```json
 {
  "currency": "points",
- "markupPercent": 20,
- "note": "User price = upstream points x (1 + markup%). 实际成本以上游响应标记为准。",
  "site": "api",
  "pricing": { "/api/v1/...": { ...规则... }, ... }
 }
@@ -33,7 +30,6 @@
 | 字段 | 出现次数 | 类型 | 含义 |
 |---|---|---|---|
 | `mode` | 115 | str | `flat` / `per_second` / `per_module` |
-| `markupPercent` | 115 | int(114) / float(1) | 加价率；`cost:0` + 非 0 表示「按上游实际点数 × (1+n%)」 |
 | `note` | 115 | str | 人写的中文说明，最长的一条 600+ 字 |
 | `cost` | 65 | int | `flat` 的一口价（点） |
 | `perSecond` | 46 | int(45) / float(1) | 每秒点数 |
@@ -56,7 +52,6 @@
 ```json
 "/api/v1/apps/image_human/submit": {
   "mode": "per_second",
-  "markupPercent": 400,
   "rateFrom": "mode",
   "defaultModel": "fast",
   "modelRates": {
@@ -65,7 +60,6 @@
     "2k":       {"*": 30},
     "4k":       {"*": 60}
   },
-  "note": "...全驱数字人 快速 10 / 标准 15 / 2K 30 / 4K 60 点/输入秒（= 上游成本 2/3/6/12 ×5，毛利 80%）..."
 }
 ```
 
@@ -81,9 +75,7 @@
 "*": {
   "mode": "flat",
   "cost": 0,
-  "markupPercent": 100,
   "minPoints": 50,
-  "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"
 }
 ```
 
@@ -96,7 +88,7 @@
 
 | 路径 | mode | 价 |
 |---|---|---|
-| `/api/v1/apps/seedance/submit` | flat | `cost: 11000`「固定 11000 点/次（上游约 5500 点 ×2）」 |
+| `/api/v1/apps/seedance/submit` | flat | `cost: 11000`「固定 11000 点/次」 |
 | `/api/v1/apps/wan/submit` | flat | 800 |
 | `/api/v1/apps/happy_horse/submit` | flat | 650 |
 | `/api/v1/apps/mmaudio/*` | flat | 495 |
@@ -107,8 +99,6 @@
 | `/api/v1/apps/aigc_photo_restore/*` | flat | 105 / `sizeRates{1K:105, 2K:203}` |
 | `/api/v1/apps/nano_banana/submit` | flat | 72 |
 | `/api/v1/apps/aigc_qwen_image/generate/index` | flat | 78 |
-| `/api/v1/apps/voice_tts/*` | flat | `cost: 0` + `markupPercent: 200`（上游实际点数 × 3）|
-| `/api/v1/apps/indextts/*` | flat | `cost: 0` + `markupPercent: 200` |
 | `/api/v1/apps/full_video/submit` | per_second | `resolutionRates` 14 / 28 / 60 / 80 / 80 |
 | `/api/v1/apps/flashvsr/submit` | per_second | 10 点/秒，保底 20 |
 | `/api/v1/apps/smart_clip/*` | per_second | 4.5 点/秒，`estimate: 45` |
@@ -286,7 +276,6 @@ wan3.0-video / wan3.0-video-prime
 ```
 
 `rateNote` 是网关算这笔账时命中的规则说明。模型层任务的 `rateNote` 恒为
-**「官方价 × 2.00（≈ +100%）」**，正好对应通配 `*` 的 `markupPercent: 100`。
 
 分页：`size` / `per_page` 无效，**每页恒 20 条**；`limit` 只影响统计窗口（给 2000 覆盖全部）。
 

@@ -131,7 +131,7 @@ docker compose pull && docker compose up -d
 - **RLS 完整落地链路**：`enable row level security` → `create policy`（四种操作分开）→
   `to authenticated` 显式限定角色 → 撤销默认授权 → 索引与 `(select ...)` 性能写法
 - **漏权检查清单**：可直接粘贴执行的 SQL，逐条回答「这张表陌生人能不能读 / 能不能写」
-- **RLS 性能**：策略列建索引、`(select auth.uid())` 的 initPlan 缓存、`security definer`
+- **RLS 性能**：策略列建索引、`(select auth.uid)` 的 initPlan 缓存、`security definer`
   函数、连接方向优化、用 `explain analyze` 与 PostgREST `explain` 量化
 - **函数与触发器安全**：`security definer` + 固定 `search_path`、把内部函数放进非暴露 schema
 - **运维骨架**：备份、版本升级与回滚、连接池（直连 / 事务池 / 会话池）的选择与坑
@@ -139,13 +139,11 @@ docker compose pull && docker compose up -d
 
 **不覆盖**：
 
-- 不搬运上游 README、文档原文、代码或 Skill 文件；只提炼事实与判断依据
 - **不替你拍板选型**。本包给的是取舍维度与代价清单，最终结论取决于你的合规要求、团队规模与预算
 - 不写你的业务代码（前端组件、具体语言的 ORM 用法、支付与业务逻辑）
 - 不做多租户企业级 HA 架构设计、不做容量规划与压测方案设计
 - 不涉及数据仓库 / ETL、向量检索与 AI 应用编排
 - 不执行任何生产变更：不写你的生产库、不改线上 `.env`、不重启你的服务
-- 不保证上游 API 与命令永久兼容 —— 本包给的是**核对方法**，不是永久快照
 
 ## 依赖条件
 
@@ -199,7 +197,7 @@ docker compose pull && docker compose up -d
 - [ ] `insert` / `update` 策略带 `with check`，没有只写 `using` 就以为能挡住写入
 - [ ] 相关视图设置了 `security_invoker`，没有被视图绕过底层表的 RLS
 - [ ] 所有 `security definer` 函数都固定了 `search_path`，内部函数不在暴露 schema
-- [ ] 策略里用到的列已建索引；`auth.uid()` / `auth.jwt()` 已用 `(select ...)` 包裹
+- [ ] 策略里用到的列已建索引；`auth.uid` / `auth.jwt` 已用 `(select ...)` 包裹
 - [ ] 用 `explain analyze` 或大表实测过关键查询，慢查询已定位到是策略还是索引
 - [ ] 已配自动化备份并**做过一次恢复演练**（没演练过的备份等于没有备份）
 - [ ] 升级前记录了当前版本标签与迁移清单，并确认回滚路径

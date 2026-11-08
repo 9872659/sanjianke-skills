@@ -29,4 +29,3 @@ SOFTWARE.
 - 项目：`bilingual_book_maker`
 - 仓库：https://github.com/yihong0618/bilingual_book_maker
 
-**不提供该项目的技术支持。** 软件本身的问题请走上游仓库的 Issues。

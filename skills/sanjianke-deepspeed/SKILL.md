@@ -18,8 +18,6 @@ tags:
 
 它的价值在于**不用改模型结构**：给一个普通的 `torch.nn.Module` 套上 `deepspeed.initialize`，训练代码仍然是你熟悉的 forward / backward / step 三步。代价是它引入一份 JSON 配置和分布式启动命令，配错 stage 或者用错启动方式，报错信息往往不够直白。
 
-**上游项目**：`DeepSpeed`　**仓库**：https://github.com/deepspeedai/DeepSpeed
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -91,21 +89,21 @@ model_engine, optimizer, _, _ = deepspeed.initialize(args=cmd_args,
 如果你原来自己调了 `torch.distributed.init_process_group(...)`，要把它换成：
 
 ```python
-deepspeed.init_distributed()
+deepspeed.init_distributed
 ```
 
 **2. 标准训练三步**
 
 ```python
 for step, batch in enumerate(data_loader):
-    #forward() method
+    #forward method
     loss = model_engine(batch)
 
     #runs backpropagation
     model_engine.backward(loss)
 
     #weight update
-    model_engine.step()
+    model_engine.step
 ```
 
 梯度平均、loss scaling、学习率调度 step 都由引擎在这三步里接管。
@@ -250,7 +248,6 @@ NCCL_SOCKET_IFNAME=eth0
 ## 已知限制
 
 - 默认 JIT 编译扩展，首次运行会额外耗时；生产环境通常要提前预编译。
-- 部分特性有平台限制：Windows 上不支持 AIO 与 GDS；华为昇腾、Intel Gaudi/XPU、Tecorigin SDAA 等由贡献者支持，上游验证程度不一（官方表格里明确区分了「贡献者验证」与「上游验证」）。
 - 官方主要测试的 GPU 架构有限，不在列表里不代表不能跑，但踩坑概率更高。
 - MPI 启动方式下 DeepSpeed 仍然使用 torch 的 NCCL 后端，而不是 MPI 后端。
 - 具体版本号、发布日期、star 数请以仓库页面实时信息为准，此处不做断言。
@@ -260,7 +257,7 @@ NCCL_SOCKET_IFNAME=eth0
 - [ ] 已先装好 PyTorch，并且 `python -c "import torch; print(torch.__version__)"` 与编译环境匹配。
 - [ ] 装完 DeepSpeed 后跑过 `ds_report`，知道哪些扩展在这台机器上可用。
 - [ ] JSON 配置里的 `train_batch_size` 与 `gradient_accumulation_steps`、各卡 batch 的关系算清楚了。
-- [ ] 训练代码里已经移除自己写的 `torch.distributed.init_process_group`，改用 `deepspeed.init_distributed()`。
+- [ ] 训练代码里已经移除自己写的 `torch.distributed.init_process_group`，改用 `deepspeed.init_distributed`。
 - [ ] 保存/加载检查点的调用在所有进程上都执行，没有只写在 rank 0 里。
 - [ ] 多机场景已确认 hostfile 的 slots 与实际卡数一致，并选定免密 SSH 或 `--no_ssh` 模式。
 - [ ] 需要传播的环境变量已写进 `.deepspeed_env`，或用 `DS_ENV_FILE` 指向自定义文件。

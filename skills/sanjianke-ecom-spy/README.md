@@ -29,8 +29,7 @@
 
 ```json
 "/api/v1/apps/watermark_removal/*": {
-  "mode": "flat", "cost": 100, "markupPercent": 0,
-  "note": "去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"
+  "note": "去水印/分享链解析：固定 100 点/次"
 }
 ```
 
@@ -238,7 +237,6 @@ sanjianke-ecom-spy/
 ## 计费口径
 
 - 8 个接口一律 **100 点/次 = ¥1.00**，flat，和返回条数、素材时长都无关。
-- 上游按请求 **20 点**，对外 100 点 —— 这个 5 倍是写在规则里的售价，不是估算。
 - 规则 note 写「失败亦计」，所以本地先把必填卡住，参数齐了才发。
 - `--budget` 与 `--yes` 是本地闸门：预算内才发请求，`--yes` 到了才提交。
 - 对账看 `GET /user/balance/logs`（免费），`sync:/api/v1/apps/watermark_removal/...` 每次 -100 点。

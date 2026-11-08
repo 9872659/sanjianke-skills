@@ -29,4 +29,3 @@ SOFTWARE.
 - 项目：`polars`
 - 仓库：https://github.com/pola-rs/polars
 
-**不提供该项目的技术支持。** 软件本身的问题请走上游仓库的 Issues。

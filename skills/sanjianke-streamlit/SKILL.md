@@ -19,8 +19,6 @@ tags:
 
 代价是这个模型必须理解透：每次点按钮、每次改滑块，整份脚本都会从头再跑一遍。所以缓存和状态不是"优化技巧"，而是写 Streamlit 应用的基本功。
 
-**上游项目**：`streamlit`　**仓库**：https://github.com/streamlit/streamlit
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -102,7 +100,7 @@ def load_data(path: str) -> pd.DataFrame:
 df = load_data("orders.csv")
 st.dataframe(df)
 
-city = st.selectbox("城市", sorted(df["city"].dropna().unique()))
+city = st.selectbox("城市", sorted(df["city"].dropna.unique))
 st.dataframe(df[df["city"] == city])
 ```
 
@@ -114,15 +112,15 @@ st.dataframe(df[df["city"] == city])
 import streamlit as st
 
 @st.cache_resource
-def get_connection():
-    return make_db_connection()      # 数据库连接、文件句柄、线程等不可序列化对象
+def get_connection:
+    return make_db_connection      # 数据库连接、文件句柄、线程等不可序列化对象
 
 @st.cache_resource
-def load_model():
-    return load_my_model()           # 大模型只加载一次，所有会话共享
+def load_model:
+    return load_my_model           # 大模型只加载一次，所有会话共享
 
-conn = get_connection()
-model = load_model()
+conn = get_connection
+model = load_model
 ```
 
 注意 `@st.cache_resource` **不复制**返回值：它就是一个全局单例，所有会话共用，改它等于改缓存里的那个对象，所以返回值必须是线程安全的。
@@ -156,7 +154,7 @@ tab1, tab2 = st.tabs(["明细", "汇总"])
 with tab1:
     st.dataframe(df)
 with tab2:
-    st.bar_chart(df.groupby("month")["amount"].sum())
+    st.bar_chart(df.groupby("month")["amount"].sum)
 
 with st.sidebar:
     st.caption("侧边栏放全局筛选条件")
@@ -174,7 +172,7 @@ uploaded = st.file_uploader("上传 CSV", type=["csv"])
 if uploaded is not None:
     df = pd.read_csv(uploaded)
     df["amount"] = df["amount"].fillna(0)
-    st.dataframe(df.head())
+    st.dataframe(df.head)
     st.download_button("下载处理结果",
                        df.to_csv(index=False).encode("utf-8-sig"),
                        file_name="cleaned.csv",
@@ -211,7 +209,7 @@ streamlit help                       # 列出全部可用命令
 | 多个人同时用，一个人改了东西别人那边也变了；或者偶发崩溃、数据串了 | `@st.cache_resource` 不复制返回值，所有会话共享同一个实例，所以必须线程安全，改动会互相影响 | 只把真正无状态的资源（模型权重、连接池）放 `cache_resource`；有会话私有状态的数据放 `cache_data` 或 `session_state` |
 | 数据库查询结果一直是旧的，改了库里的数界面没反应 | 缓存命中后不会重新执行函数 | 给 `@st.cache_data` 设 `ttl`（例如 `ttl=3600`），或给缓存按需清理；官方明确建议查库、调 API 都要设 ttl |
 | 报 `UnhashableParamError: Cannot hash argument ...` | 缓存函数要按参数值做哈希来判定命中，自定义类、模型对象、连接等默认不可哈希 | 参数名前面加下划线表示**不参与哈希**（如 `_conn`）；确实需要按该参数区分缓存时用 `hash_funcs` 指定自定义哈希函数 |
-| 在下拉框里换了模型，界面显示的结果却没变 | 给不可哈希参数加下划线是"排除哈希"，参数变化不会触发重算 | 需要"换参数就重算"的参数必须参与哈希：用 `hash_funcs` 给出稳定且能区分实例的哈希函数，不要用 `id()` 这种每次都变的（官方有专门示例说明） |
+| 在下拉框里换了模型，界面显示的结果却没变 | 给不可哈希参数加下划线是"排除哈希"，参数变化不会触发重算 | 需要"换参数就重算"的参数必须参与哈希：用 `hash_funcs` 给出稳定且能区分实例的哈希函数，不要用 `id` 这种每次都变的（官方有专门示例说明） |
 | `if st.button("提交"):` 里面的逻辑有时不执行，或者刷新页面后又执行了一次 | 按钮只在被点击那一次的重跑中返回真值，之后恢复 | 把点击后的结果写进 `session_state`，后续渲染读状态而不是读按钮；需要整组控件一起提交时用表单 |
 | 改了代码页面没热更新，或容器里跑的应用不刷新 | 文件监听在容器、网络盘、某些挂载方式下不可靠 | 本地开发手动用界面上的 Rerun 或刷新页面；容器化部署时按官方部署文档的态度处理热重载（生产不需要它） |
 | 部署后密钥泄露，或本地能跑线上报 key 不存在 | 把密钥写进了代码或提交进了仓库；或线上没配 secrets | 只用 `st.secrets` / 环境变量；本地 `.streamlit/secrets.toml` 必须进 `.gitignore`；上线前在平台侧把密钥配齐 |

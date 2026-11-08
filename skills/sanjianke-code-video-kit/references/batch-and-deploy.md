@@ -17,8 +17,8 @@
 | 文案、标题、价格、口播稿 | props（字符串） |
 | 品牌主色、Logo、字体 | props 或按客户建的配置文件 |
 | 素材路径（图片、视频、配音） | props，值用 `public/` 下的相对路径 |
-| 时长 | `calculateMetadata()` 按文案长度算，或 props 直接给 |
-| 尺寸、帧率 | 同一模板要出多种规格时用 props + `calculateMetadata()` |
+| 时长 | `calculateMetadata` 按文案长度算，或 props 直接给 |
+| 尺寸、帧率 | 同一模板要出多种规格时用 props + `calculateMetadata` |
 
 ---
 
@@ -47,7 +47,6 @@ data/
 
 - **单条失败不影响其他条**。一条数据格式错了，不需要人工从一千条里挑出来。
 - **可以断点续跑**。记录已完成的文件名，重跑时跳过。
-- **可以让上游系统直接落文件**。运营在表格里填完，导出一批 JSON 就行。
 
 ### 用 CSV 出发（适合非技术同事维护）
 
@@ -68,8 +67,8 @@ mkdirSync('data/items', {recursive: true});
 
 rows.forEach((row, i) => {
   const props = {
-    title: row['标题'].trim(),
-    price: row['价格'].trim(),
+    title: row['标题'].trim,
+    price: row['价格'].trim,
     accent: row['主色'] || '#ff5722',
     tags: (row['标签'] || '').split('/').filter(Boolean),
     voice: row['配音文件'] || '',
@@ -102,7 +101,7 @@ const ENTRY = path.resolve('./src/index.ts');
 const DATA_DIR = path.resolve('./data/items');
 const OUT_DIR = path.resolve('./out');
 
-async function main() {
+async function main {
   mkdirSync(OUT_DIR, {recursive: true});
 
   // 1) 打包一次，所有任务复用同一个 serveUrl —— 这是批量提速的关键
@@ -119,7 +118,7 @@ async function main() {
   const done: string[] = [];
   const failed: {file: string; reason: string}[] = [];
 
-  for (const [i, file] of files.entries()) {
+  for (const [i, file] of files.entries) {
     const inputProps = JSON.parse(readFileSync(path.join(DATA_DIR, file), 'utf8'));
     const outName = file.replace(/\.json$/, '.mp4');
 
@@ -157,7 +156,7 @@ async function main() {
   if (failed.length) console.log(JSON.stringify(failed, null, 2));
 }
 
-main().catch((err) => {
+main.catch((err) => {
   console.error(err);
   process.exit(1);
 });
@@ -165,7 +164,7 @@ main().catch((err) => {
 
 几个刻意的设计：
 
-- **`bundle()` 只调用一次**。每条都重新打包会让整个任务慢好几倍，而且毫无意义——打包产物对同一份代码是相同的。
+- **`bundle` 只调用一次**。每条都重新打包会让整个任务慢好几倍，而且毫无意义——打包产物对同一份代码是相同的。
 - **进度写 `stderr`，结果写 `stdout`**。这样 `node script > result.json` 不会把进度日志混进结果里。
 - **`manifest.json` 边跑边写**。长任务被系统杀掉或机器重启是常事，有了清单就知道从哪继续。
 - **单条 try/catch**。批量任务里一条数据格式错误不应该毁掉其余 999 条。
@@ -184,7 +183,7 @@ export async function pool<T, R>(
   const results = new Array<R>(items.length);
   let cursor = 0;
 
-  const runners = Array.from({length: Math.min(limit, items.length)}, async () => {
+  const runners = Array.from({length: Math.min(limit, items.length)}, async  => {
     while (true) {
       const index = cursor++;
       if (index >= items.length) return;
@@ -225,7 +224,7 @@ await pool(files, jobLimit, async (file, i) => { /* 上面的 renderMedia 逻辑
 
 **先测单条。** 渲染一条记录耗时和峰值内存，再乘并发数。别靠猜。
 
-### 用 `renderStill()` 先做质检
+### 用 `renderStill` 先做质检
 
 渲染整片很贵，静帧很便宜。批量任务正式开跑前，先用静帧把画面抽检一遍：
 
@@ -372,14 +371,14 @@ jobs:
           # 公司许可必须配置，见下方许可段落
           REMOTION_LICENSE_KEY: ${{ secrets.REMOTION_LICENSE_KEY }}
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always
         with:
           name: videos
           path: out/*.mp4
           retention-days: 7
 ```
 
-`if: always()` 让部分失败时也能拿到已成功的产物，对排查很有用。
+`if: always` 让部分失败时也能拿到已成功的产物，对排查很有用。
 
 ---
 
@@ -389,7 +388,7 @@ jobs:
 
 ### 1. 你的批量脚本算不算 automation
 
-**算。** 官方明确把「你自己的代码程序化调用渲染入口」定义为 automation，被点名的入口包括 `renderMedia()`、`renderStill()`、`renderFrames()`、各类云渲染封装，以及 `npx remotion render` / `npx remotion still` 命令行。
+**算。** 官方明确把「你自己的代码程序化调用渲染入口」定义为 automation，被点名的入口包括 `renderMedia`、`renderStill`、`renderFrames`、各类云渲染封装，以及 `npx remotion render` / `npx remotion still` 命令行。
 
 也就是说，**只要你的脚本用了上面任意一个，就不是「手动低频」了**，别再拿这个理由安慰自己。
 
@@ -413,7 +412,7 @@ jobs:
 
 - 上报内容：触发渲染机器的 IP、是否生产环境、是视频还是静图。
 - **不采集**任何画面内容、素材、元数据或用户数据。
-- 客户端渲染（`renderMediaOnWeb()` 那条路）对**所有人**都强制上报，不论许可档位。
+- 客户端渲染（`renderMediaOnWeb` 那条路）对**所有人**都强制上报，不论许可档位。
 - 免费档与 Creators 档的服务端渲染属自愿：不配 `licenseKey` 就不上报。
 - 免费档可以传 `"free-license"` 作为 `licenseKey` 值，用来声明自己的免费资格并消掉控制台警告。
 - **telemetry 不会限流、阻断或让渲染失败。** 即使上报请求本身失败，渲染照样完成。
@@ -447,8 +446,8 @@ await renderMedia({
 
 - [ ] 换数据不需要改代码（模板已完全参数化）。
 - [ ] props 全部可 JSON 序列化。
-- [ ] 用 `renderStill()` 抽帧质检过，画面没有溢出、缺字、缺素材。
-- [ ] `bundle()` 在循环外只调用一次。
+- [ ] 用 `renderStill` 抽帧质检过，画面没有溢出、缺字、缺素材。
+- [ ] `bundle` 在循环外只调用一次。
 - [ ] 「任务并发 × concurrency」按机器内存估算过，不是两个都拉满。
 - [ ] 单条失败不会中断整批，失败清单被记录下来。
 - [ ] `manifest.json` 边跑边写，支持断点续跑。

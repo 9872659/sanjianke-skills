@@ -140,12 +140,9 @@ HTTP 200
 
 ## 5. 模型层单价：价目表里没有
 
-`GET /api/v1/pricing` → 115 条规则，顶层 `{currency, markupPercent, note, site, pricing}`。
 没有 `/api/v1/videos/generations`，也没有 `modelPricing` 键。模型层命中通配：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}
 ```
 
 真实单价只在 `GET /api/v1/me/tasks` 的 `actualPrice` 里。归集规则：
@@ -153,7 +150,6 @@ HTTP 200
 1. 取 `path` 不含 `/apps/` 且 `model` 非空的记录；
 2. 按 `model` 分组，`actualPrice > 0` 的进样本；
 3. 组内最小 / 最大 = 报价区间，条数 = n，标 `source=live`；
-4. 没有样本 → 基线：上游数字人 2-12 点/秒 × 通配加价 100% = 4-24 点/秒，单笔保底 50 点，标 `source=baseline`；
 5. 跑成功一次，下一次报价值变成你账号的成交价。
 
 本账号 1,398 条台账里，模型层只有 7 个模型、43 笔成交：
@@ -179,7 +175,6 @@ seedream-5-0-flash                        1 笔   15.60
 ```json
 "/api/v1/apps/image_human/submit": {
   "mode": "per_second",
-  "markupPercent": 400,
   "rateFrom": "mode",
   "modelRates": {"fast":{"*":10},"standard":{"*":15},"2k":{"*":30},"4k":{"*":60}},
   "defaultModel": "fast",
@@ -187,13 +182,9 @@ seedream-5-0-flash                        1 笔   15.60
 }
 
 "/api/v1/apps/pic_lipsync/submit": {
-  "mode": "flat", "cost": 0, "markupPercent": 400, "minPoints": 50,
-  "note": "对外 = 上游实际点数 x 5（上游 standard 实测 3 点/秒 => 15 点/秒）"
 }
 
 "/api/v1/apps/lipsync/submit": {
-  "mode": "flat", "cost": 0, "markupPercent": 200, "minPoints": 1,
-  "note": "按上游实际点数 x 3"
 }
 ```
 

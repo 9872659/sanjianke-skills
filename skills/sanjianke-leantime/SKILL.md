@@ -19,8 +19,6 @@ tags:
 
 它的定位更偏"团队协作台"而不是"研发流水线"——没有代码仓库、CI、制品库这些研发链路能力，别指望它顶替 DevOps 工具链。
 
-**上游项目**：`Leantime`　**仓库**：https://github.com/Leantime/leantime
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -37,7 +35,6 @@ tags:
 - **需要严格的研发过程管理**（代码托管、CI/CD、制品、测试用例管理）——不在它能力范围内，这类需求应看研发专用平台。
 - **只想要一个纯 Markdown 文档站**——文档只是它的附属模块，专门做文档有更轻的选择。
 - **团队规模很小、只想要一张待办清单**——为了几张卡片维护一套 PHP + MySQL + 定时任务不划算。
-- **需要商业授权闭源二次分发**——上游许可是 AGPLv3（`app/Plugins` 目录有例外条款），闭源改造前请先确认合规。
 
 ## 安装
 
@@ -204,7 +201,7 @@ LEAN_REDIS_SESSION_DB = 1
 | 容器里看不到应用日志 | 默认把日志写进文件 | 把 `LEAN_LOG_CHANNELS` 设为包含 `stderr`，用 `docker logs` 查看 |
 | 内网离线环境页面加载卡顿 | 应用默认会联网拉取公告 | 设 `LEAN_NEWS_ENABLED=false` 关掉公告服务 |
 | 用户被限流挡在门外，尤其批量邀请时 | 内置了按 IP / 用户的限流（登录、接口、邀请各有阈值） | 按需调整 `LEAN_RATELIMIT_AUTH`、`LEAN_RATELIMIT_INVITES_USER`、`LEAN_RATELIMIT_INVITES_TENANT`，不要通过关闭登录限流来图省事 |
-| 邮件发不出去 | 默认走 PHP 的 `mail()`，而容器里通常没有可用 MTA | 设 `LEAN_EMAIL_USE_SMTP=true` 并填 `LEAN_EMAIL_SMTP_HOSTS` / `LEAN_EMAIL_SMTP_PORT` / `LEAN_EMAIL_SMTP_USERNAME` / `LEAN_EMAIL_SMTP_PASSWORD` / `LEAN_EMAIL_SMTP_SECURE` |
+| 邮件发不出去 | 默认走 PHP 的 `mail`，而容器里通常没有可用 MTA | 设 `LEAN_EMAIL_USE_SMTP=true` 并填 `LEAN_EMAIL_SMTP_HOSTS` / `LEAN_EMAIL_SMTP_PORT` / `LEAN_EMAIL_SMTP_USERNAME` / `LEAN_EMAIL_SMTP_PASSWORD` / `LEAN_EMAIL_SMTP_SECURE` |
 | IIS 上部分操作 405 | IIS 默认不允许 `PATCH` 方法 | 在 PHP 处理程序映射的"请求限制 → 谓词"里加入 `PATCH`；升级 PHP 后需重做 |
 | 手动升级后页面报错 | 有数据库结构变更没执行迁移 | 访问 `/update`，或用 `php bin/leantime system:update` |
 | 上传附件失败 | 本地上传目录或备份目录不可写 | 确认 `LEAN_USER_FILE_PATH`、`LEAN_DB_BACKUP_PATH` 指向的目录对运行用户可写（或改用 S3） |

@@ -4,7 +4,6 @@ slug: sanjianke-shortdrama-remix
 displayName: 短剧二创一条龙 · 60 秒片 18 元跑完全链
 description: "**一条 60 秒短剧素材，从认演员表到出二创成片，1,796 点（17.96 元）一条命令跑完。** 认演员表 25 点/次、去台标 25 点/次、擦硬字幕 9 点/秒、画质提一档 15 点/秒、解说配音按上游点数 ×3、模板混剪 4.5 点/秒 —— 六个工位全走 api.a7w.cn，异步两步、零依赖。本包把三件真会白跑的事做成默认动作：videoUrl 只认平台托管地址，所以先 upload 拿地址；castcrew 只出 SRT，成片在别处；应用层 submit 与部分免费 GET 会先冻结再全额退，所以 doctor 只查应用注册表。`cost` 先算钱，`--budget`（单位：点，1 元 = 100 点）与 `--yes` 两道闸门，`--step` 单跑一步、`--all` 全链跑完。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "短剧二创的六个工位散在三个通道：视频工位在 /api/v1/video/viapi/<step>，配音在 voice_tts/tts_async，混剪在 smart_clip/broadcast_mixcut。**价目**（1 元 = 100 点）：castcrew 25 点/次、delogo 25 点/次、subtitle 9 点/秒、enhance 15 点/秒、tts 上游实际点数 ×3、mixcut 4.5 点/秒（保底 45 点）。**链路**：upload（免费）→ castcrew → delogo → subtitle → enhance → tts → mixcut；--step 单跑一步，--all 自动接上一步成片。**地址**：videoUrl 只认 vr.a7w.cn、cdn2.jiujiushuyuan.cn/vr/、oss.gpu.likeadmin.cn/openapi/ 三种。**查询**：视频走 /video/viapi/result/{id}，应用走 /tasks/{id}。**计费**：按秒工位先冻结后结算，失败全额退；castcrew 价签「点/次」而规则是 per_second，本包按价签计一次。需要自备 api.a7w.cn 的 Key（注册见 https://api.a7w.cn/ ）。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -98,7 +97,6 @@ python3 scripts/run.py log --limit 10
 - 查询：视频 `GET /api/v1/video/viapi/result/{taskId}`；应用 `GET /api/v1/tasks/{taskId}`；`status` 两条都试。
 - 按秒工位先按 `duration` 冻结、完成后按实际时长结算；任务失败平台全额退回。
 - 成片链接约 **30 分钟**有效，拿到就转存；`castcrew` 的 SRT 同样是 30 分钟。
-- `tts` 对外价 = 上游实际点数 × 3，`cost` 给的是按字数的估算；真实扣费看 `usage.points_cost`。
 - 零依赖：只要 Python 3.7+，不需要 `pip install`。
 
 ## 退出码

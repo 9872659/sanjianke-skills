@@ -16,11 +16,11 @@ plotly.py：交互式数据可视化图表的安装、常用命令与避坑要�
 
 ## 使用
 
-1. `pip install plotly`，用官方 Quickstart 的三行确认环境可用：`import plotly.express as px` 出一张柱状图再 `fig.show()`。
+1. `pip install plotly`，用官方 Quickstart 的三行确认环境可用：`import plotly.express as px` 出一张柱状图再 `fig.show`。
 2. 要给人交互看，用 `fig.write_html(...)` 出自包含单文件；接收方离线也能打开。
 3. 要进报告或文档，用 `fig.write_image(...)` 出 PNG / JPG / SVG / PDF，前提是 Kaleido 与浏览器就位。
 4. 快速出图用 `plotly.express`；需要控标题、轴、图例、标注时改用 `plotly.graph_objects` 补细节。
-5. 需要交给前端或其他服务渲染时，用 `fig.to_json()` 拿结构化定义。
+5. 需要交给前端或其他服务渲染时，用 `fig.to_json` 拿结构化定义。
 6. 大数据量散点显式打开 WebGL 渲染模式，或先降采样，避免页面卡死。
 
 ---

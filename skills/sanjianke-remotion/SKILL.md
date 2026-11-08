@@ -16,9 +16,7 @@ tags:
 
 要给一千个商品各出一条 15 秒短片，每条只换标题、价格和封面图；或者要做一个数据一周一更新就自动重渲染的榜单视频——这类需求用剪辑软件做就是人肉苦力，用 Remotion 就是写一个 React 组件再循环调用一次。
 
-它的思路是把「视频」还原成「一串按帧绘制的网页」：你用 `<Composition>` 声明画布尺寸、帧率、总帧数，用 `useCurrentFrame()` 拿到当前帧号，用 `interpolate()` / `spring()` 把帧号映射成位移、缩放、透明度。剩下的交给它——它会启动一个无头浏览器逐帧截图，再用内置的 FFmpeg 编码成 MP4。所以它**不是剪辑工具，而是渲染引擎**：素材要提前备好，时间轴要在代码里算。
-
-**上游项目**：`Remotion`　**仓库**：https://github.com/remotion-dev/remotion
+它的思路是把「视频」还原成「一串按帧绘制的网页」：你用 `<Composition>` 声明画布尺寸、帧率、总帧数，用 `useCurrentFrame` 拿到当前帧号，用 `interpolate` / `spring` 把帧号映射成位移、缩放、透明度。剩下的交给它——它会启动一个无头浏览器逐帧截图，再用内置的 FFmpeg 编码成 MP4。所以它**不是剪辑工具，而是渲染引擎**：素材要提前备好，时间轴要在代码里算。
 
 ## 什么时候用 / 不用
 
@@ -158,18 +156,18 @@ npx remotion still HelloWorld out/cover.png --frame=45
 
 **5. 参数化渲染：一套代码出 N 条不同的片子**
 
-在组件里用 `getInputProps()` 读取外部传入的参数：
+在组件里用 `getInputProps` 读取外部传入的参数：
 
 ```tsx
 import {Composition, getInputProps, useCurrentFrame} from 'remotion';
 
-const MyComp = () => {
-  const {title} = getInputProps() as {title: string};
-  const frame = useCurrentFrame();
+const MyComp =  => {
+  const {title} = getInputProps as {title: string};
+  const frame = useCurrentFrame;
   return <h1 style={{opacity: Math.min(1, frame / 30)}}>{title}</h1>;
 };
 
-export const Root = () => (
+export const Root =  => (
   <Composition
     id="Ad"
     component={MyComp}
@@ -208,9 +206,9 @@ npx remotion bundle src/index.ts --out-dir=build
 | 渲染报「找不到 composition」 | 传的 ID 与 `<Composition id="...">` 里的不一致；ID 只允许字母数字和 `-`，写成中文或下划线就会对不上 | 先跑 `npx remotion compositions` 看真实 ID，再照抄进 render 命令 |
 | 升级某个 `@remotion/*` 包后满屏版本冲突报错 | Remotion 的所有官方包必须同版本，单独升级一个就破坏了约束 | 用 `npx remotion versions` 定位不一致的包，再用 `npx remotion upgrade` 或 `npx remotion add` 统一版本，别手改单个包 |
 | 首次渲染卡很久或直接超时失败 | 本机没有兼容的 Chrome，正在后台下载浏览器；或某个资源（字体、图片、接口）一直没加载完 | 等首次下载完成；确认是网络问题就配 `--browser-executable` 指向本机 Chrome；用 `--log=verbose` 看卡在哪一帧，把该资源的等待超时配 `--timeout` 调大 |
-| 动画一开渲染就错位 / 内容闪烁 | 组件里有基于 `Date.now()`、`Math.random()` 或真实时间的逻辑，每帧结果都不一样 | 帧号只能来自 `useCurrentFrame()`；随机数用帧号随机函数；所有动画必须是帧号的纯函数 |
-| 服务器上渲染出来是黑屏 / 缺字体 | 无头浏览器环境缺字体，中文尤其容易变成方块 | 把字体文件放进 `public/` 用 `staticFile()` 引入并显式等它加载完，不要依赖系统字体 |
-| 组件里请求外部接口，偶发渲染失败 | 渲染逐帧并行，多帧会同时打同一个接口，容易被限流或超时 | 数据在渲染前一次性取好，通过 `--props` 或 `calculateMetadata()` 传入，别放在逐帧渲染过程里请求 |
+| 动画一开渲染就错位 / 内容闪烁 | 组件里有基于 `Date.now`、`Math.random` 或真实时间的逻辑，每帧结果都不一样 | 帧号只能来自 `useCurrentFrame`；随机数用帧号随机函数；所有动画必须是帧号的纯函数 |
+| 服务器上渲染出来是黑屏 / 缺字体 | 无头浏览器环境缺字体，中文尤其容易变成方块 | 把字体文件放进 `public/` 用 `staticFile` 引入并显式等它加载完，不要依赖系统字体 |
+| 组件里请求外部接口，偶发渲染失败 | 渲染逐帧并行，多帧会同时打同一个接口，容易被限流或超时 | 数据在渲染前一次性取好，通过 `--props` 或 `calculateMetadata` 传入，别放在逐帧渲染过程里请求 |
 | `--crf` 和 `--video-bitrate` 同时给出报错 | 两者是互斥的码率控制模式 | 只留一个：画质优先用 `--crf`，控体积用 `--video-bitrate`。注意开了硬件加速就不能用 `--crf` |
 | Windows 下 `--props` 传内联 JSON 报解析错误 | Windows shell 会剥掉内联 JSON 里的双引号 | 把 props 写成 `.json` 文件，传 `--props=./props.json` |
 | 大批量渲染把机器内存吃满 | 并发过高，且 `<OffthreadVideo>` 的帧缓存默认按可用内存的一半分配 | 降低 `--concurrency`，或调小 `--offthreadvideo-cache-size-in-bytes`；内存紧张时加 `--disallow-parallel-encoding` |
@@ -240,8 +238,8 @@ npx remotion bundle src/index.ts --out-dir=build
 **覆盖**：
 
 - 用 React + CSS 描述画面，逐帧渲染成 MP4 / WebM / GIF / 图片序列 / 单张静帧，支持 H.264、H.265、VP8、VP9、AV1、ProRes 等编码。
-- 声明式时间轴：`<Sequence>` 定片段时长与偏移、`<Series>` 串接、`<Loop>` 循环、`<Freeze>` 定格，配合 `interpolate()`、`spring()`、`Easing` 做缓动。
-- 参数化渲染：`defaultProps` + `--props` 传入外部数据，`calculateMetadata()` 按数据动态算时长与尺寸，这是批量量产的基础。
+- 声明式时间轴：`<Sequence>` 定片段时长与偏移、`<Series>` 串接、`<Loop>` 循环、`<Freeze>` 定格，配合 `interpolate`、`spring`、`Easing` 做缓动。
+- 参数化渲染：`defaultProps` + `--props` 传入外部数据，`calculateMetadata` 按数据动态算时长与尺寸，这是批量量产的基础。
 - 音频能力：加背景音乐与音效、按帧对齐、单独导出音轨、导出带字幕的成片（字幕相关能力有一组独立包）。
 - 多种运行方式：本地 CLI、Studio 图形预览、Node.js 服务端渲染 API、浏览器端渲染、AWS Lambda 与 Google Cloud Run 分布式渲染、GitHub Actions。
 - 生态包：Google Fonts 与本地字体、Lottie、GIF、Three.js、Skia、Tailwind、转场、波形与媒体工具等。
@@ -269,7 +267,6 @@ npx remotion bundle src/index.ts --out-dir=build
 - 组件必须是纯函数式的帧渲染：任何跨帧状态、随机性、当前时间依赖都会破坏可复现性。
 - 无头环境没有系统字体可供依赖，中文与特殊字体必须显式加载并等待就绪。
 - 版本耦合很紧，所有 `@remotion/*` 包必须同版本，在与其它的依赖共存的老项目里需要额外协调。
-- 上游迭代很快，CLI flag 与包名（例如某些包被标记为 deprecated、某些 flag 在 v4 被移除）会变化；执行前以 `npx remotion help` 与官方文档当前内容为准。
 - 具体版本号、发布日期与 star 数请以仓库页面实时信息为准，此处不做断言。
 
 ## 自检清单
@@ -277,9 +274,9 @@ npx remotion bundle src/index.ts --out-dir=build
 - [ ] Node.js 已就绪，且项目里所有 Remotion 包版本一致（`npx remotion versions` 无告警）。
 - [ ] 已用 `npx remotion compositions` 确认要渲染的 composition ID 拼写正确。
 - [ ] composition 的 `width` / `height` / `fps` / `durationInFrames` 与目标投放规格一致（竖屏短视频通常是 1080×1920）。
-- [ ] 组件内没有 `Date.now()`、`Math.random()` 这类非帧号随机源；随机用官方帧号随机函数。
+- [ ] 组件内没有 `Date.now`、`Math.random` 这类非帧号随机源；随机用官方帧号随机函数。
 - [ ] 字体、图片、音视频素材都能被加载，远程资源已考虑加载等待与超时。
-- [ ] 需要外部数据时，数据在渲染前取好并通过 `--props` 或 `calculateMetadata()` 注入，没有在逐帧渲染里请求接口。
+- [ ] 需要外部数据时，数据在渲染前取好并通过 `--props` 或 `calculateMetadata` 注入，没有在逐帧渲染里请求接口。
 - [ ] `--crf` 与 `--video-bitrate` 没有同时使用；用硬件加速时没有设 `--crf`。
 - [ ] 大批量渲染前先用一小段 `--frames` 试跑，确认画质、音量电平与时长都符合预期。
 - [ ] 确认所在组织规模与使用方式落在许可证允许的范围内。

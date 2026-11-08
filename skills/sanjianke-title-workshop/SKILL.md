@@ -244,7 +244,6 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 - 人读文案照旧走 stderr；**退出码语义一个都不变**；非 `--json` 模式输出与以前完全一致
 - `--json` 写在子命令**前面或后面都可以**
 
-
 ### 平台字数上限
 
 | 平台 | 上限（字符） | 语感口径 |
@@ -294,9 +293,8 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | `Missing or invalid relay API key`（HTTP 401） | Key 无效、已过期或写错 | 重新到 https://api.a7w.cn/ 领取；确认没把 `Bearer` 重复写进环境变量 |
 | 点数不足（HTTP 402） | 账号点数用完 | 到 https://api.a7w.cn/ 充值后重试 |
 | 模型不存在（HTTP 404） | 模型名写错或已下架 | `python3 scripts/run.py models` 现查在架模型名 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 脚本已内置退避重试（最多 4 次）。连续失败就换模型，或降低 `--count` 分批跑 |
 | `鉴权失败（401）` | `A7W_API_KEY` 为空或含空格 | `echo $env:A7W_API_KEY` 检查；用 `--key` 临时覆盖验证 |
-| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符或解释 | 脚本已用 `json.JSONDecoder().raw_decode()` 扫描第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
+| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符或解释 | 脚本已用 `json.JSONDecoder.raw_decode` 扫描第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
 | `模型没产出任何可用标题` | 输出被 `max_tokens` 截断 | 加大 `--max-tokens`（30 条建议 4096 以上），或减小 `--count` |
 | 标题全部挤在 8 分以上 | 模型没在区分，标尺漂移 | 把 `--temperature` 提到 1.0 重跑，或换一个模型 |
 | 标题超字数很多 | 模型无视字数上限 | 脚本已把超限标题的平台适配分强制压到 5 分（超 5 字以上压到 3 分）并标注超字数 |

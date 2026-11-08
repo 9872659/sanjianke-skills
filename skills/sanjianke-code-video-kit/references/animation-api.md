@@ -6,35 +6,35 @@
 
 ## 一、两个基础钩子
 
-### `useCurrentFrame()`
+### `useCurrentFrame`
 
 返回当前帧号，从 `0` 开始。渲染时它被逐帧递增，Studio 里随播放头变化。
 
 ```tsx
-const frame = useCurrentFrame();
+const frame = useCurrentFrame;
 ```
 
 整条动画链路就是「帧号 → 某个数值 → 某个样式」：
 
 ```tsx
-const frame = useCurrentFrame();
+const frame = useCurrentFrame;
 const opacity = frame / 30;                  // 第 0 帧全透明，第 30 帧不透明
 return <div style={{opacity}}>淡入</div>;
 ```
 
-朴素除法够用但不优雅——它没有边界，超出范围会得到 `> 1` 或 `< 0` 的值。所以实际都配 `interpolate()`。
+朴素除法够用但不优雅——它没有边界，超出范围会得到 `> 1` 或 `< 0` 的值。所以实际都配 `interpolate`。
 
-### `useVideoConfig()`
+### `useVideoConfig`
 
 返回当前 Composition 的元信息：
 
 ```tsx
-const {fps, durationInFrames, width, height, id} = useVideoConfig();
+const {fps, durationInFrames, width, height, id} = useVideoConfig;
 ```
 
 | 字段 | 用途 |
 |---|---|
-| `fps` | `spring()` 必传；把秒换算成帧 |
+| `fps` | `spring` 必传；把秒换算成帧 |
 | `durationInFrames` | 算收尾动画的起点，例如「最后 20 帧淡出」 |
 | `width` / `height` | 按比例算布局，或做响应式定位 |
 | `id` | 在共享组件里区分是哪个 Composition 在用它 |
@@ -43,7 +43,7 @@ const {fps, durationInFrames, width, height, id} = useVideoConfig();
 
 ---
 
-## 二、`interpolate()`：把帧号映射成数值
+## 二、`interpolate`：把帧号映射成数值
 
 签名是「把 `inputRange` 里的 `input`，按对应关系映射到 `outputRange`」。
 
@@ -69,7 +69,7 @@ const opacity = interpolate(frame, [0, 30], [0, 1], {
 
 三个可选值：`'extend'`（默认，外推）、`'clamp'`（夹住）、`'identity'`（返回原值）。
 
-**推荐习惯：所有 `interpolate()` 都显式写 `extrapolateRight: 'clamp'`。** 忘了写是「元素在动画结束后突然飞出画面」这类怪现象的常见原因。
+**推荐习惯：所有 `interpolate` 都显式写 `extrapolateRight: 'clamp'`。** 忘了写是「元素在动画结束后突然飞出画面」这类怪现象的常见原因。
 
 ### 非线性映射
 
@@ -112,15 +112,15 @@ Easing.bounce                 // 落地回弹
 
 ---
 
-## 三、`spring()`：物理感的入场
+## 三、`spring`：物理感的入场
 
-`interpolate()` 是匀速映射，`spring()` 是按弹簧物理算出来的衰减曲线。入场、弹出、缩放用它比缓动更自然。
+`interpolate` 是匀速映射，`spring` 是按弹簧物理算出来的衰减曲线。入场、弹出、缩放用它比缓动更自然。
 
 ```tsx
 import {spring, useCurrentFrame, useVideoConfig} from 'remotion';
 
-const frame = useCurrentFrame();
-const {fps} = useVideoConfig();
+const frame = useCurrentFrame;
+const {fps} = useVideoConfig;
 
 const scale = spring({
   frame,
@@ -172,13 +172,13 @@ const y = interpolate(enter, [0, 1], [80, 0]);        // 弹簧驱动位移
 const blur = interpolate(enter, [0, 1], [8, 0]);      // 弹簧驱动模糊
 ```
 
-因为 `enter` 本身就是 `0~1` 的曲线，把它当「进度条」喂给 `interpolate()`，就能让任何属性共享同一条物理曲线。
+因为 `enter` 本身就是 `0~1` 的曲线，把它当「进度条」喂给 `interpolate`，就能让任何属性共享同一条物理曲线。
 
 ---
 
 ## 四、颜色与随机
 
-### `interpolateColors()`
+### `interpolateColors`
 
 ```tsx
 import {interpolateColors} from 'remotion';
@@ -190,11 +190,11 @@ const bg = interpolateColors(frame, [0, 60], ['#0b1020', '#ff5722'], {
 
 颜色在 RGB 空间插值。要做品牌色过渡，注意深色到亮色的中间态可能发灰，必要时拆成三段。
 
-### `random()`
+### `random`
 
-**绝对不要在组件里用 `Math.random()`。** 它每次求值都不同，同一帧渲染两次结果不一样，并行渲染出来的片段会跳变。
+**绝对不要在组件里用 `Math.random`。** 它每次求值都不同，同一帧渲染两次结果不一样，并行渲染出来的片段会跳变。
 
-用确定性的 `random()`：
+用确定性的 `random`：
 
 ```tsx
 import {random} from 'remotion';
@@ -229,7 +229,7 @@ const position = random(`particle-${index}`); // 用索引区分不同元素
 import {Sequence} from 'remotion';
 
 <Sequence from={0} durationInFrames={60}>
-  <Title />          {/* 内部的 useCurrentFrame() 从 0 开始，持续 60 帧 */}
+  <Title />          {/* 内部的 useCurrentFrame 从 0 开始，持续 60 帧 */}
 </Sequence>
 
 <Sequence from={60} durationInFrames={90}>
@@ -289,9 +289,9 @@ import {Freeze, Loop} from 'remotion';
 
 ## 六、音视频与素材
 
-### 素材引用：`staticFile()`
+### 素材引用：`staticFile`
 
-`public/` 下的文件用 `staticFile()` 引用，路径从根算起：
+`public/` 下的文件用 `staticFile` 引用，路径从根算起：
 
 ```tsx
 import {Audio, Img, staticFile} from 'remotion';
@@ -346,7 +346,7 @@ import {getAudioDurationInSeconds} from '@remotion/media-utils';
 import {calculateMetadata, staticFile} from 'remotion';
 
 // 在 calculateMetadata 里读音频时长，再决定视频总长
-const calculateMetadata = async () => {
+const calculateMetadata = async  => {
   const dur = await getAudioDurationInSeconds(staticFile('voice.mp3'));
   return {durationInFrames: Math.ceil(dur * 30) + 15};   // 留 15 帧尾巴
 };
@@ -356,7 +356,7 @@ const calculateMetadata = async () => {
 
 ### 字幕
 
-`@remotion/captions` 提供字幕数据结构与 TikTok 风格的字幕组件，配合 Whisper 系列包可以先把音频转成带时间戳的字幕，再用它渲染。走这条链路时注意：转写是异步且可能很慢的，务必在 `calculateMetadata()` 里完成，不要在渲染帧里做。
+`@remotion/captions` 提供字幕数据结构与 TikTok 风格的字幕组件，配合 Whisper 系列包可以先把音频转成带时间戳的字幕，再用它渲染。走这条链路时注意：转写是异步且可能很慢的，务必在 `calculateMetadata` 里完成，不要在渲染帧里做。
 
 ---
 
@@ -370,7 +370,7 @@ const calculateMetadata = async () => {
 |---|---|---|
 | 默认 props | `<Composition defaultProps={...}>` | 定义数据形状，让 Studio 能脱离真实数据设计画面 |
 | 输入 props | `--props=./data/x.json` 或 `renderMedia({inputProps})` | 渲染时覆盖默认值，批量任务靠它 |
-| 计算后 props | `calculateMetadata()` 的返回值 | 拉取远程数据、做二次加工、动态决定元信息 |
+| 计算后 props | `calculateMetadata` 的返回值 | 拉取远程数据、做二次加工、动态决定元信息 |
 
 解析顺序是「默认 props ← 输入 props 覆盖 ← `calculateMetadata` 再加工」，最终结果交给组件。
 
@@ -381,11 +381,11 @@ import {z} from 'zod';
 import {Composition} from 'remotion';
 
 export const itemSchema = z.object({
-  title: z.string(),
-  price: z.string(),
-  accent: z.string(),
-  tags: z.array(z.string()),
-  showBadge: z.boolean(),
+  title: z.string,
+  price: z.string,
+  accent: z.string,
+  tags: z.array(z.string),
+  showBadge: z.boolean,
 });
 
 export const itemDefaultProps: z.infer<typeof itemSchema> = {
@@ -410,19 +410,19 @@ export const itemDefaultProps: z.infer<typeof itemSchema> = {
 
 传了 `schema` 之后，Studio 侧边栏会按 schema 生成对应的编辑控件（文本输入、开关、列表），运营同学可以不改代码调参数。Zod 里加 `.describe('...')` 能给出中文提示。
 
-### `getInputProps()`
+### `getInputProps`
 
 在组件里直接读输入，适合组件不在 Composition 直属链路里的场合：
 
 ```tsx
 import {getInputProps} from 'remotion';
 
-const {title} = getInputProps();   // 读到的就是 --props 传进来的内容
+const {title} = getInputProps;   // 读到的就是 --props 传进来的内容
 ```
 
 多数情况下不需要它——把值当 props 传下去更清晰。
 
-### `calculateMetadata()`：异步准备与动态元信息
+### `calculateMetadata`：异步准备与动态元信息
 
 这是唯一应该做远程请求的地方。
 
@@ -430,7 +430,7 @@ const {title} = getInputProps();   // 读到的就是 --props 传进来的内容
 import {CalculateMetadataFunction, staticFile} from 'remotion';
 import {z} from 'zod';
 
-const schema = z.object({sku: z.string()});
+const schema = z.object({sku: z.string});
 
 export const calculateMetadata: CalculateMetadataFunction<z.infer<typeof schema>> = async ({
   props,
@@ -438,7 +438,7 @@ export const calculateMetadata: CalculateMetadataFunction<z.infer<typeof schema>
 }) => {
   const res = await fetch(`https://api.example.com/products/${props.sku}`, {signal: abortSignal});
   if (!res.ok) throw new Error(`取商品失败：${props.sku}`);
-  const product = await res.json();
+  const product = await res.json;
 
   return {
     // 用返回的数据替换/补充 props
@@ -466,13 +466,13 @@ export const calculateMetadata: CalculateMetadataFunction<z.infer<typeof schema>
 | `defaultProResProfile` | ProRes 档位 |
 | `defaultSampleRate` | 音频采样率 |
 
-返回值优先级：**高于 Composition 上的静态 props，低于命令行或 `renderMedia()` 显式传入的同名选项**。所以命令行给 `--width` 依然能覆盖它。
+返回值优先级：**高于 Composition 上的静态 props，低于命令行或 `renderMedia` 显式传入的同名选项**。所以命令行给 `--width` 依然能覆盖它。
 
-### `calculateMetadata()` 的约束
+### `calculateMetadata` 的约束
 
 - **只执行一次**，独立于渲染并发，跑在单独的标签页里。别在这里做「每帧都要跑」的事。
-- **必须在超时内返回**，默认 30 秒。慢接口要么自己加超时，要么在组件里用 `delayRender()` 承担等待。
-- **返回值必须是纯 JSON 可序列化对象**（`Date`、`Map`、`Set`、`staticFile()` 除外）。
+- **必须在超时内返回**，默认 30 秒。慢接口要么自己加超时，要么在组件里用 `delayRender` 承担等待。
+- **返回值必须是纯 JSON 可序列化对象**（`Date`、`Map`、`Set`、`staticFile` 除外）。
 - **每次 props 变化都会重新执行。** 在 Studio 里改一个输入框就会触发一次请求，注意别把接口打爆。
 - 用 `abortSignal` 取消过期请求，否则快速连续改 props 会导致旧响应覆盖新响应。
 
@@ -485,7 +485,7 @@ props 无论如何流转，最终都要能被 JSON 化：
 | 字符串、数字、布尔、null | 函数、类实例 |
 | 数组、普通对象 | DOM 节点、React 元素 |
 | `Date`、`Map`、`Set`（特例） | `undefined`（会被丢掉） |
-| `staticFile()` 的返回值 | 循环引用对象 |
+| `staticFile` 的返回值 | 循环引用对象 |
 
 传颜色统一用字符串。传格式化函数这种需求，改成传「格式类型标识」，在组件内部查表。
 
@@ -493,14 +493,14 @@ props 无论如何流转，最终都要能被 JSON 化：
 
 ## 八、踩坑清单
 
-- [ ] 每个 `interpolate()` 都写了 `extrapolateRight: 'clamp'`（左边界同理）。
-- [ ] 没有硬编码 fps，一律从 `useVideoConfig()` 取。
-- [ ] 没有用 `Math.random()` / `Date.now()` / `performance.now()`。
+- [ ] 每个 `interpolate` 都写了 `extrapolateRight: 'clamp'`（左边界同理）。
+- [ ] 没有硬编码 fps，一律从 `useVideoConfig` 取。
+- [ ] 没有用 `Math.random` / `Date.now` / `performance.now`。
 - [ ] `<Sequence>` 里的组件用的是相对帧号，没有误把全局帧号当时间基准。
 - [ ] `<Sequence>` 该写 `durationInFrames` 的地方都写了，没有依赖「到片尾为止」的默认行为。
 - [ ] 视频一律用 `<OffthreadVideo>`，图片一律用 `<Img>`。
-- [ ] `delayRender()` 与 `continueRender()` 成对，失败分支也放行。
-- [ ] 远程请求只在 `calculateMetadata()` 里做，且用了 `abortSignal`。
+- [ ] `delayRender` 与 `continueRender` 成对，失败分支也放行。
+- [ ] 远程请求只在 `calculateMetadata` 里做，且用了 `abortSignal`。
 - [ ] props 全部可 JSON 序列化。
 - [ ] 入场动画至少加了一层缓动或弹簧，没有裸线性运动。
 - [ ] 动画结束时间点用了 `durationInFrames` / 显式帧区间，而不是「大概差不多」的 `stiffness` 调参。

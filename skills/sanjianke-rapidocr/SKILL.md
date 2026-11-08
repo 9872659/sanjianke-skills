@@ -22,8 +22,6 @@ tags:
 默认覆盖中英文，需要其它语种时通过参数切换对应模型；识别结果带每行文本框坐标和置信度，
 需要的话还能拿到单字级坐标——做票据、截图、扫描件的文字提取都很合适。
 
-**上游项目**：`RapidOCR`　**仓库**：https://github.com/RapidAI/RapidOCR
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -41,7 +39,6 @@ tags:
 - 要做手写体、艺术字、极端扭曲文本的识别——通用 OCR 模型对这类内容效果有限，需专门模型。
 - 要做完整文档解析流水线（版面分析、表格结构、阅读顺序、公式）——这只是文字识别引擎，版面重建要另配工具。
 - 要识别印章、二维码、条形码、人脸等非文本目标——不是它的任务范围。
-- 需要云端 SLA、按量计费、厂商兜底支持的商用服务——它是开源库，出问题要靠自己排查或走上游 Issues。
 
 ## 安装
 `rapidocr` 与推理引擎分开装。注意 `rapidocr>=2.0.6` 之后不再自动带上 ONNX Runtime，必须自己装。
@@ -99,7 +96,7 @@ https://rapidai.github.io/RapidOCRDocs/main/install_usage/rapidocr/how_to_use_in
 # 1. 最小调用：两行拿到全部识别结果（自动下载/加载默认模型）
 python -c "
 from rapidocr import RapidOCR
-engine = RapidOCR()
+engine = RapidOCR
 result = engine('test.jpg')
 print(result.txts, result.scores)
 result.vis('vis_result.jpg')      # 画框可视化，便于人工核对
@@ -246,7 +243,7 @@ rec_only = engine("test.jpg", use_det=False, use_cls=False, use_rec=True)
   - 明确是否需要坐标框：要版面还原就打开 `return_word_box`。
 - 执行后：
   - 看 `scores` 分布，低置信结果要人工复核或调整 `text_score`。
-  - 用 `result.vis()` 输出可视化，肉眼核对框与文本是否对得上。
+  - 用 `result.vis` 输出可视化，肉眼核对框与文本是否对得上。
   - 大批量任务先跑小样本对比识别准确率，再决定模型尺寸与阈值。
   - 记录 `elapse`，据此估算整体吞吐与是否需要换引擎/换模型。
 

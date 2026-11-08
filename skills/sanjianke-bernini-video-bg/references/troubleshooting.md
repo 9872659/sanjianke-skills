@@ -15,8 +15,7 @@ python3 scripts/run.py run --set nXXX_xxx=值 --yes
 
 ### 「上传失败」
 
-`POST /api/v1/gpu/assets` 的字段是 `file` + `media_type`（image/video/audio）+ `purpose`。
-本地文件路径要对，单个文件别太大。
+字段是 `file` + `media_type`（image/video/audio）+ `purpose`。本地文件路径要对，单个文件别太大。
 
 ### 轮询一直 pending
 
@@ -29,4 +28,4 @@ python3 scripts/run.py run --set nXXX_xxx=值 --yes
 
 ## 价格
 
-**253.5 点/次（¥2.535）**，上游 ¥1.69。失败按平台规则处理。
+**每次 253.5 点（2.535 元）**。

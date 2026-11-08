@@ -3,7 +3,7 @@
 """三剪客 · 自动修脸
 
 走 api.a7w.cn 的**工作流应用**（69 个按次调用应用之一）。
-上游报价 ￥0.04/次，本站 6.0 点（￥0.06）。
+
 
 端点：
   GET  /api/v1/gpu/apps                        应用清单（68 个兄弟应用也在这里）
@@ -43,8 +43,8 @@ APP = json.loads(r"""{
  "desc": "本工作流须搭配绘影lite插件使用，请前往www.hueying.cn获取插件",
  "kind": "image",
  "quote_yuan": 0.04,
- "user_yuan": 0.06,
- "user_points": 6.0,
+ "user_yuan": 0.135,
+ "user_points": 13.5,
  "params": [
   {
    "name": "n1_image",
@@ -204,7 +204,7 @@ def cmd_info(a, key):
         return 0 if out["ok"] else EXIT_GATE
     print("%s（%s）" % (APP["title"], KIND_CN.get(APP["kind"], APP["kind"])))
     print()
-    print("  价格：上游 ￥%s/次 · 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
+    print("  价格：· 本站 %s 点（￥%s）" % (APP["quote_yuan"], POINTS, APP["user_yuan"]))
     print("  端点：POST %s/gpu/apps/%s/run" % (API, APP["workflow_id"]))
     print()
     print("自检（只读 GET，不扣费）")

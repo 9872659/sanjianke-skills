@@ -18,8 +18,6 @@ tags:
 
 它不改写 git 本身，只是在你的 `PATH` 里多加了几十个可执行脚本，所以装不装都不影响原有 git 行为，卸载也干净。
 
-**上游项目**：`git-extras`　**仓库**：https://github.com/tj/git-extras
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -197,7 +195,6 @@ git squash my-other-branch           # 只压入索引，之后自己再 commit
 - 依赖 git 本身的输出格式，git 大版本升级后个别命令可能需要更新 extras 版本才正常。
 - 部分功能依赖你的 git 配置（例如 `changelog.format` 控制每条提交的格式），不配置就用默认格式。
 - `summary` 的作者统计以邮箱/名字为准，同一个人的多个身份需要 `--dedup-by-email` 手工合并。
-- 上游的各个子命令成熟度不一，长尾命令（如 `obliterate`、`psykorebase`）使用面较窄，遇问题优先查该命令自己的帮助输出。
 
 ## 自检清单
 

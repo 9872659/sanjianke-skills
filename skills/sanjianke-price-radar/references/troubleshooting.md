@@ -69,8 +69,6 @@ python3 scripts/run.py cheapest --for video --live
 
 ### 语音 TTS 显示「动态计价」，没有具体价
 
-`/api/v1/apps/voice_tts/*` 的规则是 `cost: 0` + `markupPercent: 200`，
-意思是**对外 = 上游实际点数 × 3**，价目表里不写死单价。本包按「动态」单列，
 并给出实测区间（本账号 111 条 `tts_async` 实扣 1~240 点，多数 1~66 点）。
 
 ---
@@ -81,11 +79,8 @@ python3 scripts/run.py cheapest --for video --live
 里三条没有专属规则，命中通配 `*`：
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
-`cost: 0` + `markupPercent: 100` 的语义是「按上游实际点数 × 2」，
 所以单价不可能是固定值 —— 只能事后从 `/api/v1/me/tasks` 的 `actualPrice` 反推。
 这正是本包存在的理由。
 

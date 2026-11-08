@@ -28,8 +28,7 @@ import asyncio
 
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
-
-async def main() -> None:
+async def main -> None:
     crawler = BeautifulSoupCrawler(max_requests_per_crawl=10)
 
     @crawler.router.default_handler
@@ -38,13 +37,12 @@ async def main() -> None:
             'url': context.request.url,
             'title': context.soup.title.string if context.soup.title else None,
         })
-        await context.enqueue_links()
+        await context.enqueue_links
 
     await crawler.run(['https://crawlee.dev'])
 
-
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main)
 ```
 
 结果默认写到 `./storage/datasets/default/` 下的 JSON 文件；目录位置可用 `CRAWLEE_STORAGE_DIR` 环境变量改。

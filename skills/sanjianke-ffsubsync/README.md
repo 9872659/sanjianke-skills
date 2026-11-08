@@ -7,7 +7,6 @@
 ## 前置条件
 
 - **先装 ffmpeg**，并确保 `ffmpeg` / `ffprobe` 能从命令行直接调用（在 PATH 中）。这是硬前置，Python 包不会替你装。
-- 一个可用的 Python 环境（上游 README 标注兼容 Python >= 3.6，实际可用区间以 PyPI 页面为准）。
 - 想用神经网络 VAD（`--vad=fused` 等）时，另需可选的 torch 依赖。
 - 走 `--whisper-weights` 转写路线时，需要 ffmpeg >= 8.0 且构建带 whisper 滤镜，并自备 ggml 模型文件。
 - 不需要账号、不需要 API Key。

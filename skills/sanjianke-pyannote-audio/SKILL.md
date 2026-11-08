@@ -18,8 +18,6 @@ tags:
 
 它的输出是**结构化的时间轴**，不是文字。所以要「谁在什么时候说了什么」，得把它的时间轴和另一个语音识别工具的结果对起来用；它自己不转写文字。
 
-**上游项目**：`pyannote-audio`　**仓库**：https://github.com/pyannote/pyannote-audio
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -102,7 +100,7 @@ pipeline = Pipeline.from_pretrained(
 # 有 GPU 就送上去
 pipeline.to(torch.device("cuda"))
 
-with ProgressHook() as hook:
+with ProgressHook as hook:
     output = pipeline("audio.wav", hook=hook)   # 本地推理
 
 for turn, speaker in output.speaker_diarization:
@@ -130,7 +128,7 @@ for speech_turn, track, speaker in dia.itertracks(yield_label=True):
     print(f"{speech_turn.start:4.1f} {speech_turn.end:4.1f} {speaker}")
 ```
 
-`token=True` 表示用本机已登录的凭证，适合先在 notebook 里 `notebook_login()` 过一遍的场景。
+`token=True` 表示用本机已登录的凭证，适合先在 notebook 里 `notebook_login` 过一遍的场景。
 
 **4）从本地目录离线加载**（不联网）：
 
@@ -203,7 +201,7 @@ set_telemetry_metrics(False, save_choice_as_default=True)
 | 老代码用 `sox` 或指定 backend，升级后全废 | 同上，后端被砍 | 删掉相关的 backend 参数，统一走 ffmpeg |
 | 报 Python 版本不满足 | 4.0.0 起要求 Python ≥ 3.10 | 升 Python 或退回 3.x 分支的旧版本；旧分支的依赖被刻意钉住，别在里面混装新版 |
 | 缓存目录配了 `PYANNOTE_CACHE` 却没用 | 4.0.0 起不再认这个环境变量，改用 `huggingface_hub` 的缓存目录 | 要改缓存位置就设 `huggingface_hub` 对应的那个变量，别再往 `PYANNOTE_CACHE` 上使劲 |
-| 有 GPU 但还是慢得离谱 | 3.0.0 起管线默认跑在 CPU 上 | 显式 `pipeline.to(torch.device("cuda"))`；4.0.2 又加了 `pipeline.cuda()` 便捷方法，也可以用它 |
+| 有 GPU 但还是慢得离谱 | 3.0.0 起管线默认跑在 CPU 上 | 显式 `pipeline.to(torch.device("cuda"))`；4.0.2 又加了 `pipeline.cuda` 便捷方法，也可以用它 |
 | 长音频跑到一半显存爆掉 | 分段/批大小默认值偏保守，不适合长素材 | 切短音频再跑，或调小分段与批大小；官方 3.0.0 起把 `segmentation_batch_size`、`embedding_batch_size` 做成可改的，默认都是 1 |
 | 想开多个进程并行处理，结果互相抢显存 | 每个进程都自己加载一份模型 | 单卡串行跑，或按显卡数量分配进程；别在一张卡上起一堆 worker |
 | 传了 `num_speakers` 但结果人数还是不对 | 老版本（3.1.1 之前）有这个 bug | 升到 3.1.1 以上；同时确认这个参数确实被你要用的管线支持（不同管线接受的可选参数不一样） |
@@ -239,7 +237,7 @@ set_telemetry_metrics(False, save_choice_as_default=True)
 - 说话人数量控制：可以指定确切人数，也可以给上下限范围。
 - 常规与 exclusive 两套结果：后者同一时刻只归一个说话人，便于和转写时间戳对齐。
 - 模型与管线的加载方式：从托管站加载、从本地目录离线加载、用 `token=` 传凭证、用 `revision` 指定版本。
-- GPU / CPU 两种推理方式；`pipeline.to(device)` 与 `pipeline.cuda()` 两种切换写法。
+- GPU / CPU 两种推理方式；`pipeline.to(device)` 与 `pipeline.cuda` 两种切换写法。
 - 可调的分段与批大小参数，用于在长音频上权衡显存占用。
 - 匿名遥测的开关（环境变量、当前会话、全局默认三种粒度）。
 - 从内存音频推理（官方 FAQ 确认支持）。
@@ -250,7 +248,6 @@ set_telemetry_metrics(False, save_choice_as_default=True)
 - 说话人身份识别（这是谁）。只给编号，不做声纹注册与跨文件认人。
 - 实时/流式日志化。官方 FAQ 明确说本库不支持，只推荐第三方方案。
 - 音源分离（人声/伴奏、鼓/贝斯拆分）。那是另一类模型的领域。
-- 云端服务本身的 SLA、计费与数据驻留政策。付费管线的服务条款以上游文档为准。
 - 训练自己的模型。仓库里有训练与微调教程，但属于进阶用法，不在本 Skill 覆盖范围。
 - 图形界面。没有官方 GUI，全程命令行 / Python。
 
@@ -288,7 +285,7 @@ set_telemetry_metrics(False, save_choice_as_default=True)
 执行中：
 
 - [ ] 先用一段两三分钟的短音频跑通，确认输出对象的结构（是 `output.speaker_diarization` 还是 `Annotation`）。
-- [ ] GPU 可用时显式 `pipeline.to(torch.device("cuda"))` 或 `pipeline.cuda()`。
+- [ ] GPU 可用时显式 `pipeline.to(torch.device("cuda"))` 或 `pipeline.cuda`。
 - [ ] 显存吃紧时缩短输入或调小分段/批大小，不要硬扛。
 - [ ] 说话人数已知就传进去，能显著改善结果。
 

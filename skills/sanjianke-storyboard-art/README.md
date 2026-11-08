@@ -91,7 +91,7 @@ python3 scripts/run.py images --shots shots.json --characters characters.json \
     --outdir ./out --ref-mode anchor --anchor chen=https://…/chen-anchor.png --yes
 ```
 
-⚠️ 参考图必须是**公网可访问的 HTTP/HTTPS 地址**（上游 `image_urls` 的口径），本地文件传不上去。
+⚠️ 参考图必须是**公网可访问的 HTTP/HTTPS 地址**，本地文件传不上去。
 本包不做上传——schema 里没有实测过的上传路径。想给角色做锚点图，
 可以先用本包出一张角色设定图，再把它返回的 `image_url` 当锚点。
 

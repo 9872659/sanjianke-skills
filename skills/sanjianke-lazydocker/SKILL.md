@@ -16,8 +16,6 @@ tags:
 
 排查容器问题最烦的不是命令难，而是来回切换窗口：`docker compose ps` 看一眼、`restart` 一下、再开一个窗口 `logs --follow`，服务一挂日志流也断了，还得重开。这个工具把容器、服务、镜像、卷、网络的状态、日志、指标图和常用动作收进**一个终端窗口**，每个动作一次按键；同时把「顺手执行的那条 docker 命令」放在设置里可改——工具栏上的 `docker compose` 用哪个写法、日志默认看多久，都由你定。
 
-**上游项目**：`lazydocker`　**仓库**：https://github.com/jesseduffield/lazydocker
-
 ## 什么时候用 / 不用
 
 **用它**：

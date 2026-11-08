@@ -16,8 +16,6 @@ tags:
 
 终端提示符一旦自己手写，就会变成一堆越堆越乱的 `PS1` 拼接：Git 分支、Python 虚拟环境、Node 版本、上一条命令耗时，全靠一张 `if` 网撑着，换个 Shell 又得重写一遍。starship 把这件事收进一个跨 Shell 的提示符引擎——你只维护一份 TOML 配置，Bash、Zsh、Fish、PowerShell、Nushell 等都能读到同一套提示符；模块按需出现，没进 Git 仓库就不显示分支，没装 Node 就不显示版本号。
 
-**上游项目**：`starship`　**仓库**：https://github.com/starship/starship
-
 ## 什么时候用 / 不用
 
 **用它**：

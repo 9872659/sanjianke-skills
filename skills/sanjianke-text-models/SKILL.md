@@ -4,7 +4,7 @@ slug: sanjianke-text-models
 displayName: 文本模型台 · 92 个模型一句话横评，最便宜 0.40 元/百万 token
 description: "**同一句话，92 个文本模型先报价再开口，最便宜的每百万 token 只要 0.40 元。** 实测 claude 13 个变体、kimi 5 个、通义千问 3.5/3.7/3.8 共 7 个、文心 3 个、DeepSeek 5 个，再加 gemma-4、MiMo、LegalOne、AutoGLM、KAT、Sinong1.0：每百万 token 输出 40 - 15,840 点（0.40 - 158.40 元）。三件事：①文本层只有一条入口 `POST /api/v1/chat/completions`，`/v1/messages` 实测 404；②单价不用反推，92 条文本模型自带 pricing，字段名叫 `per_1k_*`、单位其实是每百万 token；③`check` 用空 messages 免费验通不通，先冻 60 点全额退回。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "横评先解决「钱花在谁身上」。`catalog` 列全 92 个文本模型的每百万 token 单价与实测可调性；`cost` 用同一句话逐个报价：输出 100 万 token 时最便宜 40 点（0.40 元），最贵 15,840 点（158.40 元），差 396 倍。单价来源最硬：92 条 text 模型自带 `pricing.per_1k_*`，`usage_unit_size` 是 1,000,000 —— 字段名带 1k、数值是 1M，按 1K 算会错 1000 倍。价目表 115 条里没有这条路径，命中通配 `*`（上游点数 x 2、保底 50 点）；实测每次调用先冻 60 点，失败全额退回，所以 900 token 的一问一答下限就是 60 点。`check` 用空 messages 探针免费验通不通：kimi-k3、Qwen3.5-Flash、GLM-5.2、MiniMax-M3、LegalOne-8B、KAT-Dev 停在参数校验即通，claude 13 个变体回 `200 code 0 未上架`，gpt-5.5 回 403 上游欠费。`chat` 用同一句话逐个调用，落盘回答 + manifest.json + 对比清单.md；`doctor` 5 个只读端点 + 3 个探针。需要自备 api.a7w.cn 的 Key。遇到问题可加技术微信 9872659。"
+summary: "横评先解决「钱花在谁身上」。`catalog` 列全 92 个文本模型的每百万 token 单价与实测可调性；`cost` 用同一句话逐个报价：输出 100 万 token 时最便宜 40 点（0.40 元），最贵 15,840 点（158.40 元），差 396 倍。单价来源最硬：92 条 text 模型自带 `pricing.per_1k_*`，`usage_unit_size` 是 1,000,000 —— 字段名带 1k、数值是 1M，按 1K 算会错 1000 倍。价目表 115 条里没有这条路径，命中通配 `*`；实测每次调用先冻 60 点，失败全额退回，所以 900 token 的一问一答下限就是 60 点。`check` 用空 messages 探针免费验通不通：kimi-k3、Qwen3.5-Flash、GLM-5.2、MiniMax-M3、LegalOne-8B、KAT-Dev 停在参数校验即通，claude 13 个变体回 `200 code 0 未上架`，gpt-5.5 回 403 上游欠费。`chat` 用同一句话逐个调用，落盘回答 + manifest.json + 对比清单.md；`doctor` 5 个只读端点 + 3 个探针。需要自备 api.a7w.cn 的 Key。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -68,7 +68,6 @@ POST /v1/messages              {"model":"claude-..."}     -> 404 {"code":"unknow
 还给官方参考价：`claude-opus-5` 官方 $5 / $25，本站 1,584 / 7,920 点（15.84 / 79.20 元），省 53.4%。
 
 **三、先冻 60 点，再谈 token。** 价目表 115 条规则里没有 `/api/v1/chat/completions`，命中通配 `*`：
-`{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50}` = 上游点数 x 2、单笔保底 50 点。实测每次调用先冻 **60 点**：
 
 ```
 11:27:20  charge  -60  reserve_sync:/api/v1/chat/completions
@@ -149,7 +148,6 @@ text-models-20261108-113000/
 
 ## 免责
 
-- 单价按「每百万 token」计，实际以 `GET /user/balance/logs` 的流水净额为准；上游按次预冻结，失败全额退回。
 - 模型上下架由平台决定，`check` 随时可复核；生成内容的合规责任在使用者：用在合法、有授权的素材与用途上。
 
 ## 联系我们

@@ -18,13 +18,13 @@
 1. `npm install turndown`，需要表格或删除线时再 `npm install turndown-plugin-gfm`。
 2. `new TurndownService(选项)` 建实例，`service.turndown(html)` 出 Markdown。
 3. **先按场景调选项**：默认是 `setext` 标题 + 缩进代码块 + `*` 列表符号，写文档时通常要换成 `atx` + `fenced` + `-`。
-4. 抓来的网页记得 `remove()` 掉 `script` / `style` / `nav` / `footer`；Markdown 表达不了的标签用 `keep()` 保留。
+4. 抓来的网页记得 `remove` 掉 `script` / `style` / `nav` / `footer`；Markdown 表达不了的标签用 `keep` 保留。
 5. 表格必须装 GFM 插件，只改选项不生效。
 
 **最该记住的三条**：
 
 - 核心**不支持表格**，`<table>` 会被拍成纯文本，要插件。
-- `remove()` 是**连内容一起删**，不是只剥标签。
+- `remove` 是**连内容一起删**，不是只剥标签。
 - 输出里满屏反斜杠是**预期行为**（基于正则的激进转义），要改就覆写 `TurndownService.prototype.escape`。
 
 ---

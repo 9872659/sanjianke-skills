@@ -98,23 +98,23 @@ npx clawhub install <slug>
 
 ### 图片（37）
 
-- **`sanjianke-action-martial-arts`** 黄色的大宝剑专用武打流 1.5点一次
-- **`sanjianke-auto-face-retouch`** 自动修脸 6.0点一次
-- **`sanjianke-auto-inpaint`** 自动补绘 1.5点一次
-- **`sanjianke-building-restore`** 修复建筑强化版 3.0点一次
-- **`sanjianke-cutout`** 一键抠图 1.5点一次
-- **`sanjianke-day-to-night`** 白天转夜景 6.0点一次
-- **`sanjianke-ecom-product-lighting`** 电商产品融合打光 12.0点一次
+- **`sanjianke-action-martial-arts`** 黄色的大宝剑专用武打流 13.5点一次
+- **`sanjianke-auto-face-retouch`** 自动修脸 13.5点一次
+- **`sanjianke-auto-inpaint`** 自动补绘 13.5点一次
+- **`sanjianke-building-restore`** 修复建筑强化版 13.5点一次
+- **`sanjianke-cutout`** 一键抠图 13.5点一次
+- **`sanjianke-day-to-night`** 白天转夜景 13.5点一次
+- **`sanjianke-ecom-product-lighting`** 电商产品融合打光 13.5点一次
 - **`sanjianke-expression-change`** 表情变换 15.0点一次
 - **`sanjianke-face-swap-photo`** 人物换头 58.5点一次
-- **`sanjianke-garment-optimize`** 服装优化 7.5点一次
+- **`sanjianke-garment-optimize`** 服装优化 13.5点一次
 - **`sanjianke-generate-foreground`** 生成前景 31.5点一次
-- **`sanjianke-hair-beautify`** 头发美化 1.5点一次
+- **`sanjianke-hair-beautify`** 头发美化 13.5点一次
 - **`sanjianke-hair-color`** 修改发色 18.0点一次
 - **`sanjianke-hair-style`** 修改发型 16.5点一次
 - **`sanjianke-image-expand`** 图片扩充 18.0点一次
-- **`sanjianke-interior-design`** 室内设计 6.0点一次
-- **`sanjianke-lawn-repair-2k`** 修复草坪2K版 10.5点一次
+- **`sanjianke-interior-design`** 室内设计 13.5点一次
+- **`sanjianke-lawn-repair-2k`** 修复草坪2K版 13.5点一次
 - **`sanjianke-lawn-repair-fast`** 修复草坪极速版 16.5点一次
 - **`sanjianke-light-aurora`** 极光光影氛围 49.5点一次
 - **`sanjianke-light-blinds`** 百叶窗条纹光影 48.0点一次
@@ -122,18 +122,18 @@ npx clawhub install <slug>
 - **`sanjianke-light-sunset`** 一键夕阳光影氛围 55.5点一次
 - **`sanjianke-light-window-grid`** 窗格光影氛围 52.5点一次
 - **`sanjianke-menswear-preview-image`** 男装开车变装（预览图生成） 15.0点一次
-- **`sanjianke-model-outfit-swap`** 模特一致性一键换装 9.0点一次
+- **`sanjianke-model-outfit-swap`** 模特一致性一键换装 13.5点一次
 - **`sanjianke-old-photo-restore`** 老照片修复 15.0点一次
 - **`sanjianke-pattern-extract`** 印花提取 16.5点一次
 - **`sanjianke-person-removal`** 人物移除 13.5点一次
 - **`sanjianke-portrait-hd`** 人像高清 33.0点一次
-- **`sanjianke-scene-flaw-repair`** 场景瑕疵修复 7.5点一次
-- **`sanjianke-scene-outpaint`** 场景扩图 7.5点一次
+- **`sanjianke-scene-flaw-repair`** 场景瑕疵修复 13.5点一次
+- **`sanjianke-scene-outpaint`** 场景扩图 13.5点一次
 - **`sanjianke-seedvr2-8k`** SeedVR2放大8K版 15.0点一次
-- **`sanjianke-seedvr2-texture-upscale`** SeedVR2无缝贴图素材放大 6.0点一次
-- **`sanjianke-smart-repaint`** 智能重绘 1.5点一次
-- **`sanjianke-text-edit-in-image`** 文字编辑 9.0点一次
-- **`sanjianke-universal-upscale`** 万物高清放大修复 1.5点一次
+- **`sanjianke-seedvr2-texture-upscale`** SeedVR2无缝贴图素材放大 13.5点一次
+- **`sanjianke-smart-repaint`** 智能重绘 13.5点一次
+- **`sanjianke-text-edit-in-image`** 文字编辑 13.5点一次
+- **`sanjianke-universal-upscale`** 万物高清放大修复 13.5点一次
 - **`sanjianke-watermark-removal`** 一键去水印 13.5点一次
 
 ### 办公（33）
@@ -180,16 +180,16 @@ npx clawhub install <slug>
 - **`sanjianke-bernini-video-prompt-edit`** Bernini视频编辑-描述词编辑视频 174.0点一次
 - **`sanjianke-bernini-video-single-image`** Bernini视频编辑-单图控制编辑视频 94.5点一次
 - **`sanjianke-first-last-frame-video`** 首尾帧视频 60.0点一次
-- **`sanjianke-h3-effect-impact-frame`** H3最强特效流➡冲击帧 1.5点一次
-- **`sanjianke-h3-single-10step-fast`** H3最强单采10步极速版 1.5点一次
-- **`sanjianke-h3-video`** H3视频 1.5点一次
+- **`sanjianke-h3-effect-impact-frame`** H3最强特效流➡冲击帧 13.5点一次
+- **`sanjianke-h3-single-10step-fast`** H3最强单采10步极速版 13.5点一次
+- **`sanjianke-h3-video`** H3视频 13.5点一次
 - **`sanjianke-infinitetalk-avatar`** Infinitetalk对口型数字人 102.0点一次
 - **`sanjianke-ltx-image-to-video`** LTX2.3图生视频 30.0点一次
 - **`sanjianke-ltx-image-to-video-lipsync`** LTX2.3图生视频对口型 39.0点一次
-- **`sanjianke-ltx-text-to-video`** LTX2.3文生视频 12.0点一次
+- **`sanjianke-ltx-text-to-video`** LTX2.3文生视频 13.5点一次
 - **`sanjianke-menswear-video`** 男装开车变装（视频生成） 15.0点一次
 - **`sanjianke-minimax-h3-image-to-video`** Minimax-H3图生视频 147.0点一次
-- **`sanjianke-minimax-h3-reference-video`** 【MINIMAX-H3教学】全能参考视频官方工作流 1.5点一次
+- **`sanjianke-minimax-h3-reference-video`** 【MINIMAX-H3教学】全能参考视频官方工作流 13.5点一次
 - **`sanjianke-minimax-h3-text-to-video`** Minimax-H3文生视频 60.0点一次
 - **`sanjianke-motion-expression-transfer`** 动作表情迁移 72.0点一次
 - **`sanjianke-video-bg-swap`** 视频换背景 79.5点一次
@@ -492,7 +492,7 @@ npx clawhub install <slug>
 ### 文本（3）
 
 - **`sanjianke-indextts-voice-clone`** IndexTTS_2声音克隆-支持各种情绪编辑 15.0点一次
-- **`sanjianke-portrait-paint`** 熟颜世绘 1.5点一次
+- **`sanjianke-portrait-paint`** 熟颜世绘 13.5点一次
 - **`sanjianke-text-to-image`** 文生图 15.0点一次
 
 ### 视频生成（3）
@@ -503,8 +503,8 @@ npx clawhub install <slug>
 
 ### 音频（2）
 
-- **`sanjianke-audio-1080p-5plus4`** 【1080P】5+4返璞归真版 1.5点一次
-- **`sanjianke-audio-1080p-8step`** 1080P八步双采 1.5点一次
+- **`sanjianke-audio-1080p-5plus4`** 【1080P】5+4返璞归真版 13.5点一次
+- **`sanjianke-audio-1080p-8step`** 1080P八步双采 13.5点一次
 
 ### 知识管理（2）
 

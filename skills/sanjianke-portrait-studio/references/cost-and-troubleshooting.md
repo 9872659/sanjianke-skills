@@ -98,7 +98,6 @@ python3 scripts/run.py cost --count 6 --resolution 2K --points-per-image 40
 | `points_cost_this_run` / `yuan_this_run` | 本次实际花费（点 / 元） | 快速确认「这一轮花了多少」 |
 
 > **注意**：`first_check` 与 `snap.after` 是两份**不同的**证据。
-> 裁剪之后不要拿裁后结果冒充「上游原始产出」——本包把两者都留着，就是为了这个。
 
 ## 五、退出码
 
@@ -130,9 +129,7 @@ python3 scripts/run.py cost --count 6 --resolution 2K --points-per-image 40
 | `code: 0` 但 HTTP 是 200 | **网关信封里 `code == 1` 才是成功，不是 0** | 看 body 里的 `msg`；脚本已按这个口径判断，别改成 `code == 0` |
 | 轮询一直读不到状态、最后超时 | **`status` 在 `data` 顶层，不在 `data.result` 里**（平台文档写错） | 脚本已按实测结构取；别看文档改回去 |
 | `当前请求未命中可用计费规格` | `model` 与 `resolution` 组合不支持（如普通模型传 `2K`） | 普通 `nano-banana` 只支持 `1K`；要高清档换 `nano-banana-2:official` 之类 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很频繁** | 脚本已内置退避重试（4 次）。连续失败就换模型或降低批次 |
 | 轮询一直 `processing` | 任务卡住了 | 已设 `--poll-timeout`（默认 600 秒）上限；超时会报出来并保留 `task_id`，可 `python scripts/a7w.py task <task_id>` 续查 |
-| 图片真实像素和请求比例差 1%~3% | **上游按 32 对齐**，不是 bug | 加 `--snap` 精确裁；或放宽 `--ratio-tolerance` |
 | `预估 N 点超过预算上限` | 超了 `--budget` | 提高预算、减少张数，或先 `cost` 试算 |
 | `2K 档没有实测单价，拒绝凭猜估算` | 我们没有 2K/4K 的实测价 | 给 `--points-per-image` 指定单价，或先用 1K 出 |
 | `输出目录 ... 在 Skill 包内`（退出码 2） | `--outdir` 指到了包里的目录 | 换到包外（`./out`、`%TEMP%\...`）。包内放图片会让上传失败 |

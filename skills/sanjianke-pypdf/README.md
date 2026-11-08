@@ -28,11 +28,11 @@ from pypdf import PdfReader, PdfWriter
 reader = PdfReader("in.pdf")
 print(len(reader.pages), reader.metadata)
 
-writer = PdfWriter()
+writer = PdfWriter
 writer.append("a.pdf")
 writer.append("b.pdf", (0, 3))
 writer.write("out.pdf")
-writer.close()
+writer.close
 ```
 
 完整的「什么时候用 / 不用、安装、常用操作、常见坑、能力边界」见 `SKILL.md`。

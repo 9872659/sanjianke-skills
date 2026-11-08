@@ -29,7 +29,6 @@
 
 ## 依赖
 
-- 上游仓库：https://github.com/FlagOpen/FlagEmbedding
 - 核心依赖：Python + PyTorch。
 - 可选附加依赖：`FlagEmbedding[finetune]`（微调与评测所需的训练侧依赖）。
 - 模型权重：按模型名从模型托管站按需下载，不随包分发。

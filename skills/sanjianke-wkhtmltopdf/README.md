@@ -42,7 +42,6 @@ wkhtmltopdf --enable-local-file-access input.html output.pdf
 - wkhtmltopdf / wkhtmltoimage 可执行文件（当前稳定系列 0.12.6）
 - 运行期依赖系统库与字体；官方包按发行版分别构建
 - 无需显示器；不需要常驻服务
-- 上游许可是 LGPL-3.0
 
 ## 安全
 

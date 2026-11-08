@@ -239,7 +239,7 @@ $env:A7W_API_KEY="sk-你的key"
 | `8` | `content` 为 **`null`**，`finish_reason` 是 **`length`** |
 | `256` | `content` 正常返回，`finish_reason` 是 `stop` |
 
-**② 代码必须对 `content == null` 容错。** 不要假定它是字符串，写 `content.strip()` 会直接崩。
+**② 代码必须对 `content == null` 容错。** 不要假定它是字符串，写 `content.strip` 会直接崩。
 
 **③ 思维链字段名有两个，都要取：**
 

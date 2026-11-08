@@ -2,7 +2,7 @@
 name: sanjianke-product-video
 slug: sanjianke-product-video
 displayName: 商品视频：一张商品图 2.4 元出一条带货短视频
-description: "**一张商品图，2.4 元出一条 6 秒带货短视频**：nano-banana 换场景图（72 点）、full_video 按秒出片（768P 28 点/秒）、voice_tts 配口播（上游真实点数 × 3）、本地出 SRT 字幕（0 点），一条 `make` 跑完、零依赖。价格取自 `/api/v1/pricing` 实测：480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒，时长 4~15 秒。三件最容易白花钱的事写进默认动作：`GET /api/v1/apps/<app>` 按应用单价扣且不退，一次都不打；查进度只走 `GET /api/v1/tasks/<id>`；`--budget` 与 `--yes` 两道闸门，超预算一个请求都不发。`doctor` 4 个只读 GET 自检，0 点。遇到问题可加技术微信 9872659。"
+description: "**一张商品图，2.4 元出一条 6 秒带货短视频**：nano-banana 换场景图（72 点）、full_video 按秒出片（768P 28 点/秒）、voice_tts 配口播、本地出 SRT 字幕（0 点），一条 `make` 跑完、零依赖。价格取自 `/api/v1/pricing` 实测：480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒，时长 4~15 秒。三件最容易白花钱的事写进默认动作：`GET /api/v1/apps/<app>` 按应用单价扣且不退，一次都不打；查进度只走 `GET /api/v1/tasks/<id>`；`--budget` 与 `--yes` 两道闸门，超预算一个请求都不发。`doctor` 4 个只读 GET 自检，0 点。遇到问题可加技术微信 9872659。"
 version: 1.0.0
 summary: "「一张商品图出带货短视频」链路上有 4 个应用、17 个接口，价格口径三套。**应用**（`GET /api/v1/apps` 实测）：nano_banana 2 个、full_video 2 个、voice_tts 6 个、seedance 7 个。**价目**（`GET /api/v1/pricing` 实测，1 元 = 100 点）：full_video/submit 480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒；nano_banana/submit 固定 72 点/次（真任务 `points_cost` = 24，站内 ×3）；voice_tts/tts 上游真实点数 × 3（实测 33 字 5.94 点）；seedance/create 固定 11,000 点/次；字幕本地 0 点。**链路**：商品图 →（免费 upload）→ 场景图 → 成片 → 配音 → 本地 SRT，`make` 一条命令。**闸门**：缺 `--yes` 退 4 并报金额，超 `--budget` 退 5 一个请求都不发。**免费件**：`catalog` / `cost` / `doctor`。需要自备 api.a7w.cn 的 API Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
@@ -145,7 +145,6 @@ python3 scripts/run.py log --limit 10
 
 - 按秒档：提交时按 `duration` 预冻结，完成后按实际时长结算；任务失败全额退回。
 - 按次档：nano-banana 72 点/次（2K/4K 只对 `:official` 档生效，价目表同价）；seedance 11,000 点/次。
-- 配音：上游真实点数 × 3，单笔保底 1 点；实测 33 字 = 5.94 点。字幕本地生成 0 点，烧进画面用 `ffmpeg -vf subtitles=…`（在你本机跑）。
 - 成片链接约 30 分钟有效，`--out` 会顺手落盘。
 
 ## 文件结构

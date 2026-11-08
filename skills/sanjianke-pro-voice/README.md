@@ -45,7 +45,6 @@ python3 scripts/run.py speak --line v2 --text "你终于来了。" --voice James
 ### 二、ElevenLabs Turbo 2.5 —— 同一套音色，出得更快
 
 音色表、参数和 V2 一样，快的代价是细节少一点。它有一个 V2 没有的能力：
-**`--language-code` 强制语言**（ISO 639-1）。V2 传了会被上游打回，本包在本地就拦住。
 
 ```bash
 python3 scripts/run.py speak --line turbo --text "你终于来了。" --voice Arabella --language-code zh --yes
@@ -294,9 +293,6 @@ sanjianke-pro-voice/
 ## 计费口径与保底
 
 - `pricing` 的 115 条规则里没有 `media_services_33`，也没有 `elevenlabs_*` —— 全部落通配
-  `{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50}`：**上游实际点数 × 2，单笔保底 50 点**。
-- 实测每次 POST 预冻结 **60 点**（50 × 站点 20% 加价），失败原路退回，净 0。
-- 所以 `cost` 给的是**下限 60 点/条**。一条到底多少钱 = 上游按字数算的真实点数 × 2，真跑一条才看得见。
 - 一次请求 = 一条任务：十句对白的群戏也是 1 条，不是 10 条。
 - `--budget` 与 `--yes` 是本地闸门：预算内才发请求，`--yes` 到了才建单。
 
@@ -306,7 +302,6 @@ sanjianke-pro-voice/
 
 - 生成内容的合规责任在使用者：请用于有授权的剧本与合法用途。
 - 声音克隆（3.8 的 `replica`）需要两段真人录音 + 本人同意声明，本包不代录、不代签。
-- 真实扣费以任务完成时上游返回的点数为准，`cost` 给的是下限估算。
 - 角色名的自动编号只影响 `speaker_id`，台词文本原样发送。
 
 ---

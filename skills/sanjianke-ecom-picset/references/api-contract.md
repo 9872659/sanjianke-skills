@@ -69,25 +69,18 @@ Key：`Authorization: Bearer sk-…`。
 顶层是**裸对象**（不套 `code/data` 信封）：
 
 ```json
-{"currency": "points", "markupPercent": 20,
- "note": "User price = upstream points x (1 + markup%). 实际成本以上游响应标记为准。",
  "site": "api", "pricing": { … 115 条 … }}
 ```
 
 与本包相关的四条原文：
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 
-"/api/v1/apps/nano_banana/*": {"mode": "flat", "cost": 72, "markupPercent": 0,
   "note": "AI商品图 = 固定 72 点/次；商品多角度 = 25 点 × 选中视角数（请求体带 views[] 时生效，
            不带 views 时仍按本固定价 72）"}
 
-"/api/v1/apps/dressing_diffusion/*": {"mode": "flat", "cost": 200, "markupPercent": 0,
-  "note": "固定 200 点/次（上游约 100 点 ×2）"}
+  "note": "固定 200 点/次"}
 
-"/api/v1/apps": {"mode": "flat", "cost": 0, "markupPercent": 0,
   "note": "★应用目录（只读）不计费（2026-10-04）…"}
 ```
 
@@ -168,7 +161,7 @@ gpt-image 的自定义尺寸要同时满足：
 | `douyin` | 1200×1600（3:4） | `1200x1600` | 1,920,000 | 二者都是 16 倍数 ✓ |
 | `detail` | 750 宽（详情单屏） | `768x1024` | 786,432 | 出完统一缩到 750 宽再拼 |
 
-本地 `check_size()` 会把这四条全验一遍，任一不过直接退 2，不发请求。
+本地 `check_size` 会把这四条全验一遍，任一不过直接退 2，不发请求。
 
 ---
 

@@ -18,18 +18,16 @@ tags:
 
 它的位置是"分析层"，不是"采集层"：抓取交给 requests、浏览器自动化或可视化采集工具，落地之后的清洗和统计交给它。
 
-**上游项目**：`pandas`　**仓库**：https://github.com/pandas-dev/pandas
-
 ## 什么时候用 / 不用
 
 **用它**：
 
-- "这批 CSV / Excel / Parquet 读进来，先看看有多少行、哪些列、空值多不多。"——`read_*` 加 `info()` / `describe()` / `isna().sum()` 是标准起手式。
-- "按城市分组算金额合计和笔数，再按合计倒序取前 20。"——`groupby().agg()` 加 `sort_values()`，比建视图再查快得多。
+- "这批 CSV / Excel / Parquet 读进来，先看看有多少行、哪些列、空值多不多。"——`read_*` 加 `info` / `describe` / `isna.sum` 是标准起手式。
+- "按城市分组算金额合计和笔数，再按合计倒序取前 20。"——`groupby.agg` 加 `sort_values`，比建视图再查快得多。
 - "两个表按 id 拼起来，只保留左表存在的行。"——`merge(..., how="left")`，等价于 SQL JOIN。
-- "把长表转成 城市 × 月份 的宽表，空的地方填 0。"——`pivot_table()`。
+- "把长表转成 城市 × 月份 的宽表，空的地方填 0。"——`pivot_table`。
 - "抓下来的 JSON 是嵌套的，帮我拍平成表再导出。"——`json_normalize` 配 `explode`。
-- "按天或按小时统计量，再算 7 日滑动平均。"——把日期列设成索引后 `resample()` / `rolling()`。
+- "按天或按小时统计量，再算 7 日滑动平均。"——把日期列设成索引后 `resample` / `rolling`。
 - "这份几百 MB 的 CSV 先转成 Parquet，后面读得快一点。"——`read_csv` 配 `to_parquet` 的列式落盘组合。
 
 **不要用它**：
@@ -94,7 +92,7 @@ df = pd.read_csv(
 )
 
 print(df.shape)
-df.info()
+df.info
 ```
 
 **2. 体检：先看清数据再动手**
@@ -102,18 +100,18 @@ df.info()
 ```python
 df.head(10)
 df.describe(include="all")                # 数值列统计加类别列频次
-df.isna().sum()                           # 每列空值数
+df.isna.sum                           # 每列空值数
 df["city"].value_counts(dropna=False)     # 类别分布，含空值
-df.duplicated(subset=["order_id"]).sum()  # 重复主键有多少
+df.duplicated(subset=["order_id"]).sum  # 重复主键有多少
 ```
 
 **3. 清洗与派生列（用 loc 与 assign，不要链式赋值）**
 
 ```python
-df["city"] = df["city"].str.strip().str.replace("市", "", regex=False)
+df["city"] = df["city"].str.strip.str.replace("市", "", regex=False)
 
 # 条件赋值：一条语句写完
-mask = df["amount"].isna()
+mask = df["amount"].isna
 df.loc[mask, "amount"] = 0
 
 # 新增列：assign 返回新对象，适合串起来写
@@ -150,10 +148,10 @@ merged = df_orders.merge(df_users, on="user_id", how="left", validate="many_to_o
 **6. 时间序列：按周期汇总与滑动窗口**
 
 ```python
-ts = df.set_index("created_at").sort_index()
-daily = ts["amount"].resample("D").sum()    # 按天汇总
-weekly = ts["amount"].resample("W").sum()   # 按周汇总
-ma7 = daily.rolling(7).mean()               # 7 期滑动平均
+ts = df.set_index("created_at").sort_index
+daily = ts["amount"].resample("D").sum    # 按天汇总
+weekly = ts["amount"].resample("W").sum   # 按周汇总
+ma7 = daily.rolling(7).mean               # 7 期滑动平均
 ```
 
 **7. 大文件分块处理，别一次读进内存**
@@ -161,7 +159,7 @@ ma7 = daily.rolling(7).mean()               # 7 期滑动平均
 ```python
 total = 0
 for chunk in pd.read_csv("huge.csv", chunksize=100_000, usecols=["city", "amount"]):
-    total += chunk["amount"].sum()
+    total += chunk["amount"].sum
 print(total)
 ```
 
@@ -188,13 +186,13 @@ df.to_sql("orders_clean", engine, if_exists="append", index=False, chunksize=100
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | `df["a"][mask] = 1` 之后原表没变，或抛 `ChainedAssignmentError` | 3.0 起 Copy-on-Write 是默认且唯一模式，链式赋值被明确禁止：从别的对象派生出来的对象一律按副本对待，一条语句只能改一个对象 | 改成单语句 `df.loc[mask, "a"] = 1`；对"取出来的那一列"调用 `inplace=True` 的方法也属于链式赋值，改写为 `df["a"] = df["a"].replace(...)`，或 `df.replace({"a": {...}}, inplace=True)` |
-| `arr = df.to_numpy()` 后写 `arr[0, 0] = 100` 报 `ValueError: assignment destination is read-only` | 返回的 NumPy 数组与 DataFrame 共享内存时，CoW 会把它设为只读，防止绕过规则反写 | 需要改就在副本上改：`arr = df.to_numpy().copy()`；确认原 DataFrame 不再需要时才考虑 `arr.flags.writeable = True` |
+| `arr = df.to_numpy` 后写 `arr[0, 0] = 100` 报 `ValueError: assignment destination is read-only` | 返回的 NumPy 数组与 DataFrame 共享内存时，CoW 会把它设为只读，防止绕过规则反写 | 需要改就在副本上改：`arr = df.to_numpy.copy`；确认原 DataFrame 不再需要时才考虑 `arr.flags.writeable = True` |
 | 用外部 NumPy 数组构造 DataFrame 后，改外部数组把表也改了 | 3.0 起 Series/DataFrame 构造器默认复制传入的 NumPy 数组，与旧版本相反 | 想共享内存、零拷贝时显式传 `copy=False`，并接受由此产生的联动修改 |
 | 邮编 `012345` 变成 `12345`、长订单号精度丢失、`1/0` 变成 `True/False` | `read_csv` 会做类型推断，把长得像数字的文本列读成整数、浮点或布尔 | 读入时就用 `dtype={"zipcode": str}` 把关键列钉成文本；必要时配 `keep_default_na=False` 防止 `NA`/`NULL` 字面量被当空值，或用 `na_values=[...]` 自定义空值集合 |
 | 中文 CSV 用 Excel 打开是乱码；或读 GBK 文件报 `UnicodeDecodeError` | 写文件时用了不带 BOM 的 UTF-8，或读文件时没声明真实编码 | 写：加 `encoding="utf-8-sig"`；读：加 `encoding="gbk"` 或 `encoding="utf-8-sig"`，先确认源文件真实编码再传参 |
 | 调用某个方法突然抛 `ImportError`：`to_markdown` 要 tabulate、`read_html` 要 BeautifulSoup4 加解析器、`read_hdf` 要 tables、`to_parquet` 要 pyarrow 或 fastparquet、`DataFrame.style` 要 Jinja2 | 这些都在可选依赖里，没装就不给用；而且只装 BeautifulSoup4 不带 lxml 或 html5lib 时 `read_html` 依然不可用 | 缺什么装什么，最省事是 `pip install "pandas[all]"`；固定环境把 extras 写进 requirements.txt |
-| Windows 上 `read_orc()` 不可用 | 官方安装页明确说明该函数与 Windows 不兼容 | 换 Parquet 格式；Parquet 优先用 pyarrow，条件允许时通过 conda 安装 |
-| `groupby(...).apply(...)` 的输出列比预期多或少，并伴随弃用警告 | 分组列是否带进 `apply` 的结果，在 2.2 与 3.0 之间发生过行为变更 | 显式传 `include_groups=`，或改用 `agg()` / `transform()` 这类语义更明确的入口 |
+| Windows 上 `read_orc` 不可用 | 官方安装页明确说明该函数与 Windows 不兼容 | 换 Parquet 格式；Parquet 优先用 pyarrow，条件允许时通过 conda 安装 |
+| `groupby(...).apply(...)` 的输出列比预期多或少，并伴随弃用警告 | 分组列是否带进 `apply` 的结果，在 2.2 与 3.0 之间发生过行为变更 | 显式传 `include_groups=`，或改用 `agg` / `transform` 这类语义更明确的入口 |
 | 读几十万行的 CSV 卡住或吃满内存 | 一次性把整份数据读进内存 | 用 `chunksize=` 分块、用 `usecols=` 只读需要列、中间结果转 Parquet；几 GB 以上该换 DuckDB / Polars，而不是继续调 pandas 参数 |
 | 时间列带时区后报找不到时区 | Windows 与 Pyodide 环境不带 IANA 时区数据库 | 装 `tzdata`（或 `pip install "pandas[timezone]"`） |
 
@@ -237,7 +235,7 @@ df.to_sql("orders_clean", engine, if_exists="append", index=False, chunksize=100
 - 机器学习建模：能用它做特征表，模型训练要靠别的库
 - 精确十进制金融计算：默认浮点存在误差
 - 命令行工具：只有 Python API，没有 `pandas` 这个可执行命令
-- Windows 上的 `read_orc()`：官方标注不兼容
+- Windows 上的 `read_orc`：官方标注不兼容
 
 ## 依赖条件
 
@@ -261,7 +259,7 @@ df.to_sql("orders_clean", engine, if_exists="append", index=False, chunksize=100
 执行前：
 
 - [ ] 确认 `pd.__version__`，3.0 前后的赋值与复制行为不同，先确定在哪个大版本上写代码
-- [ ] 用 `df.shape` / `df.info()` 确认行列数与 dtype，再决定清洗策略
+- [ ] 用 `df.shape` / `df.info` 确认行列数与 dtype，再决定清洗策略
 - [ ] 关键标识列（邮编、手机号、订单号）是否已用 `dtype` 钉成文本
 - [ ] 涉及的格式是否已装对应 extras（excel / parquet / html / hdf5 / 数据库驱动）
 - [ ] 数据量是否可能超过可用内存，决定是否分块或用 `usecols`

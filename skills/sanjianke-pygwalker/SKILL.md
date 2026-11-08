@@ -19,16 +19,14 @@ tags:
 
 它本质上是「ECharts 级别的图表库」的另一种打开方式——不追求把图导出成图片文件，而是让你在浏览器/Notebook 里连续地探索，最后**把探索结果回导成 Python 代码**或**把图表状态存成一个 JSON**，下次接着改。
 
-**上游项目**：`pygwalker`　**仓库**：https://github.com/Kanaries/pygwalker
-
 ## 什么时候用 / 不用
 
 **用它**：
 
 - 用户手里已经有一个 `pandas` / `polars` / `pyarrow` 数据表，说「想看看到底长什么样」「哪个字段和哪个字段有关系」，需要连续地切维度、换图型。
 - 想给自己或同事做一个**零前端的探索界面**：Streamlit 应用里挂一个 `StreamlitRenderer`，不用写任何图表配置代码。
-- 需要**一键把探索过程变成可复现的产物**：把图表状态存成 JSON 反复加载，或者用 `to_code()` 把界面里的图表回导成 Python 代码。
-- 需要把交互式图表**分享出去**：`to_html()` 导出一个自己能打开、能交互的 HTML 文件。
+- 需要**一键把探索过程变成可复现的产物**：把图表状态存成 JSON 反复加载，或者用 `to_code` 把界面里的图表回导成 Python 代码。
+- 需要把交互式图表**分享出去**：`to_html` 导出一个自己能打开、能交互的 HTML 文件。
 - 在 Notebook 里做完 EDA，想让数据清洗、类型修正、筛选这些操作在界面上点着做，而不是写一堆 `df[...]`。
 
 **不要用它**：
@@ -105,8 +103,8 @@ walker = pyg.walk(
 
 ```python
 walker = pyg.Walker(df, spec_path="./chart_meta_0.json", computation="browser")
-walker.show()       # 自动判断 Notebook 还是脚本模式
-html = walker.to_html()
+walker.show       # 自动判断 Notebook 还是脚本模式
+html = walker.to_html
 html = pyg.to_html(walker)
 ```
 
@@ -120,7 +118,7 @@ print(code)
 **5. 存过的旧配置先迁移再用**
 
 ```python
-migrated_spec = pyg.spec.migrate(open("./old_chart_meta.json").read())
+migrated_spec = pyg.spec.migrate(open("./old_chart_meta.json").read)
 ```
 
 **6. 在 Streamlit 里挂一个探索界面**
@@ -136,13 +134,13 @@ st.set_page_config(page_title="Use Pygwalker In Streamlit", layout="wide")
 st.title("Use Pygwalker In Streamlit")
 
 @st.cache_resource
-def get_pyg_renderer() -> "StreamlitRenderer":
+def get_pyg_renderer -> "StreamlitRenderer":
     df = pd.read_csv("./bike_sharing_dc.csv")
     # 想让界面里能保存图表配置，就设 spec_io_mode="rw"
     return StreamlitRenderer(df, spec_path="./gw_config.json", spec_io_mode="rw")
 
-renderer = get_pyg_renderer()
-renderer.explorer()
+renderer = get_pyg_renderer
+renderer.explorer
 ```
 
 如果已经有 `Walker` 对象，也可以直接交给 renderer：
@@ -150,7 +148,7 @@ renderer.explorer()
 ```python
 walker = pyg.Walker(df, spec_path="./gw_config.json", computation="kernel")
 renderer = StreamlitRenderer(walker)
-renderer.explorer()
+renderer.explorer
 ```
 
 **7. 程序化导出图表（界面里存过之后）**
@@ -185,7 +183,7 @@ pygwalker config -- --help      # 想看子命令的完整帮助用这种写法�
 | 想彻底离线，但不确定还有没有外联 | `privacy` 默认是 `update-only`，会去检查新版本 | 先 `pygwalker config --set privacy=offline`；同时确认没在用云端计算和带 token 的能力 |
 | 指定 `spec` 传本地路径，行为不符合预期 | `spec` 的语义更宽（配置 ID、JSON 字符串、本地路径、远程 URL 都能塞），本地文件路径有专用参数 | 本地文件一律走 `spec_path`，远程地址或 JSON 字符串才用 `spec` |
 | 在云端 Notebook 里图出不来 / 数据不显示 | 前端计算在部分托管环境里受限，或环境不支持对应的渲染通道 | 简化环境变量设置；换用 `computation="kernel"`；渲染通道参数 `env` 对 `Jupyter` / `JupyterWidget` 的旧别名也已进入弃用流程，新代码直接省略 `env` 用默认值即可 |
-| `to_html()` 生成的 HTML 用 `file://` 直接打开是空白 | 部分浏览器对本地文件的资源加载有限制 | 起一个本地静态服务（例如 `python -m http.server`）再访问，或直接把 HTML 嵌进已有的 Web 应用里 |
+| `to_html` 生成的 HTML 用 `file://` 直接打开是空白 | 部分浏览器对本地文件的资源加载有限制 | 起一个本地静态服务（例如 `python -m http.server`）再访问，或直接把 HTML 嵌进已有的 Web 应用里 |
 | 字段类型、聚合方式推断得和预期不一样 | 它的类型推断服务于「快速探索」，不是严格的数据契约 | 在进入界面之前把 `dtypes`、缺失值、异常值处理好；列名尽量用有语义的名字，界面里识别更准 |
 
 ## 权限与用途说明
@@ -194,7 +192,7 @@ pygwalker config -- --help      # 想看子命令的完整帮助用这种写法�
 |---|---|---|
 | 网络访问 | 视情况 | 默认档位下会检查版本更新；使用云端计算、云端分享或远程图表配置时会请求网络。完全离线的场景请切 `privacy=offline` 并避免云能力 |
 | 读取文件 | 是 | 读 `spec_path` / `spec` 指向的图表配置文件；数据本身由你自己的代码读入（`pd.read_csv` 等） |
-| 写入文件 | 是 | `spec_path` 会落盘保存图表状态；`to_html()`、`save_chart_to_file()`、`export_chart_png()` / `export_chart_svg()` 会写出文件 |
+| 写入文件 | 是 | `spec_path` 会落盘保存图表状态；`to_html`、`save_chart_to_file`、`export_chart_png` / `export_chart_svg` 会写出文件 |
 | 凭证 | 视情况 | 只有用云端能力时才需要上游站点的 token（通过 `config` 写入，或实例化时传 `kanaries_api_key`）。本 Skill 不内嵌任何密钥 |
 | 子进程 / 后台常驻 | 否 | 它是库调用；在 Streamlit / Notebook 里随宿主进程运行，不需要自己起常驻服务。想让别人访问界面，是宿主 Web 框架在监听端口 |
 
@@ -211,10 +209,10 @@ pygwalker config -- --help      # 想看子命令的完整帮助用这种写法�
 
 **覆盖**：
 
-- 数据入口：`pandas` DataFrame、`polars`、`pyarrow` 表，以及可复用的 `Walker` 对象、数据库连接器与 SQL/数据源字符串（以 `walk()` 签名为准）。
+- 数据入口：`pandas` DataFrame、`polars`、`pyarrow` 表，以及可复用的 `Walker` 对象、数据库连接器与 SQL/数据源字符串（以 `walk` 签名为准）。
 - 交互探索：拖拽字段出图、实时刷新、缩放/平移/筛选、数据表预览与分布概览、图型切换。
 - 运行环境：Jupyter Notebook / JupyterLab / Jupyter Lite、Google Colab、Kaggle、Databricks Notebook、VS Code 的 Jupyter 扩展，以及 Streamlit 集成。
-- 产物：图表状态 JSON 的存与取、`to_html()` 导出交互式 HTML、`to_code()` 回导 Python 代码、按名称导出 SVG/PNG。
+- 产物：图表状态 JSON 的存与取、`to_html` 导出交互式 HTML、`to_code` 回导 Python 代码、按名称导出 SVG/PNG。
 - 三种计算后端：浏览器端、本地内核（DuckDB）、云端。
 
 **不覆盖**：
@@ -231,15 +229,13 @@ pygwalker config -- --help      # 想看子命令的完整帮助用这种写法�
 - `pip` 或 `conda` / `mamba` 之一；conda 路线依赖 conda-forge 频道。
 - Streamlit 场景需要额外安装 `streamlit`。
 - 浏览器端渲染要求客户端能跑 JS；Notebook 场景依赖内核与前端组件的正常通信。
-- 使用 `computation="cloud"` 需要上游站点的 token，并且会走外部网络。
 
 ## 已知限制
 
 - 项目正处在 0.6 线向 0.7 线过渡的阶段，`env`、`use_kernel_calc`、`kernel_computation`、`cloud_computation` 等参数都带了弃用标记；写代码时优先用新写法，避免升级即报错。
 - 输出是交互式 HTML/前端组件，不能直接当图片塞进 PPT，需要走导出接口或截图。
-- 图表配置的 schema 会演进，旧 `spec` 文件可能要先 `pyg.spec.migrate()` 再使用。
+- 图表配置的 schema 会演进，旧 `spec` 文件可能要先 `pyg.spec.migrate` 再使用。
 - 单表探索型工具，跨表建模、多数据源关联不是它的定位。
-- 本文所写的参数名与档位来自抓取时的上游 README；上游迭代较快，执行前请以 `pygwalker config -- --help`、`pyg.walk` 的实际签名与官方文档为准。具体版本号、发布日期与 star 数不做断言。
 
 ## 自检清单
 
@@ -251,7 +247,7 @@ pygwalker config -- --help      # 想看子命令的完整帮助用这种写法�
 - [ ] 本地图表状态文件用 `spec_path`，不是 `spec`。
 - [ ] 想让图表配置在界面里可保存时，Streamlit 的 `spec_io_mode` 已设为 `"rw"`。
 - [ ] 敏感数据场景：已确认 `privacy` 档位，且没有走到云端计算或带 token 的能力。
-- [ ] 需要交付文件时，确认 `to_html()` / 导出接口的输出路径存在且文件非空。
+- [ ] 需要交付文件时，确认 `to_html` / 导出接口的输出路径存在且文件非空。
 - [ ] 用 `pygwalker config --list` 看过当前生效的配置，心里有数再动手。
 
 ## 参考文件

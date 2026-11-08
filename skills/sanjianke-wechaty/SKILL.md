@@ -20,15 +20,13 @@ tags:
 
 Wechaty 把这层封成一套统一接口：同一份业务代码，换个环境变量就能从微信 Web 协议切到 Pad 协议、切到企业微信或 WhatsApp。它自己不是协议实现，协议实现叫 **Puppet**（可插拔的协议适配模块），Wechaty 只负责把 Puppet 上报的事件翻译成人能读的对象——消息、联系人、群、好友申请。
 
-**上游项目**：`Wechaty`　**仓库**：https://github.com/wechaty/wechaty
-
 ## 什么时候用 / 不用
 
 **用它**：
 
 - "让我的微信号自动回消息 / 自动通过好友申请 / 自动拉群。"——`message`、`friendship`、`room-invite` 等事件就是为这些场景准备的。
 - "同一套机器人逻辑，我要能在微信、企业微信、WhatsApp 之间换协议。"——代码不动，只换 `WECHATY_PUPPET` 环境变量。
-- "我要在群里做关键词监控与提醒，@ 到我就处理。"——`msg.mentionSelf()`、`msg.room()`、`Room.find()` 直接可用。
+- "我要在群里做关键词监控与提醒，@ 到我就处理。"——`msg.mentionSelf`、`msg.room`、`Room.find` 直接可用。
 - "要把机器人做成可插拔的模块，别人能二次组装。"——Wechaty Plugin 就是一个接收 wechaty 实例的函数，天然适合拆包。
 - "本地开发时不想连真协议，想跑单元测试。"——`wechaty-puppet-mock` 是官方提供的 Mock 协议。
 
@@ -83,12 +81,12 @@ npm -v       # 需 >= 7
 ```javascript
 import { WechatyBuilder } from 'wechaty'
 
-const bot = WechatyBuilder.build()
+const bot = WechatyBuilder.build
 bot
   .on('scan',    (qrcode, status) => console.log(`扫码登录：${status}`))
   .on('login',   user => console.log(`已登录：${user}`))
   .on('message', message => console.log(`收到：${message}`))
-bot.start()
+bot.start
 ```
 
 **2. 跑起来并扫码**
@@ -112,23 +110,23 @@ bot.on('scan',    (qrcode, status) => log.info('Bot', 'onScan: %s', status))
 bot.on('login',   user    => log.info('Bot', '%s 已登录', user))
 bot.on('logout',  user    => log.info('Bot', '%s 已登出', user))
 bot.on('message', async message => {
-  if (message.text() === 'ding') {
+  if (message.text === 'ding') {
     await message.say('dong')
   }
 })
 
-bot.start()
+bot.start
 ```
 
 **4. 只处理群里 @ 我的消息，并区分是不是自己发的**
 
 ```javascript
 bot.on('message', async message => {
-  if (message.self()) return                     // 过滤机器人自己发的，防止自问自答死循环
-  const room = message.room()
+  if (message.self) return                     // 过滤机器人自己发的，防止自问自答死循环
+  const room = message.room
   if (!room) return                              // 不是群消息
-  if (!(await message.mentionSelf())) return     // 没 @ 我
-  await room.say(`收到，来自 ${message.from()}`)
+  if (!(await message.mentionSelf)) return     // 没 @ 我
+  await room.say(`收到，来自 ${message.from}`)
 })
 ```
 
@@ -140,8 +138,8 @@ import { Room, Contact } from 'wechaty'
 const room = await Room.find({ topic: '项目群' })   // 找不到返回 null
 if (room) {
   await room.say('机器人已上线')
-  const members = await room.memberAll()
-  console.log(`群里有 ${members.length} 人，群主是 ${room.owner()}`)
+  const members = await room.memberAll
+  console.log(`群里有 ${members.length} 人，群主是 ${room.owner}`)
   await room.add(await Contact.find({ name: '张三' }))
 }
 ```
@@ -150,9 +148,9 @@ if (room) {
 
 ```javascript
 bot.on('friendship', async friendship => {
-  console.log(`收到好友申请：${friendship.hello()}`)
-  if (friendship.type() === Friendship.Type.Receive) {
-    await friendship.accept()
+  console.log(`收到好友申请：${friendship.hello}`)
+  if (friendship.type === Friendship.Type.Receive) {
+    await friendship.accept
   }
 })
 ```
@@ -199,10 +197,10 @@ Plugin 就是一个「接收 wechaty 实例、返回空」的函数，用户 `us
 |---|---|---|
 | 扫码后一直登录不上，或提示 Web 协议不可用 | 官方 FAQ 明确：2017 年之后注册的微信账号**无法通过 Web API 登录** | 换非 Web 协议（Pad / Windows 等），这些通常需要申请 Token；别在 Web 协议上反复试 |
 | 装完 `wechaty@1.x` 后各种 `wechaty-puppet-*` 报类型错、运行时报模块不匹配 | 官方 breaking changes 写明 **v1.x 与 v0.x 模块互不兼容**：`wechaty@1.x` 必须配 `wechaty-*@1.x`，v0.x 同理 | 把所有 `wechaty` 与 `wechaty-puppet-*` 的版本对齐到同一个大版本，别一个升级一个不升 |
-| 照着旧教程写 `Wechaty.instance()`，运行报没有这个方法 | 官方文档站里不少页面仍是旧 API 写法，当前版本用的是 `WechatyBuilder.build()` | 以 README 与 API 参考里的 `WechatyBuilder` 写法为准；旧文档页面只能当概念参考 |
+| 照着旧教程写 `Wechaty.instance`，运行报没有这个方法 | 官方文档站里不少页面仍是旧 API 写法，当前版本用的是 `WechatyBuilder.build` | 以 README 与 API 参考里的 `WechatyBuilder` 写法为准；旧文档页面只能当概念参考 |
 | `require('wechaty')` 报 `ERR_REQUIRE_ESM` | 该包是 ES Module（`"type": "module"`） | 改成 `import`，或把项目设成 `"type": "module"`；用 `ts-node` 跑 TypeScript 时注意 loader 配置，官方示例用的是 `--loader ts-node/esm` |
-| 机器人把自己刚发出去的消息又处理一遍，陷入自问自答 | 事件回调里没过滤机器人自身的消息 | 在回调开头判断 `message.self()` 后直接 return |
-| 群里机器人像是不响应 @ | 被 @ 的判断方式和普通文本不同，且部分协议对 @ 的解析有差异 | 用 `await message.mentionSelf()` 判断，不要自己用文本包含 `@名字` 硬匹配；同时确认该协议支持群内 @ 解析 |
+| 机器人把自己刚发出去的消息又处理一遍，陷入自问自答 | 事件回调里没过滤机器人自身的消息 | 在回调开头判断 `message.self` 后直接 return |
+| 群里机器人像是不响应 @ | 被 @ 的判断方式和普通文本不同，且部分协议对 @ 的解析有差异 | 用 `await message.mentionSelf` 判断，不要自己用文本包含 `@名字` 硬匹配；同时确认该协议支持群内 @ 解析 |
 | Windows 下 `npm install` 编译失败 | 原生模块需要构建工具链 | 官方入门文档的排查建议是安装 `windows-build-tools` 后再重装依赖 |
 | Docker 里跑的机器人无法持久化登录状态 | 容器 `--rm` 退出即删，登录态与缓存目录没挂出来 | 用 `--volume` 把机器人数据目录一起挂到宿主机，别只挂代码目录 |
 | Puppet 服务连不上，日志里全是 TLS / 连接错误 | 官方 breaking changes 记录过 Puppet Service 客户端启用 TLS、服务发现字段由 `ip` 改为 `host` 等变更 | 把 `wechaty-puppet-service` 与 `wechaty` 一起升到最新同版本；老 Token 或老文档里的地址格式可能已失效 |
@@ -258,7 +256,7 @@ Plugin 就是一个「接收 wechaty 实例、返回空」的函数，用户 `us
 
 ## 已知限制
 
-1. v1.x 与 v0.x 生态不兼容，混版会报错；文档站上不少页面停留在旧 API（如 `Wechaty.instance()`），照抄可能与当前版本对不上。
+1. v1.x 与 v0.x 生态不兼容，混版会报错；文档站上不少页面停留在旧 API（如 `Wechaty.instance`），照抄可能与当前版本对不上。
 2. Web 协议对 2017 年后注册的账号不可用，这不是配置问题，是平台侧限制。
 3. RPA 协议依赖模拟客户端，没有官方 SLA，长跑需要自己做掉线重连与监控。
 4. 官方明确建议境外 VPS 部署 npm / Docker 方式，国内网络的安装与长连体验需要额外处理。
@@ -273,7 +271,7 @@ Plugin 就是一个「接收 wechaty 实例、返回空」的函数，用户 `us
 - [ ] `wechaty` 与全部 `wechaty-puppet-*` 版本大版本号一致
 - [ ] 确认目标账号能否用所选协议登录（Web 协议对 2017 年后注册的账号不可用）
 - [ ] 需要 Token 的协议，Token 已放环境变量，未硬编码、未提交
-- [ ] 事件回调里已加 `message.self()` 过滤，避免自问自答
+- [ ] 事件回调里已加 `message.self` 过滤，避免自问自答
 - [ ] Docker 部署已挂出数据目录，重启不丢登录态
 
 执行后：

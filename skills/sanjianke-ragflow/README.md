@@ -42,12 +42,12 @@ rag_object = RAGFlow(api_key="<YOUR_API_KEY>", base_url="http://<YOUR_BASE_URL>:
 dataset = rag_object.create_dataset(name="kb_1")
 
 with open("1.txt", "rb") as file:
-    documents = dataset.upload_documents([{"display_name": "1.txt", "blob": file.read()}])
+    documents = dataset.upload_documents([{"display_name": "1.txt", "blob": file.read}])
 
 dataset.async_parse_documents([documents[0].id])
 
 assistant = rag_object.create_chat("Miss R", dataset_ids=[dataset.id])
-session = assistant.create_session()
+session = assistant.create_session
 for ans in session.ask("安装方式是什么？", stream=True):
     print(ans.content)
 ```

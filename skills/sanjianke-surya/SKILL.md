@@ -15,8 +15,6 @@ tags:
 
 扫描件 PDF 和图片丢进去，它还给你的不是一串平铺的文字，而是**带位置和类型的结果**：这段是正文、那段是标题、这里是表格、那里是图，以及它们在页面上各自的坐标和阅读顺序。所以它解决的其实是「OCR 完还得自己猜结构」这件事——双栏论文顺序错乱、财报里的表格变成一堆空格，都是它要处理的场景。代价是：它不是一个装完就能直接 `python xxx.py` 的小工具，版面、OCR、表格识别这三件事都需要一个跑起来的推理后端（GPU 上的 vllm，或 CPU 上的 llama.cpp）。
 
-**上游项目**：`surya`　**仓库**：https://github.com/datalab-to/surya
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -32,7 +30,6 @@ tags:
 - PDF **自带文字层** → 直接 `pdftotext` / pdfplumber / PyMuPDF，几秒钟的事；为这个起一个 VLM 服务不划算
 - 自然场景照片文字（路牌、商品包装、菜单拍照）→ 官方明确说这不是它的目标
 - 机器上**既没有 NVIDIA GPU、也没装 llama.cpp**，却想直接跑 `surya_ocr` → 会卡在拉起后端这一步
-- 想要**一步到位的 Markdown 成品** → Surya 只给 blocks / html 片段 / 坐标；端到端转换是它上游那套文档转换工具的活
 - 需要**云端托管、开箱即用**、不想碰 Docker 和模型权重 → 它同时提供托管平台 API，本地部署这条路不适合
 - 商业闭源产品且规模较大 → 代码是 Apache-2.0，但模型权重是修改版 OpenRAIL-M，有营收/融资门槛（见「依赖条件」）
 
@@ -114,7 +111,7 @@ from surya.inference import SuryaInferenceManager
 from surya.layout import LayoutPredictor
 from surya.recognition import RecognitionPredictor
 
-manager = SuryaInferenceManager()          # 自动拉起 vllm 或 llama-server
+manager = SuryaInferenceManager          # 自动拉起 vllm 或 llama-server
 image = Image.open("page.png")
 
 rec = RecognitionPredictor(manager)
@@ -190,7 +187,6 @@ pages = rec([image], layouts)
 **不覆盖**：
 
 - 自然场景 / 照片文字识别（不是设计目标）
-- 端到端的 Markdown、文档树、分节成品（这是上游文档转换工具的职责）
 - PDF 文字层的直接抽取（有文字层的用 pdfplumber / PyMuPDF 更快）
 - 版面之外的内容理解：摘要、分类、检索、问答
 - 手写体的专门优化（README 里有手写示例，但属于顺带能跑，不是强项）

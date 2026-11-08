@@ -20,8 +20,6 @@ tags:
 可以缩放框选，还能直接存成 HTML 或图片。写数据爬虫的人常在这里撞墙——静态绘图的中文和
 导出麻烦，而它同时给出「交互 HTML」和「静态图片」两条落地产出路径。
 
-**上游项目**：`plotly.py`　**仓库**：https://github.com/plotly/plotly.py
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -71,10 +69,10 @@ plotly_get_chrome
 ## 常用操作
 
 ```python
-# 1. 最小示例：一张柱状图，show() 在笔记本里内联渲染，在脚本里会开浏览器
+# 1. 最小示例：一张柱状图，show 在笔记本里内联渲染，在脚本里会开浏览器
 import plotly.express as px
 fig = px.bar(x=["a", "b", "c"], y=[1, 3, 2])
-fig.show()
+fig.show
 ```
 
 ```python
@@ -90,23 +88,23 @@ fig.write_image("chart.svg")
 
 ```python
 # 4. 结构化输出：把图定义成 JSON，交给前端或别的服务去渲染
-payload = fig.to_json()
+payload = fig.to_json
 ```
 
 ```python
 # 5. 精细控制：express 出粗图，graph_objects 补细节（标题、轴、图例、标注）
 import plotly.graph_objects as go
-fig = go.Figure()
+fig = go.Figure
 fig.add_trace(go.Scatter(x=[1, 2, 3], y=[4, 5, 6], mode="lines+markers", name="系列 A"))
 fig.update_layout(title="标题", xaxis_title="X", yaxis_title="Y")
-fig.show()
+fig.show
 ```
 
 ```python
 # 6. 数据量大的散点：显式打开 WebGL 版本，别用默认的 SVG 散点
 import plotly.express as px
 fig = px.scatter(df, x="x", y="y", render_mode="webgl")
-fig.show()
+fig.show
 ```
 
 `write_image` 支持的格式、渲染后端选项与分辨率参数随版本变化，具体参数以官方静态导出文档和

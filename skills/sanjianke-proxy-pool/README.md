@@ -23,7 +23,7 @@
 3. **等第一轮采集**：刚启动池子是空的，要等调度器跑完采集与校验才会开始供血。
 4. **验证**：`curl http://127.0.0.1:5010/count/` 看规模与来源分布，`curl http://127.0.0.1:5010/get/` 取一个代理。
 5. **接入爬虫**：调 `/get` 拿地址 → 带超时请求 → 失败调 `/delete` 归还。要 HTTPS 代理加 `?type=https`。
-6. **扩展来源**：在 `fetcher/sources/` 下新建继承 `BaseFetcher` 的 `.py` 文件，实现 `fetch()` 并 yield `"host:port"`；用 `python proxyPool.py fetcher` 确认已被加载。
+6. **扩展来源**：在 `fetcher/sources/` 下新建继承 `BaseFetcher` 的 `.py` 文件，实现 `fetch` 并 yield `"host:port"`；用 `python proxyPool.py fetcher` 确认已被加载。
 7. **停服**：`./proxy_pool.sh stop`；停不掉就按 PID 文件手工处理（见 `SKILL.md` 的「常见坑」）。
 
 完整命令、参数与排查表见 `SKILL.md`。

@@ -1,23 +1,20 @@
-# 接口契约（实测）
-
-> 来源：`GET /api/v1/gpu/apps` 返回的 69 个应用之一（`total: 69`，`markup: 1.5`）。
+# 接口契约
 
 ## 应用
 
 | 字段 | 值 |
 |---|---|
 | workflow_id | `wf_96d607b0742e61f00296` |
-| 标题 | 印花提取 |
+| 名称 | 印花提取 |
 | 类型 | 图片 |
-| 上游报价 | ¥0.11 |
-| 本站 | 16.5 点（¥0.165）|
+| **每次** | **16.5 点（0.165 元）** |
 
-## 四个端点
+## 端点
 
 ```
 GET  /api/v1/gpu/apps                        应用清单（69 个）
 GET  /api/v1/gpu/apps/<workflow_id>/schema    参数
-POST /api/v1/gpu/assets                       上传素材（免费）
+POST /api/v1/gpu/assets                       上传素材
 POST /api/v1/gpu/apps/<workflow_id>/run       提交 {"inputs":{...}}
 GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 ```
@@ -26,7 +23,7 @@ GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 
 | 参数名 | 含义 | 类型 | 必填 | 默认 |
 |---|---|---|---|---|
-| `n20_image` | 需提取印花的图片 | image_input | 是 |  |
+| `n20_image` | 需提取印花的图片 | image_input | 是 | |
 | `n25_prompt` | 提示词 | string | 是 | 提取床单全部的图案纹理，输出为平整的纹理 |
 
 ## 返回

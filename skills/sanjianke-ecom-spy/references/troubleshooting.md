@@ -24,7 +24,6 @@ python3 scripts/a7w.py login --key sk-你的key
 
 Key 本身的问题。到 [api.a7w.cn](https://api.a7w.cn/) 重新创建。
 
-> `/user/balance` 是免费的用户接口；上游账号级路径（`/user`、`/user/usage` 的某些形态）
 > 平台会直接 403 并提示该用哪个，本包不碰。
 
 ---
@@ -53,7 +52,6 @@ python3 scripts/run.py hunt --platform dy --keyword "收纳盒" --dry-run
 
 信封是 HTTP 200，但 `code` 不是 1 —— 业务层拒绝。常见原因：
 
-| 上游 `msg` 里出现 | 原因 | 处理 |
 |---|---|---|
 | 参数 / 缺失 / required | 参数名或类型对不上 | 参数名大小写逐字照 `api-contract.md`（`videoId` 不是 `video_id`，`secUid` 不是 `secuid`） |
 | 不存在 / not found | ID 打错，或内容已删 | 重新从分享链接里取 ID |
@@ -88,7 +86,7 @@ python3 scripts/run.py rank                                          # 之后 0 
 先看打印出来的 JSON：
 
 - 里面**有**标题和点赞 → 是字段名没认出来，`--json` 拿完整 `raw`，
-  按 `api-contract.md` 第四节改 `run.py` 的 `norm_item()`（一处即可）；
+  按 `api-contract.md` 第四节改 `run.py` 的 `norm_item`（一处即可）；
 - 里面**是空数组 / `data:null`** → 这个词真没结果，换个词（一次 100 点，别硬试）。
 
 ---
@@ -101,7 +99,7 @@ python3 scripts/run.py rank                                          # 之后 0 
 
 ```
 "/api/v1/apps/watermark_removal/*": {"mode":"flat","cost":100,
-  "note":"去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"}
+  "note":"去水印/分享链解析：固定 100 点/次"}
 ```
 
 ### 失败了会退吗
@@ -141,8 +139,6 @@ curl -s "https://api.a7w.cn/user/balance/logs?limit=20" -H "Authorization: Beare
 
 ## 四、慢 / 超时
 
-- 搜索类接口偶尔 20–40 秒（上游现抓）。`--timeout` 默认 120 秒，够用。
-- 超时会抛 `连不上 …（已重试 2 次）`；**这时的调用可能已在上游扣过点**，
   先用 `log` 看有没有记录、用流水看有没有 `-100`，再决定要不要重发。
 - 快照文件很大（一次搜索的原始 JSON 常见 100–300 KB），本地读写不影响速度。
 

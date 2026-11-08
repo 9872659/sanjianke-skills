@@ -34,7 +34,6 @@
 20:57:11  refund  +60  refund:sync_error:/api/v1/apps/music_generation/<code>
 ```
 
-- 这是「缺参或上游失败」触发的预冻结 + 全额退，**净 0 点**
 - 本包**不做这种探针**：`doctor` 对三个音频接口一次都不 POST，在架与否用
   `GET /api/v1/apps` + `GET /api/v1/pricing` 证明
 - 真看到了就等 `refund` 那一笔，或跑 `status` 看 `refund` 字段
@@ -52,7 +51,7 @@
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| `UnicodeEncodeError: 'gbk' codec` | Windows 管道用 cp936 输出 | 本包已 `reconfigure(errors="replace")` + `safe()`；自建脚本也照做 |
+| `UnicodeEncodeError: 'gbk' codec` | Windows 管道用 cp936 输出 | 本包已 `reconfigure(errors="replace")` + `safe`；自建脚本也照做 |
 | 输出里有半角问号 | 某个符号 cp936 编不出，被替换了 | 本包不会：符号只用 `√ × · →`，金额写「元」。看到了说明是从别处粘进来的字符 |
 | 中文文件读成乱码 | 歌词文件不是 UTF-8 | `--a-file` / `--b-file` 要求 UTF-8，转一下再传 |
 

@@ -105,11 +105,11 @@
 
 | 工序 | 接口 | 单价 |
 |---|---|---|
-| 数字人 | `POST /api/v1/apps/pic_lipsync/submit` | **15 点/秒**（上游 standard 3 点/秒 x5，声明保底 50 点） |
+| 数字人 | `POST /api/v1/apps/pic_lipsync/submit` | **15 点/秒** |
 | 空镜 | `POST /api/v1/apps/full_video/submit` | 480P 14 / 768P 28 / **1080P 60** / 2K 80 / 4K 80 点/秒 |
 | 出图 | `POST /api/v1/images/generations` | **6 点/张**（与尺寸、格式同价） |
-| 企业音色 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字**（上游真实点数 x3） |
-| 音色克隆 | `POST /api/v1/apps/voice_tts/clone_voice` | **600 点/次**（上游固定 200 点 x3，长期复用） |
+| 企业音色 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字** |
+| 音色克隆 | `POST /api/v1/apps/voice_tts/clone_voice` | **600 点/次** |
 | 配乐 | `POST /api/v1/apps/media_services_33/music_generate` | **50 点起/首**（通配：上游 x2，保底 50） |
 | 查进度 | `GET /api/v1/tasks/<task_id>` | **0 点** |
 | 传图 / 传音频 | `POST /api/v1/upload` | **0 点** |

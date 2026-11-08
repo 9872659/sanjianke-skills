@@ -42,7 +42,6 @@ fd -q pattern && echo 命中          # 只关心"有没有"，不关心结果�
 
 - **运行环境**：Windows / macOS / Linux（含 musl 静态构建的各架构），官方提供单文件可执行程序，不需要额外运行时
 - **安装方式**：apt / dnf / pacman / brew / winget / scoop / choco 等包管理器，或 `cargo install fd-find` 从源码编译
-- **版本差异**：包管理器仓库里的版本可能明显落后于上游最新版，先用 `fd --version` 确认；功能开关在不同版本间可能有增删
 - **可选依赖**：`-x` / `-X` 调用的外部命令（如 `convert`、`clang-format`、`wc`）需要自行安装
 - **配置文件**：全局忽略文件默认位于 `$XDG_CONFIG_HOME/fd/ignore`，未设置时是 `$HOME/.config/fd/ignore`
 - **环境变量**：`LS_COLORS` 影响着色，`NO_COLOR` 关闭着色

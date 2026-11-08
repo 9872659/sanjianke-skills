@@ -20,8 +20,6 @@ matplotlib 是 Python 生态里最底层的静态绘图库：你把数据（列�
 凡是涉及坐标轴、刻度、图例、字体、多子图排版这类细粒度控制的需求，都以它为准；
 它不做交互式 Web 图表，也不做数据清洗与统计建模。
 
-**上游项目**：`matplotlib`　**仓库**：https://github.com/matplotlib/matplotlib
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -37,7 +35,7 @@ matplotlib 是 Python 生态里最底层的静态绘图库：你把数据（列�
 - 要的是网页里能缩放、能悬浮提示的交互式图表——用前端图表库（如 ECharts、Plotly）更合适，
   别硬套 matplotlib 的 Web 后端。
 - 要做秒级刷新的实时大屏或监控仪表盘——它不是为实时渲染设计的。
-- 已经在用 seaborn、`DataFrame.plot()` 这类高层封装且够用，不必再回头手写 pyplot 状态机。
+- 已经在用 seaborn、`DataFrame.plot` 这类高层封装且够用，不必再回头手写 pyplot 状态机。
 - 数据量到千万级、需要 GPU 渲染加速——要另找专门的渲染方案，这不是它的目标。
 - 你要的是数据清洗、建模或统计检验——那是别的库的活，它只负责最后一步画出来。
 
@@ -93,7 +91,7 @@ fig, ax = plt.subplots(figsize=(6, 4), dpi=150)
 ax.plot([1, 2, 3, 4], [1, 4, 9, 16], marker="o", label="y = x^2")
 ax.set_xlabel("x")
 ax.set_ylabel("y")
-ax.legend()
+ax.legend
 fig.savefig("out.png", bbox_inches="tight")
 plt.close(fig)
 ```
@@ -139,8 +137,8 @@ plt.style.use("ggplot")             # 全局生效
 ```python
 import matplotlib as mpl
 
-print(mpl.get_configdir())   # 用户配置目录，可放 matplotlibrc
-print(mpl.get_cachedir())    # 缓存目录，删掉后重跑可强制重建字体缓存
+print(mpl.get_configdir)   # 用户配置目录，可放 matplotlibrc
+print(mpl.get_cachedir)    # 缓存目录，删掉后重跑可强制重建字体缓存
 ```
 
 ```bash
@@ -161,18 +159,18 @@ fig.savefig("grid.png", bbox_inches="tight")
 plt.close(fig)
 ```
 
-若所用版本不支持 `layout="constrained"`，改用 `fig.tight_layout()`。
+若所用版本不支持 `layout="constrained"`，改用 `fig.tight_layout`。
 
 ## 常见坑
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | `ModuleNotFoundError: No module named 'matplotlib'`，但明明装过 | 装进了另一个 Python 或另一个虚拟环境，`pip` 与 `python` 不是同一套 | 一律用 `python -m pip install ...`；先 `python -c "import sys; print(sys.executable)"` 对齐解释器 |
-| 中文标签显示成方框 | 没有可用中文字体，或字体缓存陈旧 | 设 `font.sans-serif` 为环境里真实存在的字体；删掉 `get_cachedir()` 目录后重跑 |
+| 中文标签显示成方框 | 没有可用中文字体，或字体缓存陈旧 | 设 `font.sans-serif` 为环境里真实存在的字体；删掉 `get_cachedir` 目录后重跑 |
 | 负号也变成方框 | 中文字体缺负号字形，而 `axes.unicode_minus` 仍为 True | 设 `plt.rcParams["axes.unicode_minus"] = False` |
 | 服务器上运行报无 `$DISPLAY` 或 TclError | 默认后端想开 GUI，环境里没有显示服务 | `matplotlib.use("Agg")`，或直接 `MPLBACKEND=Agg python script.py` |
 | 调了 `use("Agg")` 却不生效 | pyplot 已经被导入，后端在那时就锁定了 | 把 `matplotlib.use(...)` 提到所有 matplotlib 导入之前，或改用环境变量 |
-| 脚本跑完卡住不退出，或窗口一闪而过 | 无界面环境下调用了 `show()`，或交互后端阻塞 | 无界面环境只 `savefig`，不要 `show()` |
+| 脚本跑完卡住不退出，或窗口一闪而过 | 无界面环境下调用了 `show`，或交互后端阻塞 | 无界面环境只 `savefig`，不要 `show` |
 | 保存出来是白图 / 存的是上一张图 | 混用了 pyplot 状态机和 Figure 对象，当前 figure 不是你以为的那张 | 固定用 `fig.savefig(...)` 而不是 `plt.savefig(...)`；多图时显式管理 fig |
 | 轴标签、图例被裁掉一块 | 默认保存范围不含轴外文字 | `savefig(..., bbox_inches="tight")`，或建图时用 `layout="constrained"` |
 | 循环画几千张图后内存暴涨 | 每次新建 figure 都没关 | 每轮结束 `plt.close(fig)` |

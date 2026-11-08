@@ -18,11 +18,8 @@ tags:
 
 它的价值在于**中文能力扎实且权重真的开放**：可以在自己的机器上跑、可以离线、可以微调、数据不出门。代价是你要自己承担显存和部署复杂度——这也是这份 Skill 花最多篇幅讲尺寸和显存的原因。
 
-**上游项目**：`Qwen`　**仓库**：https://github.com/QwenLM/Qwen
-
 > ⚠️ **两件必须最先知道的事**
 >
-> 1. **上游 README 明确写着这个仓库已不再积极维护**（因为代码库与后续版本差异较大），并引导用户去看 Qwen2 及之后的新仓库。做新项目选型时应优先考虑后续版本；本 Skill 覆盖的是这个仓库里的第一代 Qwen / Qwen-Chat。
 > 2. **许可证按尺寸分档**：1.8B 是研究许可，商用需要联系；7B / 14B / 72B 走通义千问许可协议，**商用需要填写申请表单**。对外商用的项目，动手前先把授权确认掉。
 
 ## 什么时候用 / 不用
@@ -119,7 +116,7 @@ model = AutoModelForCausalLM.from_pretrained(
     model_dir,
     device_map="auto",
     trust_remote_code=True
-).eval()
+).eval
 ```
 
 ### 3）可选：官方预构建 Docker 镜像
@@ -173,7 +170,7 @@ model = AutoModelForCausalLM.from_pretrained(
     "Qwen/Qwen-7B-Chat",
     device_map="auto",
     trust_remote_code=True
-).eval()
+).eval
 
 response, history = model.chat(tokenizer, "你好", history=None)
 print(response)
@@ -195,12 +192,12 @@ model = AutoModelForCausalLM.from_pretrained(
     "Qwen/Qwen-7B",
     device_map="auto",
     trust_remote_code=True
-).eval()
+).eval
 
 inputs = tokenizer('蒙古国的首都是乌兰巴托（Ulaanbaatar）\n冰岛的首都是雷克雅未克（Reykjavik）\n埃塞俄比亚的首都是', return_tensors='pt')
 inputs = inputs.to(model.device)
 pred = model.generate(**inputs)
-print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
+print(tokenizer.decode(pred.cpu[0], skip_special_tokens=True))
 ```
 
 **3. 用 ModelScope 直接推理（不换 transformers）**
@@ -210,7 +207,7 @@ from modelscope import AutoModelForCausalLM, AutoTokenizer
 from modelscope import GenerationConfig
 
 tokenizer = AutoTokenizer.from_pretrained("qwen/Qwen-7B-Chat", trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("qwen/Qwen-7B-Chat", device_map="auto", trust_remote_code=True, fp16=True).eval()
+model = AutoModelForCausalLM.from_pretrained("qwen/Qwen-7B-Chat", device_map="auto", trust_remote_code=True, fp16=True).eval
 model.generation_config = GenerationConfig.from_pretrained("qwen/Qwen-7B-Chat", trust_remote_code=True)
 
 response, history = model.chat(tokenizer, "你好", history=None)
@@ -224,7 +221,7 @@ print(response)
 官方**强烈建议**这种场景改用 qwen.cpp（Qwen 的纯 C++ 实现）。直接 CPU 推理也能跑，但效率极低：
 
 ```python
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-7B-Chat", device_map="cpu", trust_remote_code=True).eval()
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-7B-Chat", device_map="cpu", trust_remote_code=True).eval
 ```
 
 **5. 本地起一个 OpenAI 兼容服务**
@@ -414,12 +411,10 @@ docker run --gpus ${DEVICE} --rm --name qwen \
 
 ## 已知限制
 
-- **仓库已停止积极维护**：上游 README 明确说明，并引导到更新的 Qwen 仓库。这是选型时最重要的一条。
 - **许可证分档限制商用**：1.8B 研究许可；7B / 14B / 72B 商用需申请。代码是 Apache 2.0，权重另有协议，不能混为一谈。
 - **14B 是特例**：最大长度只有 8K，且没有系统提示增强——不是「14B 就是 7B 的加强版」这么简单。
 - **中文/英文为主**：官方说明预训练数据聚焦中英；其他语种不在它的强项里。
 - **多卡效率**：官方明确说 `device_map="auto"` 的原生流水线并行效率低，推荐 vLLM + FastChat 做张量并行。
-- **具体版本号、模型发布时间、star 数**请以仓库与模型卡实时信息为准。本文引用的发布信息与显存/跑分数据均来自上游 README 与模型卡，可能随后续更新而变化。
 
 ## 自检清单
 

@@ -20,8 +20,6 @@ tags:
 
 DataEase 就是干这个的自建平台：它自己是一套 Docker 编排的 Web 服务，浏览器打开就是工作台，连上 MySQL / Oracle / ClickHouse / Excel / API 这类数据源，用鼠标拖拽出图表，仪表板和数据大屏都从同一套数据集长出来。
 
-**上游项目**：`dataease`　**仓库**：https://github.com/dataease/dataease
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -185,7 +183,6 @@ CREATE DATABASE `dataease` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai
 **不覆盖**：
 
 - 命令行查询与数据导出：没有 SQL CLI，分析操作都在浏览器里完成
-- ETL 编排与作业调度：不做数据加工流水线，脏数据要在上游数仓处理
 - 机器学习 / 预测建模：只做描述性分析与可视化呈现
 - 桌面单机版之外的个人绘图需求：一次性画图交给 matplotlib 一类库更划算
 - 社区版不含 X-Pack 的企业能力（组织管理、权限体系、定时报告、血缘、告警、Webhook、嵌入等），这些属于另一套版本范围

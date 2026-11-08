@@ -19,8 +19,6 @@ ItChat 是早年很流行的一个 Python 库：扫码登录个人微信号之�
 
 **但必须先说清楚现状**：它走的是网页版登录通道，而该通道自 2017 年起先对新注册账号关闭、2019 年起进一步整体收紧，登录阶段会返回「为你的帐号安全，此微信号不能登录网页微信」这类错误。仓库本身也长期没有更新，文档标注的 Python 支持是 2.7 与 3.5。所以它的现实价值主要在**读接口设计、维护历史脚本、理解个人号自动化的技术路线**，而不是拿来做新项目。真要落自动化，应优先考虑平台官方提供的开放接口或企业侧方案。
 
-**上游项目**：`ItChat`　**仓库**：https://github.com/littlecodersh/ItChat
-
 > 本文接口名与参数名取自该仓库 README 与其官方文档站；登录状态与账号能否使用受平台策略影响，实测结论会随时间变化。
 
 ## 什么时候用 / 不用
@@ -77,7 +75,7 @@ pip install itchat
 ```python
 import itchat
 
-itchat.auto_login()
+itchat.auto_login
 
 itchat.send('Hello, filehelper', toUserName='filehelper')
 ```
@@ -91,8 +89,8 @@ import itchat
 def text_reply(msg):
     return msg.text
 
-itchat.auto_login()
-itchat.run()
+itchat.auto_login
+itchat.run
 ```
 
 处理函数的返回值会被当作回复内容发回去。
@@ -139,7 +137,7 @@ def download_files(msg):
 
 @itchat.msg_register(FRIENDS)
 def add_friend(msg):
-    msg.user.verify()
+    msg.user.verify
     msg.user.send('Nice to meet you!')
 
 @itchat.msg_register(TEXT, isGroupChat=True)
@@ -151,13 +149,13 @@ itchat.auto_login(True)
 itchat.run(True)
 ```
 
-要点：传列表可一次注册多种类型；`isGroupChat=True` 注册群消息；`msg.isAt` 判断是否被 @；`msg.user` 是发送者对象，可以直接 `.send()`。
+要点：传列表可一次注册多种类型；`isGroupChat=True` 注册群消息；`msg.isAt` 判断是否被 @；`msg.user` 是发送者对象，可以直接 `.send`。
 
 **6. 搜索用户 / 多开 / 登录与退出回调**
 
 ```python
 # 获取自己的用户信息
-itchat.search_friends()
+itchat.search_friends
 # 按 UserName 精确获取
 itchat.search_friends(userName='@abcdefg1234567')
 # 备注、微信号、昵称任意一项匹配
@@ -169,25 +167,25 @@ itchat.search_friends(wechatAccount='somebody')
 ```python
 import itchat
 
-newInstance = itchat.new_instance()
+newInstance = itchat.new_instance
 newInstance.auto_login(hotReload=True, statusStorageDir='newInstance.pkl')
 
 @newInstance.msg_register(itchat.content.TEXT)
 def reply(msg):
     return msg.text
 
-newInstance.run()
+newInstance.run
 ```
 
 ```python
-def lc():
+def lc:
     print('finish login')
 
-def ec():
+def ec:
     print('exit')
 
 itchat.auto_login(loginCallback=lc, exitCallback=ec)
-itchat.logout()
+itchat.logout
 ```
 
 文档说明：不设置 `loginCallback` 时，登录后会默认删除二维码文件并清空命令行显示。
@@ -210,9 +208,9 @@ itchat.logout()
 |---|---|---|
 | 网络访问 | 需要 | 与平台服务端通信完成扫码登录、收发消息、拉取联系人；这是本库运行的前提 |
 | 读取文件 | 需要 | 读取本地保存的登录状态文件以实现免重复扫码；读取要发送的附件 |
-| 写入文件 | 需要 | 写登录状态文件；`msg.download()` 把收到的图片 / 语音 / 文件存到本地；登录后默认还会生成并删除二维码图片 |
+| 写入文件 | 需要 | 写登录状态文件；`msg.download` 把收到的图片 / 语音 / 文件存到本地；登录后默认还会生成并删除二维码图片 |
 | 凭证 | 需要 | 登录态本身就是凭证，等价于你的个人账号身份；不要把它传播给他人，也注意状态文件不要泄露 |
-| 子进程 / 后台常驻 | 需要 | `itchat.run()` 是阻塞式消息循环，必须以常驻进程方式运行；登录态过期后需要人工扫码 |
+| 子进程 / 后台常驻 | 需要 | `itchat.run` 是阻塞式消息循环，必须以常驻进程方式运行；登录态过期后需要人工扫码 |
 
 ## 触发场景
 

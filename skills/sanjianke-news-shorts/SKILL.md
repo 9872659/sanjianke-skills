@@ -72,8 +72,8 @@ tags:
 |---|---|---|
 | 采集参考 | `POST /api/v1/apps/watermark_removal/douyin_search_video` · `xhs_search_note` | **100 点/次**（flat，失败亦计） |
 | 配图 | `POST /api/v1/images/generations` | **6 点/张**（尺寸与格式同价） |
-| 播报 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字**（上游 x 3） |
-| 配乐 | `POST /api/v1/apps/media_services_33/music_generate` | **50 点起/首**（上游 x 2，保底 50） |
+| 播报 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字** |
+| 配乐 | `POST /api/v1/apps/media_services_33/music_generate` | **50 点起/首** |
 | 补镜头 | `POST /api/v1/apps/full_video/submit` | 480P 14 / 768P 28 / **1080P 60** / 2K 80 / 4K 80 点/秒 |
 | 混剪 | `POST /api/v1/apps/smart_clip/news_mixcut` | **4.5 点/秒**（无 duration 时预冻结 45 点） |
 | 免费四项 | `GET /tasks/<id>` · `POST /upload` · `plan` · `qc` | **0 点** |

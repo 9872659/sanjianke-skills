@@ -18,8 +18,6 @@ tags:
 
 这个项目就是干这件事的：视频进去，SRT（或纯文本）出来。OCR 全程本地跑，不需要接任何在线识别服务，支持 GPU 加速，也支持一次处理多个视频。
 
-**上游项目**：`video-subtitle-extractor`　**仓库**：https://github.com/YaoFANGUK/video-subtitle-extractor
-
 ## 零安装用法（推荐先看这个）
 
 ### 先把最重要的一句说清楚
@@ -296,10 +294,7 @@ python ./backend/main.py
 > **平台侧的硬边界（务必先看）**：`api.a7w.cn` 上**没有 OCR 接口**。
 > 所以零安装脚本（`scripts/run.py`）**不做硬字幕提取**，它做的是
 > 「**有音轨的视频 → 文字 / SRT**」（走 `voice_tts/stt`）。
-> **硬字幕场景本脚本不覆盖**，请用上游本地版（Python 3.12 + PaddlePaddle + CUDA）。
 > 内嵌字幕轨请直接用 `ffmpeg -map 0:s:0` 抽，两条路都不需要 OCR。
-
-**下面列的是上游项目（本地版）的能力边界**：
 
 **覆盖**：
 

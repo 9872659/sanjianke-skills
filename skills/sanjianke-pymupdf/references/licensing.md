@@ -1,7 +1,5 @@
 # 许可证：AGPL 与商业授权的分界
 
-> 这份文件是对上游许可条款的**整理与解读**，不是法律意见。最终以官方 `COPYING` 文件、AGPL-3.0 原文与 Artifex 的授权条款为准；拿不准请咨询法务。
-
 ---
 
 ## 一、基本事实
@@ -89,7 +87,7 @@ PyMuPDF 与它底层的 MuPDF 都由 **Artifex Software, Inc.** 维护，采用*
 **PyMuPDF Pro** 是独立销售的产品，增加 Office（DOC / DOCX / XLS / XLSX / PPT / PPTX）与韩文 Office（HWP / HWPX）格式支持。
 
 - 用 `pymupdf.pro.unlock("你的许可证Key")` 解锁。
-- **不带 Key 调用 `unlock()` 时有明确限制**：任意文档**只能访问前 3 页**，并且功能在评估期结束后失效。
+- **不带 Key 调用 `unlock` 时有明确限制**：任意文档**只能访问前 3 页**，并且功能在评估期结束后失效。
 - Pro 的能力与 AGPL 开源版是分开授权的——**开源许可证不覆盖 Pro**。
 
 ```python
@@ -98,7 +96,7 @@ import pymupdf.pro
 pymupdf.pro.unlock("YOUR-LICENSE-KEY")
 
 doc = pymupdf.open("presentation.pptx")
-pdf_bytes = doc.convert_to_pdf()
+pdf_bytes = doc.convert_to_pdf
 ```
 
 **PyMuPDF4LLM** 是另一个独立的包（`pip install pymupdf4llm`），提供面向 RAG 的 Markdown / JSON / 文本输出。它由同一方维护，**其授权条款需单独确认**——不要假设和核心包一样，也不要假设它自动包含在你的商业许可证里。

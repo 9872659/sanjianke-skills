@@ -45,7 +45,6 @@ http://localhost:11434/v1/chat/completions
 - **必需**：受支持的浏览器（Chromium 系 / Firefox / Safari）；可访问所选翻译服务的网络
 - **可选**：自备的 OpenAI 兼容接口或按官方契约实现的翻译接口及其 Key；Tampermonkey 等脚本管理器（用用户脚本形态时）
 - **移动端**（可选）：官方 APK 或 Android 浏览器、iOS Safari
-- **不需要**：源码、构建工具链或 Node.js —— 上游仓库只发布编译好的安装包，**没有 `package.json`、没有构建脚本、没有 `src/` 目录**，不存在"从源码构建"的步骤
 
 ---
 
@@ -56,7 +55,6 @@ http://localhost:11434/v1/chat/completions
 - 该扩展申请的作用范围是全部网址（含本地文件协议），这是它能在任意网页上工作的前提；安装前请确认这与你的使用环境与合规要求相符
 - 若填写自备的 API Key，凭证保存在本机浏览器配置里；不要在共享电脑上留存生产环境的 Key
 - 用户脚本形态下，自定义接口需要在脚本头部用 `@connect` 声明目标域名才能请求
-- 上游仓库**不含源代码**，安装包来自官方分发渠道；不要从第三方站点下载改包
 - 本 Skill 不提供该产品的技术支持，产品问题走官方反馈渠道
 
 ---
@@ -67,8 +65,6 @@ http://localhost:11434/v1/chat/completions
 
 - 项目：`immersive-translate`
 - 仓库：https://github.com/immersive-translate/immersive-translate
-
-> 说明：该仓库用于发布安装包与收集用户反馈，**不包含源代码**，上游明确说明该项目并非开源软件。本 Skill 只介绍安装、配置与使用，不涉及源码。
 
 ---
 

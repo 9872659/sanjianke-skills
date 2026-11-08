@@ -88,8 +88,6 @@ Windows 下不要把内联 JSON 直接写在 `--props` 后面，双引号会被 
 
 MIT，见 `LICENSE.md`。
 
-> 注意区分：本 Skill 包的许可是 MIT；上游项目 Remotion 自身另有商业许可证条款，两者不是一回事。上游的使用许可请以 https://www.remotion.dev/docs/license/pricing 为准。
-
 ---
 
 ---

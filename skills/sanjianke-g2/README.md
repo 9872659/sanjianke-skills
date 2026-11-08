@@ -21,8 +21,8 @@ G2：统计图表可视化语法 的安装、常用命令与避坑要点
 1. **先判适用性**：命中"不要用它"里的任何一条（关系图、地图、纯表格展示、后端出图），直接换方案，别硬接。
 2. **锁定大版本**：看 `package.json` 或执行 `npm ls @antv/g2`，确定当前是 v3 / v4 / v5 中的哪一版，再去看对应版本的官方文档——示例写法差异很大。
 3. **准备容器**：在页面里放一个宽高确定的容器元素，等 DOM 就绪、容器可见后再创建图表。
-4. **写声明**：`new Chart({ container })` → 选 mark（`interval` / `line` / `area` / `point` …）→ `.data()` 绑数据 → `.encode()` 映射通道 → 按需配置坐标轴、图例、Tooltip 与 transform → `chart.render()`。
-5. **收尾**：组件卸载或路由离开时调用 `chart.destroy()`。
+4. **写声明**：`new Chart({ container })` → 选 mark（`interval` / `line` / `area` / `point` …）→ `.data` 绑数据 → `.encode` 映射通道 → 按需配置坐标轴、图例、Tooltip 与 transform → `chart.render`。
+5. **收尾**：组件卸载或路由离开时调用 `chart.destroy`。
 
 包内的 `SKILL.md` 有完整的六块内容：什么时候用 / 不用、安装、常用操作、常见坑、权限与用途说明、能力边界。链式 API 的确切签名与可配置项，以所装版本对应的官方 API 文档为准。
 

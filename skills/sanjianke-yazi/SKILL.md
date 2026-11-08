@@ -19,8 +19,6 @@ tags:
 比 `ls` + `cd` + `mv` 快得多的地方在于：它有可视化预览、多选、批量重命名、后台任务队列，还能记住你上次选中的东西。
 Claude / Agent 用它的时候，通常是**人**在交互式终端里操作，Agent 负责装依赖、改配置、写 keymap、排错。
 
-**上游项目**：`yazi`　**仓库**：https://github.com/sxyazi/yazi
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -108,7 +106,7 @@ ya --version
 裸跑 `yazi` 也能用，但退出后 shell 还停在原目录。官方给的 shell wrapper 解决这个问题，把它写进 `~/.bashrc`：
 
 ```bash
-function y() {
+function y {
 	local tmp cwd; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	command yazi "$@" --cwd-file="$tmp"
 	IFS= read -r -d '' cwd < "$tmp"

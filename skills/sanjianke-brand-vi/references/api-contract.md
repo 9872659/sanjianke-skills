@@ -145,9 +145,7 @@ HTTP 500
 
 ```json
 "/api/v1/apps/nano_banana/submit": {
-  "mode": "flat", "cost": 72, "markupPercent": 0,
   "note": "…AI商品图 = 固定 72 点/次；商品多角度 = 25 点 × 选中视角数…"}
-"/api/v1/apps/nano_banana/*": {"mode": "flat", "cost": 72, "markupPercent": 0, …}
 ```
 
 ---
@@ -206,8 +204,6 @@ GET /user/balance/logs → 200，limit 生效，上限 1000
 "/api/v1/apps": {"mode":"flat","cost":0,"note":"★应用目录（只读）不计费"},
 "/api/v1/models": {"mode":"flat","cost":0,"note":"★模型目录（只读）不计费"},
 "/api/v1/upload": {"mode":"flat","cost":0,"note":"★上传不计费"},
-"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-      "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 ---

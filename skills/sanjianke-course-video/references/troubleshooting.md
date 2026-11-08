@@ -42,7 +42,6 @@
 ```
 
 说明网关的计费卡被改过。先跑 `cost` 看预估还对不对，再决定要不要按新价重算预算。
-`口播口径一致（上游实际点数 ×5）` 这一项只核对 `markupPercent == 400`。
 
 ### 2. 配音好了，出片说「第 N 章还没有配音」
 
@@ -95,7 +94,7 @@ python3 scripts/run.py status --task-id task_xxx
 | `GET /api/v1/tasks/{id}` | 免费（本包唯一的轮询路径） |
 | `GET /user/balance` · `/user/balance/logs` | 免费，`limit` 上限 1000 |
 | `POST /api/v1/upload` | 免费（0 点/次） |
-| `POST /api/v1/apps/{code}/query` | **每轮询一次就是一次的钱**，本包在 `http_json()` 里拦死 |
+| `POST /api/v1/apps/{code}/query` | **每轮询一次就是一次的钱**，本包在 `http_json` 里拦死 |
 
 对照流水：`sync:/api/v1/apps/nano_banana/query` 108 次、每次 -72 点，合计 **-7,776 点**。
 
@@ -104,7 +103,6 @@ python3 scripts/run.py status --task-id task_xxx
 能，前提是带上 `duration`：
 
 - `image_human` 带上 `duration` ⇒ 价格被费率卡锁死 = `rate × 秒数`
-- 不带 ⇒ 平台按上游冻结点计费，估不准
 
 所以 `slide` 永远把 `plan` 算出来的 `seconds` 显式传成 `duration`；平台探测的时长偶尔比你自己算的长一点，用 `--pad 10` 留 10% 余量。
 

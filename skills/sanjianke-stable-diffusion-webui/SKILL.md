@@ -18,8 +18,6 @@ tags:
 
 它的价值在于**本地可控 + 参数全开 + 可脚本化**：界面负责交互调参，启动开关负责适配你的显存，HTTP 接口负责让别的程序来点单，所以它既能当手工画图的工作台，也能当一台本地的出图服务器。
 
-**上游项目**：`Stable Diffusion WebUI`　**仓库**：https://github.com/AUTOMATIC1111/stable-diffusion-webui
-
 ## 零安装用法（推荐先看这个）
 
 **不需要装 WebUI、不需要 Python 环境、不需要显卡、不需要下几个 G 的模型。**
@@ -181,7 +179,7 @@ req = urllib.request.Request(
     data=json.dumps(payload).encode("utf-8"),
     headers={"Content-Type": "application/json"},
 )
-resp = json.loads(urllib.request.urlopen(req).read())
+resp = json.loads(urllib.request.urlopen(req).read)
 for i, b64 in enumerate(resp["images"]):
     with open("out_%d.png" % i, "wb") as fh:
         fh.write(base64.b64decode(b64.split(",", 1)[-1]))
@@ -279,7 +277,6 @@ export COMMANDLINE_ARGS="--xformers"
 
 ## 已知限制
 
-- 上游迭代与依赖版本强相关，换 Python 或换 torch 版本都可能需要重装依赖。
 - 启动开关数量很多，其中一部分已经失效或只用于测试；不要凭旧教程里的参数直接照抄。
 - 服务默认面向单机单人：鉴权、限流、并发控制都很弱，直接暴露到公网风险很高。
 - 生成速度、可达分辨率与能否开精修放大，完全取决于显存；同一套参数在不同机器上体验差别很大。
@@ -309,7 +306,6 @@ export COMMANDLINE_ARGS="--xformers"
 - **技术微信：9872659** —— 加好友时说一下是从哪个 Skill 找过来的，直接给你配套的 API Key 与能跑的示例。
 - **要算力 / 要 API Key**：[算力集市 · 注册领 API Key](https://api.a7w.cn/) —— 一个 Key 调用全部 AI 算力，注册、充值、创建 Key 都在这里。
 - **更多 AI 插件与接口**：[AI 插件市场](https://aigc.a7w.cn/)。
-
 
 ---
 

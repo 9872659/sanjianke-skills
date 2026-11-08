@@ -13,7 +13,6 @@
 | 中文名 | 标准超分 1080P |
 | 提交路径 | `/api/v1/video/viapi/superres` |
 | 售价 | **9 点/秒**（¥0.09/秒） |
-| 上游 action | `SuperResolveVideo` |
 | 单条上限 | **600 秒** |
 | 输入规格 | 输入 **>360×360 且 <1920×1080**；输出＝输入 2× |
 | 典型场景 | 长视频、批量、1080P 交付 |
@@ -263,7 +262,7 @@ GET /api/v1/video/viapi/tools
 `POST` 同路径会掉进单档处理器：`404 {"error":{"code":"unknown_tool","message":"未知的视频能力：tools"}}`。
 `GET .../tools/x` 仍正常回 `404 not_found`（查询路由还在）。
 
-→ 说明 relay 的 `tools` **GET 路由掉了**。本包因此**优雅降级**到内置档位表（单价取自 `api.a7w.cn` 在架能力），并如实打印「在线源当前不可达」。**价格与规格以线上为准。****如果这条恢复了，把 `fetch_tiers()` 的注释更新一下即可，代码无需改。**
+→ 说明 relay 的 `tools` **GET 路由掉了**。本包因此**优雅降级**到内置档位表（单价取自 `api.a7w.cn` 在架能力），并如实打印「在线源当前不可达」。**价格与规格以线上为准。****如果这条恢复了，把 `fetch_tiers` 的注释更新一下即可，代码无需改。**
 
 对照（同一时刻全部正常）：`/health` 200、`/api/v1/apps` 200、`/api/v1/me/tasks` 200、`POST /api/v1/video/viapi/superres` 400 `url_not_allowed`（提交链路与闸门都正常）。
 

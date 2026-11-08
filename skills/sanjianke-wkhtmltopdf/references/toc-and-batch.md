@@ -54,7 +54,7 @@ wkhtmltopdf --exclude-from-outline appendix.html out.pdf
 <html>
 <head>
 <script>
-function subst() {
+function subst {
   var vars = {};
   var qs = document.location.search.substring(1).split('&');
   for (var i in qs) {
@@ -75,7 +75,7 @@ function subst() {
 }
 </script>
 </head>
-<body style="border:0; margin:0;" onload="subst()">
+<body style="border:0; margin:0;" onload="subst">
   <table style="width:100%; border-bottom:1px solid #000;">
     <tr>
       <td class="section"></td>
@@ -88,7 +88,7 @@ function subst() {
 </html>
 ```
 
-要点：类名要和变量名一致、`onload` 里调用 `subst()`、请求参数用 URL 编码。
+要点：类名要和变量名一致、`onload` 里调用 `subst`、请求参数用 URL 编码。
 
 也可以用 `--replace <name> <value>` 在纯文字页眉页脚里做自定义替换。
 

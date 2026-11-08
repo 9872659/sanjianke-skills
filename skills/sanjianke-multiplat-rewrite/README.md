@@ -219,7 +219,7 @@ python3 scripts/run.py diff    --file out.json
   用它们跑公众号长文要么提高 `--max-tokens`，要么就用默认的 `deepseek-chat`
 - **成功响应不带 `code` 字段**；`code==1` 那套信封只用于生成应用的响应，不适用于本端点
 - 大模型调用带退避重试（网关 `upstream timeout` / HTTP 502 实测很常见）
-- JSON 解析用 `json.JSONDecoder().raw_decode()` 扫描第一个完整对象，
+- JSON 解析用 `json.JSONDecoder.raw_decode` 扫描第一个完整对象，
   模型在合法 JSON 后多吐字符也不会炸
 
 ## 文件结构

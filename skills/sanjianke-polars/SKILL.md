@@ -18,8 +18,6 @@ Polars 是一个用 Rust 写的 DataFrame 分析查询引擎。它的价值在�
 
 如果你现在用 pandas 处理几百万行开始卡、内存开始爆，或者一堆链式 `groupby` 已经看不懂了，就是换它的时候。如果你只是对几百行数据做个小筛选，它带来的收益很小。
 
-**上游项目**：`polars`　**仓库**：https://github.com/pola-rs/polars
-
 > 版本号与行为取自实测环境（Python 包 1.44.2）。可选功能（extras）与安装选项随版本变化，以官方安装文档为准。
 
 ## 什么时候用 / 不用
@@ -90,7 +88,7 @@ polars[rt64]       # 默认行数上限约 2^32，用它把上限提到 2^64
 import polars as pl
 
 df = pl.read_csv("data.csv")
-print(df.filter(pl.col("amount") > 0).group_by("region").agg(pl.col("amount").sum()))
+print(df.filter(pl.col("amount") > 0).group_by("region").agg(pl.col("amount").sum))
 ```
 
 `read_csv` / `read_parquet` / `read_json` 是无状态即时读取，读完立刻在内存里。
@@ -105,17 +103,17 @@ q = (
     .filter(pl.col("status") == "shipped")
     .group_by("customer_id")
     .agg(
-        pl.col("amount").sum().alias("total"),
-        pl.len().alias("n_orders"),
+        pl.col("amount").sum.alias("total"),
+        pl.len.alias("n_orders"),
     )
     .sort("total", descending=True)
 )
 
-print(q.explain())     # 打印优化后的查询计划
-result = q.collect()   # 到这里才真正执行
+print(q.explain)     # 打印优化后的查询计划
+result = q.collect   # 到这里才真正执行
 ```
 
-`scan_*` 返回 LazyFrame，不 `collect()` 就不会算。`explain()` 能让你看到过滤和投影有没有被下推到扫描阶段。
+`scan_*` 返回 LazyFrame，不 `collect` 就不会算。`explain` 能让你看到过滤和投影有没有被下推到扫描阶段。
 
 **3. 内存装不下时：切流出式引擎**
 
@@ -136,7 +134,7 @@ result = q.collect(engine="streaming")
 
 官方还提示：若所选引擎跑不了该查询，Polars 会回落到内存引擎。
 
-**关于下一个大版本**：2.0 升级指南说明 `collect` / `collect_async` 仍默认 `engine="auto"`，但 `"auto"` 的解析目标将从内存引擎改为流式引擎。要恢复旧行为，可以用 `pl.Config.set_engine_affinity("in-memory")`（进程级）、`lf.collect(engine="in-memory")`（单次查询），或设 `POLARS_ENGINE_AFFINITY=in-memory`。另外 `explain()` / `show_graph()` 只有在显式传 `engine="streaming"` 时才渲染流式计划，`sink_*` 不受影响。
+**关于下一个大版本**：2.0 升级指南说明 `collect` / `collect_async` 仍默认 `engine="auto"`，但 `"auto"` 的解析目标将从内存引擎改为流式引擎。要恢复旧行为，可以用 `pl.Config.set_engine_affinity("in-memory")`（进程级）、`lf.collect(engine="in-memory")`（单次查询），或设 `POLARS_ENGINE_AFFINITY=in-memory`。另外 `explain` / `show_graph` 只有在显式传 `engine="streaming"` 时才渲染流式计划，`sink_*` 不受影响。
 
 **4. 写回文件 / 转给别的库**
 
@@ -144,8 +142,8 @@ result = q.collect(engine="streaming")
 df.write_parquet("out.parquet")
 df.write_csv("out.csv")
 
-pdf = df.to_pandas()      # 需要装 pandas
-tbl = df.to_arrow()       # Apache Arrow 表
+pdf = df.to_pandas      # 需要装 pandas
+tbl = df.to_arrow       # Apache Arrow 表
 ```
 
 Polars 内部使用 Apache Arrow 列式格式，与 Arrow / pandas 之间可以零拷贝或低成本共享。
@@ -154,19 +152,19 @@ Polars 内部使用 Apache Arrow 列式格式，与 Arrow / pandas 之间可以�
 
 ```python
 import polars as pl
-print(pl.thread_pool_size())   # 实测输出：12（由本机核数决定）
+print(pl.thread_pool_size)   # 实测输出：12（由本机核数决定）
 ```
 
 Polars 默认就会用满 CPU 核。官方 API 文档给出的控制方式是在**进程启动前**设置 `POLARS_MAX_THREADS` 环境变量；线程池没有加锁，一旦设好就不能再改，官方也明确「除此之外强烈建议不要覆盖这个值，引擎会自动设置它」，典型适用场景是在 PySpark UDF 之类的上下文里临时限流。
 
-另外注意：老函数名 `polars.threadpool_size()` 已废弃，改用 `thread_pool_size()`。
+另外注意：老函数名 `polars.threadpool_size` 已废弃，改用 `thread_pool_size`。
 
 **6. 和 Python 的 multiprocessing 一起用时，必须用 spawn**
 
 ```python
 from multiprocessing import get_context
 
-with get_context("spawn").Pool() as pool:
+with get_context("spawn").Pool as pool:
     pool.map(my_fun, ["input1", "input2"])
 ```
 
@@ -178,15 +176,15 @@ with get_context("spawn").Pool() as pool:
 |---|---|---|
 | `AttributeError`，或结果和 pandas 预期完全不一样 | 把 pandas 的习惯直接搬过来了：Polars 没有 index，也就没有 `.loc` / `.iloc`；取值与赋值方式都不同 | 换表达式写法：`pl.col("x")`、`df.select(...)`、`df.filter(...)`，把返回的新对象重新赋值给变量 |
 | 调用 `df.with_columns(...)` 后发现原变量没变 | 官方记录的行为是返回新的 DataFrame（因此也不会出现 pandas 的 `SettingWithCopyWarning`），不是就地修改 | 接住返回值：`df = df.with_columns(...)` |
-| `q.filter(...)` 之后打印出来还是「查询」而不是数据 | 用了 `scan_*` 或 `.lazy()`，拿到的是 LazyFrame，惰性计划不会自动执行 | 末尾加 `.collect()`；调试时先 `.explain()` 看计划，再决定收不收 |
+| `q.filter(...)` 之后打印出来还是「查询」而不是数据 | 用了 `scan_*` 或 `.lazy`，拿到的是 LazyFrame，惰性计划不会自动执行 | 末尾加 `.collect`；调试时先 `.explain` 看计划，再决定收不收 |
 | `collect(engine="streaming")` 报未知参数 | 旧版本还没有这个参数名，或写法与该版本不符 | 先 `print(pl.__version__)` 确认版本，再对照该版本文档；升级 polars 往往是最省事的解法 |
-| 和 `multiprocessing` 一起用时抛出与 multiprocessing 方法相关的错误 | 在 Unix 上默认用 `fork`，而 Polars 是多线程的，不能安全 fork | 显式用 `get_context("spawn").Pool()`，不要依赖平台默认值 |
+| 和 `multiprocessing` 一起用时抛出与 multiprocessing 方法相关的错误 | 在 Unix 上默认用 `fork`，而 Polars 是多线程的，不能安全 fork | 显式用 `get_context("spawn").Pool`，不要依赖平台默认值 |
 | 空值和 NaN 的处理结果和 pandas 不一致 | 官方迁移文档明确：pandas 用 `NaN` / `None` 表示缺失且可能把整型列变成浮点，而 Polars 里缺失一律是 `null`；浮点列里的 `NaN` **不被当作缺失**，只是一个特殊浮点值 | 显式处理：先 `fill_null` / `drop_nulls`，需要区分时用对应的判空表达式，别默认两者等价 |
 | 照抄老教程的 extras 名字，`pip install` 直接失败 | 1.0 升过一轮 extras 名（例如 `fastexcel` / `gevent` / `matplotlib` 已改名） | 对照官方安装文档当前的 Feature flags 表写 extras，别用旧文章里的名字 |
 | 读 Parquet 目录时行为和老版本不同、分区列没出现 | 1.0 起 `read/scan_parquet` 对**文件输入**（单文件、glob、文件列表）默认关闭 Hive 分区推断，目录输入才默认开启 | 需要老行为就显式传 `hive_partitioning=True` |
 | 读 `lf.schema` / `lf.columns` 时收到性能警告 | 这些惰性属性会触发 schema 解析，官方已将其标记为废弃并给出替代方法 | 改用 `LazyFrame.collect_schema` 取 schema |
-| 以为加 `multiprocessing` 就能更快 | Polars 已经把可并行的计算放到多线程里，再套一层进程池往往只是抢内存和 CPU | 先看 `explain()` 有没有优化空间、要不要切 streaming；只有当瓶颈在别的单线程库上时，才考虑多进程 |
-| 大结果集直接 `to_pandas()` 把内存打爆 | 转换成 pandas 意味着额外物化一份数据，惰性引擎省下的内存被这一步吃回去 | 先在 Polars 侧聚合 / 裁剪到需要规模，再转换；能不下沉到 pandas 就别下沉 |
+| 以为加 `multiprocessing` 就能更快 | Polars 已经把可并行的计算放到多线程里，再套一层进程池往往只是抢内存和 CPU | 先看 `explain` 有没有优化空间、要不要切 streaming；只有当瓶颈在别的单线程库上时，才考虑多进程 |
+| 大结果集直接 `to_pandas` 把内存打爆 | 转换成 pandas 意味着额外物化一份数据，惰性引擎省下的内存被这一步吃回去 | 先在 Polars 侧聚合 / 裁剪到需要规模，再转换；能不下沉到 pandas 就别下沉 |
 
 ## 权限与用途说明
 
@@ -212,7 +210,7 @@ with get_context("spawn").Pool() as pool:
 **覆盖**：
 
 - 单机 DataFrame 变换：读取、过滤、聚合、join、排序、窗口函数、pivot / unpivot、时间序列处理。
-- 惰性查询与自动查询优化，可用 `explain()` 查看优化后的计划。
+- 惰性查询与自动查询优化，可用 `explain` 查看优化后的计划。
 - 流出式执行：通过 `collect(engine="streaming")` 处理放不进内存的数据集。
 - 多线程、向量化执行，默认使用全部 CPU 核。
 - 与 Apache Arrow 生态互操作，可与 pandas / Arrow / NumPy 互转。
@@ -223,7 +221,7 @@ with get_context("spawn").Pool() as pool:
 
 - 不做分布式计算，不能跨机器水平扩展算力（官方另有面向集群的产品线，不属于本库）。
 - 不做绘图、不做报表渲染，也不做调度编排——它只负责把计算做出来。
-- 不替代 pandas 的全套生态：很多第三方库只接受 pandas 对象，仍需要 `to_pandas()` 过桥。
+- 不替代 pandas 的全套生态：很多第三方库只接受 pandas 对象，仍需要 `to_pandas` 过桥。
 - 不做爬虫、不解析网页，也不负责文件下载。
 - 不提供持久化数据库或服务端能力。
 
@@ -250,12 +248,12 @@ with get_context("spawn").Pool() as pool:
 执行前：
 
 - [ ] 确认环境里的 polars 版本（`pl.__version__`），再决定用哪些参数名。
-- [ ] 分清楚这次用的是 `read_*`（即时）还是 `scan_*` / `.lazy()`（惰性）。
+- [ ] 分清楚这次用的是 `read_*`（即时）还是 `scan_*` / `.lazy`（惰性）。
 - [ ] 判断数据量级：小数据用 eager 更省心，大数据或高于内存先走惰性加流式。
 
 执行后：
 
-- [ ] 惰性查询确认已经 `collect()`，别拿着未执行的 LazyFrame 当结果用。
+- [ ] 惰性查询确认已经 `collect`，别拿着未执行的 LazyFrame 当结果用。
 - [ ] 检查行数与列名是否和预期一致，尤其是 join 与聚合之后。
 - [ ] 大结果集转换到 pandas 之前，先估算内存余量。
 - [ ] 用了 `multiprocessing` 的话，确认启动方式是 `spawn`。

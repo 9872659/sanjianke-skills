@@ -23,7 +23,7 @@
 `upscale` 是唯一收任意公网地址的档位，代价是它**完全不看素材能不能下载**：
 喂 404 地址它照样 201 并冻结点数（30 点/秒）。
 
-**本包因此把「素材可达性」补成了一道提交前闸门**：`probe_http()` 先发一次 Range 请求，拿不到 2xx/3xx 就直接 `exit=3` 拒提交（要强行绕过必须显式 `--force`）。
+**本包因此把「素材可达性」补成了一道提交前闸门**：`probe_http` 先发一次 Range 请求，拿不到 2xx/3xx 就直接 `exit=3` 拒提交（要强行绕过必须显式 `--force`）。
 
 ```bash
 python3 scripts/run.py doctor --url https://你的地址/x.mp4   # 只看可达性
@@ -32,9 +32,8 @@ python3 scripts/run.py upload 你的视频.mp4                    # 传本地文
 
 ---
 
-## 3. 报错对照表（上游 code → 人话）
+## 3. 报错对照表
 
-| 上游 code | HTTP | 本包的说法 / 处置 |
 |---|---|---|
 | `empty_url` / `pixverse_empty_url` | 400 | 没给 `videoUrl` |
 | `url_not_allowed` | 400 | **本档只收本站素材**（见 §2，本包会提前拦） |

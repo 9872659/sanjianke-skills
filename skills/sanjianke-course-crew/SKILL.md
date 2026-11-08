@@ -201,7 +201,7 @@ curl https://api.a7w.cn/api/v1/models -H "Authorization: Bearer $A7W_API_KEY"
 1. **字段白名单** —— `ROLES[*]["inputs"]` / `["forbidden"]` 是提示词模板真实读的数据，
    被排除的字段在物理上没有进入 prompt 的路径。给课件的设计卡只是一份**窄字典**
    （课程名 + 逐单元标题），讲师拿得到学习目标但**拿不到考核标准**。
-2. **调用前实检**（`assert_isolation()`）—— 拿被禁字段的标记词对**真实提示词文本**
+2. **调用前实检**（`assert_isolation`）—— 拿被禁字段的标记词对**真实提示词文本**
    扫一遍，泄漏就抛 `IsolationBreach`、**中止这次调用**（一个字都不发出去）。
    每次调用的判定逐条写进产物与 `REPORT.md`，外部可复核。
 
@@ -260,7 +260,7 @@ stderr 打印标红汇总。**跑不通就说跑不通。**
 
 ### 驳回也必须留理由
 
-`check_ruling_completeness()` 在收口时核一遍：凡是
+`check_ruling_completeness` 在收口时核一遍：凡是
 `send_back` / `veto` / `cannot_fit` / `rejected` / `ineffective` 这类否决性裁决，
 理由少于 8 个字就判「无理由裁决」→ 整次运行退出码 3 并逐条指出是哪一条。
 
@@ -439,7 +439,6 @@ python3 scripts/run.py models --type all # 看全部
 | `没有找到 API Key` | `--key` / `A7W_API_KEY` / `a7w.py login` 三选一 |
 | `鉴权失败（401）` / `点数不足（402）` | 到 https://api.a7w.cn/ 重新创建 Key 或充值 |
 | `模型不存在（404）` | `run.py models` 现查在架名，别写死 |
-| 上游 502/503/504、`网络抖动（WinError 10054）` | 脚本自动退避重试 4 次；真机上重试一次就成功过 |
 | `预估成本已超预算，未发起这次调用`（退出码 5） | 提高 `--budget`、减少节数/篇幅，或先 `cost` 试算 |
 | `用了 --budget 就必须给 --price-in / --price-out`（退出码 2） | 补上单价 —— 不给单价时 `--budget` 是个**假保险丝** |
 | `出口 = design_retries_exhausted` | **这是真实结论，不是 bug**。看 `unresolved` 里逐条原因（通常是目标不可考核），加 `--design-retries` 或人工改设计卡 |

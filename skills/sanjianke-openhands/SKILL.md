@@ -19,8 +19,6 @@ tags:
 
 它最有价值的地方是**后端可以换、可以多开**：Agent Server 是一个 REST 服务，一台机器一个端口就能托一组 Agent；Canvas 可以同时连多个 Agent Server，本地笔记本、团队共享的服务器、云上的机器，在同一个界面里切换。再加上 Automation 那一层，可以让 Agent 按计划或按 webhook 自己跑起来（对接 Slack、GitHub、Linear 这类系统）。
 
-**上游项目**：`OpenHands`　**仓库**：https://github.com/OpenHands/OpenHands
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -277,7 +275,6 @@ curl -I http://canvas.example.com/     # 期望 301 跳 https
 - 默认**不做**安全隔离：Options 1/3 直接在宿主机跑，官方明确警告；Docker 方式给的也只是「把项目挂进容器」这一层限制。
 - 不是 IDE，也不做代码补全/静态分析；它是驱动 Agent 的控制中心。
 - 不提供公网部署的安全兜底。官方自托管文档的立场很清楚：先锁防火墙，再启动服务，Key 与 TLS 由你负责。
-- 不覆盖上游其它仓库的内容：Agent Server 与 SDK 的 API 细节、自动化服务的内部实现，要看各自的仓库与文档。
 - 不承担「Agent 改坏了代码」的后果——版本控制与备份是你的责任。
 
 ## 依赖条件

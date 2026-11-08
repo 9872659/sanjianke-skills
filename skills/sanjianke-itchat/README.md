@@ -20,7 +20,7 @@
 1. 先读 `SKILL.md` 的「什么时候用 / 不用」——多数新需求在这一步就会被判定为不该用。
 2. 如果确实要跑：`pip install itchat`，然后在独立虚拟环境里尝试登录。
 3. 接口用法按官方文档站对照：`auto_login`（含 `enableCmdQR` / `hotReload` / `loginCallback` / `exitCallback` / `statusStorageDir`）、`msg_register`、`run`、`send`、`search_friends`、`new_instance`、`logout`。
-4. 消息处理用装饰器按类型注册；处理器返回值即回复内容；`msg.user.send()` 主动发消息；`msg.download()` 下载附件。
+4. 消息处理用装饰器按类型注册；处理器返回值即回复内容；`msg.user.send` 主动发消息；`msg.download` 下载附件。
 5. 群消息用 `isGroupChat=True` 注册，用 `msg.isAt` 判断是否被 @。
 6. **登录失败就果断换路线**，不要对同一条通道反复重试。
 

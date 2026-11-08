@@ -18,8 +18,6 @@ tags:
 
 需要说明的是：这个项目**已经改名为 CowAgent**，`chatgpt-on-wechat` 是它历史上的名字，老仓库地址会自动跳转。本 Skill 按改名后的口径写，同时把改名前后的差异点标出来，免得照旧文章操作时对不上。
 
-**上游项目**：`chatgpt-on-wechat（现名 CowAgent）`　**仓库**：https://github.com/zhayujie/chatgpt-on-wechat
-
 ## 什么时候用 / 不用
 
 **用它**：

@@ -105,7 +105,6 @@ ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 low.mp4
 ### `status` 显示 `failed` / `提交后轮询到 failed`
 
 - **失败全额退回**，`status --json` 里看 `chargedPoints` / `netPoints`
-- `message` 字段有上游原因
 - `tasks` 里这条的 `status` 是 `refunded`，`netPoints` 是 0
 
 ### 冻结了但还没结算
@@ -176,7 +175,7 @@ python3 scripts/run.py submit --url ... --tier 4k --duration 600 --out out.mp4 -
 ```python
 import urllib.request
 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-data = urllib.request.urlopen(req, timeout=600).read()
+data = urllib.request.urlopen(req, timeout=600).read
 ```
 
 ---

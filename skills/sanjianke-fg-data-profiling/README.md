@@ -22,7 +22,7 @@
 2. 按「安装」一节把包装好；从旧包迁移过来的，先卸旧再装新，并把代码里的导入名改成 `data_profiling`。
 3. 用 pandas 读入数据，先确认表头、编码、分隔符都正确；确认列类型基本符合预期。
 4. 数据量较大时先抽样，再生成报告；不要拿几十万行以上直接全量跑。
-5. 一行生成报告对象：`ProfileReport(df, title="...")`，再按需要 `to_file()` / `to_json()` / `to_widgets()` / `to_notebook_iframe()`。
+5. 一行生成报告对象：`ProfileReport(df, title="...")`，再按需要 `to_file` / `to_json` / `to_widgets` / `to_notebook_iframe`。
 6. 报告出来后，重点看「警报」与「总览」两部分，逐条回到业务语义判断哪些需要处理。
 7. 含敏感数据的表，先用官方敏感数据相关配置处理，再决定报告的分发范围。
 

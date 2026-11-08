@@ -143,15 +143,12 @@ GET /user/balance/logs?limit=3
 ### 3.1 `GET /api/v1/pricing`（裸对象，不套 code/data）
 
 ```json
-{"currency": "points", "markupPercent": 20, "site": "...", "note": "...",
  "pricing": {
    "/api/v1/video/viapi/enhance": {"mode": "per_second", "perSecond": 15,
-                                    "markupPercent": 0,
                                     "note": "画质综合增强（VIAPI EnhanceVideoQuality）：15 点/秒"},
    "/api/v1/apps/full_video/submit": {"mode": "per_second",
                                       "resolutionRates": {"480P": 14, "768P": 28, "1080P": 60,
                                                           "2K": 80, "4K": 80}},
-   "/api/v1/upload": {"mode": "flat", "cost": 0, "markupPercent": 0,
                       "note": "★上传不计费……上传是生成的前置动作、不是可计费服务"},
    "/api/v1/tasks": {"mode": "per_module", "cost": 50}
  }}

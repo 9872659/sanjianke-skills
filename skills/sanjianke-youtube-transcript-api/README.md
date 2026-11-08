@@ -27,10 +27,8 @@
 
 ## 依赖
 
-- 上游仓库：https://github.com/jdepoix/youtube-transcript-api
 - 运行依赖：Python 与 requests（随包安装）。
 - 可选：代理服务商账号（使用代理功能时）。
-- 开发上游源码时需要 Poetry 及其任务运行器，并按仓库说明安装测试与开发依赖组。
 
 ---
 

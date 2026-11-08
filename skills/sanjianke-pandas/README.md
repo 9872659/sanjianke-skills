@@ -17,8 +17,8 @@
 
 1. 装好 pandas 并确认版本：`python -c "import pandas as pd; print(pd.__version__)"`
 2. 按数据形态选读入函数：CSV 用 `read_csv`、Excel 用 `read_excel`、JSON 用 `read_json`、数据库用 `read_sql`、Parquet 用 `read_parquet`
-3. 先体检再动手：`df.shape` / `df.info()` / `df.describe()` / `df.isna().sum()`，确认行列数、dtype、空值分布
-4. 清洗与计算：选列筛行、`assign` 派生列、`groupby().agg()` 聚合、`pivot_table()` 透视、`merge()` 合并
+3. 先体检再动手：`df.shape` / `df.info` / `df.describe` / `df.isna.sum`，确认行列数、dtype、空值分布
+4. 清洗与计算：选列筛行、`assign` 派生列、`groupby.agg` 聚合、`pivot_table` 透视、`merge` 合并
 5. 落地：`to_csv` / `to_excel` / `to_parquet` 写文件，或 `to_sql` 写数据库
 6. 完整操作清单、可复制的代码片段、高频坑对照表，见 `SKILL.md`
 

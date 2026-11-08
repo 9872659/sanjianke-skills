@@ -15,8 +15,6 @@ tags:
 
 拿现成的 HTML + CSS 直接渲染成 PDF，不用为打印另做一套排版。它内置浏览器引擎（Qt WebKit）、完全无头运行，不需要显示器，一条命令就能把网页或本地 HTML 变成带页眉页脚、页码、书签和目录的 PDF；同门的 `wkhtmltoimage` 还能顺手出图片。它的天花板也很明确：内核停留在 2012 年前后的 WebKit，现代 CSS、新语法 JS 都不认；上游仓库已经归档，最后一个稳定版是 2020 年的 0.12.6。
 
-**上游项目**：`wkhtmltopdf`　**仓库**：https://github.com/wkhtmltopdf/wkhtmltopdf
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -32,7 +30,6 @@ tags:
 - HTML 用了 **flex / grid / CSS 变量 / ES6+ 语法**，或者依赖现代前端框架的运行时 → 内核太老，渲染结果会崩
 - 页面内容**完全靠 JS 异步渲染**（SPA、前端图表库） → 等不到结果或大概率白页，考虑无头 Chromium 系方案
 - 处理**不可信的用户 HTML** → 官方明确警告：不消毒就等于把服务器交出去（详见「常见坑」）
-- 需要**长期维护、持续跟进浏览器安全更新** → 上游已归档，引擎不会更新
 - 只想**简单合并/操作 PDF**（拆页、加水印、加密） → 它只负责 HTML→PDF，PDF 后期处理要用别的工具
 - 追求**和打印浏览器逐像素一致** → 不同版本、不同发行版编译方式差异会导致排版和字体都不完全一致
 
@@ -173,7 +170,6 @@ wkhtmltopdf --read-args-from-stdin --enable-local-file-access < cmds
 - 现代 Web 平台：flex/grid、CSS 变量、ES6+、WebAssembly、以及依赖现代浏览器内核的框架
 - 保证与某浏览器逐像素一致：引擎老旧且不同发行版编译差异大
 - 内容安全：不消毒的 HTML/JS 会带来服务器失守风险，它不做隔离
-- 持续的安全更新：上游仓库已归档，最后稳定版是 2020 年的 0.12.6
 
 ## 依赖条件
 
@@ -182,7 +178,6 @@ wkhtmltopdf --read-args-from-stdin --enable-local-file-access < cmds
 - 运行需要系统字体（fontconfig / freetype 与具体字体），中文字体要自己装
 - 容器化注意：glibc 系基础镜像；Alpine 需要额外折腾
 - Serverless：官方提供 Amazon Linux 2 的 lambda zip，需设 `LD_LIBRARY_PATH` 与 `FONTCONFIG_PATH`
-- 上游许可为 LGPL-3.0；本 Skill 只是使用说明，不包含其源码
 
 ## 已知限制
 

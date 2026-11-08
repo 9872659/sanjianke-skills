@@ -20,7 +20,6 @@ python3 scripts/run.py resume --workdir oldfilm-work --dry-run   # 看还差几�
 | `文件不存在：…` 退 `2` | 本包 | `--file` 路径不对 | 换成绝对路径，或先 `upload --file` 拿地址 |
 | `--steps 里有不认识的工序` 退 `2` | 本包 | 工序名拼错 | 用 `catalog` 里的 7 个名字 |
 | `--preset 只能是…` 退 `2` | 本包 | 预设名拼错 | `quick / standard / repair / portrait / cinema` |
-| `上游只收本站托管的地址…` 退 `2` | 本包（本地预检） | `--video-url` 不在白名单 | 先 `upload`，或换成 `vr.a7w.cn` / `cdn2.jiujiushuyuan.cn/vr/` 链接 |
 | `提交失败（HTTP 400）… url_not_allowed` | 上游 | 地址不在白名单，本地预检被 `--allow-any-url` 跳过了 | 去掉 `--allow-any-url`，先 `upload` |
 | `提交失败（HTTP 400）… empty_url` | 上游 | `videoUrl` 是空串 | 检查 `state.json` 里上一步的 `resultUrl` / `feedUrl` |
 | `提交失败（HTTP 404）… unknown_tool` | 上游 | 路径拼错（`restore` 打成 viapi 版） | 本包已按实测表固定路径，`catalog` 可核对 |
@@ -90,7 +89,6 @@ python3 scripts/run.py resume --workdir oldfilm-work               # 只查不�
 ### 等待时
 
 - 状态一直是 `processing`：给 `--wait` 调大，或用 `resume` 分次等；
-- 卡在 `pending`：上游排队，`--every 30` 减少请求次数；
 - 状态跳 `failed` 又回 `processing`：这是自动重试，等它走完。
 
 ### 完成后

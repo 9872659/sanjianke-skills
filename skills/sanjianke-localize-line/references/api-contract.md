@@ -68,7 +68,6 @@
 ```
 
 - `result.segments` 是**字级**条目（一字一条），**不带标点**；标点只出现在 `result.text`。
-- 计费 **120 点/次**（上游 40 点 x 3；`usage.points_cost` 是上游点数）。
 - 预扣 **150 点/次**，失败全额退。
 
 ---
@@ -103,7 +102,6 @@
 - 异步：`{"code":1,"msg":"success","data":{"task_id":"task_…","status":"pending"}}`。
 - 轮询 `GET /api/v1/tasks/<task_id>`（免费），完成态 `status=completed`，音频地址在
   `result` 里（本包的解析器对 `audio_url` / `audioUrl` / `url` / `result.*` 递归兜底）。
-- 计费：通配规则「上游实际点数 x 2、单笔保底 50 点」，**实测每次预扣 60 点**。
 
 ### 4.4 67 个音色（`voice.enum` 原文顺序）
 
@@ -197,25 +195,21 @@
 
 ```json
 "/api/v1/apps/voice_tts/*": {
-  "mode": "flat", "cost": 0, "markupPercent": 200,
-  "note": "…对外价 = 上游实际点数（响应 usage.points_cost / actual_points）× 3，
            单笔保底 > 0。实测：voice_tts/stt 上游真实 40 点 → 我方 120 点；
            tts_live 33 字上游真实 1.98 点 → 我方 5.94 点。"
 }
 ```
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 折算：
 
 | 项 | 点数 |
 |---|---|
-| `voice_tts/stt` | 120 点/次（上游 40 x 3） |
+| `voice_tts/stt` | 120 点/次 |
 | `voice_tts/tts*` | 约 0.18 点/字 = 180 点/千字（同族锚点） |
-| `media_services_33/*` 配音 | 60 点/条起（上游 x 2、保底 50；实测预扣 60） |
+| `media_services_33/*` 配音 | 60 点/条起 |
 | 字幕（本地） | 0 点 |
 
 ### 6.1 流水锚点（同账号、同族会话实测，非本轮）
@@ -237,7 +231,6 @@
 | 项 | 本包口径 |
 |---|---|
 | 转写计费 | 120 点/次，按次不按时长 |
-| 配音计费 | 60 点/条起，一条 <=5000 字；成交价 = 上游实际点数 x 2 |
 | 翻译计费 | 只报 token |
 | 字幕 | 0 点 |
 | 预算闸门 | `--budget` 单位是点（1 元 = 100 点），超了发请求前就退 `5` |

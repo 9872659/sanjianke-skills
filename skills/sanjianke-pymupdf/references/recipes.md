@@ -15,7 +15,7 @@ with pymupdf.open("input.pdf") as doc:
     print("是否加密:", doc.is_encrypted)
     print("是否需要密码:", doc.needs_pass)
     print("元数据:", doc.metadata)
-    print("目录:", doc.get_toc())
+    print("目录:", doc.get_toc)
 
     page = doc[0]                       # 支持下标与切片
     print("页面尺寸:", page.rect)        # Rect(x0, y0, x1, y1)
@@ -32,7 +32,7 @@ doc = pymupdf.open("secret.pdf", password="your-password")
 
 ```python
 with open("input.pdf", "rb") as f:
-    data = f.read()
+    data = f.read
 
 doc = pymupdf.open(stream=data, filetype="pdf")
 ```
@@ -45,7 +45,7 @@ doc = pymupdf.open(stream=data, filetype="pdf")
 
 ```python
 with pymupdf.open("input.pdf") as doc:
-    full = "\n".join(page.get_text() for page in doc)
+    full = "\n".join(page.get_text for page in doc)
 ```
 
 ### 按页分块（RAG 常用）
@@ -53,7 +53,7 @@ with pymupdf.open("input.pdf") as doc:
 ```python
 with pymupdf.open("input.pdf") as doc:
     for page in doc:
-        text = page.get_text().strip()
+        text = page.get_text.strip
         if text:
             print({"page": page.number + 1, "text": text})
 ```
@@ -95,13 +95,13 @@ import pymupdf
 
 with pymupdf.open("input.pdf") as doc:
     page = doc[0]
-    sizes = Counter()
+    sizes = Counter
     for block in page.get_text("dict")["blocks"]:
         if block["type"] != 0:
             continue
         for line in block["lines"]:
             for span in line["spans"]:
-                if span["text"].strip():
+                if span["text"].strip:
                     sizes[round(span["size"], 1)] += len(span["text"])
 
     # 正文字号 = 出现字符数最多的那个
@@ -113,7 +113,7 @@ with pymupdf.open("input.pdf") as doc:
             continue
         for line in block["lines"]:
             for span in line["spans"]:
-                if span["size"] > body * 1.2 and span["text"].strip():
+                if span["size"] > body * 1.2 and span["text"].strip:
                     print("#" * max(1, int(body * 2 / span["size"])), span["text"])
 ```
 
@@ -145,7 +145,7 @@ with pymupdf.open("paper.pdf") as doc:
 ```python
 with pymupdf.open("input.pdf") as doc:
     page = doc[0]
-    tp = page.get_textpage()                 # 只建一次，这是贵的部分
+    tp = page.get_textpage                 # 只建一次，这是贵的部分
     text  = page.get_text("text",  textpage=tp)
     words = page.get_text("words", textpage=tp)
     d     = page.get_text("dict",  textpage=tp)
@@ -162,15 +162,15 @@ import pymupdf
 
 with pymupdf.open("spreadsheet.pdf") as doc:
     for page in doc:
-        tables = page.find_tables()
+        tables = page.find_tables
         for i, table in enumerate(tables):
             print(f"--- 第 {page.number + 1} 页 表 {i} ---")
             print("位置:", table.bbox)
             print("行数:", table.row_count, "列数:", table.col_count)
-            print(table.to_markdown())
+            print(table.to_markdown)
 
             # 需要 pandas 时
-            # df = table.to_pandas()
+            # df = table.to_pandas
 ```
 
 ### 提取表格到 CSV
@@ -183,8 +183,8 @@ with pymupdf.open("report.pdf") as doc, \
      open("tables.csv", "w", newline="", encoding="utf-8-sig") as f:
     writer = csv.writer(f)
     for page in doc:
-        for table in page.find_tables():
-            for row in table.extract():
+        for table in page.find_tables:
+            for row in table.extract:
                 writer.writerow(["" if c is None else c for c in row])
 ```
 
@@ -242,7 +242,7 @@ with pymupdf.open("input.pdf") as doc:
     out.mkdir(exist_ok=True)
 
     for page in doc:
-        for img in page.get_images():
+        for img in page.get_images:
             xref = img[0]
             pix = pymupdf.Pixmap(doc, xref)
             if pix.n > 4:                        # CMYK 等要转 RGB
@@ -250,9 +250,9 @@ with pymupdf.open("input.pdf") as doc:
             pix.save(out / f"p{page.number}_{xref}.png")
 ```
 
-**注意**：`get_images()` 只列嵌入的位图。图表如果是矢量绘制的，这里什么都拿不到——那种情况只能整页栅格化。
+**注意**：`get_images` 只列嵌入的位图。图表如果是矢量绘制的，这里什么都拿不到——那种情况只能整页栅格化。
 
-更完整的提取（含图片在页面上的位置与变换矩阵）用 `page.get_image_info()`。
+更完整的提取（含图片在页面上的位置与变换矩阵）用 `page.get_image_info`。
 
 ---
 
@@ -277,7 +277,7 @@ quads = page.search_for("important term", quads=True)
 page.add_highlight_annot(quads)
 ```
 
-其他文本标注：`add_underline_annot()`、`add_strikeout_annot()`、`add_squiggly_annot()`。自由文本用 `add_freetext_annot()`。
+其他文本标注：`add_underline_annot`、`add_strikeout_annot`、`add_squiggly_annot`。自由文本用 `add_freetext_annot`。
 
 ### 永久脱敏（两步）
 
@@ -290,7 +290,7 @@ with pymupdf.open("contract.pdf") as doc:
             page.add_redact_annot(rect, fill=(1, 1, 1))
 
         # 关键：不调这一步，内容还在文件里，只是被画了个框
-        page.apply_redactions()
+        page.apply_redactions
 
     doc.save("contract_redacted.pdf")
 ```
@@ -300,11 +300,11 @@ with pymupdf.open("contract.pdf") as doc:
 ```python
 with pymupdf.open("contract_redacted.pdf") as doc:
     for page in doc:
-        assert "confidential" not in page.get_text().lower(), \
+        assert "confidential" not in page.get_text.lower, \
             f"第 {page.number + 1} 页还能提取出敏感词！"
 ```
 
-`apply_redactions()` 之后原始内容**永久消失，无法恢复**。所以设计成两步，让你能先审阅标记结果再执行。
+`apply_redactions` 之后原始内容**永久消失，无法恢复**。所以设计成两步，让你能先审阅标记结果再执行。
 
 ### 带自定义外观的脱敏
 
@@ -318,7 +318,7 @@ page.add_redact_annot(
     text_color=(1, 1, 1),
     align=pymupdf.TEXT_ALIGN_CENTER,
 )
-page.apply_redactions()
+page.apply_redactions
 ```
 
 ---
@@ -330,7 +330,7 @@ page.apply_redactions()
 ```python
 import pymupdf
 
-doc = pymupdf.new()                     # 或 pymupdf.open()
+doc = pymupdf.new                     # 或 pymupdf.open
 page = doc.new_page(width=595, height=842)      # A4，单位是点
 
 page.insert_text(
@@ -361,8 +361,8 @@ md_doc.save("example.pdf")
 ```python
 import pymupdf
 
-doc = pymupdf.open()
-page = doc.new_page()
+doc = pymupdf.open
+page = doc.new_page
 
 # 方式一：用 pymupdf-fonts 里的字体名
 page.insert_text(pymupdf.Point(72, 100), "中文测试", fontname="china-s")
@@ -384,14 +384,14 @@ with pymupdf.open("input.pdf") as doc:
     doc.save("with_logo.pdf")
 ```
 
-也支持传 `stream=`（字节）。插入已有 PDF 页作为图片用 `show_pdf_page()`。
+也支持传 `stream=`（字节）。插入已有 PDF 页作为图片用 `show_pdf_page`。
 
 ### 合并
 
 ```python
 import pymupdf
 
-out = pymupdf.open()
+out = pymupdf.open
 for path in ["a.pdf", "b.pdf", "c.pdf"]:
     with pymupdf.open(path) as src:
         out.insert_pdf(src)
@@ -413,10 +413,10 @@ import pymupdf
 
 with pymupdf.open("input.pdf") as doc:
     for i in range(doc.page_count):
-        out = pymupdf.open()
+        out = pymupdf.open
         out.insert_pdf(doc, from_page=i, to_page=i)
         out.save(f"page_{i + 1:04d}.pdf")
-        out.close()
+        out.close
 ```
 
 按固定份数拆分（每 10 页一个文件）：
@@ -428,10 +428,10 @@ with pymupdf.open("input.pdf") as doc:
     step = 10
     for start in range(0, doc.page_count, step):
         end = min(start + step - 1, doc.page_count - 1)
-        out = pymupdf.open()
+        out = pymupdf.open
         out.insert_pdf(doc, from_page=start, to_page=end)
         out.save(f"part_{start // step + 1:03d}.pdf")
-        out.close()
+        out.close
 ```
 
 ### 删除 / 重排页面
@@ -505,7 +505,7 @@ with pymupdf.open("input.pdf") as doc:
     doc.save("output.pdf")
 ```
 
-`get_toc()` 返回 `[[level, title, page], ...]`，`level` 从 1 起，`page` 从 1 起。
+`get_toc` 返回 `[[level, title, page], ...]`，`level` 从 1 起，`page` 从 1 起。
 
 `doc.metadata` 里的键：`format`、`title`、`author`、`subject`、`keywords`、`creator`、`producer`、`creationDate`、`modDate`、`encryption`。
 
@@ -542,7 +542,7 @@ with pymupdf.open("input.pdf") as doc:
 ```python
 with pymupdf.open("scan.pdf") as doc:
     page = doc[0]
-    if not page.get_text().strip():
+    if not page.get_text.strip:
         print("没有文字层，需要 OCR")
 ```
 
@@ -589,11 +589,11 @@ pix = pymupdf.Pixmap("image.png")
 if pix.alpha:
     pix = pymupdf.Pixmap(pix, 0)          # 去 alpha
 
-doc = pymupdf.open()
+doc = pymupdf.open
 page = doc.new_page(width=pix.width, height=pix.height)
 page.insert_image(page.rect, pixmap=pix)
 
-tp = page.get_textpage_ocr()
+tp = page.get_textpage_ocr
 print(page.get_text(textpage=tp))
 ```
 
@@ -621,7 +621,7 @@ import pymupdf
 
 with pymupdf.open("form.pdf") as doc:
     for page in doc:
-        for field in page.widgets():
+        for field in page.widgets:
             print(f"{field.field_name!r} = {field.field_value!r}  type={field.field_type_string}")
 ```
 
@@ -632,14 +632,14 @@ import pymupdf
 
 with pymupdf.open("form.pdf") as doc:
     page = doc[0]
-    for field in page.widgets():
+    for field in page.widgets:
         if field.field_name == "First Name":
             field.field_value = "Ada"
-            field.update()                    # 别忘了
+            field.update                    # 别忘了
     doc.save("filled.pdf")
 ```
 
-复选框用 `field.field_value = True`（或者按 `field.on_state()` 取到的值）。
+复选框用 `field.field_value = True`（或者按 `field.on_state` 取到的值）。
 
 ---
 
@@ -652,19 +652,16 @@ import os
 from multiprocessing import Pool
 import pymupdf
 
-
 def extract_page_text(args):
     path, start, end = args
     with pymupdf.open(path) as doc:
         return [
-            {"file": os.path.basename(path), "page": i + 1, "text": doc[i].get_text()}
+            {"file": os.path.basename(path), "page": i + 1, "text": doc[i].get_text}
             for i in range(start, min(end, doc.page_count))
         ]
 
-
 def chunk_ranges(page_count, chunk_size):
     return [(i, min(i + chunk_size, page_count)) for i in range(0, page_count, chunk_size)]
-
 
 if __name__ == "__main__":                    # Windows 上必须
     path = "big.pdf"
@@ -673,7 +670,7 @@ if __name__ == "__main__":                    # Windows 上必须
 
     jobs = [(path, s, e) for s, e in chunk_ranges(total, 25)]
 
-    with Pool(os.cpu_count()) as pool:
+    with Pool(os.cpu_count) as pool:
         results = pool.map(extract_page_text, jobs)
 
     flat = [item for sub in results for item in sub]
@@ -695,11 +692,10 @@ from pathlib import Path
 from multiprocessing import Pool
 import pymupdf
 
-
 def convert_one(path):
     try:
         with pymupdf.open(path) as doc:
-            text = "\n".join(p.get_text() for p in doc)
+            text = "\n".join(p.get_text for p in doc)
         out = Path("out") / (Path(path).stem + ".txt")
         out.parent.mkdir(exist_ok=True)
         out.write_text(text, encoding="utf-8")
@@ -707,10 +703,9 @@ def convert_one(path):
     except Exception as e:                    # 单个文件失败不能拖垮整批
         return (path, False, repr(e))
 
-
 if __name__ == "__main__":
     pdfs = sorted(str(p) for p in Path("pdfs").glob("*.pdf"))
-    with Pool(os.cpu_count()) as pool:
+    with Pool(os.cpu_count) as pool:
         for path, ok, err in pool.map(convert_one, pdfs):
             print("OK " if ok else "FAIL", path, err or "")
 ```

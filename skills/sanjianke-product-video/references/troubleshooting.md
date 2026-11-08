@@ -24,7 +24,6 @@ python3 scripts/a7w.py login --key sk-你的key
 
 Key 本身的问题。到 [api.a7w.cn](https://api.a7w.cn/) 重新创建。
 
-> `/user/balance` 是免费的用户接口；`/user`、`/user/usage`、`/balance` 这类上游账号级路径
 > 平台会直接 403 并告诉你该用哪个（`upstream_account_scope_blocked`）。
 
 ---
@@ -89,7 +88,7 @@ python3 scripts/run.py seedance --action create --text "…" --budget 12000 --ye
 
 ### `连不上 https://api.a7w.cn/…：timed out（已重试 2 次）`（exit 6）
 
-网络或网关抖动。`http_json()` 对 502/503/504 与连接重置退避重试 3 次（2s / 4s / 6s），
+网络或网关抖动。`http_json` 对 502/503/504 与连接重置退避重试 3 次（2s / 4s / 6s），
 仍失败就是网关侧问题，隔一会儿再跑。**重试只发生在 GET / 提交成功后拿不到响应的情况**，
 `task_id` 已经拿到时不要重新提交（会再扣一次）。
 
@@ -109,7 +108,7 @@ python3 scripts/run.py seedance --action create --text "…" --budget 12000 --ye
 - `failed`：看 `message` / `fail_reason`；按秒档任务失败**全额退回**。
 - `completed` 但没 URL：`status --json` 看 `raw`，把字段名反馈给我们。
 
-`pick_asset()` 会按扩展名（`.mp4/.mov/.webm/.m4v`、`.png/.jpg/…`、`.mp3/.wav/…`）找，
+`pick_asset` 会按扩展名（`.mp4/.mov/.webm/.m4v`、`.png/.jpg/…`、`.mp3/.wav/…`）找，
 再按字段名含 `video`/`image`/`audio` 兜一层，所以不同应用的不同返回结构都能取到。
 
 ### 语音同步接口返回里没有 `audio_url`

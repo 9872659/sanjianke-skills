@@ -79,10 +79,9 @@ import urllib.error
 import urllib.request
 
 API = "https://api.a7w.cn/api/v1/chat/completions"
-KEY = os.environ.get("A7W_API_KEY", "").strip()
+KEY = os.environ.get("A7W_API_KEY", "").strip
 
 SYSTEM_PROMPT = "你是群里的 AI 助手。回答简短、口语化，不超过 80 字，不要用 Markdown 标题。"
-
 
 def ask(prompt, model="DeepSeek-V4-Flash", history=None, timeout=60):
     """发一句话给模型，返回回复文本。失败时返回一句友好提示，不抛异常。"""
@@ -110,7 +109,7 @@ def ask(prompt, model="DeepSeek-V4-Flash", history=None, timeout=60):
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
+            payload = json.loads(resp.read.decode("utf-8"))
     except urllib.error.HTTPError as e:
         code = e.code
         if code == 402:
@@ -132,9 +131,8 @@ def ask(prompt, model="DeepSeek-V4-Flash", history=None, timeout=60):
     content = message.get("content") or ""
     if not content:
         reasoning = message.get("reasoning") or message.get("reasoning_content") or ""
-        content = reasoning.strip() or "（这次没想出答案，再问我一次）"
-    return content.strip()
-
+        content = reasoning.strip or "（这次没想出答案，再问我一次）"
+    return content.strip
 
 if __name__ == "__main__":
     print(ask("用一句话介绍你自己"))
@@ -303,16 +301,16 @@ import random, time
 def with_retry(fn, attempts=4):
     for i in range(attempts):
         try:
-            return fn()
+            return fn
         except Exception as e:
             if i == attempts - 1:
                 raise
             if getattr(e, "code", None) in (400, 401, 402, 403, 404):
                 raise                      # 业务错误，重试没意义
-            time.sleep((2 ** i) + random.random())
+            time.sleep((2 ** i) + random.random)
 ```
 
-**同群串行的实现方式**：给每个 `chat_id` 配一把锁（asyncio 里用 `asyncio.Lock()` 放进字典；多线程里用 `threading.Lock()`）。这是最简单也最有效的做法。
+**同群串行的实现方式**：给每个 `chat_id` 配一把锁（asyncio 里用 `asyncio.Lock` 放进字典；多线程里用 `threading.Lock`）。这是最简单也最有效的做法。
 
 ### 6.3 消息去重与幂等（同一 `message_id` 只回一次）
 
@@ -327,9 +325,9 @@ _seen = {}          # message_id -> 处理时间
 TTL = 600           # 10 分钟
 
 def already_handled(message_id):
-    now = time.time()
+    now = time.time
     # 顺手清理过期记录，防止字典无限增长
-    for k in [k for k, t in _seen.items() if now - t > TTL]:
+    for k in [k for k, t in _seen.items if now - t > TTL]:
         _seen.pop(k, None)
     if message_id in _seen:
         return True
@@ -358,15 +356,15 @@ def split_reply(text, limit=800):
     for para in text.split("\n"):
         if len(buf) + len(para) + 1 > limit:
             if buf:
-                parts.append(buf.rstrip())
+                parts.append(buf.rstrip)
             while len(para) > limit:            # 单段就超长，硬切
                 parts.append(para[:limit])
                 para = para[limit:]
             buf = para + "\n"
         else:
             buf += para + "\n"
-    if buf.strip():
-        parts.append(buf.rstrip())
+    if buf.strip:
+        parts.append(buf.rstrip)
     return parts
 ```
 

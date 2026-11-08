@@ -6,7 +6,7 @@
 
 ```python
 import requests
-print(requests.get("http://127.0.0.1:1224/api/ocr/get_options").json())
+print(requests.get("http://127.0.0.1:1224/api/ocr/get_options").json)
 ```
 
 ## 通用约定
@@ -84,7 +84,7 @@ with open("scan.pdf", "rb") as f:
         "http://127.0.0.1:1224/api/doc/upload",
         files={"file": f},
         data={"json": json.dumps({"doc.extractionMode": "mixed"})},
-    ).json()
+    ).json
 task_id = r["data"]
 ```
 

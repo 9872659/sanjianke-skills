@@ -361,7 +361,6 @@ token 数我们估（实测标定），金额必须由你给单价。
 - 人读文案照旧走 stderr；**退出码语义一个都不变**；非 `--json` 模式输出与以前完全一致
 - `--json` 写在子命令**前面或后面都可以**
 
-
 ### 三个真实事故写进了代码
 
 **1. `prompt_echo`：模型会照抄提示词里的示例，哪怕标着「这是错的写法」。**
@@ -441,7 +440,6 @@ Jaccard 又被摊薄。实测（示例主题充电桩，去标点后 16~21 字�
 | `Missing or invalid relay API key`（HTTP 401） | Key 无效、已过期或写错 | 重新到 https://api.a7w.cn/ 领取；确认没把 `Bearer` 重复写进环境变量 |
 | 点数不足（HTTP 402） | 账号点数用完 | 到 https://api.a7w.cn/ 充值后重试 |
 | 模型不存在（HTTP 404） | 模型名写错或已下架 | `python3 scripts/run.py models` 现查在架模型名 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 脚本已内置退避重试（最多 4 次）。连续失败就换模型 |
 | `配置错误：给了 --budget 就必须给单价` | 预算没有单价就没意义 | 补 `--price-in` / `--price-out`（点/百万 token） |
 | `!! 预估成本 … 已超过 --budget … 就地中止` | 预估闸门在花钱之前就拦下了 | 跑单平台、调低 `--max-tokens`，或提高预算 |
 | `!! 已花 … 点，超过 --budget` | 真实 usage 累计超了（退出码 5） | 已完成的平台结果仍会输出，从断点继续 |
@@ -449,7 +447,7 @@ Jaccard 又被摊薄。实测（示例主题充电桩，去标点后 16~21 字�
 | `!! 有 N 个平台被硬闸门拦下` | 合规命中等 | 看 stderr 的逐条原因；改完重跑。退出码 3 |
 | 合规命中「最X」但你看不出问题 | 可能是程度副词作描述（如「冲突最强的那一段」） | 已知过度报告的残留（同族「播放量最低的」已豁免）。要么改措辞，要么人工确认后放行；**不要改成只警告** |
 | `!! 跨平台换皮` | 两个平台的正文太像 | 用 `diff` 看是哪一对；重跑该平台，或在 `--brief` 里指定该平台换一个切入角度 |
-| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符 | 脚本已用 `json.JSONDecoder().raw_decode()` 扫第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
+| `模型返回的不是合法 JSON` | 模型在 JSON 前后多吐了字符 | 脚本已用 `json.JSONDecoder.raw_decode` 扫第一个完整对象。仍失败就加 `--no-json-mode` 并换模型 |
 | `模型没返回 choices` / 产出为空 | 输出被 `max_tokens` 截断 | 加大 `--max-tokens`（公众号长文建议 4096 以上）。**注意下面那条推理模型的坑** |
 | 换了在架模型后正文被截断、或只吐出一段思考 | **实测 `models` 列表里的 `DeepSeek-V4-Pro` 与 `DeepSeek-V3.2` 是推理模型**，会先花 completion token 出思维链再给答案。实测一句两字的回复：`DeepSeek-V3.2`（路由到 `deepseek-v3.2-think`）花掉 **105** 个 reasoning token，`DeepSeek-V4-Pro` 花掉 **54** 个 | 用默认的 `deepseek-chat`（实测非推理、最快）；非要用推理模型就把 `--max-tokens` 提高 1.5~2 倍 |
 | HTTP 200 但 `model:null`、内容为空、usage 为空 | 实测把 `deepseek-flash`（`deepseek-chat` 的路由**目标名**）当**请求名**用就是这个结果——**静默失败**，状态码骗人。脚本会报「模型没返回 choices」而不是产出空文件 | 请求名用 `deepseek-chat`；要换模型就用 `models` 列表里的名字（如 `DeepSeek-V4-Flash`） |

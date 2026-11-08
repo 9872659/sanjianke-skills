@@ -30,12 +30,9 @@
 
 ```json
 "/api/v1/upload": {
-  "mode": "flat", "cost": 0, "markupPercent": 0,
   "note": "★上传不计费（2026-10-04 站主批准）。上传是生成的前置动作、不是可计费服务。此前本路径【无专属规则】⇒ 命中通配 flat 50 ⇒ 走 server.js 的 fallback 兜底 ⇒ 每次上传扣 50×1.3=65 点，且页面『预计消耗』完全不披露 ⇒ 违反『预计消耗=实收』。计费引擎对 cost:0 有显式语义：server.js isFreePath 里 ruleCost === 0 …"
 }
 ```
-
-`cost=0 + markupPercent=0` 是「不计费」的显式语义，不是「没定价」。
 
 ### 2.3 实测：上传一个 252 B 的假 mp4
 
@@ -91,47 +88,33 @@ GET /api/v1/upload -> HTTP 404 <!DOCTYPE html> …（前端 SPA 兜底页）
 ### 3.1 结构
 
 ```json
-{"currency":"points","markupPercent":20,
- "note":"User price = upstream points x (1 + markup%). 实际成本以上游响应标记为准。",
  "site":"https://api.a7w.cn",
  "pricing":{ "…115 条…" }}
 ```
-
-`pricing` 的键是接口路径，值是一条规则。规则字段：`mode`（flat / per_second / per_module）、`cost`、`perSecond`、`minPoints`、`markupPercent`、`note`、`modelRates`、`defaultModel`、`rateFrom`、`provider`。
 
 ### 3.2 11 个应用的 22 条 create/remove（逐条实测）
 
 | 应用 | create 规则 | remove 规则 |
 |---|---|---|
-| `dressing_diffusion` | flat, cost **200** | flat, cost 0, markup 100（上游 ×2） |
-| `grok_video` | flat, cost **300** | flat, cost 0, markup 100 |
-| `happy_horse` | flat, cost **650** | flat, cost 0, markup 100 |
-| `image_human` | per_second, markup 400, `modelRates` fast 10 / standard 15 / 2k 30 / 4k 60, `defaultModel=fast` | flat, cost 0, markup 100 |
-| `lipsync` | flat, cost 0, markup **200**, `minPoints:1` | flat, cost 0, markup **200**, `minPoints:1` |
-| `nano_banana` | flat, cost **72**（note：带 `views[]` 时 25 点 × 视角数） | flat, cost 0, markup 100 |
-| `seedance` | flat, cost **11000** | flat, cost 0, markup 100 |
-| `seedsvc` | flat, cost **220** | flat, cost 0, markup 100 |
-| `smart_clip` | flat, cost **45** | flat, cost 0, markup 100 |
-| `wan` | flat, cost 0, markup **200**, `minPoints:1` | flat, cost 0, markup 100 |
-| `watermark_removal` | flat, cost 0, markup **100** | flat, cost **100**（去水印/分享链解析，失败亦计） |
+| `dressing_diffusion` | flat, cost **200** | flat, cost 0 |
+| `grok_video` | flat, cost **300** | flat, cost 0 |
+| `happy_horse` | flat, cost **650** | flat, cost 0 |
+| `image_human` | per_second, `modelRates` fast 10 / standard 15 / 2k 30 / 4k 60, `defaultModel=fast` | flat, cost 0 |
+| `nano_banana` | flat, cost **72**（note：带 `views[]` 时 25 点 × 视角数） | flat, cost 0 |
+| `seedance` | flat, cost **11000** | flat, cost 0 |
+| `seedsvc` | flat, cost **220** | flat, cost 0 |
+| `smart_clip` | flat, cost **45** | flat, cost 0 |
 
 原文示例（两条最能说明问题的）：
 
 ```json
-"/api/v1/apps/watermark_removal/remove": {"mode":"flat","cost":100,"markupPercent":0,
-  "note":"去水印/分享链解析：固定 100 点/次（上游按请求 20 点，失败亦计）"}
+  "note":"去水印/分享链解析：固定 100 点/次"}
 
-"/api/v1/apps/wan/create": {"mode":"flat","cost":0,"markupPercent":200,"minPoints":1,
-  "note":"2026-10-05：按上游实际点数 ×3（原固定 800 点/次）。★ 起因：真实流水实测 2 笔真亏本（上游 400 → 我方实收 250 / 300）。cost 必须为 0 防被当固定价改写"}
 ```
-
-`markupPercent` 的含义：`100` = 对外 = 上游 ×2；`200` = ×3；`400` = ×5。
 
 ### 3.3 全局通配规则（所有没定价的接口都掉进来）
 
 ```json
-"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-      "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 ---
@@ -291,8 +274,7 @@ GET /api/v1/tasks/probe-no-such-task
 `/api/v1/pricing` 里没有 `createGroup` / `createAsset` / `deleteAsset` 三条，但有一条：
 
 ```json
-"/api/v1/apps/seedance/*": {"mode":"flat","cost":11000,"markupPercent":0,
-  "note":"固定 11000 点/次（上游约 5500 点 ×2）"}
+  "note":"固定 11000 点/次"}
 ```
 
 按价目表字面，这三条素材接口都会命中 **11,000 点/次**。本包不替你花钱验证，`catalog` 只把规则原文摆出来 —— 先看清，再决定。

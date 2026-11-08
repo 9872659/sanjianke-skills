@@ -15,8 +15,6 @@ tags:
 
 PDF、Word、PPT、Excel、HTML、邮件、EPUB、图片……几十种格式各写一套解析代码是件苦差事。这个库把它们统一成一条路：进去一个文件，出来一串**带类型标签的元素**——这是标题、这是正文段、这是列表项、这是表格，每块都带页码、文件名等元数据。之后不管是丢进向量库做 RAG，还是按类型过滤出正文做摘要，都有统一的抓手。它的真实成本在于：要解析 PDF 和 Office 文档，光装 Python 包不够，系统级依赖（poppler、tesseract、libreoffice）得先在机器上备齐。
 
-**上游项目**：`unstructured`　**仓库**：https://github.com/Unstructured-IO/unstructured
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -155,8 +153,8 @@ from unstructured.staging.base import elements_to_json, elements_from_json
 elements_to_json(elements, filename="elements.json")
 restored = elements_from_json(filename="elements.json")
 
-# 单元素也行：el.to_dict()
-print(elements[0].to_dict().keys())
+# 单元素也行：el.to_dict
+print(elements[0].to_dict.keys)
 ```
 
 **6）按类型过滤，只留正文**
@@ -211,7 +209,7 @@ for t in tables:
 - 元素类型识别：`Title`、`NarrativeText`、`ListItem`、`Table`、`PageBreak` 等，可按类型筛选
 - PDF 与图片的策略选择：`auto` / `fast` / `hi_res` / `ocr_only`，可选 OCR 语言、表格结构推断
 - 分块：`basic` 与 `by_title` 两种策略，支持硬/软上限与重叠参数
-- 序列化：元素转 JSON / 从 JSON 读回，元素可 `to_dict()`
+- 序列化：元素转 JSON / 从 JSON 读回，元素可 `to_dict`
 - 元数据：文件名、页码、坐标（hi_res 下）、表格 HTML 等
 - 容器化运行与本地开发工作流（uv / make）
 

@@ -46,14 +46,10 @@
 
 ```json
 "/api/v1/apps/pic_lipsync/submit": {
-  "mode": "flat", "cost": 0, "markupPercent": 400, "minPoints": 50,
-  "note": "对外 = 上游实际点数 ×5（毛利 80%）… 上游实扣 3 点/秒 → 我方 15 点/秒"
 }
 ```
 
-- 对外口径 **15 点/秒**（上游 `standard` 档实扣 3 点/秒 × 5）
 - 公开文档写「单笔保底 50 点」；`cost` 按 50 点下限预估，不低估
-- 换 `quality=max` 时上游单价可能更高，仍按「上游实际点数 ×5」结算
 
 ---
 
@@ -89,8 +85,6 @@
 "defaultModel": "fast"
 ```
 
-= 上游成本 2 / 3 / 6 / 12 点/秒 × 5。
-
 ### 实测原文
 
 ```json
@@ -121,13 +115,7 @@
 
 ```json
 "model_rates": {"xiaojiayu1.0": 0.9, "xiaojiayu2.0": 4.5, "xiaojiayu3.0": 4.5},
-"/api/v1/apps/lipsync/submit": {"mode": "flat", "cost": 0, "markupPercent": 200, "minPoints": 1,
-  "note": "2026-10-05：按上游实际点数 ×3（原固定 27 点/次）"}
 ```
-
-- `xiaojiayu1.0`：上游 0.9 点/秒 × 3 = **2.7 点/秒**（30 秒 = 81 点）
-- `xiaojiayu2.0` / `3.0`：上游 4.5 点/秒 × 3 = **13.5 点/秒**（30 秒 = 405 点）
-- 上游 30 秒 × 0.9 = 27 点，正是历史文档里那个「27 点/次」的来源
 
 ### 实测原文
 
@@ -154,7 +142,7 @@
 1. **`result` 是双重身份字段**。任务完成后 `data` 里也有一个 `result`，
    和「中转包装层」的 `result` 同名。无脑往下钻会丢掉 `status` → 轮询永远等不到终态。
 2. **视频地址不在固定字段**。按优先级兜：`video_url` → `video_uri` → `output_url` → `result_url`，
-   本包 `find_media()` 直接递归扫所有 http 字符串 + 视频后缀。
+   本包 `find_media` 直接递归扫所有 http 字符串 + 视频后缀。
 3. **刚 `completed` 时结果地址偶尔是空串**（实测竞态，数字人/剪辑/TTS/生图都吃）。
    本包取不到地址时提示「隔几秒再查一次」。
 

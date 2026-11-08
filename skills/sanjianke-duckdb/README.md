@@ -21,7 +21,7 @@
 3. 按需选入口：
    - 一次性跑一条 SQL：`duckdb -c "SELECT ..."`（跑完即退，适合脚本）。
    - 交互式探索：直接 `duckdb` 进内存库，或 `duckdb my_database.duckdb` 开持久库。
-   - Python 里集成：`import duckdb` 后用 `duckdb.sql(...)` 或 `duckdb.connect()`。
+   - Python 里集成：`import duckdb` 后用 `duckdb.sql(...)` 或 `duckdb.connect`。
 4. 结果要交出去就用 `COPY ... TO ...` 导出成 CSV / Parquet，别在终端里截屏抄数。
 5. 只读场景给库文件加 `-readonly`，避免误写。
 
@@ -36,7 +36,7 @@
 | 平台 | Windows / macOS / Linux |
 | CLI | 官方预编译单文件可执行程序，无额外运行时依赖 |
 | Python | 3.9+；`pip install duckdb`，也支持 `conda install python-duckdb -c conda-forge` |
-| pandas（可选） | 只有用 `.df()` / `fetchdf()` 这类转 DataFrame 的方法才需要；它不是 DuckDB 的默认依赖，缺了会在调用时报错 |
+| pandas（可选） | 只有用 `.df` / `fetchdf` 这类转 DataFrame 的方法才需要；它不是 DuckDB 的默认依赖，缺了会在调用时报错 |
 | pyarrow（可选） | 需要 Arrow 格式输出时使用 |
 | 网络（部分场景） | 仅安装扩展时需要；本地文件分析与本地库读写不需要 |
 

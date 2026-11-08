@@ -49,7 +49,7 @@ cd src/android && ./gradlew :app:assembleDebug
 
 本 Skill 自身只依赖阅读与文档能力，不引入任何运行时库、不调用任何外部接口。
 
-它所描述的操作对象（上游开源工程）依赖：macOS / Xcode、JDK 17、Android SDK 与 NDK r28+、CMake 3.22.1，以及构建期从源码编译的 iSH、PRoot、FFmpeg、LAME 与 Alpine minirootfs。完整版本表见 `SKILL.md` 的「依赖条件」。
+它所描述的操作对象依赖：macOS / Xcode、JDK 17、Android SDK 与 NDK r28+、CMake 3.22.1，以及构建期从源码编译的 iSH、PRoot、FFmpeg、LAME 与 Alpine minirootfs。完整版本表见 `SKILL.md` 的「依赖条件」。
 
 ---
 

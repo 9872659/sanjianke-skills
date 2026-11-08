@@ -22,8 +22,6 @@ tags:
 和多数 JS PDF 库最大的区别是：它**能改已有的 PDF**，不只是从零生成；
 反过来说，它不会帮你把 HTML/CSS 变成 PDF，也不能提取页面上已有的文字。
 
-**上游项目**：`pdf-lib`　**仓库**：https://github.com/Hopding/pdf-lib
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -74,14 +72,14 @@ npm install --save @pdf-lib/fontkit
 // 1. 从零创建一份 PDF 并写一段文字
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
-const pdfDoc = await PDFDocument.create()
+const pdfDoc = await PDFDocument.create
 const timesRoman = await pdfDoc.embedFont(StandardFonts.TimesRoman)
-const page = pdfDoc.addPage()
-const { width, height } = page.getSize()
+const page = pdfDoc.addPage
+const { width, height } = page.getSize
 page.drawText('Creating PDFs in JavaScript is awesome!', {
   x: 50, y: height - 120, size: 30, font: timesRoman, color: rgb(0, 0.53, 0.71),
 })
-const pdfBytes = await pdfDoc.save()   // Uint8Array，Node 里写文件即可
+const pdfBytes = await pdfDoc.save   // Uint8Array，Node 里写文件即可
 ```
 
 ```js
@@ -90,18 +88,18 @@ import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib'
 
 const pdfDoc = await PDFDocument.load(existingPdfBytes)
 const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica)
-const firstPage = pdfDoc.getPages()[0]
-const { width, height } = firstPage.getSize()
+const firstPage = pdfDoc.getPages[0]
+const { width, height } = firstPage.getSize
 firstPage.drawText('This text was added with JavaScript!', {
   x: 5, y: height / 2 + 300, size: 50, font: helvetica,
   color: rgb(0.95, 0.1, 0.1), rotate: degrees(-45),
 })
-const bytes = await pdfDoc.save()
+const bytes = await pdfDoc.save
 ```
 
 ```js
 // 3. 跨文档拷贝页面并重排：取 A 的第 1 页、B 的第 743 页，插到新文档指定位置
-const pdfDoc = await PDFDocument.create()
+const pdfDoc = await PDFDocument.create
 const donorA = await PDFDocument.load(firstDonorPdfBytes)
 const donorB = await PDFDocument.load(secondDonorPdfBytes)
 const [pageFromA] = await pdfDoc.copyPages(donorA, [0])
@@ -117,20 +115,20 @@ import fontkit from '@pdf-lib/fontkit'
 const pdfDoc = await PDFDocument.load(formPdfBytes)
 pdfDoc.registerFontkit(fontkit)
 const font = await pdfDoc.embedFont(fontBytes)
-const form = pdfDoc.getForm()
+const form = pdfDoc.getForm
 form.getTextField('CharacterName 2').setText('马里奥')
-form.getCheckBox('Check Box3').check()
+form.getCheckBox('Check Box3').check
 form.getRadioGroup('Group2').select('Choice1')
 form.updateFieldAppearances(font)   // 关键一步：用嵌入字体重绘字段外观
-form.flatten()                      // 需要不可编辑的成品时再压平
-const bytes = await pdfDoc.save()
+form.flatten                      // 需要不可编辑的成品时再压平
+const bytes = await pdfDoc.save
 ```
 
 ```js
 // 5. 贴图与元数据（PNG / JPG 各有独立方法，尺寸要先算好）
 const jpgImage = await pdfDoc.embedJpg(jpgImageBytes)
 const dims = jpgImage.scale(0.25)
-const page = pdfDoc.addPage()
+const page = pdfDoc.addPage
 page.drawImage(jpgImage, { x: 50, y: 50, width: dims.width, height: dims.height })
 
 pdfDoc.setTitle('二创素材清单')
@@ -140,7 +138,7 @@ await pdfDoc.attach(otherPdfBytes, 'appendix.pdf', { mimeType: 'application/pdf'
 
 ```js
 // 6. 读写文档元数据、加 SVG 路径
-const meta = pdfDoc.getTitle()                    // 也有 getAuthor / getKeywords / getSubject 等
+const meta = pdfDoc.getTitle                    // 也有 getAuthor / getKeywords / getSubject 等
 page.drawSvgPath('M 0,20 L 100,160 L 200,20 Z', { x: 25, y: 500 })
 ```
 
@@ -150,12 +148,12 @@ page.drawSvgPath('M 0,20 L 100,160 L 200,20 Z', { x: 25, y: 500 })
 |---|---|---|
 | 写中文直接抛错：`WinAnsi cannot encode "Ω"` | 标准 14 字体用 WinAnsi 编码，只覆盖拉丁字符集 | 改用 `@pdf-lib/fontkit` + 自带中文字体：`pdfDoc.registerFontkit(fontkit)` 后 `embedFont(fontBytes)`，绘图时传该 font |
 | 报 `FontkitNotRegisteredError` | 没注册 fontkit 就想嵌入自定义字体 | 先 `npm i @pdf-lib/fontkit`，再 `pdfDoc.registerFontkit(fontkit)`；标准字体不需要这步 |
-| 表单填了中文，保存时报编码错误或显示空白 | 表单字段默认外观用 Helvetica，字段里塞了非拉丁字符 | 先 `form.updateFieldAppearances(customFont)` 用嵌入字体重绘外观，再 `save()` |
-| 保存出来的 PDF 多了一张空白页 | `save()` 的 `addDefaultPage` 默认为 `true`，零页文档会自动补一页 | 文档确实要零页时传 `save({ addDefaultPage: false })`；多数情况下应显式 `addPage()` |
-| `PDFDocument.load()` 抛 `EncryptedPDFError` | pdf-lib 明确不支持加密文档 | 先用有密码的工具（如 pdfcpu）解密；`ignoreEncryption: true` 只是不报错、并不解密，官方不建议 |
+| 表单填了中文，保存时报编码错误或显示空白 | 表单字段默认外观用 Helvetica，字段里塞了非拉丁字符 | 先 `form.updateFieldAppearances(customFont)` 用嵌入字体重绘外观，再 `save` |
+| 保存出来的 PDF 多了一张空白页 | `save` 的 `addDefaultPage` 默认为 `true`，零页文档会自动补一页 | 文档确实要零页时传 `save({ addDefaultPage: false })`；多数情况下应显式 `addPage` |
+| `PDFDocument.load` 抛 `EncryptedPDFError` | pdf-lib 明确不支持加密文档 | 先用有密码的工具（如 pdfcpu）解密；`ignoreEncryption: true` 只是不报错、并不解密，官方不建议 |
 | 自定义字体嵌进去后文件体积暴涨 | 默认嵌入整个字体文件 | 传 `embedFont(fontBytes, { subset: true })` 做子集化；注意子集化并非对所有字体都有效 |
 | `copyPages` 之后页面错位或报 `ForeignPageError` | 页面对象归属于原文档，必须先拷贝再插入新文档 | 用 `const [p] = await newDoc.copyPages(srcDoc, [i])`，再 `newDoc.addPage(p)` / `insertPage(idx, p)` |
-| `save()` 输出体积比想象大或结构怪 | `useObjectStreams` 默认为 `true`，会写对象流 | 需要兼容老旧阅读器时传 `save({ useObjectStreams: false })` |
+| `save` 输出体积比想象大或结构怪 | `useObjectStreams` 默认为 `true`，会写对象流 | 需要兼容老旧阅读器时传 `save({ useObjectStreams: false })` |
 | 打开别人的 PDF 改完发现 Producer / 修改时间被改了 | 加载时 `updateMetadata` 默认为 `true`，会写入 pdf-lib 作为 Producer 并刷新 ModDate | 需要保持原始元数据就传 `PDFDocument.load(bytes, { updateMetadata: false })` |
 | 想读页面上的正文文字却读不到 | 官方明确说明：只能读表单字段的值，不能提取表单之外的页面文字 | 换用专门的文本抽取工具，别在 pdf-lib 上绕 |
 
@@ -195,7 +193,7 @@ page.drawSvgPath('M 0,20 L 100,160 L 200,20 Z', { x: 25, y: 500 })
 - 不解析 HTML/CSS，不做「网页转 PDF」。
 - 不能提取或编辑页面上已有的正文文字，只能读表单字段值。
 - 不支持加密文档，也不提供解密、权限设置、数字签名。
-- 不支持 XFA 表单（`getForm()` 会提示移除 XFA 数据）。
+- 不支持 XFA 表单（`getForm` 会提示移除 XFA 数据）。
 - 不做压缩优化、不重排已有内容、不做 OCR。
 - 没有流式排版引擎：自动换行只有 `drawText` 的 `maxWidth`/`lineHeight` 这类基础支持，表格、分页、页眉页脚要自己实现。
 
@@ -210,7 +208,7 @@ page.drawSvgPath('M 0,20 L 100,160 L 200,20 Z', { x: 25, y: 500 })
 
 - 加密文档只能绕开报错、无法真正解密。
 - 页面正文文字无法提取，也无法编辑。
-- `copy()` 不会复制表单、大纲等全部信息（官方注释已说明）。
+- `copy` 不会复制表单、大纲等全部信息（官方注释已说明）。
 - XFA 表单不受支持。
 - 字体子集化对部分字体无效。
 - 复杂排版需要自行实现，或交给无头浏览器方案。
@@ -220,7 +218,7 @@ page.drawSvgPath('M 0,20 L 100,160 L 200,20 Z', { x: 25, y: 500 })
 - 执行前：
   - 确认输入 PDF 未加密；加密的先解密。
   - 需要中文/非拉丁文字时，确认已装 `@pdf-lib/fontkit` 且已 `registerFontkit`。
-  - 表单字段名用 `form.getFields()` 打印一遍核对，不要凭猜测写字段名。
+  - 表单字段名用 `form.getFields` 打印一遍核对，不要凭猜测写字段名。
   - 明确是否需要保留原始元数据（决定 `updateMetadata`）。
 - 执行后：
   - 用真实阅读器（Acrobat / Chrome / Preview）打开结果，确认中文不乱码、水印位置正确。

@@ -10,7 +10,7 @@
 - **不需要深度学习框架**：做分词、关键词抽取、词性标注零第三方依赖
 - **不需要显卡、不需要联网**：词典随包分发，全程离线
 - **自定义词典文件必须是 UTF-8**：格式为「词语 词频 词性」，后两段可省略、顺序不可颠倒
-- **用 paddle 模式才需要额外依赖**：`paddlepaddle-tiny==1.6.1`，且 jieba 需 v0.40 以上、代码里先调 `jieba.enable_paddle()`
+- **用 paddle 模式才需要额外依赖**：`paddlepaddle-tiny==1.6.1`，且 jieba 需 v0.40 以上、代码里先调 `jieba.enable_paddle`
 - **并行分词只在 Linux 可用**：基于 multiprocessing，官方明确说暂不支持 Windows
 - **不需要账号或 API Key**
 

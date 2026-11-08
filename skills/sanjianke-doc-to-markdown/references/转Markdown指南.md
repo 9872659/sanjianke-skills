@@ -84,13 +84,12 @@ KEY = os.environ["A7W_API_KEY"]
 PROMPT = ("把全文整理成结构化 Markdown：保留标题层级、有序与无序列表、"
           "表格转 Markdown 表格，去掉页眉页脚与页码，不要概括、不要漏段。")
 
-
 def conv(url, retries=3):
     body = {"file_urls": [url], "question": PROMPT}
     for i in range(retries):
         try:
             req = urllib.request.Request(
-                API, data=json.dumps(body).encode(), method="POST",
+                API, data=json.dumps(body).encode, method="POST",
                 headers={"Authorization": "Bearer " + KEY,
                          "Content-Type": "application/json"})
             with urllib.request.urlopen(req, timeout=300) as r:
@@ -101,11 +100,10 @@ def conv(url, retries=3):
                 raise
             time.sleep(2 * (i + 1))
 
-
 os.makedirs("md", exist_ok=True)
 with open("urls.txt", encoding="utf-8") as f:
-    for n, url in enumerate((l.strip() for l in f if l.strip()), 1):
-        url = url.strip()
+    for n, url in enumerate((l.strip for l in f if l.strip), 1):
+        url = url.strip
         text = conv(url)
         name = "md/%03d.md" % n
         with open(name, "w", encoding="utf-8") as out:

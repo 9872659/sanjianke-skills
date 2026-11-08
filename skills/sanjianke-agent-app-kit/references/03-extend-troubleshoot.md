@@ -111,8 +111,6 @@ iSH 集成说明。改动 iOS 沙箱、VDSO 或 rootfs 格式前必读。
 
 ### 4.3 上游仓库 `scripts/` 下的开发工具
 
-> 下表的脚本属于**被介绍的上游项目仓库**，不在本 Skill 包内；跑之前先按前文克隆仓库。
-
 | 脚本 | 用途 |
 |---|---|
 | `gen_debug_skill.sh` / `gen_debug_skill_android.sh` | 生成调试用技能包（iOS / Android 各一份） |

@@ -42,16 +42,12 @@
 要点：
 
 - **`audio_url` 两种模式都必填**，含义不同：audio 模式是驱动音频，text 模式是**参考音色**。
-- **`content` 只在 text 模式生效**；text 模式漏传 `content` 上游报参数错误。
-- `image_url` 漏传 → 上游回「请提供 image_url」。
 - 图片建议正脸、清晰、单人；口型质量几乎完全取决于脸部分辨率与角度。
-- 实测输出规格 **480x832 / 24fps / 含 AAC 音轨**，分辨率由上游决定，不随入参变化。
 
 ## 2 · `POST /api/v1/apps/pic_lipsync/query`
 
 `{"task_id": "<提交返回的 id>"}`，同步返回状态与成片地址。
 
-**本包默认不拿它轮询**：价目表里 `/apps/pic_lipsync/query` 与 `/submit` 同 path 计价（`markupPercent 400`），
 虽然 note 写「query 本身不计费」，但这条口径没有独立验证过。查进度一律走 `GET /api/v1/tasks/<task_id>`
 （价目表 `cost:0`）。通用查询说不存在时，才用 `status --app pic_lipsync --yes` 显式走这条路。
 
@@ -181,9 +177,6 @@
 
 ```json
 "\/api/v1\/apps\/pic_lipsync\/submit": {
-  "mode": "flat", "cost": 0, "markupPercent": 400, "minPoints": 50,
-  "note": "…对外 = 上游实际点数 × 5…10-07 实测不发 quality ⇒ 上游按 standard 3 点/秒 收 ⇒
-           成本固定 3 点/秒 ⇒ ×5 = 15 点/秒 = 上游实际点数×5。★ cost 必须为 0。
            ★ minPoints:50 目前是声明性字段（通用计费不读）。"
 }
 ```
@@ -194,8 +187,6 @@
 
 ```json
 "\/api\/v1\/apps\/voice_tts\/*": {
-  "mode": "flat", "cost": 0, "markupPercent": 200,
-  "note": "…对外价 = 上游实际点数…× 3，单笔保底 > 0。
            实测：voice_tts/stt 上游真实 40 点 → 我方 120 点；tts_live 33 字上游真实 1.98 点 → 我方 5.94 点。"
 }
 ```
@@ -206,7 +197,6 @@
 
 ```json
 "\/api\/v1\/apps\/full_video\/submit": {
-  "mode": "per_second", "markupPercent": 1e-07,
   "resolutionRates": {"480P": 14, "768P": 28, "1080P": 60, "2K": 80, "4K": 80},
   "note": "2026-11-06 站主定价：480P 0.14 元/秒、768P 0.28、1080P 0.60、2K/4K 0.80（1 元=100 点，价格已含利润，不再叠加上游倍率）"
 }
@@ -215,9 +205,6 @@
 ### 通配与上传
 
 ```json
-"*": {"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
-      "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
-"\/api\/v1\/upload": {"mode": "flat", "cost": 0, "markupPercent": 0,
       "note": "★上传不计费（2026-10-04 站主批准）…计费引擎对 cost:0 有显式语义：ruleCost === 0 即视为免费路径。"}
 ```
 

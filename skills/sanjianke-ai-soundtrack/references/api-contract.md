@@ -45,7 +45,6 @@
 | `audio_urls` / `image_urls` / `video_urls` / `audio_weight` / `persona_model` | 否 | 参考素材（配乐线不用） |
 
 **`duration` 的生效条件（本包据此做本地校验）**：`custom_mode=true` **且** `model ∈ {V6, V6_MINI, V6_WILD}`。
-不满足时上游按默认时长出，不报错也不提示。
 
 ### 2. `music_extend` 延长音乐
 
@@ -68,7 +67,6 @@
 | `sound_loop` | 否 | 可循环 |
 | `grab_lyrics` | 否 | 顺手抓歌词 |
 
-> **实测坑**：`sound_tempo` 写成「可选、默认 Auto」，但真省掉它，上游直接报
 > `input.sound_tempo: 类型不正确`。所以本包**总是显式传** `sound_tempo`（默认 120）。
 
 ### 4. `music_timestamped_lyrics` 获取带时间戳的歌词
@@ -110,12 +108,7 @@
 `GET /api/v1/pricing` 顶层（实测原文）：
 
 ```json
-{"currency":"points","markupPercent":20,"site":"api",
- "note":"User price = upstream points x (1 + markup%). 实际成本以任务详情账单为准。",
  "pricing": {
-   "*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-         "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"},
-   "/api/v1/apps": {"mode":"flat","cost":0,"markupPercent":0,
          "note":"应用目录只读，不计费（2026-10-04 起 server.js 无计价分支）"},
    "/api/v1/apps/music_generation/*": {…}
  }}
@@ -123,7 +116,6 @@
 
 **关键点**：
 
-1. 通配 `*` 的 `markupPercent` 是 **100**，即「在上游点数上加 100%」= **对外 x 2**，不是把顶层那 20 算进去。
 2. **没有 `media_services_33` 的专属规则**，所以整个应用落通配。
 3. `minPoints` 写 50，但**实测每笔冻结 60 点**（= 上游 30 点 x 2），所以 50 只是理论保底。
 4. 另一个应用 `music_generation`（Suno 老应用）**有**专属规则，两条线别混。

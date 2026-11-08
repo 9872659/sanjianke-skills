@@ -50,12 +50,12 @@
 create policy "本人可读自己的订单"
 on public.orders for select
 to authenticated                     -- 显式限定，别省
-using ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id );
 ```
 
 **永远不要省 `to`**。不写 `to` 的策略对所有角色生效，
 意味着 `anon` 也要走一遍完整的策略求值 —— 既浪费数据库算力，
-又给「只靠 `auth.uid()` 不等于 null 来挡匿名用户」这种脆弱写法留下空间。
+又给「只靠 `auth.uid` 不等于 null 来挡匿名用户」这种脆弱写法留下空间。
 
 ---
 
@@ -72,7 +72,7 @@ using ( (select auth.uid()) = user_id );
 ```sql
 -- 危险：建完表就走了
 create table public.notes (
-  id uuid primary key default gen_random_uuid(),
+  id uuid primary key default gen_random_uuid,
   user_id uuid references auth.users(id) on delete cascade not null,
   body text not null
 );
@@ -106,7 +106,7 @@ alter table public.notes enable row level security;
 create policy "本人可改订单"
 on public.orders for update
 to authenticated
-using ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id );
 -- 用户能改自己的行，但能把 user_id 改成别人的 —— 相当于把行送出去了
 ```
 
@@ -116,8 +116,8 @@ using ( (select auth.uid()) = user_id );
 create policy "本人可改订单"
 on public.orders for update
 to authenticated
-using ( (select auth.uid()) = user_id )
-with check ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id )
+with check ( (select auth.uid) = user_id );
 ```
 
 `insert` 策略**必须**用 `with check`，写 `using` 是无效的。
@@ -128,7 +128,7 @@ with check ( (select auth.uid()) = user_id );
 create policy "本人可操作"
 on public.orders for all
 to authenticated
-using ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id );
 ```
 
 看起来简洁，但 `for all` 在 `insert` 时不会用 `using` 做检查，
@@ -166,7 +166,7 @@ stable
 as $$
   select exists (
     select 1 from public.user_roles
-    where user_roles.user_id = (select auth.uid())
+    where user_roles.user_id = (select auth.uid)
       and user_roles.role = required_role
   );
 $$;
@@ -184,14 +184,14 @@ grant execute on function public.has_role(text) to authenticated;
 
 ```sql
 -- 慢：对每一行都要去比对 join 条件
-using ( (select auth.uid()) in (
+using ( (select auth.uid) in (
   select user_id from public.team_members where team_members.team_id = teams.id
 ) )
 ```
 
 ```sql
 -- 快：先把「属于我的 team_id 集合」算出来，再拿它去比对行
-using ( id in ( select team_id from public.team_members where user_id = (select auth.uid()) ) )
+using ( id in ( select team_id from public.team_members where user_id = (select auth.uid) ) )
 ```
 
 方向是「**行里的列** 属于 **我的一批 id**」，不是「我的 id 出现在 **满足行条件的记录**里」。
@@ -207,13 +207,13 @@ using ( id in ( select team_id from public.team_members where user_id = (select 
 
 ```sql
 create table public.projects (
-  id          uuid primary key default gen_random_uuid(),
-  created_at  timestamptz not null default now(),
-  updated_at  timestamptz not null default now()
+  id          uuid primary key default gen_random_uuid,
+  created_at  timestamptz not null default now,
+  updated_at  timestamptz not null default now
 );
 ```
 
-- 主键用 `uuid`：策略里比对 `auth.uid()`（也是 uuid）不用转换。
+- 主键用 `uuid`：策略里比对 `auth.uid`（也是 uuid）不用转换。
 - 时间一律 `timestamptz`，不要用 `timestamp`（时区问题会在跨区部署时爆发）。
 
 ### 2. 归属列必须有，且非空
@@ -230,16 +230,16 @@ owner_id uuid not null references auth.users(id) on delete cascade
 
 ```sql
 create table public.teams (
-  id uuid primary key default gen_random_uuid(),
+  id uuid primary key default gen_random_uuid,
   name text not null,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now
 );
 
 create table public.team_members (
   team_id uuid not null references public.teams(id) on delete cascade,
   user_id uuid not null references auth.users(id) on delete cascade,
   role text not null default 'member' check (role in ('owner','admin','member')),
-  created_at timestamptz not null default now(),
+  created_at timestamptz not null default now,
   primary key (team_id, user_id)
 );
 
@@ -249,7 +249,7 @@ create index team_members_user_id_idx on public.team_members (user_id);
 - 成员关系**独立成表**：策略里能高效地取出「我的一批 team_id」，
   角色也能放在这里做细粒度控制。
 - 用数组列（`member_ids uuid[]`）看起来简单，但策略会变成
-  `(select auth.uid()) = any(member_ids)` —— 无法有效利用索引，
+  `(select auth.uid) = any(member_ids)` —— 无法有效利用索引，
   且角色、加入时间这些元数据没地方放。
 
 ### 4. 枚举用 check 约束或独立类型，不要用自由文本
@@ -268,7 +268,7 @@ status text not null default 'draft' check (status in ('draft','published','arch
 create policy "本人可读未删除的项目"
 on public.projects for select
 to authenticated
-using ( (select auth.uid()) = owner_id and deleted_at is null );
+using ( (select auth.uid) = owner_id and deleted_at is null );
 ```
 
 忘了这句，用户会看到自己「已删除」的数据 —— 属于功能 bug，但也常被当成权限问题来排查。
@@ -295,7 +295,7 @@ revoke all on public.notes from anon, authenticated;
 grant select, insert, update, delete on public.notes to authenticated;
 
 create policy "本人可读" on public.notes for select to authenticated
-  using ( (select auth.uid()) = user_id );
+  using ( (select auth.uid) = user_id );
 -- ...其余三条策略
 ```
 
@@ -311,13 +311,13 @@ create policy "本人可读" on public.notes for select to authenticated
 ```sql
 -- ============ 1. 建表 ============
 create table public.notes (
-  id         uuid primary key default gen_random_uuid(),
+  id         uuid primary key default gen_random_uuid,
   user_id    uuid not null references auth.users(id) on delete cascade,
   team_id    uuid references public.teams(id) on delete cascade,
   title      text not null check (length(title) between 1 and 200),
   body       text not null default '',
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  created_at timestamptz not null default now,
+  updated_at timestamptz not null default now
 );
 
 -- ============ 2. 索引（策略要用到的列）============
@@ -337,40 +337,40 @@ grant select, insert, update, delete on public.notes to authenticated;
 create policy "notes_select_own"
 on public.notes for select
 to authenticated
-using ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id );
 
 create policy "notes_insert_own"
 on public.notes for insert
 to authenticated
-with check ( (select auth.uid()) = user_id );
+with check ( (select auth.uid) = user_id );
 
 create policy "notes_update_own"
 on public.notes for update
 to authenticated
-using ( (select auth.uid()) = user_id )
-with check ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id )
+with check ( (select auth.uid) = user_id );
 
 create policy "notes_delete_own"
 on public.notes for delete
 to authenticated
-using ( (select auth.uid()) = user_id );
+using ( (select auth.uid) = user_id );
 
 -- ============ 6. updated_at 自动维护 ============
-create or replace function public.touch_updated_at()
+create or replace function public.touch_updated_at
 returns trigger
 language plpgsql
 security invoker
 set search_path = ''
 as $$
 begin
-  new.updated_at = now();
+  new.updated_at = now;
   return new;
 end;
 $$;
 
 create trigger notes_touch_updated_at
 before update on public.notes
-for each row execute function public.touch_updated_at();
+for each row execute function public.touch_updated_at;
 ```
 
 带团队可见性的版本（读：本人或本团队；写：仅本人）：
@@ -380,10 +380,10 @@ create policy "notes_select_own_or_team"
 on public.notes for select
 to authenticated
 using (
-  (select auth.uid()) = user_id
+  (select auth.uid) = user_id
   or team_id in (
     select tm.team_id from public.team_members tm
-    where tm.user_id = (select auth.uid())
+    where tm.user_id = (select auth.uid)
   )
 );
 ```
@@ -543,11 +543,11 @@ npx supabase test db       # 用 pgTAP 写策略用例，跑一遍
 
 | 写法 | 优化前 | 优化后 |
 |---|---|---|
-| `auth.uid() = user_id` | 171 ms | < 0.1 ms（加了索引） |
-| `auth.uid() = user_id` | 179 ms | 9 ms（包上 `(select ...)`） |
-| `is_admin()`（表关联） | 11,000 ms | 7 ms |
-| `is_admin() or auth.uid() = user_id` | 11,000 ms | 10 ms |
-| `has_role() = role` | 178,000 ms | 12 ms |
+| `auth.uid = user_id` | 171 ms | < 0.1 ms（加了索引） |
+| `auth.uid = user_id` | 179 ms | 9 ms（包上 `(select ...)`） |
+| `is_admin`（表关联） | 11,000 ms | 7 ms |
+| `is_admin or auth.uid = user_id` | 11,000 ms | 10 ms |
+| `has_role = role` | 178,000 ms | 12 ms |
 | 无 `to` 策略（anon 访问） | 170 ms | < 0.1 ms（加 `to authenticated`） |
 
 六条优化手法，按性价比排序：
@@ -558,21 +558,21 @@ npx supabase test db       # 用 pgTAP 写策略用例，跑一遍
 create index if not exists notes_user_id_idx on public.notes (user_id);
 ```
 
-只要策略里出现 `= auth.uid()` 这类按列的比对，那一列就该有索引。
+只要策略里出现 `= auth.uid` 这类按列的比对，那一列就该有索引。
 **这是第一条要做的，别的都排在它后面。**
 
 ### 2. 把函数包进 `(select ...)`
 
 ```sql
 -- 慢：每一行都调用一次
-using ( auth.uid() = user_id )
+using ( auth.uid = user_id )
 
 -- 快：优化器把它当成 initPlan，只算一次
-using ( (select auth.uid()) = user_id )
+using ( (select auth.uid) = user_id )
 ```
 
-**前提**：这个函数的结果**不能随行变化**。`auth.uid()`、`auth.jwt()`、
-`is_admin()`、`has_role()` 这类「本次请求内固定」的值都适用。
+**前提**：这个函数的结果**不能随行变化**。`auth.uid`、`auth.jwt`、
+`is_admin`、`has_role` 这类「本次请求内固定」的值都适用。
 
 如果函数带**行相关的入参**，就没法这么包，只能实测。
 
@@ -582,10 +582,10 @@ using ( (select auth.uid()) = user_id )
 
 ```js
 // 只靠 RLS：扫全表再过滤
-.from('notes').select()
+.from('notes').select
 
 // 加上过滤：直接走索引
-.from('notes').select().eq('user_id', userId)
+.from('notes').select.eq('user_id', userId)
 ```
 
 两句话记住：**RLS 保证你拿不到别人的行；过滤条件保证你拿得快。**
@@ -596,7 +596,7 @@ using ( (select auth.uid()) = user_id )
 把逻辑封进 `security definer` 函数里，既绕开了额外策略求值，也能被 `(select ...)` 缓存：
 
 ```sql
-using ( (select public.has_role('admin')) or (select auth.uid()) = user_id )
+using ( (select public.has_role('admin')) or (select auth.uid) = user_id )
 ```
 
 ### 5. 优化连接方向
@@ -607,10 +607,10 @@ using ( (select public.has_role('admin')) or (select auth.uid()) = user_id )
 
 ```sql
 -- 慢：anon 用户也要完整求值一遍策略
-create policy "p" on public.notes for select using ( (select auth.uid()) = user_id );
+create policy "p" on public.notes for select using ( (select auth.uid) = user_id );
 
 -- 快：匿名用户在角色检查阶段就被拦掉
-create policy "p" on public.notes for select to authenticated using ( (select auth.uid()) = user_id );
+create policy "p" on public.notes for select to authenticated using ( (select auth.uid) = user_id );
 ```
 
 ### 怎么量化
@@ -663,7 +663,7 @@ const { data } = await supabase
 |---|---|
 | 服务端后台任务，只需访问特定几张表 | **不要用 service_role。** 建一个专用角色，只授权那几张表 |
 | 定时统计、跑批 | 同上，或走 `security definer` 函数 + 精确 `execute` 授权 |
-| 管理后台（需要按管理员身份操作） | 用用户 JWT + `is_admin()` 类策略，**不要降级成 service_role** |
+| 管理后台（需要按管理员身份操作） | 用用户 JWT + `is_admin` 类策略，**不要降级成 service_role** |
 | 数据迁移 / 运维脚本 | 用 service_role，但只在受控环境、不常驻、不写进代码 |
 
 给 Agent 建专用角色的写法：
@@ -677,7 +677,7 @@ grant usage on schema public to agent_reader;
 grant select on public.notes, public.teams to agent_reader;
 
 -- 3. 若 Agent 通过接口访问（会走 RLS），则要给它策略
---    策略里不能用 auth.uid() 判断，改用角色判断：
+--    策略里不能用 auth.uid 判断，改用角色判断：
 create policy "agent 可读"
 on public.notes for select
 to agent_reader

@@ -4,7 +4,7 @@ slug: sanjianke-pyecharts
 displayName: 三剪客 · Python 图表生成
 description: "用 Python 写配置、交给 ECharts 渲染的图表库：链式 API 出 30 多种图表、400+ 地图资源、导出可交互 HTML、在 Notebook 与 Web 框架里嵌入，以及转静态图片的额外依赖。含安装、常用操作与避坑要点。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "Python 里的 ECharts 绑定：`Bar()` 链式出图、`render()` 导 HTML、`Page` 拼多图、Notebook 内嵌、Flask/Django 挂载、`make_snapshot` 转 PNG 与它背后的 Selenium / PhantomJS 依赖。遇到问题可加技术微信 9872659。"
+summary: "Python 里的 ECharts 绑定：`Bar` 链式出图、`render` 导 HTML、`Page` 拼多图、Notebook 内嵌、Flask/Django 挂载、`make_snapshot` 转 PNG 与它背后的 Selenium / PhantomJS 依赖。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -18,8 +18,6 @@ tags:
 如果你在 Python 里画图，嫌 `matplotlib` 的默认样式不够现代、又不想为了几张图去写 JavaScript，pyecharts 就是中间那条路：**你用 Python 描述图表，它把配置翻译成 ECharts 的配置项，最后吐出一个 HTML 文件**。样式、交互、提示框、缩放这些都是 ECharts 现成的能力，你不用碰 JS。
 
 它最大的特点是「**产物是网页而不是图片**」。做后台报表、做数据看板、往 Flask/Django 里嵌一段图表，这一条就值回票价；反过来，如果你要的是一张 PNG 塞进 Word，那还得额外配一套无头浏览器（见下面「安装」和「常见坑」）。
-
-**上游项目**：`pyecharts`　**仓库**：https://github.com/pyecharts/pyecharts
 
 ## 什么时候用 / 不用
 
@@ -82,23 +80,23 @@ from pyecharts.charts import Bar
 from pyecharts import options as opts
 
 bar = (
-    Bar()
+    Bar
     .add_xaxis(["衬衫", "毛衣", "领带", "裤子", "风衣", "高跟鞋", "袜子"])
     .add_yaxis("商家A", [114, 55, 27, 101, 125, 27, 105])
     .add_yaxis("商家B", [57, 134, 137, 129, 145, 60, 49])
     .set_global_opts(title_opts=opts.TitleOpts(title="某商场销售情况"))
 )
-bar.render()          # 默认写出 render.html
+bar.render          # 默认写出 render.html
 ```
 
 不习惯链式调用也可以一行一行写，两种写法等价：
 
 ```python
-bar = Bar()
+bar = Bar
 bar.add_xaxis(["衬衫", "毛衣", "领带"])
 bar.add_yaxis("商家A", [114, 55, 27])
 bar.set_global_opts(title_opts=opts.TitleOpts(title="某商场销售情况"))
-bar.render()
+bar.render
 ```
 
 **2. 指定输出路径**
@@ -109,10 +107,10 @@ bar.render("output/bar.html")
 
 **3. 在 Notebook 里内嵌显示**
 
-在 Jupyter / JupyterLab 里，用 `render_notebook()` 直接把图表显示在单元格下面。
+在 Jupyter / JupyterLab 里，用 `render_notebook` 直接把图表显示在单元格下面。
 
 ```python
-bar.render_notebook()
+bar.render_notebook
 ```
 
 如果渲染通道判断得不对（比如某些 Notebook 环境），可以显式指定；可选项以官方文档的「全局配置项」一节为准。
@@ -136,8 +134,8 @@ page.render("report.html")
 ```python
 from pyecharts.charts import Line, Pie, Map
 
-line = Line().add_xaxis(["一月", "二月", "三月"]).add_yaxis("销量", [10, 20, 30])
-pie = Pie().add("", [("A", 10), ("B", 20), ("C", 30)])
+line = Line.add_xaxis(["一月", "二月", "三月"]).add_yaxis("销量", [10, 20, 30])
+pie = Pie.add("", [("A", 10), ("B", 20), ("C", 30)])
 ```
 
 **6. 主题与初始化配置**
@@ -166,21 +164,19 @@ from pyecharts import options as opts
 from pyecharts.charts import Bar
 from pyecharts.render import make_snapshot
 
-
-def bar_chart() -> Bar:
+def bar_chart -> Bar:
     c = (
-        Bar()
+        Bar
         .add_xaxis(["衬衫", "毛衣", "领带", "裤子", "风衣", "高跟鞋", "袜子"])
         .add_yaxis("商家A", [114, 55, 27, 101, 125, 27, 105])
         .add_yaxis("商家B", [57, 134, 137, 129, 145, 60, 49])
-        .reversal_axis()
+        .reversal_axis
         .set_series_opts(label_opts=opts.LabelOpts(position="right"))
         .set_global_opts(title_opts=opts.TitleOpts(title="Bar-测试渲染图片"))
     )
     return c
 
-
-make_snapshot(driver, bar_chart().render(), "bar.png")
+make_snapshot(driver, bar_chart.render, "bar.png")
 ```
 
 **8. 嵌进 Web 框架**
@@ -192,12 +188,12 @@ Flask / Django / Sanic 这类框架的集成方式，官方文档有专门的章
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | 照抄网上示例，报 `ImportError` / `AttributeError`：`Bar` 没有某个方法 | 抄的是 0.5.x 时代的代码，而 v0.5.x 与 v1 之后的 API **不兼容** | 认准版本线：v1+ 用 `pyecharts.charts` 的类 + 链式调用 + `from pyecharts import options as opts`；老代码去 05x 文档对照 |
-| `bar.render()` 出来了 HTML，但双击打开是空白 | HTML 默认从 CDN 加载 ECharts 的 JS，离线或网络受限时加载失败 | 联网打开，或改用「内嵌 JS 资源」的输出方式（`CurrentConfig` 里可配置在线/本地 host 与内嵌策略），让 HTML 自包含 |
+| `bar.render` 出来了 HTML，但双击打开是空白 | HTML 默认从 CDN 加载 ECharts 的 JS，离线或网络受限时加载失败 | 联网打开，或改用「内嵌 JS 资源」的输出方式（`CurrentConfig` 里可配置在线/本地 host 与内嵌策略），让 HTML 自包含 |
 | 装完 pyecharts 就调 `make_snapshot`，报找不到驱动 | 转图片是**可选能力**，需要另外装 `snapshot-selenium` 或 `snapshot-phantomjs`，并配好浏览器/驱动 | `pip install snapshot-selenium`，确认本机浏览器与 driver 版本匹配；或改走「先出 HTML 再人工截图」 |
 | 中文标签在导出的图片里变成方框 | 无头浏览器容器里没有中文字体 | 在镜像/系统里装中文字体；这是渲染环境问题，不是图表配置问题 |
-| Notebook 里 `render()` 只落盘不显示，或者显示了两个图 | `render()` 是写文件，Notebook 内嵌要用 `render_notebook()` | Notebook 用 `render_notebook()`；Web 场景用「嵌入渲染」那条路 |
+| Notebook 里 `render` 只落盘不显示，或者显示了两个图 | `render` 是写文件，Notebook 内嵌要用 `render_notebook` | Notebook 用 `render_notebook`；Web 场景用「嵌入渲染」那条路 |
 | 地图图画不出来 / 报缺少地图 | 地图数据要按地区名或编码匹配，名称写法不标准就匹配不上 | 用标准的行政区全称（与官方示例一致）；确认当前版本对应的地图资源已包含该地区 |
-| 想把 `df` 直接丢进去画图，报类型错 | 它接收的是 list 一类的基础结构，不认识 DataFrame | 先用 `pandas` 把列取出来转成 list：`df["col"].tolist()` |
+| 想把 `df` 直接丢进去画图，报类型错 | 它接收的是 list 一类的基础结构，不认识 DataFrame | 先用 `pandas` 把列取出来转成 list：`df["col"].tolist` |
 | 自定义 JS 回调（格式化标签等）写进 `opts` 后没生效 | 字符串会被当成普通文本，不会当函数执行 | 用官方提供的 JS 代码包装类型（`JsCode` 一类的写法）包住，具体写法以官方文档为准 |
 | 多个图表对象复用同一个渲染结果，样式互相串 | 图表对象的 `options` 是实例状态，重复 `add_*` 会累加 | 每张图单独构造对象；需要复用就先定义构造函数，每次返回一个新实例 |
 
@@ -207,9 +203,9 @@ Flask / Django / Sanic 这类框架的集成方式，官方文档有专门的章
 |---|---|---|
 | 网络访问 | 视情况 | 渲染出来的 HTML 默认要从 CDN 拉 ECharts 的 JS；换成内嵌资源或本地 host 后可以完全离线。图表数据本身不联网 |
 | 读取文件 | 否 | 它接收的是内存里的 Python 数据；只有嵌进 Web 框架时由你的框架去读模板 |
-| 写入文件 | 是 | `render()` 写 HTML；`make_snapshot()` 写 PNG/其他图片格式 |
+| 写入文件 | 是 | `render` 写 HTML；`make_snapshot` 写 PNG/其他图片格式 |
 | 凭证 | 否 | 不需要任何 API Key 或账号。本 Skill 不内嵌任何密钥 |
-| 子进程 / 后台常驻 | 是（仅转图片时） | `make_snapshot()` 会拉起无头浏览器进程去截图；纯出 HTML 的用法不需要 |
+| 子进程 / 后台常驻 | 是（仅转图片时） | `make_snapshot` 会拉起无头浏览器进程去截图；纯出 HTML 的用法不需要 |
 
 ## 触发场景
 
@@ -235,7 +231,7 @@ Flask / Django / Sanic 这类框架的集成方式，官方文档有专门的章
 
 - 不做数据分析与统计计算，不做数据清洗，不读数据源；这些交给 `pandas` / 数据库客户端。
 - 不产出 PDF、Word、Excel 这类文档格式；想要这些得自己把 HTML 或图片再拼进去。
-- 不提供图表托管服务。`render()` 写出的是一个静态文件，要长期可访问需要你自己部署 Web 服务。
+- 不提供图表托管服务。`render` 写出的是一个静态文件，要长期可访问需要你自己部署 Web 服务。
 - 不做实时数据推送与流式刷新；数据更新要重新生成。
 - 不做无头浏览器管理，转图片的浏览器与驱动要你自己装好。
 
@@ -253,12 +249,11 @@ Flask / Django / Sanic 这类框架的集成方式，官方文档有专门的章
 - 原生产物是 HTML 而非图片，图片导出是附加能力且依赖外部浏览器。
 - 地图资源虽多，但地区名称匹配对写法敏感；数据里的名称不标准会导致图上无数据。
 - 图表配置项非常庞大，`opts` 的对象树需要查文档；本文只给出主干用法，细节一律以官方文档的配置项章节为准。
-- 上游迭代中部分类与参数可能随版本调整；执行前请以实际安装版本的文档与示例为准。具体版本号、发布日期与 star 数不做断言。
 
 ## 自检清单
 
 - [ ] 确认当前装的是 v1+ 还是 0.5.x，代码写法与版本线一致（不要混着抄）。
-- [ ] 用的是 `render()`（写文件）还是 `render_notebook()`（Notebook 内嵌）——别用错。
+- [ ] 用的是 `render`（写文件）还是 `render_notebook`（Notebook 内嵌）——别用错。
 - [ ] 需要交付图片时，快照驱动已经装上，且浏览器与 driver 版本匹配。
 - [ ] 离线环境：已确认 HTML 能自行拿到 JS 资源，不依赖 CDN。
 - [ ] 容器/无头环境：已安装中文字体，避免中文标签显示成方框。

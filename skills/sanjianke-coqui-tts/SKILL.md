@@ -18,8 +18,6 @@ tags:
 
 它是个**完整的语音合成工具箱**，不是单一模型：里面既有传统的声学模型加声码器的组合，也有端到端模型，还有做得更现代的零样本克隆方案，外加一套训练与微调流程。所以你既能拿现成模型开箱出片，也能拿自己的素材去训一个专属音色。需要提前知道的是：**上游仓库已经归档、由社区接手维护**，包名和文档站都换过，装的时候踩错坑的概率不低，下面的安装顺序和坑位请照着走。
 
-**上游项目**：`Coqui TTS`　**仓库**：https://github.com/coqui-ai/TTS
-
 ## 零安装用法（推荐先看这个）
 
 **不需要装 PyTorch、不需要装 coqui-tts、不需要下模型、不需要显卡。** 本 Skill 自带一个
@@ -63,7 +61,6 @@ export A7W_API_KEY=sk-xxxx                      # 环境变量
 - **只是偶尔合成一两句话**。装 PyTorch、下模型、配环境的时间远超过直接用现成语音接口。
 - **没有 GPU 又要高并发实时合成**。它默认面向单机推理，服务端也明显不是为性能优化的。
 - **要求顶级自然度和情感表现**。开源模型的韵律、情感、长句稳定性普遍不如商业方案，别拿它当终稿配音的唯一来源。
-- **期待长期稳定的上游支持**。原仓库已归档，文档站与包名由社区维护版本提供，接口与依赖会继续变动，锁定版本很重要。
 - **想拿任意人的声音随便克隆**。音色克隆涉及他人声音权益，未经同意不得使用；这是合规红线，不是技术问题。
 
 ## 安装
@@ -221,10 +218,10 @@ tts --out_path output/speech.wav \
 import torch
 from TTS.api import TTS
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+device = "cuda" if torch.cuda.is_available else "cpu"
 
 # 列出可用模型
-print(TTS().list_models())
+print(TTS.list_models)
 
 # 初始化多语言多数据集模型
 tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
@@ -330,7 +327,6 @@ tts-server --model_name "tts_models/multilingual/multi-dataset/xtts_v2" --langua
 - 不做音乐与歌声合成：目标是说话语音。
 - 不做声音权益管理：克隆谁的声音、能不能用，是使用者自己的法律责任。
 - 不是生产级高并发服务：官方明说演示服务没做性能优化，也不提供分布式部署方案。
-- 不保证上游长期维护：原仓库已归档，实际维护由社区接管，版本与依赖存在继续变动的风险。
 
 ### 零安装版（走 `api.a7w.cn`）的边界
 
@@ -362,7 +358,6 @@ tts-server --model_name "tts_models/multilingual/multi-dataset/xtts_v2" --langua
 - 演示服务不是为性能优化的，别把它当生产级语音服务直接对外。
 - 音色克隆能力受模型的 `supports_cloning` 约束，不是所有模型都能克隆；且许多模型在 `speaker` 与 `speaker_wav` 之间只能二选一。
 - 缓存的音色与生成它的模型绑定，换模型需要重新克隆。
-- 项目上游仓库已归档，当前由社区维护的版本与其文档站继续更新；包名、依赖与接口请以该文档站当前内容为准，本包不做版本断言。
 - 许可证是两层的：代码与发布出的预训练模型可能适用不同条款，商用前请分别核对官方说明。
 - 具体版本号、发布日期与 star 数请以仓库页面实时信息为准，此处不做断言。
 
@@ -378,7 +373,6 @@ tts-server --model_name "tts_models/multilingual/multi-dataset/xtts_v2" --langua
 - [ ] 指定声码器前，确认它与所选声学模型是官方说明里的兼容组合。
 - [ ] 对外提供服务前，清楚演示服务未做性能优化；批量任务改用 Python API 跑。
 - [ ] 商用前分别核对了代码与预训练模型各自的许可条款。
-- [ ] 记录下当前锁定的版本号，避免上游更新后环境被破坏。
 
 ## 参考文件
 

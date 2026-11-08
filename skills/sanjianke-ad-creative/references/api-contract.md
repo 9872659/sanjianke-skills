@@ -58,7 +58,6 @@ multipart/form-data
 
 ```json
 "/api/v1/apps/nano_banana/*": {
-  "mode": "flat", "cost": 72, "markupPercent": 0,
   "note": "AI商品图 = 固定 72 点/次；商品多角度 = 25 点 x 选中视角数（请求体带 views[] 时生效）"
 }
 ```
@@ -124,8 +123,6 @@ multipart/form-data
 
 返回 `data.audio_url`。
 
-**计费**：`/api/v1/apps/voice_tts/*` 是 `mode=flat, cost=0, markupPercent=200`，note 原文
-「对外价 = 上游实际点数（响应 `usage.points_cost` / `actual_points`，单位是点）x 3，单笔保底 > 0」。
 实测基准：`tts_live` 33 字上游 1.98 点 → 我方 5.94 点，所以本包按 **0.18 点/字**估，实际以 `usage.points_cost` 为准。
 
 ---
@@ -139,8 +136,6 @@ multipart/form-data
  "prompt": "电子鼓点，节奏明快，适合 15 秒竖版"}
 ```
 
-**计费**：该路径没有专属规则，落通配 `*`：`{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50}`，
-即**上游实际点数 x 2、单笔保底 50 点**。返回里可能有 `audio_url`，也可能是 `task_id`（用 `GET /api/v1/tasks/<id>` 取结果）。
 `media_services_33` 在架 29 个接口（`/api/v1/apps` 现查），配乐取 `music_generate`。
 
 ---
@@ -185,7 +180,6 @@ note 原文「上传不计费（2026-10-04 站主批准）。上传是生成的�
 
 | 规则 | 说明 |
 |---|---|
-| 16 的倍数 | `720x1280`、`1024x1024`、`1024x1280`、`1152x1536`、`1280x720` 都合规 |
 | 长短边 ≤ 3:1 | 9:16 = 1.78、4:5 = 1.25，都过 |
 | 单边 ≤ 3840 | 上架尺寸 1920 是后期放大，不占生成预算 |
 | 总像素 655,360~8,294,400 | 800x800 只有 640,000，低于下限，所以 1:1 请求 1024x1024 |

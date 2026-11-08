@@ -4,7 +4,6 @@ slug: sanjianke-talking-matrix
 displayName: 口播矩阵 3 形象 × 4 音色一次出 12 条
 description: "**3 个形象 × 4 个音色 = 12 条口播，一条命令跑完，约 2,564 点（25.64 元）。** 一段文案进来，配音只做 4 次 —— 每个音色一次，复用到 12 条视频里，这是矩阵最省的一刀。三个应用：voice_tts 配音 0.18 点/字、pic_lipsync 图片数字人 15 点/秒、image_human 全驱数字人 10/15/30/60 点/输入秒。上传/配音/提交/轮询/断点续跑都进 state，重跑只补没跑完的，配过音的音色不再付第二次钱。付费 submit 只发一次，重试只在免费的上传与轮询；轮询只走 GET /tasks/<id>。cost 先算钱、--budget 超了退 5 零请求、--yes 缺了退 4 报点数，doctor 只读 GET。零依赖。需要自备 API Key，注册见 https://api.a7w.cn/ 。技术微信 9872659。"
 version: 1.0.0
-summary: "算账：60 字约 14 秒，单条 lipsync 210 点；3 形象 × 4 音色 = 12 条，配音 4 次 44 点 + 视频 2,520 点 = 2,564 点（25.64 元）。配音每个音色只做一次，复用音频，省掉 N-1 次重复合成。三个应用：voice_tts/tts 同步配音（≤500 字，直回 audio_url；33 字上游 1.98 点→我方 5.94 点）；pic_lipsync/submit 图片数字人，档位真名是 quality，按上游实际点数 ×5 即 15 点/秒；image_human/submit 全驱四档 fast 10 / standard 15 / 2k 30 / 4k 60 点/输入秒，mode 必须显式给 —— schema 默认 standard、计费卡默认 fast。链路：上传图 0 点 → 逐音色配音 → 笛卡尔积提交 → 并发轮询 → 按 {prefix}_{序号}-{形象}_{音色}.mp4 落盘。state 存每条的 task_id、成片与点数，断点续跑成立；文案指纹进 key，换文案不误用旧音频。付费 submit 只发一次，中断记 unknown 先对账；重试只在免费环节；轮询只走 GET /tasks/<id>。零依赖。需要自备 API Key，注册见 https://api.a7w.cn/ 。技术微信9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -28,8 +27,8 @@ tags:
 
 | 环节 | 接口 | 单价 |
 |---|---|---|
-| 配音 | `voice_tts/tts` | **0.18 点/字**（上游实际点数 ×3；33 字实测 5.94 点）|
-| 视频 · lipsync | `pic_lipsync/submit` | **15 点/秒**（上游实际点数 ×5）|
+| 配音 | `voice_tts/tts` | **0.18 点/字**|
+| 视频 · lipsync | `pic_lipsync/submit` | **15 点/秒**|
 | 视频 · human fast | `image_human/submit` | **10 点/输入秒** |
 | 视频 · human standard | 同上 | **15 点/输入秒** |
 | 视频 · human 2k / 4k | 同上 | **30 / 60 点/输入秒** |

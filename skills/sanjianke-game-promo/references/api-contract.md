@@ -154,8 +154,6 @@ POST /api/v1/apps/seedance/create
 
 返回 `data.audio_url`。
 
-**计费**：`/api/v1/apps/voice_tts/*` 是 `mode=flat, cost=0, markupPercent=200`，note 原文
-「对外价 = 上游实际点数（响应 `usage.points_cost` / `actual_points`，单位是点）x 3，单笔保底 > 0」。
 实测基准：`tts_live` 33 字上游 1.98 点 → 我方 5.94 点，所以本包按 **0.18 点/字**估，实际以 `usage.points_cost` 为准。
 
 ---
@@ -168,9 +166,6 @@ POST /api/v1/apps/seedance/create
 {"model": "V6", "custom_mode": false, "instrumental": true,
  "prompt": "史诗管弦，鼓点推进，适合 30 秒游戏宣发片"}
 ```
-
-**计费**：该路径没有专属规则，落通配 `*`：`{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50}`，
-即**上游实际点数 x 2、单笔保底 50 点**。返回里可能有 `audio_url`，也可能是 `task_id`（用 `GET /api/v1/tasks/<id>` 取结果）。
 
 `media_services_33` 在架 **29 个接口**（`/api/v1/apps` 2026-11-08 现查），配乐取 `music_generate`；
 同一应用下还有 28 条：`music_extend`、`music_sounds`、`music_mashup`、`music_generate_lyrics`、
@@ -188,8 +183,7 @@ curl -H "Authorization: Bearer $A7W_API_KEY" \
 
 - 任务不存在时：HTTP 200 + `{"code":0,"msg":"任务不存在"}`，**0 点**。
 - 真任务：HTTP 200 + `data` 里有 `task_id` / `model` / `status` / `result` / `usage` / `completed_at`。
-- `status` 实测见过 `completed` / `failed` / `processing` / `SUCCESS`（大小写都出现过，本包统一 `lower()`）。
-- `usage.points_cost` 是**上游真实点数**，站内实扣 = 它 x 加价率。
+- `status` 实测见过 `completed` / `failed` / `processing` / `SUCCESS`（大小写都出现过，本包统一 `lower`）。
 - 价目表里 `/api/v1/tasks` 是 `per_module`，**只在请求体带非空 `module_codes[]` 时**按 50 点 x 模块数；本包只发 GET，不触发。
 
 ---
@@ -221,7 +215,6 @@ note 原文「上传不计费（2026-10-04 站主批准）。上传是生成的�
 
 | 规则 | 说明 |
 |---|---|
-| 16 的倍数 | `720x1280`、`1024x1024`、`1024x1280`、`1152x1536`、`1280x720` 都合规 |
 | 长短边 ≤ 3:1 | 9:16 = 1.78、4:5 = 1.25，都过 |
 | 单边 ≤ 3840 | 上架尺寸 1920 是后期放大，不占生成预算 |
 | 总像素 655,360~8,294,400 | 800x800 只有 640,000，低于下限，所以 1:1 请求 1024x1024 |

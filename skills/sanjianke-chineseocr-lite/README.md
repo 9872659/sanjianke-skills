@@ -6,7 +6,6 @@
 
 ## 前置条件
 
-- 一个可用的 Python 环境。上游 README 给出的推荐版本是 Python 3.6，实际可跑区间以仓库 `requirements.txt` 为准。
 - Windows / Linux / macOS 均可，**纯 CPU 推理，不需要显卡，也不需要 CUDA**。
 - 仓库自带的三个 ONNX 推理模型要在位：文字检测 `dbnet.onnx`、文字识别 `crnn_lite_lstm.onnx`、方向分类 `angle_net.onnx`（都在 `models/` 下）。
 - 输入必须是**图片**（截图、扫描页、照片）。如果要处理 PDF，请先用别的工具把页面渲染成 PNG/JPG。
@@ -28,7 +27,6 @@
 
 ## 依赖
 
-- 上游仓库：https://github.com/DayBreak-u/chineseocr_lite
 - Python 依赖：仓库 `requirements.txt`（推理运行时、数值计算、图像处理、Web 服务框架，以文件当前内容为准）。
 - 推理模型：仓库 `models/` 下的 ONNX 文件；另有一份 `models_ncnn/` 仅供 NCNN 端侧示例使用，不是 CLI 必需资源。
 - Web 服务：由仓库 `backend/` 提供，默认监听 8089 端口。

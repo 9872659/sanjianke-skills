@@ -165,7 +165,6 @@ python3 scripts/run.py run --input 片子.mp4 --to en --dry-run
 
 ### 实际扣费比 `cost` 多
 
-`cost` 给的是**下限**：配音每条按 60 点保底算，成交价 = 上游实际点数 x 2。
 以 `/user/balance/logs` 的结算记录为准。
 
 ### 请求失败了会扣钱吗？

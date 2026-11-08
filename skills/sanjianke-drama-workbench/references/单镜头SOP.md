@@ -149,7 +149,7 @@ python3 scripts/a7w.py call flashvsr submit \
 
 ```csv
 shot_id,stage,app,api,task_id,status,points,input_url,output_url,updated_at
-shot01,image,nano_banana,submit,task_aaa,completed,24,,"https://.../shot01.png",2026-01-01T10:00:00
+shot01,image,nano_banana,submit,task_aaa,completed,24，"https://.../shot01.png",2026-01-01T10:00:00
 ```
 
 - `status` 只认 `pending` / `completed` / `failed`

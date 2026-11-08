@@ -20,8 +20,6 @@ tags:
 
 turndown 干的就是这一件事：接受 HTML 字符串或 DOM 节点，输出 CommonMark。它的扩展点是**规则（rule）**——每条规则用 `filter` 挑元素、用 `replacement` 决定怎么转，你可以加规则、保留某些元素为原始 HTML、或整段删掉。表格和删除线不属于 CommonMark，官方用 `turndown-plugin-gfm` 这个独立包补上。
 
-**上游项目**：`turndown`　**仓库**：https://github.com/mixmark-io/turndown
-
 ## 权限与用途说明
 
 | 能力 | 是否申请 | 用途 |
@@ -39,16 +37,14 @@ turndown 干的就是这一件事：接受 HTML 字符串或 DOM 节点，输出
 **该用**：
 
 - 「把这段网页 HTML 转成 Markdown 存进知识库」——最典型的一步转换。
-- 「抓下来的正文里还混着 `<script>`、`<style>`、导航栏，帮我清掉」——用 `remove()` 过滤。
+- 「抓下来的正文里还混着 `<script>`、`<style>`、导航栏，帮我清掉」——用 `remove` 过滤。
 - 「这个页面的表格要保留成 Markdown 表格」——加载 GFM 插件。
-- 「`<details>` / `<iframe>` 这些标签 Markdown 表达不了，原样留着」——用 `keep()` 保留为原始 HTML。
+- 「`<details>` / `<iframe>` 这些标签 Markdown 表达不了，原样留着」——用 `keep` 保留为原始 HTML。
 - 「默认转出来的 Markdown 转义太激进，满屏反斜杠」——覆写 `escape`。
 - 「我要在 Node 里批量转一堆 HTML 文件」——配合 `fs` 写个循环。
 
-
 **不该用**：
 
-- 要抓网页、去广告、抽正文 —— 它只转你递给它的 HTML，抓取与正文提取是上游环节的事。
 - 不装 GFM 插件就想要 Markdown 表格 —— 核心包明确把表格划在边界之外。
 - 要做 Markdown → HTML 的反向转换 —— turndown 只有单向。
 - 拿它当 HTML 净化器 —— 它不检测 XSS、不剥离危险属性、不校验 URL 协议；输出给不可信环境前必须另加 sanitize 环节。
@@ -75,7 +71,7 @@ npm install turndown-plugin-gfm
 ```html
 <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 <script>
-  var turndownService = new TurndownService()
+  var turndownService = new TurndownService
   console.log(turndownService.turndown('<h1>Hello world!</h1>'))
 </script>
 ```
@@ -91,7 +87,7 @@ npm install turndown-plugin-gfm
 ```js
 const TurndownService = require('turndown')
 
-const turndownService = new TurndownService()
+const turndownService = new TurndownService
 const markdown = turndownService.turndown('<h1>Hello world!</h1>')
 console.log(markdown)
 ```
@@ -131,7 +127,7 @@ const markdown = turndownService.turndown(html)
 
 **3. 保留 Markdown 表达不了的元素为原始 HTML**
 
-默认 turndown **不保留任何元素**，全部尝试转成 Markdown。转不了的会被降级成纯文本内容——比如 `<details>` 展开区、`<iframe>`、`<video>` 就没了。用 `keep()` 把它们原样留在输出里：
+默认 turndown **不保留任何元素**，全部尝试转成 Markdown。转不了的会被降级成纯文本内容——比如 `<details>` 展开区、`<iframe>`、`<video>` 就没了。用 `keep` 把它们原样留在输出里：
 
 ```js
 turndownService.keep(['details', 'summary', 'iframe', 'video'])
@@ -212,7 +208,7 @@ turndownService.addRule('internalLink', {
 | 表格转出来全是一行行纯文本 | **turndown 核心不支持表格**，CommonMark 规范里就没有表格语法 | 装 `turndown-plugin-gfm` 并 `service.use(gfm)` |
 | 输出里满屏反斜杠（`1\.`、`\*`、`\-`） | turndown 不解析每个元素的 Markdown 语义，而是用一组正则**激进地**转义可能被误读的字符。这是刻意的性能取舍 | 觉得过度就覆写 `TurndownService.prototype.escape`。**代码元素里的文本不会被转义**，放心 |
 | `<details>` / `<iframe>` / `<video>` 内容凭空消失 | 默认**不保留任何元素**，没有对应规则的节点只输出其文本内容，标签本身丢掉 | 用 `keep(['details','iframe'])` 保留为原始 HTML |
-| `remove()` 之后文字也没了 | `remove` 的作用是**连内容一起删掉**，不是只剥标签 | 只想剥标签、保内容就别用 `remove`，交给默认规则；要精确控制就 `addRule` |
+| `remove` 之后文字也没了 | `remove` 的作用是**连内容一起删掉**，不是只剥标签 | 只想剥标签、保内容就别用 `remove`，交给默认规则；要精确控制就 `addRule` |
 | 自定义规则不生效 | 规则优先级是固定顺序的，`keep` / `remove` / 自定义规则的相对次序会影响谁先命中 | 记住优先级：**空白规则 > 新增规则 > CommonMark 规则 > keep 规则 > remove 规则 > 默认规则**。要让自定义规则接管被 CommonMark 规则覆盖的元素，只能用 `addRule`，`keep` 不够 |
 | 多个 `keep` / `remove` 冲突 | 多次调用时**后加的优先级高于先加的** | 按「从宽到严」的顺序调用，或者干脆合并成一个数组一次传 |
 | Node 里直接传 DOM 节点报错 | 服务端没有全局 `document` | Node 里传**字符串**；确实要传节点就先在 jsdom / domino 里构造出 DOM |
@@ -233,7 +229,6 @@ turndownService.addRule('internalLink', {
 
 **不覆盖**：
 
-- **不抓网页**。它只转你给它的 HTML。抓取、去广告、正文提取是上游环节的事。
 - **不做表格转 Markdown**（核心）。这是工具自己明确划出的边界，必须装 GFM 插件。
 - **不做反向转换**。Markdown → HTML 是另一件事，turndown 只有单向。
 - **不做 HTML 净化**。它不检测 XSS、不剥离危险属性、不校验 URL 协议。要输出给不可信环境用，请在前面加 sanitize 环节。
@@ -254,15 +249,14 @@ turndownService.addRule('internalLink', {
 - **表格需要插件，且插件对复杂表格支持有限**。合并单元格（`rowspan` / `colspan`）、嵌套表格、表头与数据行结构不规范的表格，转出来通常不符合预期——Markdown 表格语法本身就表达不了这些。
 - **无对应规则的元素会丢失标签**（默认降级为文本），这包括 `<details>`、`<figure>`、`<mark>` 这类语义化标签，也包括嵌入式内容。
 - **规则优先级固定**，`keep` 无法覆盖 CommonMark 已有规则的标签；要让 `<p>` 这种行为不同，只能 `addRule`。多个 `keep` / `remove` 的先后顺序也有语义（后加的更优先）。
-- **`preformattedCode` 选项的 `true` 行为**指向一个上游 issue 讨论的空白折叠问题，不是完全等价的「保留原样」。
 - **不处理 `<style>` 与内联 CSS 的语义**。视觉信息（颜色、字号、布局）在输出里无法体现。
 - 许可证为 MIT。版本号与行为以你实际安装的版本为准。
 
 ## 自检清单
 
-- [ ] 需要表格或删除线时，确认装了 `turndown-plugin-gfm` 并 `use()` 了它——只改选项是不够的。
-- [ ] 抓来的 HTML 里明确 `remove()` 掉了 `script` / `style` / `nav` / `footer` 这类噪音，且知道 `remove` 会连内容一起删。
-- [ ] 需要保留的语义元素（`details` / `iframe` / `video`）已加进 `keep()`，确认没有内容凭空消失。
+- [ ] 需要表格或删除线时，确认装了 `turndown-plugin-gfm` 并 `use` 了它——只改选项是不够的。
+- [ ] 抓来的 HTML 里明确 `remove` 掉了 `script` / `style` / `nav` / `footer` 这类噪音，且知道 `remove` 会连内容一起删。
+- [ ] 需要保留的语义元素（`details` / `iframe` / `video`）已加进 `keep`，确认没有内容凭空消失。
 - [ ] 转换前确认了 HTML 里没有需要保真的表格结构（合并单元格会丢）。
 - [ ] 输出风格（`headingStyle` / `codeBlockStyle` / `bulletListMarker`）已按目标场景调整，没有沿用默认的 `setext` + 缩进代码块。
 - [ ] 抽样肉眼比对过转换结果：标题层级、代码块内容、链接目标是否正确。

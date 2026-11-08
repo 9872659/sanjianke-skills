@@ -18,8 +18,6 @@ Cal.diy 要解决的是「别再用聊天记录约时间」。它把你可预约
 
 它面向的是愿意自己管服务器、并且能接受「社区版 = 去掉商业化功能」这套取舍的人。项目本身明确说明它是社区维护的开源自托管版本，**严格建议用于个人、非生产场景**，没有托管版，也没有商业支持。
 
-**上游项目**：`Cal.com`　**仓库**：https://github.com/calcom/cal.diy
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -32,7 +30,6 @@ Cal.diy 要解决的是「别再用聊天记录约时间」。它把你可预约
 
 **不要用它**：
 
-- 要**生产级、多人协作的排期基础设施**。上游明确建议这类需求走商业托管版，而不是这个社区版。
 - 需要 **SSO / SAML、团队与组织管理、Insights、Workflows** 这些能力——在这个版本里是被**主动移除**的，装完也不会有。
 - 期望**开箱即用的托管服务**：没有官方托管版，也没有官方技术支持通道，运维责任全在使用者。
 - 团队里**没有人会管 PostgreSQL、反向代理和证书**。这套系统自托管需要数据库管理、服务器运维和数据安全方面的高级知识。
@@ -180,7 +177,7 @@ yarn playwright show-report test-results/reports/playwright-html-report
 | 容器日志报 `CLIENT_FETCH_ERROR`、`getaddrinfo ENOTFOUND ...` | 认证回调把 `WEBAPP_URL` 当基址，而容器内部的 DNS 跟宿主机不是一套，容器解析不了你的域名 | 显式让后端回环到自己，设置 `NEXTAUTH_URL=http://localhost:3000/api/auth`（按实际端口调整） |
 | 构建镜像时报找不到数据库 | 这个应用在构建期就要读数据库配置，不是只在运行期才需要 | 构建前先确认 `DATABASE_URL` 指向一个可用库；本地没有就 `docker compose up -d database` 起一个临时的 |
 | 构建时网络不通、依赖拉不下来 | 构建过程需要网络桥接，而默认的 BuildKit 方式在这套配置下不支持 | 按上游写法加上环境变量降级：`DOCKER_BUILDKIT=0 docker compose build calcom` |
-| 在 Prisma Studio 里建用户报 `Invalid 'prisma.user.create()'` | 空值字段的兼容性问题，`metadata` 为空时会触发 | 把 `metadata` 填成空的 JSON 对象 `{}`；`id` 是自增的，留空即可 |
+| 在 Prisma Studio 里建用户报 `Invalid 'prisma.user.create'` | 空值字段的兼容性问题，`metadata` 为空时会触发 | 把 `metadata` 填成空的 JSON 对象 `{}`；`id` 是自增的，留空即可 |
 | 启动报 `No key set vapidDetails.publicKey` | 推送通知的 VAPID 密钥没配 | `npx web-push generate-vapid-keys` 生成后写入 `NEXT_PUBLIC_VAPID_PUBLIC_KEY` 与 `VAPID_PRIVATE_KEY` |
 | 改完 `.env` 的 `NEXT_PUBLIC_WEBAPP_URL` 后站点行为不对 | 这个值同时有构建期和运行期两份，两者不一致时容器启动要花额外时间改写静态文件，容易出现地址错乱 | 让构建期与运行期的 `NEXT_PUBLIC_WEBAPP_URL` 保持一致；改完地址后重启容器并等它完成改写 |
 | Windows 上跑数据库迁移脚本报 `Environment variable not found: DATABASE_DIRECT_URL` | 任务编排工具没能把根目录 `.env` 注入进来 | 进到 prisma 包目录手动设变量再执行，例如用 PowerShell 设好 `DATABASE_URL` 与 `DATABASE_DIRECT_URL` 后跑 `npx prisma db push` |
@@ -221,11 +218,9 @@ yarn playwright show-report test-results/reports/playwright-html-report
 
 **不覆盖**：
 
-- 具体版本号、镜像标签与发布时间；这些以实际拉取到的版本和上游说明为准。ARM 平台另有带架构后缀的镜像，用之前先核对。
 - 各类第三方服务商账号的开通流程（Google Cloud、Azure、Zoom 等控制台里的操作细节由服务商文档决定）。
 - 企业级功能的替代实现（SSO、组织管理、工作流等在本版本中被移除，不提供绕过方案）。
 - 生产环境的容量规划、数据库高可用与备份策略。
-- 上游的托管服务与商业授权，本包不涉及也不代售。
 
 ## 依赖条件
 
@@ -238,9 +233,7 @@ yarn playwright show-report test-results/reports/playwright-html-report
 
 ## 已知限制
 
-- 上游定位为个人、非生产场景，自托管需要数据库管理与服务器安全方面的经验，风险由使用者承担。
 - 团队、组织、Insights、Workflows、SSO/SAML 等企业功能已被移除，不是未启用而是不存在。
-- 没有官方托管版本，也没有商业支持通道；社区版问题走上游仓库的 issue。
 - 构建期依赖数据库，这让纯前端式的快速试跑变得不可能。
 - 该仓库是社区分支，向这里提交的改动不会回流到商业版代码库。
 - 部分能力（如严格 CSP）仍在演进，登录页与其他页面、SSG 页面的支持程度并不一致。

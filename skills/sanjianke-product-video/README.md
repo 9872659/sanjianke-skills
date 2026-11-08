@@ -186,7 +186,6 @@ sanjianke-product-video/
 
 - 按秒档：提交时按 `duration` 预冻结，完成后按**实际时长**结算；任务失败全额退回。
 - 按次档：`nano_banana/submit` 72 点/次（真任务 `usage.points_cost` = 24，站内 ×3）；`seedance/create` 11,000 点/次。
-- 配音：上游真实点数 × 3，单笔保底 1 点。实测同一 `task_id`：上游 `points_cost` = 2.64，站内流水 `settle` = −7.92。
 - 字幕：本地生成 SRT，0 点；烧进画面在你本机跑 ffmpeg。
 - 成片链接约 30 分钟有效，`--out` 会顺手落盘；上传返回的地址最长 24 小时。
 - `--budget` 与 `--yes` 是本地闸门：预算内才发请求，`--yes` 到了才提交。`--dry-run` 只打印请求，两道闸门都放行。

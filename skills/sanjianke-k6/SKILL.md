@@ -19,8 +19,6 @@ tags:
 
 脚本用 JS 写，但**不是 Node**：没有 npm 生态，没有浏览器 API，文件读取、并发模型、指标聚合都由 k6 自己提供。理解这一点，后面一半的坑就不会踩。
 
-**上游项目**：`k6`　**仓库**：https://github.com/grafana/k6
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -117,7 +115,7 @@ export const options = {
   },
 };
 
-export default function () {
+export default function  {
   const res = http.get('https://example.com/');
   check(res, { 'status was 200': (r) => r.status === 200 });
   sleep(1);
@@ -205,23 +203,23 @@ K6_VUS=10 K6_DURATION=10s k6 run script.js
 |---|---|---|
 | 阈值明明失败了，CI 还是绿的 | 脚本里**根本没写 thresholds**——没有阈值时 k6 总是退出 0 | 必须显式声明 `thresholds`；阈值失败时退出码是 `99`，别只判"非 0 就算崩" |
 | `check` 全部失败但退出码仍是 0 | `check` 只统计不判定 | 加一条 `checks: ['rate>0.9']` 阈值，把 check 成功率变成门禁条件 |
-| 脚本在 init 阶段发 HTTP 请求直接报错 | init 上下文每个 VU 都会执行一次，且**不允许发请求** | init 只做静态准备（常量、`open()` 读文件、构造 SharedArray）；请求放到 `default` 函数里 |
+| 脚本在 init 阶段发 HTTP 请求直接报错 | init 上下文每个 VU 都会执行一次，且**不允许发请求** | init 只做静态准备（常量、`open` 读文件、构造 SharedArray）；请求放到 `default` 函数里 |
 | VU 之间共享的计数器不生效 / 状态互相串 | 每个 VU 是独立的 JS 虚拟机，**不共享状态**；且每次迭代会重置 VU（清 cookie、可能断连接） | 需要跨 VU 只读共享就用 `SharedArray`；需要读写共享状态用 setup/teardown 或外部存储，别指望模块级变量 |
 | 报 `new SharedArray must be called in the init context` | `SharedArray` 只能在 init 上下文构造 | 把构造语句提到文件顶层（`default` 函数外） |
-| SharedArray 反而更吃内存 / 行为和普通数组一样 | 对它调 `.filter()`/`.map()`、`JSON.stringify` 整体、或从 `setup()` 返回，都会退化成普通数组 | 只在 init 构造并在 VU 里按下标读取；派生数据在 init 里一次性算好 |
+| SharedArray 反而更吃内存 / 行为和普通数组一样 | 对它调 `.filter`/`.map`、`JSON.stringify` 整体、或从 `setup` 返回，都会退化成普通数组 | 只在 init 构造并在 VU 里按下标读取；派生数据在 init 里一次性算好 |
 | 想开 REST API / 外部控制，发现连不上 | 较新版本（v2 起）REST API **默认关闭** | 显式加 `--address`（短名 `-a`）或设 `K6_ADDRESS`；被移除的 `pause`/`resume`/`scale`/`status` 子命令不要再用 |
 | 升级后发现 `k6 login`、`k6 cloud script.js`、`--upload-only` 全都不认识 | 云相关命令已迁移：`k6 login` 变 `k6 cloud login`，位置参数变 `k6 cloud run`，上传变 `k6 cloud upload`；所有 `k6 cloud` 子命令都要求先配好 stack | 按新形式改写命令；`K6_CLOUD_TOKEN` / `K6_CLOUD_STACK_ID` 配好；InfluxDB 登录无替代，改走 `K6_INFLUXDB_ADDR` 环境变量 + `--out influxdb` |
 | `--no-summary`、`--summary-mode=legacy` 报未知参数 | 这两个写法已被移除，摘要模式现在只有 compact（默认）/ full / disabled | 用 `--summary-mode=disabled` 关摘要 |
 | Docker 里跑 `k6 run script.js` 报找不到文件 | 容器里没有宿主机的文件系统 | 要么挂载目录并给容器内路径，要么 `docker run --rm -i grafana/k6 run - < script.js` 走 stdin |
 | 命令行设了 `K6_VUS` 却不生效 / 优先级混乱 | 选项来源有固定优先级，环境变量高于脚本 `options`、低于 CLI flag | 记住从低到高：默认值 → 配置文件 → 脚本 options → 环境变量 → CLI flag；调试时先 `k6 inspect` 看最终解析结果 |
-| `setup()` 卡住或超时 | setup 默认超时 60s | 把耗时初始化拆出去或调大超时（云上另有上限）；另外 setup 抛异常时 `teardown()` **不会**执行，清理逻辑别只写在 teardown 里 |
+| `setup` 卡住或超时 | setup 默认超时 60s | 把耗时初始化拆出去或调大超时（云上另有上限）；另外 setup 抛异常时 `teardown` **不会**执行，清理逻辑别只写在 teardown 里 |
 
 ## 权限与用途说明
 
 | 能力 | 是否申请 | 用途 |
 |---|---|---|
 | 网络访问 | 是 | 压测本身就是对目标地址发大量并发请求；安装与 `--out` 推指标时也需联网 |
-| 读取文件 | 是 | `open()` 读取 init 阶段的数据文件；`--config`、脚本文件本身 |
+| 读取文件 | 是 | `open` 读取 init 阶段的数据文件；`--config`、脚本文件本身 |
 | 写入文件 | 是 | `--out json=...`、`--summary-export`、`handleSummary` 写出的报告文件 |
 | 凭证 | 视情况 | 纯自建地址压测无需凭证；云服务需要 `K6_CLOUD_TOKEN` / stack 配置；压测受保护接口时 token 通过 `-e` 或环境变量传入 |
 | 子进程 / 后台常驻 | 否 | k6 是单次执行的前台命令，跑完即退；没有需要长期常驻的守护进程 |
@@ -252,7 +250,7 @@ K6_VUS=10 K6_DURATION=10s k6 run script.js
 
 - 浏览器真实渲染与前端性能指标（需要带浏览器的镜像 + Browser 模块，属另一套用法）
 - 录制回放式脚本生成（不提供录制器）
-- Node.js 生态：npm 包与 Node 内置模块基本不可用，`require()` 是自定义实现
+- Node.js 生态：npm 包与 Node 内置模块基本不可用，`require` 是自定义实现
 - GUI 报告与长期数据留存（要图形化与历史趋势得自己接外部时序库或云端服务）
 - 被压服务的调优与容量规划结论——k6 只给数据，不给根因
 - 非 HTTP 类的冷门协议，除非有对应扩展并经 xk6 编译
@@ -285,7 +283,7 @@ K6_VUS=10 K6_DURATION=10s k6 run script.js
 - [ ] 目标地址与压测环境已确认：**别把压测流量打到生产**
 - [ ] 并发量与时长量级先小后大（先 `-u 1 -d 10s` 验证脚本，再放大）
 - [ ] `k6 inspect script.js` 看一遍最终生效的配置，确认命令行参数与脚本 `options` 的合并结果符合预期
-- [ ] 需要读数据文件时，确认文件在 init 阶段用 `open()` 读，并考虑用 `SharedArray` 避免每个 VU 各读一份
+- [ ] 需要读数据文件时，确认文件在 init 阶段用 `open` 读，并考虑用 `SharedArray` 避免每个 VU 各读一份
 - [ ] 接 CI 时确认退出码判定包含 `99`（阈值失败）而不是只判非 0
 
 执行后：

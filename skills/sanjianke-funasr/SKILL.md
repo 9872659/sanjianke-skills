@@ -23,12 +23,9 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 把一段音频变成带时间轴、带说话人区分的文字，是剪辑流水线里最耗时也最容易卡住的一环。FunASR 就是一个能在自己机器上跑完这件事的工具箱：语音识别、静音切分、标点恢复、说话人区分、情绪与音频事件识别，都能按需组合成一条流水线，不必把素材上传给第三方。
 
 它和「调一个云端转写接口」的区别在于：模型跑在本地或自己的服务器上，长音频可以批量跑，认准了某个模型可以长期固定，成本是电费而不是接口费。代价是你得自己准备 Python + PyTorch 环境，第一次用要下载模型权重。
-
-**上游项目**：`FunASR`　**仓库**：https://github.com/modelscope/FunASR
 
 ## 零安装用法（推荐先看这个）
 
@@ -91,9 +88,6 @@ checkpoint 做微调，或者已经有 GPU 想批量跑几千小时时。日常�
 - 需要**声纹级身份识别**（"这句话是不是张三说的"，要和已登记的某人比对）。它的说话人输出是一段录音内部的匿名编号，不是已知身份的辨认；合规场景下把编号当成"某某本人"是错误结论。
 
 ## 安装
-> 以下命令与参数均取自上游仓库 README 的公开说明；不同版本可能调整，安装前建议对照仓库最新文档与实际 `--help` 输出。
-
-**1）确认 PyTorch 先装好**（这是最容易顺序搞错的一步）。上游要求先装 PyTorch 与 torchaudio，再装 FunASR；GPU 机器请到 PyTorch 官方安装页按自己的 NVIDIA 驱动选对应的 CUDA wheel。
 
 CPU 起步（默认 PyPI wheel）：
 
@@ -105,7 +99,7 @@ pip install funasr
 装完确认 GPU 是否真的可见——**只有打印 True 才可以用 `device="cuda"`**：
 
 ```bash
-python -c "import torch; print(torch.cuda.is_available())"
+python -c "import torch; print(torch.cuda.is_available)"
 ```
 
 如果打印 False，要么把代码里的 `device` 改成 `"cpu"`，要么重装匹配的 CUDA wheel，不要硬指定 `cuda`。
@@ -121,15 +115,11 @@ Python 版本要求：3.8 及以上（以上游文档为准）。
 
 **3）Windows / macOS / Linux**：`pip install funasr` 三个平台一致。差异主要在 PyTorch 本身——Windows 上同样是 `pip install torch torchaudio`，但 CUDA 版本要自己挑；macOS 没有 CUDA，用 CPU 或 MPS 路径。国内网络下模型权重下载慢时，换成国内镜像源装包，权重下载可参考仓库文档里关于缓存目录的说明。
 
-**4）Docker**（流式服务场景，上游给出的是现成镜像）：
-
 ```bash
 docker pull registry.cn-hangzhou.aliyuncs.com/funasr_repo/funasr:funasr-runtime-sdk-online-cpu-0.1.12
 ```
 
 镜像 tag 与可用版本以仓库 README 的部署章节为准。
-
-**5）CPU / 边缘设备（不想装 Python）**：上游另有一整套 llama.cpp 编译版运行时，SenseVoice / Paraformer / Fun-ASR-Nano 可以做成单个自包含二进制，在 CPU 和边缘设备上跑，内置 FSMN-VAD，运行时不需要 Python。二进制与 GGUF 权重从仓库 Releases 页下载，具体文件名与 `--backend` 等参数以该章节说明和 releases 资产为准。
 
 ### 模型与算力走哪
 
@@ -249,8 +239,6 @@ curl --fail-with-body http://127.0.0.1:8000/v1/audio/transcriptions \
   -F response_format=verbose_json
 ```
 
-**这个服务默认没有鉴权**：上游明确建议先绑在回环地址上，对外暴露前先读仓库里的安全说明。放到公网等于把一个免费转写接口送人。
-
 **⑥ 只要情绪识别**
 
 ```python
@@ -261,8 +249,6 @@ result = model.generate(input="audio.wav", granularity="utterance")
 ```
 
 **⑦ 换 VAD 实现**（需要先装可选依赖）：`python -m pip install "funasr[silero]"`，然后把 `vad_model` 换成 `silero-vad`，阈值通过 `vad_kwargs` 传（README 示例里是 `silero_threshold` 与 `silero_min_silence_duration_ms`）。
-
-**⑧ 大批量用 vLLM 加速**：上游提供了 `funasr.auto.auto_model_vllm` 里的 `AutoModelVLLM`，先构造一次模型再传音频列表：
 
 ```python
 from funasr.auto.auto_model_vllm import AutoModelVLLM
@@ -278,13 +264,13 @@ results = model.generate(["audio1.wav", "audio2.wav"], language="auto")
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| 代码里写了 `device="cuda"`，报 CUDA 相关错误或直接崩 | 装的是 CPU 版 PyTorch，或 GPU 驱动与 wheel 的 CUDA 版本不匹配 | 先跑 `python -c "import torch; print(torch.cuda.is_available())"`；False 就改 `device="cpu"`，或按官方安装页重装匹配的 CUDA wheel。不要靠改代码绕过去 |
+| 代码里写了 `device="cuda"`，报 CUDA 相关错误或直接崩 | 装的是 CPU 版 PyTorch，或 GPU 驱动与 wheel 的 CUDA 版本不匹配 | 先跑 `python -c "import torch; print(torch.cuda.is_available)"`；False 就改 `device="cpu"`，或按官方安装页重装匹配的 CUDA wheel。不要靠改代码绕过去 |
 | 第一次运行卡很久，像死机 | 首次调用要下载模型权重，几百 MB 到数 GB；`paraformer-zh` 220M、`Fun-ASR-Nano` 800M 这类规模，网络不好时是分钟级 | 耐心等并把下载日志留着；批量任务先单独跑通一次把权重缓存下来，再跑正式任务 |
 | 流式识别出来缺字、断句乱、结尾少一句 | 三件事之一：拿离线模型做了流式（模型名不带 `streaming`）；`cache` 没有在多次调用间传递；最后一块没设 `is_final=True` | 换成流式 checkpoint；把 `cache` 放在循环外并每轮传回；最后一块 `is_final=True`。另外确认输入是 16 kHz 单声道 |
 | 说话人被标成 Speaker 0/1/…，但同一人在不同片段里编号不一样 | 这是按录音内部聚类出的**匿名编号**，不是跨录音的声纹身份，编号只在一段录音内有效 | 单次任务按编号切分可用；要做"固定某人的声音"需要另外的声纹登记方案。不要把编号直接写进对外文案当作人名 |
 | 识别出的文本里混着一堆奇怪符号（语言标签、情绪标签） | 用的是 SenseVoice 这类带标签输出的模型，标签是模型输出的一部分 | 用上游提供的 `rich_transcription_postprocess` 处理后再用，或改用不带标签输出的模型 |
 | 长音频一次丢进去，内存爆掉 | 没有分块。上游长音频路线是用 `vad_model` 切段，或按 `batch_size_s` 控制单批秒数 | 加 `vad_model="fsmn-vad"`，并用 `batch_size_s` 限制批大小；再不行就自己先按静音切文件 |
-| `import` numpy 相关报错 | 老版本与 NumPy 2 不兼容（上游在 1.4.15 的说明里提到补上了 NumPy 2 兼容） | 升级到该版本或更新：`python -m pip install -U "funasr==1.4.15"`；否则把 numpy 降到 2 以下。具体以仓库 Releases 说明为准 |
+| `import` numpy 相关报错 | 老版本与 NumPy 2 不兼容 | 升级到该版本或更新：`python -m pip install -U "funasr==1.4.15"`；否则把 numpy 降到 2 以下。具体以仓库 Releases 说明为准 |
 | 把 GGUF 权重路径丢给 `AutoModel` 加载失败 | GGUF 是给 llama.cpp 那套二进制运行时用的，不是 Python `AutoModel` 的 checkpoint | 二选一：Python 路线用普通权重；CPU/边缘路线用 llama.cpp 二进制 + GGUF，两条路不要混 |
 | Windows 上 `pip install -e ./` 或命令行里路径带空格报错 | 路径没加引号，或用了 Linux 的 `&&` 拼接习惯 | 路径加引号；在 PowerShell 里分开执行或用 `;` |
 | 起了 `funasr-server`，别的机器连不上 | 默认只绑 `127.0.0.1`，这是有意的 | 确实要对内网开放时，先把安全说明读完、加上鉴权与网络访问控制，再改绑定地址。不要直接绑 `0.0.0.0` 放到公网 |
@@ -348,7 +334,6 @@ results = model.generate(["audio1.wav", "audio2.wav"], language="auto")
 
 ## 依赖条件
 
-- Python ≥ 3.8（以上游文档为准）
 - PyTorch + torchaudio，**必须先装且版本与硬件匹配**；GPU 路径需要可用的 NVIDIA 驱动与对应 CUDA wheel
 - FunASR 本体：`pip install funasr`
 - 可选：`fastapi` + `uvicorn` + `python-multipart`（起 HTTP 服务）、`funasr[silero]`（用 silero-vad）、vLLM（GPU 大批量加速路径）、`soundfile`（流式示例里读音频）
@@ -367,7 +352,6 @@ results = model.generate(["audio1.wav", "audio2.wav"], language="auto")
 - 模型权重与工具箱的许可证是分开的，权重的使用条款以各模型卡片为准。
 - 基准测试结果与你的音频、硬件强相关，不能直接当成产能承诺。
 - GGUF 权重只服务编译版运行时，与 Python SDK 的 checkpoint 不通用。
-- 零安装路线（`scripts/run.py`）的返回字段只有 `text` / `language` / `language_code` / `duration` / `segments`（逐字），**没有 speaker 字段**：上游「VAD + 说话人向量 + 聚类」的分人能力在平台接口上没有对应物，实测返回中 `speakers` 恒为 0。
 - 零安装路线**不经过 FunASR 的标点恢复模型**：标点来自平台 ASR 的 `text` 字段；脚本把标点回填到字符时间轴上再合并成字幕行，回填对不齐时会退化成按字数（默认 18 字）硬切。
 - 零安装路线上传上限约 50MB / 单条 30 分钟（以平台实时限制为准），长音频要先切片，切片边界附近的识别质量同样会受影响。
 - 零安装路线按次计费且素材要上传到平台，与「本地推理、数据不出机器、成本是电费」这套定位是两回事，选型时别混为一谈。
@@ -376,7 +360,7 @@ results = model.generate(["audio1.wav", "audio2.wav"], language="auto")
 
 执行前：
 
-- [ ] 确认装了 PyTorch 与 torchaudio，且 `torch.cuda.is_available()` 的结果与代码里的 `device` 一致
+- [ ] 确认装了 PyTorch 与 torchaudio，且 `torch.cuda.is_available` 的结果与代码里的 `device` 一致
 - [ ] 确认输入音频的采样率与声道（流式要求 16 kHz 单声道），视频素材已取出音轨
 - [ ] 确认所选模型与任务匹配：离线 / 流式、是否要标点、是否要说话人、语言范围
 - [ ] 评估磁盘空间是否够放权重，批量任务先跑通单条

@@ -190,7 +190,6 @@ Authorization: Bearer <key>
 |---|---|---|---|
 | 缺视频地址 | 400 | `video_url_required` | 补 `--url`（要 `http(s)://` 公网地址） |
 | 缺 / 非数字 duration | 400 | `duration_unknown` | 补 `--duration 秒数` |
-| 上游凭据异常 | 502 | `FailedOperation.InvalidMpsUser` | 不建单、不扣点；平台侧处理 |
 | 查询不存在的任务 | 400 | `task_not_exist` | 核对 `task_id` 与 `--tier` |
 | 路由没注册 | 404 | （HTML 兜底） | 本条路径不存在 |
 

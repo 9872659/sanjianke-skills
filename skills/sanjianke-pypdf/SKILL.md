@@ -22,8 +22,6 @@ tags:
 旋转、压缩、去空白页、抽文本喂给后续流程），二是在服务端做**文件收口**
 （统一加密码、写元数据、盖水印、去掉敏感批注）。
 
-**上游项目**：`pypdf`　**仓库**：https://github.com/py-pdf/pypdf
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -93,7 +91,7 @@ print(reader.metadata)                    # {'/Title': ..., '/Author': ...}
 from pypdf import PdfReader
 
 reader = PdfReader("example.pdf")
-text = "\n".join(page.extract_text() or "" for page in reader.pages)
+text = "\n".join(page.extract_text or "" for page in reader.pages)
 print(text[:500])
 ```
 
@@ -102,12 +100,12 @@ print(text[:500])
 ```python
 from pypdf import PdfWriter
 
-writer = PdfWriter()
+writer = PdfWriter
 writer.append("a.pdf")                    # 整个文件追加
 writer.append("b.pdf", (0, 3))            # 只取 b.pdf 的第 0~2 页
 writer.merge(position=1, fileobj="c.pdf", pages=(0, 1))  # 插到第 1 页之后
 writer.write("out-merged.pdf")
-writer.close()
+writer.close
 ```
 
 **4. 拆页 / 抽单页 / 删页**
@@ -119,12 +117,12 @@ reader = PdfReader("in.pdf")
 
 # 每页存成一个文件
 for i, page in enumerate(reader.pages):
-    w = PdfWriter()
+    w = PdfWriter
     w.add_page(page)
     w.write(f"page-{i + 1:03d}.pdf")
 
 # 删掉第 2 页（索引 1），其余原样导出
-w = PdfWriter()
+w = PdfWriter
 for i, page in enumerate(reader.pages):
     if i != 1:
         w.add_page(page)
@@ -166,7 +164,7 @@ from pypdf import PdfReader, PdfWriter
 
 reader = PdfReader("big.pdf")
 writer = PdfWriter(clone_from=reader)
-writer.compress_identical_objects()          # 合并重复对象
+writer.compress_identical_objects          # 合并重复对象
 writer.remove_annotations("/Text")           # 去掉指定类型的批注（'/Text'、'/Link'、'/Widget'…）
 writer.write("small.pdf")
 ```
@@ -187,13 +185,13 @@ pdfly --help                           # 全部 17 个子命令以 pdfly 当前�
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| `extract_text()` 返回 `''` 或全空白 | 该 PDF 没有文本层（扫描件 / 图片版），或用了自定义编码字体 | 先确认页面上能不能选中文字；不能就转 OCR 链路，别在 pypdf 上耗 |
+| `extract_text` 返回 `''` 或全空白 | 该 PDF 没有文本层（扫描件 / 图片版），或用了自定义编码字体 | 先确认页面上能不能选中文字；不能就转 OCR 链路，别在 pypdf 上耗 |
 | 抽出的中文是乱码或方块 | 字体缺少 ToUnicode 映射表 | 换别的样本验证；这种情况 pypdf 能做的有限，需要 OCR 或原始文档 |
 | 抽出的文字顺序全乱 | 多栏排版、文本框，PDF 里没有「阅读顺序」概念，pypdf 按内容流顺序返回 | 版面复杂的文档改用版面分析类工具（先把每栏裁出来再抽） |
-| 合并大文件时 `RecursionError` | 对象克隆递归过深 | `import sys; sys.setrecursionlimit(sys.getrecursionlimit() * 5)`，或分批合并 |
+| 合并大文件时 `RecursionError` | 对象克隆递归过深 | `import sys; sys.setrecursionlimit(sys.getrecursionlimit * 5)`，或分批合并 |
 | 加了密码的文件打不开 | 不传 `algorithm` 时 pypdf 默认用 RC4（兼容性优先，但不安全） | 显式写 `writer.encrypt(pw, algorithm="AES-256")`；官方推荐 `AES-256-R5` |
 | AES PDF 报缺少加密库 | AES 依赖外部加密后端，不在基础安装里 | `pip install "pypdf[crypto]"` |
-| 合并后页面方向不对 | 源页面带 `/Rotate` 旋转标记，合并时被保留，再叠加水印就歪了 | 合并前对每页调 `page.transfer_rotation_to_content()` |
+| 合并后页面方向不对 | 源页面带 `/Rotate` 旋转标记，合并时被保留，再叠加水印就歪了 | 合并前对每页调 `page.transfer_rotation_to_content` |
 | 同样一页被合并进来两次，改一页两页都变 | 同一个源对象被复用，cloning 会命中缓存 | 调 `writer.reset_translation(reader)` 重置克隆映射 |
 | 从旧代码迁过来大量报错 | `PyPDF2` 在 3.0 起停止维护，pypdf 是它的正式后继，API 有变 | 装 `pypdf` 而不是 `PyPDF2`，按官方 migration 指南改导入名 |
 | 抽出来的图片文件名很怪 / 覆盖了 | PDF 内部资源名可含任意字符且不保证唯一 | 自己重命名（如 `f"out-{i}.png"`），不要直接用 `image_file_object.name` |

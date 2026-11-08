@@ -122,7 +122,7 @@ SkillHub 的扩展名白名单只放 `.md .py .txt .json .sh .js .yaml .yml .csv
 其中一次那条还拿了**最高分**——不是"真的最好"，是"抄了标准答案"。
 所以本包的提示词里**不出现任何一句可直接复制的完整中文句子**，
 举例只用描述性说明；真实示例登记在 `PROMPT_SAMPLES`，并由
-`prompt_hygiene()` 在 `--dry-run` 时对**即将发送的提示词**做前置自检。
+`prompt_hygiene` 在 `--dry-run` 时对**即将发送的提示词**做前置自检。
 
 ## 怎么用（命令行）
 
@@ -190,7 +190,6 @@ python3 scripts/a7w.py schema music_search
    `id` / `model_id`，**32 位十六进制，抄短一位就得到 `code=0 任务处理失败`**。
 2. **配乐的创建动作叫 `create`，不叫 `generate`**。接口代码里没有 `generate`；
    `generate` 只是 `create` 的 `type` 参数的一个取值。而且 `create` 的参数表里
-   **没有时长参数**，垫乐多长由上游决定，长度控制在 `mix` 里用 ffmpeg 做。
 3. **`music_search` 是真实存在的 app**，只有一个同步接口
    `POST /api/v1/apps/music_search/search`，入参 `{keyword, page, page_size≤20}`，
    返回 `data.result.items[]`（`title / author / url / link / pic / songid`），

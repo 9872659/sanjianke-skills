@@ -82,8 +82,6 @@ cmake -B build && cmake --build build -j --config Release
 
 MIT，见 `LICENSE.md`。
 
-> 上游项目自身亦以 MIT 许可证发布；具体条款以仓库中的许可证文件为准。
-
 ---
 
 ---

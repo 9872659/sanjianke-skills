@@ -4,7 +4,7 @@ slug: sanjianke-sqlalchemy
 displayName: 三剪客 · Python SQL 工具包与 ORM
 description: "SQLAlchemy：Python 的 SQL 工具包与 ORM。既能用 Core 表达式语言拼 SQL，也能用声明式模型把表映射成对象，自带连接池、事务与多数据库方言。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "SQLAlchemy 2.x 的安装、引擎与会话配置、声明式模型、select() 查询、批量写入、反射与连接池调优，以及延迟加载、提交后过期、会话跨线程、分页误用等高频坑。遇到问题可加技术微信 9872659。"
+summary: "SQLAlchemy 2.x 的安装、引擎与会话配置、声明式模型、select 查询、批量写入、反射与连接池调优，以及延迟加载、提交后过期、会话跨线程、分页误用等高频坑。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -19,8 +19,6 @@ tags:
 
 它其实有两层，这点决定了你会不会用错。**Core** 是 SQL 表达式语言加 DBAPI 交互层，不涉及对象映射；**ORM** 建在 Core 之上，用声明式类把表映射成对象，靠 identity map + unit of work 自动把 Python 里的改动同步成 SQL。两边可以混用。
 
-**上游项目**：`sqlalchemy`　**仓库**：https://github.com/sqlalchemy/sqlalchemy
-
 > 版本实测：本 Skill 的示例在 SQLAlchemy 2.0.52 / Python 3.11.9 上跑通。2.0 与 1.4 的查询写法差别很大，网上大量 1.x 的 `session.query(...)` 老例子仍然能跑但属于遗留 API，新代码请统一用 2.0 风格。
 
 ## 什么时候用 / 不用
@@ -29,8 +27,8 @@ tags:
 
 - "我要在 Python 里连数据库、建表、增删改查，但不想每个项目重写一遍连接和事务。"——`create_engine` + `Session` 一次配好，业务代码只写查询。
 - "同一套代码要能跑 MySQL 开发、PostgreSQL 生产，SQL 方言不一样。"——换 URL 里的方言前缀即可，SQL 由表达式语言渲染。
-- "想用对象的方式改数据，不想手写 INSERT/UPDATE。"——声明式模型 `Mapped[...]` + `mapped_column`，改属性后 `commit()` 自动落库（工作单元模式）。
-- "这条 SQL 需要 join、子查询、关联，但我又要参数化防注入。"——`select()` 表达式语言把 SQL 结构显式暴露出来，绑定参数自动处理。
+- "想用对象的方式改数据，不想手写 INSERT/UPDATE。"——声明式模型 `Mapped[...]` + `mapped_column`，改属性后 `commit` 自动落库（工作单元模式）。
+- "这条 SQL 需要 join、子查询、关联，但我又要参数化防注入。"——`select` 表达式语言把 SQL 结构显式暴露出来，绑定参数自动处理。
 - "连接要复用、要限并发、要断线重连。"——`create_engine` 自带连接池（`pool_size`、`max_overflow`、`pool_pre_ping`）。
 - "库里已经有一堆表，我不想手写模型类。"——反射（`MetaData.reflect` / `autoload_with`）一步把表结构读成 Python 元数据。
 
@@ -38,10 +36,10 @@ tags:
 
 - **只是 CSV / Parquet 文件做分析**——那是 pandas、polars、DuckDB 的活，为了读文件引入 ORM 只会更重。
 - **一次性脚本跑一句 SQL 就完事**——直接用驱动（`sqlite3` / `psycopg` / `pymysql`）更短，不必包一层。
-- **要做大批量 ETL 的高速写入**——ORM 逐对象 flush 有开销。要么用 Core 的 `insert()` 配合批量执行，要么用数据库原生批量装载（各库的 COPY / LOAD DATA）。
-- **想要"自动建好数据模型、自动迁移"**——SQLAlchemy 不管数据迁移版本管理，那是 Alembic 的职责；`create_all()` 只建不存在的表，不会改已有表结构。
+- **要做大批量 ETL 的高速写入**——ORM 逐对象 flush 有开销。要么用 Core 的 `insert` 配合批量执行，要么用数据库原生批量装载（各库的 COPY / LOAD DATA）。
+- **想要"自动建好数据模型、自动迁移"**——SQLAlchemy 不管数据迁移版本管理，那是 Alembic 的职责；`create_all` 只建不存在的表，不会改已有表结构。
 - **想要完整 Web 框架的 ORM 集成**——Django 自带 ORM 与迁移，如果整个项目在 Django 里，没必要混搭。
-- **想要 Python 对象图的复杂关系自动级联到数据库**——SQLAlchemy 有意不做"隐式魔法"，级联行为要自己在 `relationship()` 上声明。
+- **想要 Python 对象图的复杂关系自动级联到数据库**——SQLAlchemy 有意不做"隐式魔法"，级联行为要自己在 `relationship` 上声明。
 
 ## 安装
 
@@ -98,8 +96,8 @@ print(e.dialect.name, e.dialect.driver)
 from sqlalchemy import create_engine, text
 
 engine = create_engine("sqlite+pysqlite:///:memory:", echo=False)
-with engine.connect() as conn:
-    print(conn.execute(text("select 1")).scalar())   # 1
+with engine.connect as conn:
+    print(conn.execute(text("select 1")).scalar)   # 1
 ```
 
 URL 形状是 `方言+驱动://用户名:密码@主机:端口/库名`。密码里有 `@`、`/` 等字符要 URL 编码，不要直接拼字符串。
@@ -111,10 +109,8 @@ from typing import List
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-
 class Base(DeclarativeBase):
     pass
-
 
 class User(Base):
     __tablename__ = "user_account"
@@ -122,14 +118,12 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(30))
     addresses: Mapped[List["Address"]] = relationship(back_populates="user")
 
-
 class Address(Base):
     __tablename__ = "address"
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str]
     user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
     user: Mapped["User"] = relationship(back_populates="addresses")
-
 
 Base.metadata.create_all(engine)
 ```
@@ -147,14 +141,14 @@ with Session(engine) as session:
         User(name="spongebob", addresses=[Address(email="a@b.c")]),
         User(name="patrick"),
     ])
-    session.commit()
+    session.commit
 
     stmt = select(User).where(User.name.in_(["spongebob", "patrick"])).order_by(User.id)
     for user in session.scalars(stmt):
         print(user.id, user.name)
 ```
 
-`session.scalars()` 拿单个实体，`session.execute()` 拿 Row 元组。更省事的写法是 `with Session.begin() as session:`，出错自动回滚。
+`session.scalars` 拿单个实体，`session.execute` 拿 Row 元组。更省事的写法是 `with Session.begin as session:`，出错自动回滚。
 
 **4. 聚合、join、分组（直接对应 SQL 结构）**
 
@@ -166,7 +160,7 @@ stmt = (
     .join(Address, isouter=True)
     .group_by(User.name)
 )
-print(session.execute(stmt).all())   # [('patrick', 0), ('spongebob', 1)]
+print(session.execute(stmt).all)   # [('patrick', 0), ('spongebob', 1)]
 ```
 
 `isouter=True` 是 LEFT OUTER JOIN，`full=True` 是 FULL OUTER JOIN（不是所有数据库都支持）。
@@ -180,10 +174,10 @@ user = session.get(User, 1)                  # 先查 identity map，没有再�
 
 session.execute(update(User).where(User.name == "patrick").values(name="pat"))
 session.execute(delete(Address).where(Address.email == "a@b.c"))
-session.commit()
+session.commit
 ```
 
-`session.get()` 只能按主键；按其它字段筛还是用 `select()`。
+`session.get` 只能按主键；按其它字段筛还是用 `select`。
 
 **6. 反射已有库的表结构**
 
@@ -191,11 +185,11 @@ session.commit()
 from sqlalchemy import MetaData, create_engine, select
 
 engine = create_engine("postgresql+psycopg://<用户>:<密码>@localhost/<库名>")
-metadata = MetaData()
+metadata = MetaData
 metadata.reflect(bind=engine, only=["orders"])        # 只反射需要的表，别全库拉
 
 orders = metadata.tables["orders"]
-with engine.connect() as conn:
+with engine.connect as conn:
     for row in conn.execute(select(orders).limit(5)):
         print(row)
 ```
@@ -220,17 +214,17 @@ Web 服务进程数 ×（`pool_size` + `max_overflow`）不能超过数据库的
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| `DetachedInstanceError: Instance <User> is not bound to a Session` | 会话关掉（`with` 块结束）后对象就 detached 了，但某个属性还没加载，访问时想回数据库取却已经没有会话 | 在会话内把要用的数据读完（已加载的字段可以直接用），或者取出后立刻转成 dict / dataclass 再往外传；渲染模板的场景常用 `selectinload()` 预加载关联集合 |
-| `commit()` 之后访问对象属性又发了一次 SQL，或者对象像"变空了" | 默认 `expire_on_commit=True`，提交后所有对象被标记过期，下次访问属性会重新查询 | 明确知道会立即复用数据时，用 `Session(engine, expire_on_commit=False)`；但要注意这时对象里的值可能已经落后于数据库，需要时显式 `session.refresh(obj)` |
+| `DetachedInstanceError: Instance <User> is not bound to a Session` | 会话关掉（`with` 块结束）后对象就 detached 了，但某个属性还没加载，访问时想回数据库取却已经没有会话 | 在会话内把要用的数据读完（已加载的字段可以直接用），或者取出后立刻转成 dict / dataclass 再往外传；渲染模板的场景常用 `selectinload` 预加载关联集合 |
+| `commit` 之后访问对象属性又发了一次 SQL，或者对象像"变空了" | 默认 `expire_on_commit=True`，提交后所有对象被标记过期，下次访问属性会重新查询 | 明确知道会立即复用数据时，用 `Session(engine, expire_on_commit=False)`；但要注意这时对象里的值可能已经落后于数据库，需要时显式 `session.refresh(obj)` |
 | 生成了一条又一条 SQL（N+1），几百个对象发了几百条查询 | 关联关系默认是**延迟加载**：访问 `user.addresses` 才去查 | 不要循环里逐个访问，改成 `select(User).options(selectinload(User.addresses))`（发少量 IN 查询）或 `joinedload(User.addresses)`（发 JOIN，集合大时结果集膨胀） |
 | 多线程下偶发报错、数据串号 | `Session` **不是线程安全的**，也不是协程安全的；而 `Engine` 和 `sessionmaker` 是线程安全的工厂，可以在模块级别共享 | Engine / sessionmaker 放模块级；Session 每个请求或每个工作单元新建；异步场景用 `AsyncSession`，同样一个任务一个 |
-| `This Session's transaction has been rolled back due to a previous exception during flush` | flush 中途失败后，会话的事务已经是失败状态，继续在里面跑查询就会报这个 | 捕获异常后先 `session.rollback()`（或用 `with Session.begin():` 让它自动回滚），再重新开始一个事务；不要吞掉异常继续用同一个会话 |
-| 出现 `QueuePool limit of size ... overflow ... connection timed out` | 连接池被耗尽：大多是会话或连接没关（异常路径漏了 `close()`），或者 `pool_size` 相对并发太小 | 一律用 `with Session(engine) as s:` / `with engine.connect() as c:` 上下文管理；先查有没有连接泄漏，再考虑调大池子 |
-| 报 `'Session' object has no attribute 'query'` 之类旧写法失效 | 用的是 2.0 环境，但代码是 1.x 的 `session.query()` 风格 | 2.0 标准写法是 `select()` 配合 `session.scalars()` / `execute()`；`Query` 仍可用但属于遗留 API，新代码别再用 |
-| 写入带 `%` 的字符串报参数错误，或拼 SQL 出安全问题 | 用了 f-string 拼 SQL | 永远不要拼字符串：`text()` 里用命名绑定参数（`text("... where name = :n")` 配合参数字典），表达式语言本身就更安全 |
-| `InvalidRequestError: A transaction is already begun on this Session` | 用了 `autobegin=False`，又在没结束上一个事务时直接调用 `begin()` | 用默认的 autobegin，或者确保每次 `begin()` 前上一个事务已 commit / rollback |
+| `This Session's transaction has been rolled back due to a previous exception during flush` | flush 中途失败后，会话的事务已经是失败状态，继续在里面跑查询就会报这个 | 捕获异常后先 `session.rollback`（或用 `with Session.begin:` 让它自动回滚），再重新开始一个事务；不要吞掉异常继续用同一个会话 |
+| 出现 `QueuePool limit of size ... overflow ... connection timed out` | 连接池被耗尽：大多是会话或连接没关（异常路径漏了 `close`），或者 `pool_size` 相对并发太小 | 一律用 `with Session(engine) as s:` / `with engine.connect as c:` 上下文管理；先查有没有连接泄漏，再考虑调大池子 |
+| 报 `'Session' object has no attribute 'query'` 之类旧写法失效 | 用的是 2.0 环境，但代码是 1.x 的 `session.query` 风格 | 2.0 标准写法是 `select` 配合 `session.scalars` / `execute`；`Query` 仍可用但属于遗留 API，新代码别再用 |
+| 写入带 `%` 的字符串报参数错误，或拼 SQL 出安全问题 | 用了 f-string 拼 SQL | 永远不要拼字符串：`text` 里用命名绑定参数（`text("... where name = :n")` 配合参数字典），表达式语言本身就更安全 |
+| `InvalidRequestError: A transaction is already begun on this Session` | 用了 `autobegin=False`，又在没结束上一个事务时直接调用 `begin` | 用默认的 autobegin，或者确保每次 `begin` 前上一个事务已 commit / rollback |
 | SQLite 内存库换了一个连接就"表不存在" | `:memory:` 库默认每连接一份独立数据，连接池换连接等于换库 | 用 `create_engine("sqlite://", poolclass=StaticPool, connect_args={"check_same_thread": False})`，或直接落到临时文件库 |
-| 大结果集 `.all()` 把内存吃光 | `.all()` 一次性把全部行物化到内存 | 用 `for row in session.scalars(stmt):` 流式迭代；需要分批时用 `yield_per`，或改用 Core 层 `conn.execution_options(stream_results=True)` |
+| 大结果集 `.all` 把内存吃光 | `.all` 一次性把全部行物化到内存 | 用 `for row in session.scalars(stmt):` 流式迭代；需要分批时用 `yield_per`，或改用 Core 层 `conn.execution_options(stream_results=True)` |
 | 多进程 / 多 worker 下报 `Table 'x' is already defined for this MetaData` | 同一个 `MetaData` 里重复登记了同名表（常见于热重载把模块执行了两遍） | 保证模型模块只被导入一次；不要在多处对同一个 Base 重复声明同名 `__tablename__` |
 
 ## 权限与用途说明
@@ -242,7 +236,7 @@ Web 服务进程数 ×（`pool_size` + `max_overflow`）不能超过数据库的
 | 写入文件 | 视情况 | 同上。连远程库时不落本地文件 |
 | 凭证 | 是 | 数据库连接串含用户名、密码，可能还有 SSL 证书路径。**不要硬编码进代码或提交到仓库**，用环境变量、密钥管理服务或各库自带的密码文件（如 `~/.pgpass`） |
 | 子进程 / 后台常驻 | 否 | 纯库调用，不启动后台服务。连接池在进程内，进程退出即释放 |
-| 执行写操作 | 视情况 | ORM/Core 能发出 `update` / `delete`；`create_all()` 会建表，`drop_all()` 会**删表**，执行前必须确认目标库和备份 |
+| 执行写操作 | 视情况 | ORM/Core 能发出 `update` / `delete`；`create_all` 会建表，`drop_all` 会**删表**，执行前必须确认目标库和备份 |
 
 ## 触发场景
 
@@ -259,15 +253,15 @@ Web 服务进程数 ×（`pool_size` + `max_overflow`）不能超过数据库的
 **覆盖**：
 
 - **Core 层**：SQL 表达式语言（`select` / `insert` / `update` / `delete`，join、子查询、关联子查询、CTE、集合运算）、类型系统与自定义类型、`MetaData` 与 DDL 生成
-- **ORM 层**：声明式映射（`DeclarativeBase` / `Mapped` / `mapped_column`）、`relationship()` 与各种加载策略（延迟加载、`joinedload`、`selectinload`、`subqueryload`、`raiseload`）、identity map、工作单元、`Session` 生命周期与嵌套事务
-- **连接与事务**：`Engine`、连接池（`QueuePool` / `StaticPool` / `NullPool`）、`begin()` 事务块、SAVEPOINT
+- **ORM 层**：声明式映射（`DeclarativeBase` / `Mapped` / `mapped_column`）、`relationship` 与各种加载策略（延迟加载、`joinedload`、`selectinload`、`subqueryload`、`raiseload`）、identity map、工作单元、`Session` 生命周期与嵌套事务
+- **连接与事务**：`Engine`、连接池（`QueuePool` / `StaticPool` / `NullPool`）、`begin` 事务块、SAVEPOINT
 - **多数据库**：统一的方言层，覆盖 PostgreSQL、MySQL / MariaDB、SQLite、Oracle、SQL Server 等主流库；异步驱动通过 `AsyncSession` 支持
 - **数据库结构**：反射把已有表读成 Python 元数据，再反向生成 DDL
 - 与 Alembic 配合做 schema 迁移（迁移工具本身不在这个包里）
 
 **不覆盖**：
 
-- **数据模型迁移版本管理**——只建不改。`create_all()` 不会给已存在的表加列，改表要走 Alembic 之类的迁移工具
+- **数据模型迁移版本管理**——只建不改。`create_all` 不会给已存在的表加列，改表要走 Alembic 之类的迁移工具
 - **连接池之外的中间件**——不做读写分离、分库分表、SQL 审计、慢查询统计
 - **结果集分析**——没有 DataFrame、没有分组透视、没有画图。要做分析请把结果交给 pandas / polars
 - **缓存层**——identity map 只是单次会话内的对象去重，不是跨进程缓存
@@ -289,9 +283,9 @@ Web 服务进程数 ×（`pool_size` + `max_overflow`）不能超过数据库的
 1. `Session` 不是线程安全的，也不是协程安全的；跨线程 / 跨任务复用是未定义行为。
 2. 默认 `expire_on_commit=True`，提交后对象过期，访问属性会触发新的查询——服务端渲染与缓存序列化场景经常踩到。
 3. 关联默认延迟加载，N+1 是默认行为而不是 bug，必须显式配置加载策略。
-4. 只建不改：`create_all()` 不会修改已存在的表结构，schema 演进要外部迁移工具。
+4. 只建不改：`create_all` 不会修改已存在的表结构，schema 演进要外部迁移工具。
 5. 反射全库在表数量大时很慢，且拿不到注释、分区等全部数据库特性。
-6. 不同数据库方言能力不一致（例如 FULL OUTER JOIN、部分 DDL）；表达式语言会尽力渲染，个别语法要落到 `text()` 里写原生 SQL。
+6. 不同数据库方言能力不一致（例如 FULL OUTER JOIN、部分 DDL）；表达式语言会尽力渲染，个别语法要落到 `text` 里写原生 SQL。
 7. 版本之间（尤其 1.4 与 2.0）API 风格差异明显，抄网上的例子前先确认它对应哪个大版本。
 
 ## 自检清单
@@ -300,9 +294,9 @@ Web 服务进程数 ×（`pool_size` + `max_overflow`）不能超过数据库的
 
 - [ ] 连接串里的方言与驱动名和已安装的驱动一致（`postgresql+psycopg` 与 `postgresql+psycopg2` 是两个东西）
 - [ ] 密码等敏感信息来自环境变量或密钥服务，不在代码和命令历史里
-- [ ] 每个会话都有 `with` 上下文或明确的 `close()`，异常路径也不会漏
+- [ ] 每个会话都有 `with` 上下文或明确的 `close`，异常路径也不会漏
 - [ ] 写操作前确认目标库、是否要备份、有没有 WHERE 条件（漏 WHERE 会全表更新 / 删除）
-- [ ] `drop_all()` / `delete()` 这类破坏性调用执行前二次确认
+- [ ] `drop_all` / `delete` 这类破坏性调用执行前二次确认
 - [ ] 生产环境的池参数与数据库 `max_connections`、应用进程数一起算过
 
 执行后：
@@ -310,7 +304,7 @@ Web 服务进程数 ×（`pool_size` + `max_overflow`）不能超过数据库的
 - [ ] 确认事务已提交（读连接、看影响行数），没有留下挂起事务
 - [ ] 如果开了 `echo=True` 或日志，检查生成的 SQL 数量是否符合预期（重点看有没有 N+1）
 - [ ] 检查返回对象是否会被带出会话作用域使用（会不会 detached）
-- [ ] 大批量操作后确认内存占用没有异常增长（避免 `.all()` 物化大结果集）
+- [ ] 大批量操作后确认内存占用没有异常增长（避免 `.all` 物化大结果集）
 
 ## 参考文件
 

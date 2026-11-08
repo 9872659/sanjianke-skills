@@ -133,11 +133,7 @@ return = {"code":0,"msg":"任务不存在","data":null}
 `music_generate` / `elevenlabs_*` 的条目 —— 全部落通配 `*`：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
-
-同一个文件里，目录类只读接口的计价是 `{"mode":"flat","cost":0,"markupPercent":0}`：
 
 | 路径 | 计价 | 实测 |
 |---|---|---|
@@ -174,7 +170,6 @@ return = {"code":0,"msg":"任务不存在","data":null}
 三步读法：
 
 1. POST 先冻 60（`reserve_sync`），任务建起来后冻结转成本任务（`refund:sync_to_task`）；
-2. 任务级预扣按**上游实际点数**算 —— 这条是 1 个字，预扣 **1.2 点**，不是固定 60；
 3. 任务失败 → `refund:task_failed` 全额退，净 0。
 
 `21:27:26` 那条 `reserve -1.2` 的 `balanceMoving=false`、`balanceAfter=null`，是**不动的记账影子行**；

@@ -4,7 +4,6 @@ slug: sanjianke-storyboard-art
 displayName: 三剪客 · 漫画分镜出图
 description: "把剧本变成**漫画分镜序列**：抽角色设定卡（外貌/服装/配色/特征词）→ 出分镜表（景别/机位/画面/对白）→ 逐格出图 → 跨格一致性自检 → 本地拼页。难点：**同一角色在 N 格里长得一样**：用「设定卡 + 硬约束提示词 + 多参考图（action=edit 传上一格/锚点）」三道一起压，且不替你补词——哪格漏了哪条特征词就报出来。走 api.a7w.cn 的 nano_banana，零依赖。七道硬闸门：合规、占位符、照抄示例、比例真伪（--snap-exact 裁准）、分镜结构、角色一致性、成本与位置。断点 key 含八维，改一维就重出。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 version: 1.0.2
-summary: "「每格长得不一样」最翻车：同一个主角在第 1 格和第 12 格是两张脸。本包六个子命令：`characters` 抽角色设定卡（features 是跨格复述凭据）、`shots` 出分镜表、`images` 逐格出图（先报价）、`consistency` 零成本跨格自检、`sheet` 本地拼页。压一致性三道一起上：设定卡写死可视觉特征、每格提示词逐字复述这些特征、再用 action=edit 加 image_urls 把上一格或锚点图当参考。一致性闸门**不替你补词**：逐字核对每格提示词，报出「第几格 · 哪个角色 · 漏了哪个词」。实测：nano_banana 1K = 24 点/张，冻结 31.2 点、实扣 24 点，只信 usage.points_cost；上游按 32 对齐，3:4 实测给 864x1184（偏差 2.70%），要精确就 --snap-exact 裁到 864x1152。拼页内置纯标准库 PNG 解码/缩放/合成；图上不渲染文字（零依赖做不了字形光栅化，AI 出的文字也必错），对白另出 dialogue.md。包内含完整操作文档与零依赖客户端（`SKILL.md` + `references/`）。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -170,7 +169,6 @@ python3 scripts/run.py images --shots shots.json --characters characters.json \
 | `both` | 锚点图 + 上一格都给 | `edit` |
 | `none` | 纯文生图 | `generate` |
 
-> **参考图必须是公网可访问的 HTTP/HTTPS 地址**（上游 `image_urls` 的口径），
 > 本地文件传不上去。本包**不做上传**：schema 里没有实测过的图片上传路径，
 > 与其编一个，不如把边界写清楚。想给角色做锚点图，可以先用本包出一张
 > 角色设定图，再把它返回的 `image_url` 当锚点。
@@ -506,9 +504,7 @@ curl -sS "https://api.a7w.cn/api/v1/tasks/task_xxxxxxxxxxxx" \
 | `code: 0` 但 HTTP 是 200 | **网关信封里 `code == 1` 才是成功，不是 0** | 看 body 里的 `msg`；脚本已按这个口径判断，别改成 `code == 0` |
 | 轮询一直读不到状态 | **`status` 在 `data` 顶层**，不在 `data.result` 里（平台文档写错） | 脚本按实测结构取；自己写脚本时别照文档写 |
 | `当前请求未命中可用计费规格` | `model` 与 `resolution` 组合不支持（如普通模型传 `2K`） | 普通 `nano-banana` 只支持 `1K`；要高清档换 `nano-banana-2:official` 之类 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很频繁** | 脚本已内置退避重试（4 次）。连续失败就换模型或降低批次 |
 | 一格卡在 `processing` | 任务卡住了 | 已设 `--poll-timeout`（默认 600 秒）；超时会报出来并保留 `task_id`，可 `python3 scripts/a7w.py task <task_id>` 续查 |
-| 真实像素和请求比例差 1%~3% | **上游按 32 对齐**，不是 bug | 拼页用 `--snap-exact` 裁准；或把 `--ratio-tolerance` 放宽 |
 | `读不出真实像素` | 下载被截断，或不是图片 | 删掉那条断点记录重出（`--force`），或检查网络 |
 | `第 N 格 · X（id）漏了特征词「…」` | 模型没把设定卡里的特征词写进这一格的提示词 | 重跑 `shots`；或手改 `shots.json` 里那一格的 `prompt` 补上（改一个字 key 就变，会重出这一格） |
 | `第 N 格结构问题：景别 … 不在枚举里` | 模型写了"看得见人"这种非景别写法 | 改成枚举里的景别；别名表已兜住"半身/全身/大全"这类常见写法 |

@@ -193,7 +193,7 @@ curl https://api.a7w.cn/api/v1/models -H "Authorization: Bearer $A7W_API_KEY"
 1. **字段白名单**（`ROLES[*]["inputs"]` / `["forbidden"]`）—— 提示词模板按它拼装，
    被排除的字段在物理上没有进入 prompt 的路径。合规拿到的选题卡只是一份
    **窄字典**（`title` + `risk_note`，8 个字段里的 2 个）。
-2. **调用前实检**（`assert_isolation()`）—— 拿被禁字段的标记词对**真实提示词文本**
+2. **调用前实检**（`assert_isolation`）—— 拿被禁字段的标记词对**真实提示词文本**
    扫一遍，泄漏就抛异常、**中止这次调用**（一个字都不发出去）。
    每次调用的判定结果逐条写进产物与 `REPORT.md`，外部可复核。
 
@@ -352,7 +352,6 @@ python3 scripts/run.py models
 | `没有找到 API Key` | `--key` / `A7W_API_KEY` / `a7w.py login` 三选一 |
 | `鉴权失败（401）`／`点数不足（402）` | 到 https://api.a7w.cn/ 重新创建 Key 或充值 |
 | `模型不存在（404）` | `run.py models` 现查在架名，别写死 |
-| 上游 502/503/504 | 脚本自动退避重试 4 次；仍失败是网关侧问题 |
 | `未收敛，出口 = rounds_exhausted` | **这是真实结论，不是 bug**。看 `REPORT.md` 的未决项：加 `--rounds`、人工介入，或按写手卡在哪一句决定并稿 |
 | `出口 = no_effective_change` | 写手在原地打转（正文相似度 ≥ 0.86）。**继续加轮次只会烧钱**，看必须修清单是不是写得太抽象 |
 | `出口 = stalled_same_quote` | 审稿两次指向同一段文字。通常是那两个要求互相冲突，需要人来定口径 |

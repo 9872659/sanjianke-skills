@@ -10,8 +10,6 @@
 
 | 工位 | 方法 | 路径 | 计费规则（pricing 原文口径） |
 |---|---|---|---|
-| 旁白配音 | POST | `/api/v1/apps/voice_tts/tts_async` | `markupPercent: 200` → 对外 = 上游实际点数 × 3 |
-| 数字人口播 | POST | `/api/v1/apps/pic_lipsync/submit` | `markupPercent: 400` → 对外 = 上游实际点数 × 5 |
 | 配乐 | POST | `/api/v1/apps/media_services_33/music_generate` | **未配价**，按默认预冻 60 点/次 |
 | 卡点字幕 | POST | `/api/v1/apps/media_services_33/music_timestamped_lyrics` | **未配价**，按默认预冻 60 点/次 |
 | 封面 / 片头 / 预告 | POST | `/api/v1/apps/full_video/submit` | `per_second` + `resolutionRates`（见 §5） |
@@ -55,7 +53,6 @@ media_services_33   29 个接口，全部 POST
 **计费**
 
 - 平台字段价：输入 50 点 / 1k tokens（租户价），`fixed_price=0.0200`
-- 对外：`markupPercent: 200`，即**上游实际点数 × 3**
 - 本包估价：**0.18 点/字**（350 字 = 63 点）。真实扣费看 `usage.points_cost`
 
 **响应**
@@ -112,8 +109,6 @@ media_services_33   29 个接口，全部 POST
 
 **计费**
 
-- `markupPercent: 400`（×5），`minPoints: 50`
-- pricing note 原文：上游按 `standard` 档 **3 点/秒** 收，我方 = 上游实际点数 × 5 = **15 点/秒**
 - `minPoints: 50` 是**声明性字段**，通用计费不读它（只有 `VOICE_CLONE.minPoints` 生效）
 
 ---
@@ -288,7 +283,6 @@ note 原文：「2026-11-06 站主定价：480P 0.14 元/秒、768P 0.28、1080P
 **为什么不走应用层 query**：`pic_lipsync/query`、`full_video/query`、`nano_banana/query`
 都是 POST，按次计费。实测 `nano_banana/query` **每次 72 点**，流水里 216 笔就是这个数。
 `pic_lipsync/query` 在 pricing note 里写「query 本身不计费」，但同一 path 的规则是
-`markupPercent: 400` —— 一条免费通道已经够用，本包就不碰第二条。
 
 ---
 

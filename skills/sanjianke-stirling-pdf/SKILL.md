@@ -18,8 +18,6 @@ tags:
 
 它提供 50 多个 PDF 工具（编辑、合并、拆分、签名、脱敏、转换、OCR、压缩等），并且支持把多步操作串成流水线一次跑完。对个人是省事的桌面/网页工具，对团队是可集成的私有文档处理服务。
 
-**上游项目**：`Stirling-PDF`　**仓库**：https://github.com/Stirling-Tools/Stirling-PDF
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -266,8 +264,6 @@ curl -X POST "http://localhost:8080/api/v1/security/add-watermark" \
 ## 已知限制
 
 - 界面截图、版本号与功能清单随版本演进，具体以你部署的实例和 [官方文档](https://docs.stirlingpdf.com) 为准；此处不臆断版本号与发布日期。
-- 上游项目是 open-core 模式：本 Skill 只覆盖社区版可见的能力，付费/企业特性（SSO、审计等）不在范围内。
-- 社区维护的 NAS / 虚拟化集成不属于上游官方支持范围。
 - MCP 的 `stirling_ai` 工具在自建场景下形同虚设。
 - 前端专属功能无法通过 API 自动化。
 

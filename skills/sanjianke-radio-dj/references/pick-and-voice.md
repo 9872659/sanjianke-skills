@@ -43,7 +43,7 @@ POST /api/v1/apps/music_search/search          ← 同步，只有一个接口
 1. **它按次扣点，实测 10 点/次**，而且**与 `page_size` 无关**（`page_size` 取 2 和 3
    都是 10 点）。所以 `--page-size` 调大不额外花钱，但每多搜一首歌就多一次调用。
 2. **`usage` 在 `data` 里，不在 `data.result` 里**。结算只认 `usage.points_cost`
-   （本包 `points_of()` 会把 `usage` / `data.usage` / `result.usage` 三个位置都试一遍）。
+   （本包 `points_of` 会把 `usage` / `data.usage` / `result.usage` 三个位置都试一遍）。
 3. `items[].url` 是**可直接下载的 mp3 地址**；`link` 是人看的网页地址；
    `has_more` 指示还有没有下一页。
 4. 搜索结果来自流媒体源。本包**默认只存元信息，不落盘音频**（`--download` 才下）。
@@ -145,7 +145,7 @@ python3 scripts/a7w.py schema voice_tts
 ### 分块策略：为什么按"串词段"切，而不是整篇一段
 
 电台的形态是 **说一句 → 放一首 → 再说一句**。整篇合成一段音频，
-根本插不进歌与歌之间。所以 `draft_voice_chunks()`：
+根本插不进歌与歌之间。所以 `draft_voice_chunks`：
 
 1. **按串词段切**（开场 / 过渡 i / 结尾各是独立音频文件）
 2. 段内超过 500 字，再按句末标点（`。！？；` 与换行）拆块

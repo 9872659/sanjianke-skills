@@ -4,7 +4,6 @@ slug: sanjianke-ai-soundtrack
 displayName: AI 配乐 60 点一段 卡点与混音一起给
 description: "**一条 3 分钟视频，60 点（0.60 元）配齐一段卡点配乐。** 给一条视频，四步自动走完：按 BPM 算小节并把切点吸到鼓点、出配乐、接到视频时长、给一条 ffmpeg 混音命令。走 api.a7w.cn 的 Official 音频（`media_services_33`），4 个接口接通：`music_generate` 出音乐、`music_extend` 接到时长、`music_sounds` 铺环境音、`music_timestamped_lyrics` 出时间轴。`duration` 10-360 秒只在 V6 系自定义模式下生效，本包自动切对。价格落通配「上游 x 2，保底 50 点」，实测每笔冻 60 点，`cost` 给下限。`--budget` 与 `--yes` 双闸门，`doctor` 默认 0 个 POST、0 冻结。问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "配乐难的不是生成音乐，是把音乐**配到画面**上：一首 3 分钟的歌接到 8 分钟片子上，要么重复到腻，要么接缝一跳就露馅。本包把它拆成能算的四步。`plan --duration 480 --bpm 92 --shots 14,47,96` 先出方案：一小节 2.609 秒、每个切点吸到最近小节、每段用哪个接口、下限多少点，一分钱不花。`gen --duration 180 --yes` 出音乐，配乐默认 instrumental=true。超 6 分钟就 `extend --audio-id … --continue-at 360` 接着写，同一首不断。最后 `mix --video in.mp4 --duration 480` 给一条 ffmpeg 命令：逐段对齐、接缝淡入 0.5 秒、音量 0.35、aloop 补够再 atrim 到视频时长、尾部 2.5 秒淡出，视频流 copy 不重编码。价格落通配「上游实际点数 x 2，单笔保底 50 点」，实测空 body 提交流水 +60/-60（净 0），所以每笔真冻结 60 点，`cost` 按 60 点/次给下限。轮询只走 GET /api/v1/tasks/<id>（免费）。需要自备 Key（注册见 https://api.a7w.cn/ ）。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -34,9 +33,6 @@ tags:
 | 加一层环境音 | 再来 1 次 `sound` | +60 点 | +0.60 元 |
 
 - 计费口径：`/api/v1/pricing` 里**没有 `media_services_33` 的专属规则**，落通配 `*`：
-  **对外 = 上游实际点数 x 2，单笔保底 50 点**（1 元 = 100 点）。
-- **实测每笔冻结 60 点**（= 上游 30 点 x 2），比规则写的 50 点保底高，所以 `cost` 默认按 60 点/次给。
-- `cost` 给的是**下限**；上游真实点数要真跑一次才看得到，最终按任务详情结算。
 - `plan` / `mix` / `catalog` / `cost` / `doctor` / `task` / `log` 全是 0 点。
 
 ## 三条干货

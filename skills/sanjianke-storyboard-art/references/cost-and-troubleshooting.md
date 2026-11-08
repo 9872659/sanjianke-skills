@@ -172,7 +172,7 @@ sb:<格号>:<sha1(提示词全文摘要 + 比例 + resolution + 模型 + action
 | `completed[].request` | **实际发出去的请求体**（prompt / action / image_urls / resolution / model / aspect_ratio） |
 | `completed[].points_cost` | 该格实扣点数（来自 `usage.points_cost`） |
 | `completed[].image_url` | 上游返回的图片地址（**这也是下一格参考图的来源**） |
-| `completed[].first_check` | **裁剪前**的真实像素与比例偏差（上游到底给了什么） |
+| `completed[].first_check` | **裁剪前**的真实像素与比例偏差 |
 | `completed[].snap` | 裁剪方式 / 裁剪框 / 裁后复核；没裁就是 `null` |
 | `completed[].raw_task` | 任务查询响应原文（含 `data.status` 与 `usage`） |
 | `ratio_failed[]` | 比例不合格的格与原因 |
@@ -201,7 +201,6 @@ sb:<格号>:<sha1(提示词全文摘要 + 比例 + resolution + 模型 + action
 | HTTP 200 但 `code: 0` | **网关信封里 `code == 1` 才是成功**，不是 0 | 看 `msg`；脚本已按这个口径判断，别改成 `code == 0` |
 | 轮询一直读不到状态 | **`status` 在 `data` 顶层**，不在 `data.result` 里（平台文档写错） | 脚本按实测结构取；自己写脚本别照文档写 |
 | `当前请求未命中可用计费规格` | `model` + `resolution` 组合不支持 | 普通 `nano-banana` 只有 `1K`；要高清档换 `nano-banana-2:official` 之类 |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很频繁** | 脚本内置退避重试（4 次）；连续失败就换模型或降低批次 |
 | 任务卡在 `processing` | 任务卡住 | `--poll-timeout`（默认 600 秒）到点会报出来并保留 `task_id`；续查：`python3 scripts/a7w.py task <task_id>` |
 | `参考图最多 12 张` | 超过 schema 的 `max_reference_images` | 减少 `--anchor` / `--ref-urls` |
 | `action=edit 时必须提供 image_urls` | `--ref-mode anchor` 但没给锚点 | 给 `--anchor id=URL`，或把 `anchor_urls` 写进设定卡 |
@@ -213,7 +212,6 @@ sb:<格号>:<sha1(提示词全文摘要 + 比例 + resolution + 模型 + action
 | `命中违禁词「…」` | 广告法绝对化用语等 | 改文案；确实要用才加 `--allow-prompt-hits` |
 | `残留了模板占位符` | 模型留了 `{}` / `[待填]` / `XXX` | 改掉后重跑 |
 | `提示词有 N% 的内容来自示例` | 照抄了提示词里的示例 | 换写法；检查模板里是不是留了可复制的示例 |
-| `真实像素 … 与请求比例 … 偏差 …%` | 上游按 32 对齐 | `--snap-exact` 裁准，或放宽 `--ratio-tolerance` |
 | `第 N 格结构问题：景别 … 不在枚举里` | 写了"看得见人"这类非景别 | 改成八档枚举之一 |
 | `第 N 格结构问题：画面描述只有 X 个字` | 描述太短 | 补到 8 字以上（建议 30~80 字） |
 | `分镜表格数为 0` | 没有格 | 先跑 `shots` 出分镜表 |

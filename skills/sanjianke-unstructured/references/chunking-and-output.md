@@ -44,7 +44,7 @@ chunks = chunk_by_title(elements, max_characters=1500, new_after_n_chars=1000)
 每个元素有两个关键属性：
 
 - `category`：元素类型标签（字符串）
-- `metadata`：元数据对象；还有 `text` / `str(el)` 拿文本，`el.to_dict()` 拿字典
+- `metadata`：元数据对象；还有 `text` / `str(el)` 拿文本，`el.to_dict` 拿字典
 
 常见 `category` 取值：`Title`、`NarrativeText`、`ListItem`、`Table`、`Image`、
 `FigureCaption`、`Header`、`Footer`、`PageBreak`、`Formula`、`CodeSnippet`、
@@ -70,7 +70,7 @@ body = [el for el in elements if isinstance(el, NarrativeText)]
 | `text_as_html` | 表格元素的 HTML 表示（需要开表格结构推断） |
 | `languages` | 探测到的语言 |
 
-用之前先 `print(el.metadata.to_dict().keys())` 看看实际有哪些，
+用之前先 `print(el.metadata.to_dict.keys)` 看看实际有哪些，
 不要假定某个字段一定存在。
 
 ## 序列化与还原
@@ -80,7 +80,7 @@ from unstructured.staging.base import elements_to_json, elements_from_json
 
 # 存
 elements_to_json(elements, filename="elements.json")
-# 或者自己处理： [el.to_dict() for el in elements]
+# 或者自己处理： [el.to_dict for el in elements]
 
 # 读回（JSON 里保留了元素类型，还原后 isinstance 判断依旧有效）
 restored = elements_from_json(filename="elements.json")
@@ -91,7 +91,7 @@ restored = elements_from_json(filename="elements.json")
 ```python
 docs = []
 for el in chunks:
-    if not str(el).strip():
+    if not str(el).strip:
         continue
     docs.append({
         "text": str(el),

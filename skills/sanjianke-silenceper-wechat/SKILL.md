@@ -18,8 +18,6 @@ tags:
 
 这个 SDK 把微信各条产品线拆成互相独立的模块，统一从一个 `Wechat` 实例上取：公众号、小程序、小游戏、微信支付、开放平台、企业微信、智能对话。每个模块自己管好 token 与请求签名，业务侧只需要把 `AppID` / `AppSecret` 这类配置传进去，然后调方法。
 
-**上游项目**：`silenceper/wechat`　**仓库**：https://github.com/silenceper/wechat
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -91,8 +89,8 @@ import (
 )
 
 func serveWechat(rw http.ResponseWriter, req *http.Request) {
-    wc := wechat.NewWechat()
-    memory := cache.NewMemory()          // 仅适合本地调试，生产见第 2 条
+    wc := wechat.NewWechat
+    memory := cache.NewMemory          // 仅适合本地调试，生产见第 2 条
     cfg := &offConfig.Config{
         AppID:     "xxx",
         AppSecret: "xxx",
@@ -108,14 +106,14 @@ func serveWechat(rw http.ResponseWriter, req *http.Request) {
         return &message.Reply{MsgType: message.MsgTypeText, MsgData: text}
     })
 
-    if err := server.Serve(); err != nil {     // 先 Serve 处理请求
+    if err := server.Serve; err != nil {     // 先 Serve 处理请求
         fmt.Println(err)
         return
     }
-    server.Send()                              // 再 Send 发出回复
+    server.Send                              // 再 Send 发出回复
 }
 
-func main() {
+func main {
     http.HandleFunc("/", serveWechat)
     fmt.Println("wechat server listen at", ":8001")
     if err := http.ListenAndServe(":8001", nil); err != nil {
@@ -133,7 +131,7 @@ import (
     offConfig "github.com/silenceper/wechat/v2/officialaccount/config"
 )
 
-wc := wechat.NewWechat()
+wc := wechat.NewWechat
 redisOpts := &cache.RedisOpts{
     Host:        "127.0.0.1:6379",   // 注意要带端口
     Password:    "",
@@ -153,12 +151,12 @@ cfg := &offConfig.Config{
 officialAccount := wc.GetOfficialAccount(cfg)
 ```
 
-三种现成缓存：`cache.NewRedis(redisOpts)`、`cache.NewMemcache("127.0.0.1:11211")`、`cache.NewMemory()`。
+三种现成缓存：`cache.NewRedis(redisOpts)`、`cache.NewMemcache("127.0.0.1:11211")`、`cache.NewMemory`。
 
 **3. 手动取 access_token**
 
 ```go
-ak, err := officialAccount.GetAccessToken()
+ak, err := officialAccount.GetAccessToken
 if err != nil {
     // 常见失败：IP 不在白名单、AppSecret 错、额度超限
 }
@@ -170,7 +168,7 @@ fmt.Println(ak)
 ```go
 type myTokenHandle struct{}
 
-func (h *myTokenHandle) GetAccessToken() (string, error) {
+func (h *myTokenHandle) GetAccessToken (string, error) {
     return "从中台拿到的-token", nil
 }
 
@@ -181,7 +179,7 @@ officialAccount.SetAccessTokenHandle = &myTokenHandle{}
 
 ```go
 type AccessTokenHandle interface {
-    GetAccessToken() (accessToken string, err error)
+    GetAccessToken (accessToken string, err error)
 }
 ```
 
@@ -190,10 +188,10 @@ type AccessTokenHandle interface {
 ```go
 import "github.com/silenceper/wechat/v2/officialaccount/menu"
 
-m := officialAccount.GetMenu()
+m := officialAccount.GetMenu
 
 // 查询当前菜单
-res, err := m.GetMenu()
+res, err := m.GetMenu
 
 // 用 struct 方式设置菜单
 buttons := []*menu.Button{
@@ -204,7 +202,7 @@ err = m.SetMenu(buttons)
 // 也可以直接传 JSON
 err = m.SetMenuByJSON(`{"button":[{"type":"view","name":"首页","url":"https://example.com"}]}`)
 
-err = m.DeleteMenu()
+err = m.DeleteMenu
 ```
 
 `Button` 结构体的字段名（如 `Name` / `Type` / `URL`）以本机依赖里的类型定义与官方文档为准。
@@ -212,12 +210,12 @@ err = m.DeleteMenu()
 **6. 用户管理与群发**
 
 ```go
-u := officialAccount.GetUser()
+u := officialAccount.GetUser
 info, err := u.GetUserInfo("openid-xxxx")            // 用户基本信息
 err = u.UpdateRemark("openid-xxxx", "备注名")
-list, err := u.ListUserOpenIDs()                     // 用户列表，翻页用 NextOpenID
+list, err := u.ListUserOpenIDs                     // 用户列表，翻页用 NextOpenID
 
-bd := officialAccount.GetBroadcast()
+bd := officialAccount.GetBroadcast
 err = bd.SendText(nil, "发给所有人的文本")            // 第一个参数为 nil 表示发给所有人
 err = bd.SendText(&broadcast.User{TagID: 1}, "只发给某个标签")
 err = bd.SendText(&broadcast.User{OpenID: []string{"openid-1", "openid-2"}}, "只发给指定 openid")
@@ -235,7 +233,7 @@ mini := wc.GetMiniProgram(&miniConfig.Config{
 })
 
 // 用 code 换 session
-result, err := mini.GetAuth().Code2Session("js_code")
+result, err := mini.GetAuth.Code2Session("js_code")
 ```
 
 小程序码、订阅消息、云开发等能力分布在 `miniprogram` 下的 `qrcode` / `subscribe` / `tcb` 等子包，具体方法与参数以官方文档对应页面为准。
@@ -257,11 +255,11 @@ pay := wc.GetPay(&payConfig.Config{AppID: "xxx", MchID: "xxx", ApiKey: "xxx", Ca
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | 引用回来的类型、方法名跟示例完全对不上 | 导入路径漏了 `/v2`，拉到了 1.x 系列，两个大版本 API 差异很大 | 统一写成 `github.com/silenceper/wechat/v2`；`go.mod` 里确认依赖版本是 `v2.x` |
-| 多实例部署时 `access_token` 频繁互相顶掉，接口随机报错 | 默认或 `cache.NewMemory()` 是进程内内存缓存，每个实例各存一份，刷新即失效 | 换成 `cache.NewRedis(...)` 或 `cache.NewMemcache(...)`，让所有实例共享同一份 token；`NewMemory()` 官方明确标注**不推荐用于生产** |
+| 多实例部署时 `access_token` 频繁互相顶掉，接口随机报错 | 默认或 `cache.NewMemory` 是进程内内存缓存，每个实例各存一份，刷新即失效 | 换成 `cache.NewRedis(...)` 或 `cache.NewMemcache(...)`，让所有实例共享同一份 token；`NewMemory` 官方明确标注**不推荐用于生产** |
 | Redis 缓存怎么都连不上，或读不到 key | `RedisOpts.Host` 只写了 IP、没带端口 | `Host` 写成 `127.0.0.1:6379` 这种「主机:端口」格式 |
 | 公众号后台保存服务器配置时一直提示失败 | 回调验签没通过。Token 不一致、`EncodingAESKey` 与加密模式不匹配、或地址根本不可达 | 先在本地用内网穿透把端口暴露出去；核对 Token 与加密方式；本地联调阶段可以 `server.SkipValidate(true)` 先跳过校验（**上线前务必关掉**） |
 | 启用了安全模式抓不到消息内容 | 只填了 `EncodingAESKey` 但没把消息加解密链路走通，或者漏了该字段导致按明文处理 | 加密模式要把 `EncodingAESKey` 填上；确认回调地址与后台配置的加密方式一致 |
-| 收不到回复，或日志里报发送顺序不对 | 收到了请求但没按「先 `Serve()` 处理、再 `Send()` 回复」的顺序调用 | 严格按顺序：`Serve()` 完成后立即 `Send()`；`Serve()` 返回错误时直接 return，不要再 `Send()` |
+| 收不到回复，或日志里报发送顺序不对 | 收到了请求但没按「先 `Serve` 处理、再 `Send` 回复」的顺序调用 | 严格按顺序：`Serve` 完成后立即 `Send`；`Serve` 返回错误时直接 return，不要再 `Send` |
 | 日志里能看到 AppSecret、token 之类的敏感值 | SDK 内部用 logrus 输出日志，默认会打到 stdout 且为 Debug 级别 | 在自己的 `main` 里覆盖 logrus 配置，把级别调高并对敏感字段做脱敏，别让原始日志进生产采集 |
 | `GetUserInfo` 之类的接口报 IP 不在白名单 | 公众号后台配置了 IP 白名单，而这是微信平台侧的限制 | 到公众号后台把服务器出口 IP 加进白名单；IP 会变的环境要提前规划固定出口 |
 | 自己实现的 Cache 编译不过 | 接口方法签名没对齐 | 完整实现四个方法：`Get(key string) interface{}`、`Set(key string, val interface{}, timeout time.Duration) error`、`IsExist(key string) bool`、`Delete(key string) error` |
@@ -292,7 +290,7 @@ pay := wc.GetPay(&payConfig.Config{AppID: "xxx", MchID: "xxx", ApiKey: "xxx", Ca
 
 **覆盖**：
 
-- 实例与配置：`wechat.NewWechat()`，以及 `SetCache`（全局缓存）、`SetHTTPClient`（自定义 HTTP 客户端）
+- 实例与配置：`wechat.NewWechat`，以及 `SetCache`（全局缓存）、`SetHTTPClient`（自定义 HTTP 客户端）
 - 公众号（`GetOfficialAccount`）：`GetServer` 消息接收与回复、`GetMenu` 菜单管理与个性化菜单、`GetUser` 用户资料与备注、`GetBroadcast` 群发、`GetMaterial` 素材、`GetBasic` 获取微信服务器 IP 与清理调用频次、`GetAccessToken`、`SetAccessTokenHandle` 自定义 token；另有 `draft` 草稿、`freepublish` 发布、`datacube` 数据统计、`js` JSSDK、`oauth` 网页授权、`customerservice` 客服消息、`ocr` 等子包
 - 小程序（`GetMiniProgram`）：登录 `auth`、消息解密 `encryptor`、小程序码 `qrcode` 与 `urllink`、订阅消息 `subscribe`、云开发 `tcb`、内容安全 `security`、数据分析 `analysis`、虚拟支付 `virtualpayment` 等
 - 小游戏、微信支付（`GetPay`：`order` / `refund` / `notify` / `redpacket` / `transfer`）、开放平台（`GetOpenPlatform`：第三方平台代公众号/小程序）、企业微信（`GetWork`：通讯录 `addresslist`、群聊 `appchat`、客服 `kf`、外部联系人 `externalcontact`、打卡 `checkin`、发票 `invoice`、JSAPI 等）
@@ -323,7 +321,7 @@ pay := wc.GetPay(&payConfig.Config{AppID: "xxx", MchID: "xxx", ApiKey: "xxx", Ca
 1. 这是按需实现的 SDK，不是微信开放接口的完整映射；找不到的方法就回到官方文档自己发请求。
 2. 1.x 与 2.x 是两个不兼容的大版本，导入路径漏了 `/v2` 会拿到旧系列，报错信息往往很隐晦。
 3. 官方文档站上的部分页面仍停留在旧版写法（例如消息处理回调的签名在不同页面不一致），**以本机依赖里的类型定义与 README 为准**。
-4. `cache.NewMemory()` 官方标注不推荐用于生产，多实例下会出现 token 互顶。
+4. `cache.NewMemory` 官方标注不推荐用于生产，多实例下会出现 token 互顶。
 5. 回调地址与加密方式是平台侧强约束，配置不匹配时保存就失败，属于必须提前规划的部署条件。
 6. 本 Skill 里的类型名、方法名与参数名以抓到的官方文档为准；不同版本可能存在差异，请以本机实际依赖的签名为准。
 
@@ -333,7 +331,7 @@ pay := wc.GetPay(&payConfig.Config{AppID: "xxx", MchID: "xxx", ApiKey: "xxx", Ca
 
 - [ ] 导入路径带 `/v2`，`go.mod` 里依赖是 `v2.x`
 - [ ] `AppID` / `AppSecret` / `Token` 等凭证来自环境变量或配置中心，未硬编码、未提交
-- [ ] 生产环境已把缓存换成 Redis 或 memcache，不再是 `NewMemory()`
+- [ ] 生产环境已把缓存换成 Redis 或 memcache，不再是 `NewMemory`
 - [ ] 回调地址可被公网访问，且已在平台后台完成服务器配置
 - [ ] 加密方式与 `EncodingAESKey` 的填写情况一致
 - [ ] 出口 IP 已加入平台后台白名单

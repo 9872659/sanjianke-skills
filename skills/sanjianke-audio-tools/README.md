@@ -88,8 +88,6 @@ python3 scripts/run.py chain --file hook.mp3 --seconds 30 --dry-run
 | 视频补帧 | `POST /api/v1/video/viapi/interp` | **25 点/秒** | 价目表写死 `perSecond=25` |
 | 查任务 | `GET /api/v1/tasks/<task_id>` | **0 点** | 免费，别去碰应用层 `/query` |
 
-三档按次的价是这么来的：`GET /api/v1/pricing` 里 `music_generation` 没有独立规则，只有一条 `music_generation/*` 的 `markupPercent=200`（上游实际点数 × 3）；平台 schema 写 `vox` 14 点、`mashup_lyrics` 12 点、`upload_audio` 13 点，乘 3 得到 42 / 36 / 39。真实成交价只在返回体的 `data.usage.points_cost`。
-
 ## 三个接口到底挂在哪个应用下
 
 2026-11-08 `GET /api/v1/apps` 现查，22 个应用共 100 个接口：

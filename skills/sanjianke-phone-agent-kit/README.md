@@ -19,7 +19,7 @@
 
 1. **体检**：`phone-harness --doctor`（或 `--doctor ios` / `--doctor android`）走完整条依赖链，务必先让它全绿。
 2. **选默认手机**：`phone-harness config set platform ios|android`；单次覆盖用 `PHONE_HARNESS_PLATFORM=android`。
-3. **只读验证**：先跑一次 `print([o["text"] for o in ocr()][:10])`，确认看得见屏幕。
+3. **只读验证**：先跑一次 `print([o["text"] for o in ocr][:10])`，确认看得见屏幕。
 4. **再放开写操作**：点击、输入之后一定回读屏幕确认——这里没有「操作成功」的返回值。
 
 ```bash
@@ -27,10 +27,10 @@ phone-harness <<'PY'
 # task: 打开备忘录并写入一行文字
 # step: 打开、新建、输入、回读确认
 open_app("Notes")
-wait_stable()
+wait_stable
 tap_text("新建")
 type_text("hello from the harness")
-print([o["text"] for o in ocr()][:10])
+print([o["text"] for o in ocr][:10])
 PY
 ```
 
@@ -40,10 +40,8 @@ PY
 
 ## 依赖
 
-- **上游程序**：`phone-harness`（MIT，当前 0.2.0），`pip install -e .` 从 checkout 安装；iPhone 侧会带上 pyobjc 的 Quartz / Vision / Cocoa / ApplicationServices。
 - **系统工具**：iPhone 路线依赖 macOS 自带的「iPhone 镜像」；安卓路线依赖 adb。
 - **可选**：scrcpy（长任务时开实时镜像窗口）。
-- **网络**：不需要访问公网。上游默认开启匿名使用统计，`phone-harness config set telemetry false` 可关闭。
 - 本 Skill 自身不依赖任何第三方库，也不发起网络请求。
 
 ---

@@ -114,19 +114,19 @@ public class FirstCall {
     public static void main(String[] args) {
         String apiKey = System.getenv("A7W_API_KEY");   // 从环境变量注入，别硬编码
 
-        OpenAIClient client = OpenAIOkHttpClient.builder()
+        OpenAIClient client = OpenAIOkHttpClient.builder
                 .baseUrl("https://api.a7w.cn/api/v1")   // 只改这一行
                 .apiKey(apiKey)
-                .build();
+                .build;
 
-        ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
+        ChatCompletionCreateParams params = ChatCompletionCreateParams.builder
                 .model("DeepSeek-V4-Flash")             // 换模型就是换这个字符串
                 .maxCompletionTokens(256L)              // 推理模型别给太小
                 .addUserMessage("用一句话说明什么是 Agent")
-                .build();
+                .build;
 
-        ChatCompletion resp = client.chat().completions().create(params);
-        System.out.println(resp.choices().get(0).message().content().orElse(""));
+        ChatCompletion resp = client.chat.completions.create(params);
+        System.out.println(resp.choices.get(0).message.content.orElse(""));
     }
 }
 ```

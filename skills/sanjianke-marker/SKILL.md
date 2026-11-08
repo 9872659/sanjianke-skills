@@ -22,12 +22,9 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 marker 把 PDF 转成结构干净的 Markdown / JSON / HTML：保留标题层级、表格、公式（LaTeX）、代码块、图片，还顺手去掉页眉页脚。它是给「要拿文档内容做后续处理」的场景准备的——喂给 RAG、进 Git 管、批量清洗资料库。
 
 它的架构决定了用法：**必须先有一个能跑的推理后端**。marker 本体负责解析 PDF 文本层和版面，OCR 与公式走一个本地的 surya VLM 推理服务，这个服务在首次使用时自动拉起（NVIDIA 卡上用 vLLM，CPU / Apple Silicon 上用 llama.cpp）。没准备好这层前置，命令会直接失败——这是最常见的踩坑点。
-
-**上游项目**：`marker`　**仓库**：https://github.com/datalab-to/marker（该项目仓库早期地址不同，网上老教程里的旧地址可能仍指向同一项目，请以本地址为准）
 
 ## 零安装用法（推荐先看这个）
 
@@ -205,7 +202,7 @@ from marker.models import create_model_dict
 from marker.output import text_from_rendered
 
 # 模型加载耗时，循环处理多个文件时只创建一次
-converter = PdfConverter(artifact_dict=create_model_dict())
+converter = PdfConverter(artifact_dict=create_model_dict)
 rendered = converter("FILEPATH")
 text, _, images = text_from_rendered(rendered)
 ```
@@ -278,7 +275,6 @@ text, _, images = text_from_rendered(rendered)
   没有块类型 / 坐标 / 章节层级树，也没有 RAG 切片列表；要这些得走传统装法。
 - **公式与表格是文字描述**：不保证还原成 LaTeX，也不保证转成结构化数组，需要人工抽检。
 - **不做版式还原**、不输出可编辑的 Office 文件（与本地路径一致）。
-- **上游那套模型权重许可门槛不适用于这条路径**：零安装路径不下载、不运行 marker
   的模型权重，走的是平台侧能力；平台自身的服务条款仍然适用。
 - **平台取文档会超时**：实测 `https://arxiv.org/pdf/1706.03762` 返回过
   `HTTP 502 upstream timeout`，不是所有公网地址都抓得动；报 502 时先自己确认

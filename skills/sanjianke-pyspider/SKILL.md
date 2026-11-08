@@ -18,8 +18,6 @@ tags:
 结果入库，以及一个带脚本编辑器、任务监控、项目管理、结果查看的网页控制台，都由它包掉。
 要采的站多、要按天按周反复爬、还要在浏览器里看任务状态时，用它能省掉自己搭调度和界面那一大摊。
 
-**上游项目**：`pyspider`　**仓库**：https://github.com/binux/pyspider
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -119,7 +117,6 @@ pyspider -c config.json webui --need-auth --username some_name --password some_p
 # 6. Handler 的最小骨架：on_start 定时触发，self.crawl 指回调，回调里再翻页 / 返回结果
 from pyspider.libs.base_handler import *
 
-
 class Handler(BaseHandler):
     crawl_config = {
     }
@@ -130,13 +127,13 @@ class Handler(BaseHandler):
 
     @config(age=10 * 24 * 60 * 60)
     def index_page(self, response):
-        for each in response.doc('a[href^="http"]').items():
+        for each in response.doc('a[href^="http"]').items:
             self.crawl(each.attr.href, callback=self.detail_page)
 
     def detail_page(self, response):
         return {
             "url": response.url,
-            "title": response.doc('title').text(),
+            "title": response.doc('title').text,
         }
 ```
 

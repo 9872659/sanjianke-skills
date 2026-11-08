@@ -6,14 +6,12 @@
 
 ## 前置条件
 
-- **平台**：上游强烈建议在 **Linux** 上安装；Windows / macOS 也支持，但依赖问题更多。
 - **Python**：>= 3.8。
 - **系统**：`gcc >= 4.8.5`。
 - **必须先装 PaddlePaddle**：PaddleSpeech 不会自动带对你的 paddlepaddle 版本，需要先按 PaddlePaddle 官方安装页面选好 CPU 或对应 CUDA 的 GPU 版并安装。
 - **安装前置**：先 `pip install pytest-runner`。
 - **输入格式**：音频要求 **16k 采样率 wav**。
 - **功能限制**：语音翻译（英译中）依赖 kaldi 预编译工具，只在 Ubuntu 上支持。
-- **可选**：GPU（训练与大批量推理建议有）；Docker（上游 README 提到可以在容器里启动服务）。
 
 ---
 
@@ -49,7 +47,7 @@ paddlespeech_client asr --server_ip 127.0.0.1 --port 8090 --input input_16k.wav
 ```python
 from paddlespeech.cli.asr.infer import ASRExecutor
 
-asr = ASRExecutor()
+asr = ASRExecutor
 print(asr(audio_file="zh.wav"))
 ```
 
@@ -62,7 +60,6 @@ print(asr(audio_file="zh.wav"))
 - PaddlePaddle（CPU 版或匹配 CUDA 的 GPU 版，须单独安装）
 - Python >= 3.8、`gcc >= 4.8.5`
 - `pytest-runner`（安装前置）
-- 上游安装文档中列出的其他系统与 Python 依赖（conda / librosa / gcc / kaldi 等场景分开说明）
 - 可选：kaldi 预编译工具（仅语音翻译等少数功能需要，限 Ubuntu）
 - 可选：GPU 与对应 CUDA 环境（训练、大批量推理）
 

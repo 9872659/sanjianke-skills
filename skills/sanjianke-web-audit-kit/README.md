@@ -69,7 +69,6 @@ squirrel mcp                               # 或挂本地 MCP，无需账号
 | Alpine / musl Linux | 需要 `libstdc++`，root 下安装脚本会自动补，否则先 `apk add libstdc++` |
 | 磁盘 | 本地 SQLite 缓存与审计历史，默认每项目保留最近 3 次审计（`[storage] keep_audits`） |
 | 账号 / Key | 纯本地审计不需要；云端渲染 / AI 分析 / 技术栈识别 / 发布报告才需要账号，凭证走 `SQUIRRELSCAN_API_KEY` |
-| 上游仓库 | https://github.com/squirrelscan/squirrelscan （MIT，独立于本 Skill 的第三方项目） |
 
 本 Skill 只提供使用说明与流程编排，**不打包、不修改、不重新分发上游的任何代码或二进制**。
 

@@ -78,18 +78,18 @@ def ask(prompt, model="DeepSeek-V4-Flash", timeout=25):
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 512,
-    }).encode()
+    }).encode
     req = urllib.request.Request(
         "https://api.a7w.cn/api/v1/chat/completions", data=body,
         headers={"Authorization": "Bearer " + os.environ["A7W_API_KEY"],
                  "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read())["choices"][0]["message"]["content"]
+        return json.loads(r.read)["choices"][0]["message"]["content"]
 ```
 
 ### 第四步：按平台推回去
 
-把你机器人框架里「收到消息」的处理器改成：**取文本 → 调上面的 `ask()` → 发回去**。
+把你机器人框架里「收到消息」的处理器改成：**取文本 → 调上面的 `ask` → 发回去**。
 剩下的工程细节（多轮上下文、并发、去重、降级）在 `references/bot-llm-integration.md` 里逐项给方案。
 
 ---

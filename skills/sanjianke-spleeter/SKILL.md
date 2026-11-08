@@ -18,8 +18,6 @@ tags:
 
 它是一条命令行工具，也是一套 Python 库。批量处理一首歌几秒到几十秒（取决于有没有 GPU），适合塞进脚本里跑一整批素材。
 
-**上游项目**：`Spleeter`　**仓库**：https://github.com/deezer/spleeter
-
 ## 什么时候用 / 不用
 
 **用它**：

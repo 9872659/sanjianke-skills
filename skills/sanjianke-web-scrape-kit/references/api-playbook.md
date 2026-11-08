@@ -345,8 +345,6 @@ curl -X DELETE -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
 - `errors`：`id`、`url`、`error`（错误消息）、`timestamp`。网络错误、超时等都在这里；被有意跳过的外站首页以 `error` 码 `EXTERNAL_LINK` 出现。
 - `robotsBlocked`：被目标站 robots.txt 拦下的 URL。
 
-> `/errors` **不保证是全部失败的完备枚举**——某些内部失败类别在构造响应前就被过滤掉了。把它当作「上游报告了哪些失败」，而不是「没别的问题了」的证明。
-
 ### 4.3 抓取范围参数全集
 
 | 参数 | 类型 | 默认 | 说明 |
@@ -658,8 +656,6 @@ curl -X POST 'https://api.firecrawl.dev/v2/scrape/<SCRAPE_ID>/interact' \
 | `crawl.page` | 每成功抓取一页，payload 里带该页文档 |
 | `crawl.completed` | 整个作业结束 |
 | `crawl.failed` | 作业失败 |
-
-**Webhook 请求必须验签**——上游提供了签名校验机制，收到 webhook 时先验证再信任内容，否则你的回调端点就是一个公开的数据注入入口。生产环境还要考虑重放、幂等与失败重试。
 
 也可以连 WebSocket 实时收结果：`WS /v2/crawl/{jobId}`，路径与状态接口相同，协议从 HTTP 换成 WS。
 

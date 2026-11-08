@@ -18,8 +18,6 @@ tags:
 
 它原样保留了每条字幕的起始时间与持续时长，所以拿回来的东西可以直接当剪辑打点的时间依据——这是纯文本抓取工具给不了的。
 
-**上游项目**：`youtube-transcript-api`　**仓库**：https://github.com/jdepoix/youtube-transcript-api
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -38,7 +36,6 @@ tags:
 - **给的是受限视频**（年龄限制等）。基于 Cookie 的认证在当前实现里已经不可用，这类视频取不到。
 - **部署在云主机上批量跑**。YouTube 屏蔽了大量云厂商 IP 段，很容易直接撞上封锁异常。
 - **要抓取平台上的其他信息**（评论、点赞、观看量）。它的能力范围就是字幕轨。
-- **希望它是稳定契约**。上游明确说明它调用的是未公开接口，随时可能失效，不能当长期稳定依赖来设计系统。
 
 ## 安装
 
@@ -57,14 +54,14 @@ pip install youtube-transcript-api
 ```python
 from youtube_transcript_api import YouTubeTranscriptApi
 
-ytt_api = YouTubeTranscriptApi()
+ytt_api = YouTubeTranscriptApi
 ytt_api.fetch(video_id)
 ```
 
 默认取英语字幕。返回的是一个 `FetchedTranscript` 对象，带 `snippets`、`video_id`、`language`、`language_code`、`is_generated` 等字段，每条片段有 `text`、`start`、`duration`。这个对象基本按列表用：可迭代、可索引、有长度。
 
 ```python
-ytt_api = YouTubeTranscriptApi()
+ytt_api = YouTubeTranscriptApi
 fetched_transcript = ytt_api.fetch(video_id)
 
 for snippet in fetched_transcript:
@@ -74,7 +71,7 @@ last_snippet = fetched_transcript[-1]
 snippet_count = len(fetched_transcript)
 ```
 
-要原始字典列表就调 `to_raw_data()`：
+要原始字典列表就调 `to_raw_data`：
 
 ```python
 [
@@ -89,23 +86,23 @@ snippet_count = len(fetched_transcript)
 
 ```python
 # 先德语，失败再退英语
-YouTubeTranscriptApi().fetch(video_id, languages=['de', 'en'])
+YouTubeTranscriptApi.fetch(video_id, languages=['de', 'en'])
 
 # 只接受德语
-YouTubeTranscriptApi().fetch(video_id, languages=['de'])
+YouTubeTranscriptApi.fetch(video_id, languages=['de'])
 
 # 保留斜体、粗体等格式标记
-YouTubeTranscriptApi().fetch(video_id, languages=['de', 'en'], preserve_formatting=True)
+YouTubeTranscriptApi.fetch(video_id, languages=['de', 'en'], preserve_formatting=True)
 ```
 
 **3. 先列出可用字幕，再按类型挑**
 
-不确定有哪些语言时先列清单。默认行为是：如果请求的语言同时有人工和自动生成，优先选人工的；要打破这个默认就用下面的类型过滤方法。每个 `Transcript` 对象都带元信息：`video_id`、`language`、`language_code`、`is_generated`、`is_translatable`、`translation_languages`，并可用 `.fetch()` 取数据。
+不确定有哪些语言时先列清单。默认行为是：如果请求的语言同时有人工和自动生成，优先选人工的；要打破这个默认就用下面的类型过滤方法。每个 `Transcript` 对象都带元信息：`video_id`、`language`、`language_code`、`is_generated`、`is_translatable`、`translation_languages`，并可用 `.fetch` 取数据。
 
 ```python
 from youtube_transcript_api import YouTubeTranscriptApi
 
-ytt_api = YouTubeTranscriptApi()
+ytt_api = YouTubeTranscriptApi
 transcript_list = ytt_api.list(video_id)
 
 for transcript in transcript_list:
@@ -128,12 +125,12 @@ transcript = transcript_list.find_generated_transcript(['de', 'en'])
 
 **4. 翻译字幕**
 
-平台自带字幕自动翻译能力，这里也能用上：`translate()` 返回一个新的 `Transcript` 对象。
+平台自带字幕自动翻译能力，这里也能用上：`translate` 返回一个新的 `Transcript` 对象。
 
 ```python
 transcript = transcript_list.find_transcript(['en'])
 translated_transcript = transcript.translate('de')
-print(translated_transcript.fetch())
+print(translated_transcript.fetch)
 ```
 
 **5. 用格式化器导出成 SRT / WebVTT / JSON / 纯文本**
@@ -142,17 +139,17 @@ print(translated_transcript.fetch())
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import JSONFormatter, SRTFormatter, WebVTTFormatter, TextFormatter
 
-ytt_api = YouTubeTranscriptApi()
+ytt_api = YouTubeTranscriptApi
 transcript = ytt_api.fetch(video_id)
 
 # 转成 JSON 字符串；因为底层是 json.dumps，还能透传 indent 之类的参数
-json_formatted = JSONFormatter().format_transcript(transcript)
-json_formatted = JSONFormatter().format_transcript(transcript, indent=2)
+json_formatted = JSONFormatter.format_transcript(transcript)
+json_formatted = JSONFormatter.format_transcript(transcript, indent=2)
 
 # 其他内置格式
-srt_formatted = SRTFormatter().format_transcript(transcript)
-vtt_formatted = WebVTTFormatter().format_transcript(transcript)
-text_formatted = TextFormatter().format_transcript(transcript)
+srt_formatted = SRTFormatter.format_transcript(transcript)
+vtt_formatted = WebVTTFormatter.format_transcript(transcript)
+text_formatted = TextFormatter.format_transcript(transcript)
 
 with open('your_filename.srt', 'w', encoding='utf-8') as f:
     f.write(srt_formatted)
@@ -225,7 +222,7 @@ youtube_transcript_api <first_video_id> --http-proxy http://user:pass@domain:por
 ```python
 from requests import Session
 
-http_client = Session()
+http_client = Session
 http_client.headers.update({"Accept-Encoding": "gzip, deflate"})
 http_client.verify = "/path/to/certfile"
 
@@ -242,8 +239,8 @@ ytt_api_2 = YouTubeTranscriptApi(http_client=http_client)
 |---|---|---|
 | 传了整条视频网址却报取不到视频 | 接口收的是视频 ID，不是 URL | 从链接里把 `v=` 后面的 ID 抠出来；`https://www.youtube.com/watch?v=12345` 的 ID 就是 `12345` |
 | 报请求被封锁 / IP 被封锁 | 对方屏蔽了大量云厂商 IP 段；本机请求太频繁也会触发 | 配轮换住宅代理或通用代理；别在无代理的云主机上做高频批量 |
-| 明明有字幕却拿不到 | 可能只存在自动生成字幕而你要求了人工字幕，或者目标语言根本没有 | 先 `list()` / `--list-transcripts` 看清单，再决定语言顺序与字幕类型过滤 |
-| 升级后取值方式全变了 | 较新版本改成了「先实例化、再 `.fetch()`」的对象式接口，老的类方法式写法不再适用 | 按当前官方 README 的写法改；这个库有过一次明显的接口大改，迁移时别只改一半 |
+| 明明有字幕却拿不到 | 可能只存在自动生成字幕而你要求了人工字幕，或者目标语言根本没有 | 先 `list` / `--list-transcripts` 看清单，再决定语言顺序与字幕类型过滤 |
+| 升级后取值方式全变了 | 较新版本改成了「先实例化、再 `.fetch`」的对象式接口，老的类方法式写法不再适用 | 按当前官方 README 的写法改；这个库有过一次明显的接口大改，迁移时别只改一半 |
 | 视频 ID 以连字符开头时命令报错 | 命令行把它当成了参数名 | 用反斜杠转义，例如 `youtube_transcript_api "\-abc123"` |
 | 想给受限视频做认证 | 平台接口近期变更已让基于 Cookie 的认证失效，官方说明该功能当前不可用 | 换其他可行来源；不要指望 `--cookies` 参数能解决 |
 | 拿到的文本里混着 `<i>`、`<b>` 标签 | 默认会剥掉这些格式元素，但你传了保留格式的开关，或者用了原始数据通道 | 不需要格式就别开保留开关；需要干净文本时用纯文本格式化器输出 |
@@ -290,7 +287,6 @@ ytt_api_2 = YouTubeTranscriptApi(http_client=http_client)
 - 不抓评论、点赞、观看量等平台元数据。
 - 当前不支持受限视频的 Cookie 认证。
 - 没有无头浏览器兜底——这是它的设计取向（轻量），也意味着平台结构一改就可能受影响。
-- 不保证长期可用性：上游明确说用的是未公开接口。
 
 ## 依赖条件
 

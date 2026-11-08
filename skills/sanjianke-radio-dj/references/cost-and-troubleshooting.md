@@ -101,7 +101,7 @@ $ python3 scripts/run.py voice --outdir D:/radio/ep01
 [占位符] 残留了占位符大括号 `{}`，模板没被替换干净
 ```
 
-通常是把别处的模板稿直接喂进来了。注意本包的 `prompt_hygiene()` 用的是
+通常是把别处的模板稿直接喂进来了。注意本包的 `prompt_hygiene` 用的是
 **比闸门更窄**的一套形态：提示词里的 `{title, host}` 是 JSON 结构说明，
 不是"没填干净的模板"——一个为**产出**设计的检查，不能直接拿去扫**输入**。
 
@@ -178,7 +178,7 @@ $ python3 scripts/run.py voice --outdir D:/radio/ep01
 2. **异步任务的 `status` 在任务 `data` 顶层**，不在 `data.result` 里（平台文档写错了）。
    实测原文：`data.status = 'completed'`、`data.result.status = None`。
 3. **`music_search` 的 `usage` 在 `data` 里**，不在 `data.result` 里。
-   本包的 `points_of()` 会把 `usage` / `data.usage` / `result.usage` 三个位置都试一遍。
+   本包的 `points_of` 会把 `usage` / `data.usage` / `result.usage` 三个位置都试一遍。
 
 ---
 

@@ -105,15 +105,12 @@ GET /api/v1/models
 ```
 GET /api/v1/pricing
 -> HTTP 200 · 21,201 字节 · 115 条规则
-   顶部：{"currency":"points","markupPercent":20,...}
-   通配：{"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-                "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}}
 ```
 
 逐条确认：`/api/v1/chat/completions`、`/v1/chat/completions`、`/api/v1/messages`、
 `/v1/messages`、`/api/v1/embeddings` **五条都不在** `pricing` 里，全部命中通配 `*`。
 
-所以文本线的计费 = `max(上游点数 x 2, 50)`，且每次调用**先冻 60 点**（见第 4 节）。
+所以文本线的计费 = `max`，且每次调用**先冻 60 点**（见第 4 节）。
 
 ---
 
@@ -130,11 +127,10 @@ GET /user/balance/logs?limit=200
 ```
 
 - `charge` 类型是「冻结/预扣」，`points` 为负数；`refund` 为正数，类型「退款」
-- `reserve_sync:` 前缀 = 同步预扣；`refund:sync:` = 正常退回；`refund:sync_error:` = 上游报错后退回
 - **净额永远是 charge + refund 的和**，不是「余额变没变」的直觉判断
 - 余额可用位是 4 位小数，单看余额会以为「没动」，看流水才看得出预扣发生过
 
-`run.py` 的 `settle()` 就是按这个口径统计：只取 `reference` 含 `chat/completions`、
+`run.py` 的 `settle` 就是按这个口径统计：只取 `reference` 含 `chat/completions`、
 且 `at >= 本次开始时间` 的记录求和，作为「本次实际花费」。
 
 ---
@@ -187,6 +183,5 @@ GET /user/balance/logs?limit=200
 
 - `i` / `o`：输入 / 输出每百万 token 的点数
 - `p`：目录协议，`chat`（含 openai_chat，66 个）/ `anthropic`（13 个）/ `responses`（13 个）
-- `st`：2026-11-08 实测状态，`ok` 能调 / `gone` 未上架 / `dead` 上游停用或欠费 / `?` 未测
 
 `catalog --live` 会用 `GET /api/v1/models` 的现查值覆盖 `i` / `o`，`st` 不受影响（那是实测结论）。

@@ -11,7 +11,6 @@
 - **docx / pptx / xlsx / html / md 这类声明式格式不需要模型**，装完就能用。
 - **默认不允许调用远程服务**（防数据外发）。要用远程 VLM 或远程图片描述，必须显式加 `--enable-remote-services`。
 - macOS Intel 机器需要特殊版本组合（PyTorch 停供 Intel Mac wheel）；无头容器注意 OpenCV 的 `libGL` 依赖。
-- 上游仓库早年挂在 `DS4SD` 组织，现已迁到 `docling-project`，旧教程链接可能失效。
 
 ---
 
@@ -48,9 +47,9 @@ Python 里用（推荐方式，方便接自己的流水线）：
 ```python
 from docling.document_converter import DocumentConverter
 
-converter = DocumentConverter()
+converter = DocumentConverter
 result = converter.convert("report.pdf")        # 本地路径或 URL
-print(result.document.export_to_markdown())
+print(result.document.export_to_markdown)
 ```
 
 更细的 API 用法（管线选项、`convert_all` 批量、chunker、遍历表格与图片、完全离线配置、报错定位顺序）见 `references/python-api.md`。

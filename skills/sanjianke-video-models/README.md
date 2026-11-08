@@ -45,8 +45,6 @@ POST /api/v1/videos/generations  {"model":"kling-4-0"}
 整张表也没有 `modelPricing` 键；模型层命中的是通配 `*`：
 
 ```json
-{"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
- "note":"未单独定价的接口：对外 = 上游实际点数 x 2，单笔保底 50 点"}
 ```
 
 所以真实单价只存在于 `GET /api/v1/me/tasks` 的 `actualPrice` 里。本包按 `model` 归集：
@@ -255,7 +253,6 @@ $ python3 scripts/run.py cost
 ## 免责
 
 - 单价按「点/条」计，实际以响应里的 `usage` 与 `GET /user/balance/logs` 为准。
-- 上游按模型预冻结，任务失败全额退回；成片链接约 30 分钟有效。
 - 生成内容的合规责任在使用者：用在合法、有授权的素材与用途上。
 
 ## 许可证

@@ -248,7 +248,6 @@
 |---|---|
 | `sanjianke-apitable` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-appflowy` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
-| `sanjianke-cal-com` | 商用需单独取得授权 |
 | `sanjianke-calibre` | 商用需单独取得授权 |
 | `sanjianke-code-video-kit` | 商用需单独取得授权 |
 | `sanjianke-dataease` | 商用需单独取得授权 |
@@ -260,13 +259,11 @@
 | `sanjianke-inventree` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-jimureport` | 商用需单独取得授权 |
 | `sanjianke-labuladong` | 商用需单独取得授权 |
-| `sanjianke-leantime` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-mall4cloud` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-mall4j` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-marker` | 商用需单独取得授权 |
 | `sanjianke-mattermost` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-mautic` | 上游许可禁止对外提供 SaaS |
-| `sanjianke-metabase` | 上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-minio` | 上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-ocrmypdf` | 上游为 AGPL，网络服务有源码开放义务 |
 | `sanjianke-outline` | 商用需单独取得授权 |
@@ -275,7 +272,7 @@
 | `sanjianke-pdf-extract-kit` | 上游为 AGPL，网络服务有源码开放义务；商用需单独取得授权；上游许可禁止对外提供 SaaS |
 | `sanjianke-pptist` | 上游为 AGPL，网络服务有源码开放义务；商用需单独取得授权 |
 | `sanjianke-pymupdf` | 商用需单独取得授权；上游为 AGPL，网络服务有源码开放义务 |
-| `sanjianke-qwen` | 上游为研究/非商业许可；商用需单独取得授权 |
+| `sanjianke-qwen` | 商用需单独取得授权；上游为研究/非商业许可 |
 | `sanjianke-ragflow` | 上游许可禁止对外提供 SaaS |
 | `sanjianke-remotion` | 商用需单独取得授权 |
 | `sanjianke-rocket-chat` | 商用需单独取得授权 |
@@ -287,8 +284,7 @@
 | `sanjianke-unsloth` | 上游为 AGPL，网络服务有源码开放义务；商用需单独取得授权 |
 | `sanjianke-vikunja` | 商用需单独取得授权 |
 | `sanjianke-web-scrape-kit` | 上游为 AGPL，网络服务有源码开放义务 |
-| `sanjianke-wiki-js` | 上游许可禁止对外提供 SaaS；上游为 AGPL，网络服务有源码开放义务 |
-| `sanjianke-wxjava` | 上游许可禁止对外提供 SaaS |
+| `sanjianke-wiki-js` | 上游许可禁止对外提供 SaaS |
 
 ---
 

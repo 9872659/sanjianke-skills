@@ -59,7 +59,7 @@ Chromium **默认按 `print` 媒体类型渲染**。这是最常见也最容易�
 **处置优先级**（别一上来就用定时等待）：
 1. **`waitForSelector`**：让页面在就绪时插一个标记元素，然后等它的 CSS 选择器。
    ```js
-   await heavyCalculation()
+   await heavyCalculation
    const marker = document.createElement("div")
    marker.id = "app-ready"
    document.body.appendChild(marker)

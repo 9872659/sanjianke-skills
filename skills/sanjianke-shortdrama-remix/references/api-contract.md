@@ -177,8 +177,6 @@ file: <二进制>          ← 字段名就是 file，单文件默认上限 512 
   "note":"画质综合增强（VIAPI EnhanceVideoQuality）：15 点/秒"}
 "/api/v1/apps/smart_clip/*":    {"mode":"per_second","perSecond":4.5,"estimate":45,
   "note":"…对外 = 1.5 × 3 = 4.5 点/秒（15 秒 → 67.5 点）；无 duration 时按 estimate 45 点预估"}
-"/api/v1/apps/voice_tts/*":     {"mode":"flat","cost":0,"markupPercent":200,
-  "note":"…一律按上游真实点数计费…对外价 = 上游实际点数 × 3…tts_live 33 字上游真实 1.98 点 → 我方 5.94 点"}
 ```
 
 **口径冲突**：`castcrew` / `delogo` 的 `rule` 是 `per_second`，`note` 写「点/次」。本包按 `note` 计一次，

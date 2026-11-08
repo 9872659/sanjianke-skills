@@ -6,9 +6,6 @@
 
 ## 前置条件
 
-- **硬件**：NVIDIA 显卡（并装好匹配 CUDA 版本的 PyTorch），或 Apple Silicon 的 Mac。其他设备不在上游承诺范围内。
-- **Python**：上游打包元数据声明 `requires-python >= 3.8`；但 Python 3.11.x 搭配 pipx 存在版本误判问题，需要忽略 Python 版本要求安装，详见 `SKILL.md` 的「安装」一节。
-- **pipx 或 pip**：上游推荐 pipx，把工具装成独立环境里的全局命令。
 - **网络**：首次运行需要下载模型权重（默认检查点体积较大）。
 - **可选**：要开 Flash Attention 2 需另外安装 `flash-attn`；要说话人分离需自备 Hugging Face Token。
 

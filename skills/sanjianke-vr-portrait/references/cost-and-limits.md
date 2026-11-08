@@ -67,7 +67,7 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 60 -reset_timestamps 1 part_
 
 ---
 
-## 4. 输入规格（上游限制，改不了，只能提前拦）
+## 4. 输入规格
 
 | 项 | 本档要求 | 违反时的上游错误 |
 |---|---|---|
@@ -79,7 +79,6 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 60 -reset_timestamps 1 part_
 
 ## 5. 本档成本与毛利（供运营参考）
 
-| 档位 | 售价(点/秒) | 上游成本(点/秒) | 毛利(点/秒) | 毛利率 |
 |---|---|---|---|---|
 | `upscale` | 30 | 15 | 15 | +100% |
 | `superres` | 9 | 0.67 | 8.33 | +1243% |
@@ -91,8 +90,6 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 60 -reset_timestamps 1 part_
 | `segment` | 9 | 0.67 | 8.33 | +1243% |
 | `enhance` | 15 | 0.67 | 14.33 | +2139% |
 | `colorize` | 9 | 0.67 | 8.33 | +1243% |
-
-**本档（`portrait`）上游成本是 0**，线上档位说明原文写着「公测免费」。售价 18 点/秒是**纯毛利**，而且它有输入门槛（<1920×1080）。对外推广时它是**性价比最高的一档** —— 适合做「先让用户跑通」的那一档。
 
 ---
 

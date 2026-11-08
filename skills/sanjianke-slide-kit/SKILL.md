@@ -331,7 +331,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | `--every` | 每 N 页配一张图（`1`=每页一图，`2`=数页一图），默认 `1` |
 | `--resolution` | `1K`(默认) / `2K` / `4K`。**只有 1K 有实测价**，2K/4K 拒绝估算 |
 | `--ratio` | 出图比例，默认按分页方案（`16:9`） |
-| `--snap` | 出图后按请求比例**居中裁准**（上游按 32 对齐，5/10 种比例不精确） |
+| `--snap` | 出图后按请求比例**居中裁准** |
 | `--ratio-tolerance` | 比例容差，默认 `0.03`（实测最大偏差 2.9%） |
 | `--points-per-image` | 覆盖单张单价（点） |
 | `--poll-timeout` | 单张出图轮询上限（秒），默认 `600` |
@@ -467,7 +467,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 > 实测确认：**模板没被照抄**。真机跑出来的 7 页标题、要点、备注、配图意图
 > 与 5 条示例的最大覆盖率是 0.000（0 命中）。
 
-### 闸门四：上游按 32 对齐，5/10 种比例给不出精确值
+### 闸门四：尺寸按 32 对齐，5/10 种比例给不出精确值
 
 实测到的上游特性（**必须知道，否则闸门天天误报**）：上游先定总像素、再把每边向下取整到
 32 的倍数。所以：
@@ -547,8 +547,7 @@ curl -sS -X POST "https://api.a7w.cn/api/v1/chat/completions" \
 | `预估 … 超过预算上限`（`exit=3`） | 超了 `--budget` | 提高预算、减少页数，或先 `cost` 试算 |
 | 重跑又扣了一次钱 | 断点 key 的某一维变了（文案改了 / 换了 resolution / 换了模型） | 设计如此（内容变了就该重做）。只改版式不会重出图 |
 | 页码或配色改了但图没变 | 改了画法却没 bump `LAYOUT_VERSION` | 把 `LAYOUT_VERSION` +1（**源码里有醒目注释**） |
-| 上游 `502` / `upstream timeout` | 网关到上游的瞬时抖动，**实测很常见** | 脚本已内置退避重试（最多 4 次）。连续失败就换模型，或 `--count` 分批跑 |
-| 模型返回的不是合法 JSON | 模型在 JSON 前后多吐了字符 | 脚本用 `json.JSONDecoder().raw_decode()` 扫第一个完整对象。仍失败就 `--no-json-mode` |
+| 模型返回的不是合法 JSON | 模型在 JSON 前后多吐了字符 | 脚本用 `json.JSONDecoder.raw_decode` 扫第一个完整对象。仍失败就 `--no-json-mode` |
 | `任务未完成（timeout）`（`exit=4`） | 出图卡在 processing | `task_id` 已记进断点文件，**重跑会续查而不是重新提交（不重复扣费）**；也可调大 `--poll-timeout` |
 | Windows 下中文乱码 | 控制台代码页不是 UTF-8 | 脚本已把 stdout/stderr 切成 UTF-8；仍有问题先 `chcp 65001` 或设 `PYTHONIOENCODING=utf-8` |
 | 想复核一份已有产出，但不想再花钱 | —— | `outline --from-file 某份返回.json` / `pages --from-file …` 只跑闸门、不调模型 |
@@ -611,10 +610,10 @@ sanjianke-slide-kit/
 | 用途 | 方法与路径 |
 |---|---|
 | 分页方案 / 每页内容（文本） | `POST https://api.a7w.cn/api/v1/chat/completions` |
-| 在架模型清单 | `GET  https://api.a7w.cn/api/v1/models` |
-| 在架生成应用 | `GET  https://api.a7w.cn/api/v1/apps` |
+| 在架模型清单 | `GET https://api.a7w.cn/api/v1/models` |
+| 在架生成应用 | `GET https://api.a7w.cn/api/v1/apps` |
 | 出配图（异步提交） | `POST https://api.a7w.cn/api/v1/apps/nano_banana/submit` |
-| 出图任务轮询 | `GET  https://api.a7w.cn/api/v1/tasks/<task_id>` |
+| 出图任务轮询 | `GET https://api.a7w.cn/api/v1/tasks/<task_id>` |
 
 协议是 **OpenAI 兼容**：`Authorization: Bearer <Key>`，请求体用
 `model` / `messages` / `temperature` / `max_tokens` / `response_format`。

@@ -19,8 +19,6 @@ tags:
 
 网站上线前后真正难的不是「写了没写 meta description」这种单点，而是**你根本不知道哪些页面坏了**：首页标题超长、某个栏目 40 张图缺 `alt`、sitemap 里躺着十几个 404、HTTPS 页面还在加载 `http://` 的脚本、`/llms.txt` 被 SPA 兜底页面顶掉、页脚版权年份停在两年前。人工一页页点又慢又漏。squirrelscan 把这件事压成一条命令：抓取目标站点 → 跑规则 → 给你一个 0~100 的健康分、一份按严重度排好序的问题清单，以及每条问题的修复方向。
 
-**先把它的定位说清楚，不夸大也不贬低。** 这个上游项目自身热度一般（GitHub 上约 268 stars），但它是那批热门 Skill 里 `audit-website` 的底层工具——`npx skills add squirrelscan/squirrelscan` 一次会装下两个 Skill：`squirrelscan` 负责操作命令行，`audit-website` 负责「审计 → 定位到源文件 → 批量修 → 重审」的闭环。换句话说，绝大多数人是**通过那个大 Skill 间接用到了它**，单独提起它的反而少。它属于典型的「被大 Skill 依赖的小工具」：体量小、能力实，官方自己就是把它当作编码 Agent 的地基在维护。
-
 技术上它是**零依赖的单文件二进制**，命令行叫 `squirrel`（`squirrelscan` 是包名，Node 18+ 环境也能 `npm i -g squirrelscan`）。**纯本地审计免费、不限次数、不需要注册账号**；只有云端增强（浏览器渲染 JS 重的页面、AI 分析、技术栈识别、发布可分享报告）才按 credits 计费。所以「审自己的站」这件事边际成本基本是零。
 
 ## 权限与用途说明
@@ -38,8 +36,6 @@ tags:
 | 凭证 | 视需要 | 仅在使用云端功能时需要 `SQUIRRELSCAN_API_KEY`。纯本地审计**不需要账号、不需要 Key** |
 | 子进程 / 后台常驻 | 是 | 执行 `squirrel` 二进制；`squirrel mcp` 会作为常驻 stdio 进程被编码 Agent 拉起；站点大时审计应放后台跑 |
 | 自定义请求头 | 视需要 | `-H "Authorization: Bearer …"` 用于 staging 站、Basic Auth 或 bot 墙；值在输出中会被脱敏 |
-
-**密钥与费用**：本 Skill 不内嵌任何密钥，不代理转发你的请求，也不代收任何费用。云端 credits 的消耗由使用者自己的上游账号承担，Key 从上游控制台自行获取（`squirrel keys create`）。请勿把 Key 写进 SKILL.md、脚本源码或提交记录，一律走环境变量。纯本地审计不产生任何费用。
 
 ## 触发场景
 

@@ -135,7 +135,7 @@ GET  https://api.a7w.cn/api/v1/models               在架模型清单
 - `deepseek-chat` 这个别名**实测可用**（路由到 `deepseek-flash`），
   但它**不在** `/api/v1/models` 的返回列表里——"列表里没有"不等于"不能用"
 - 大模型调用带**退避重试**（网关 `upstream timeout` / HTTP 502 实测很常见）
-- JSON 解析用 `json.JSONDecoder().raw_decode()` 扫描第一个完整对象，
+- JSON 解析用 `json.JSONDecoder.raw_decode` 扫描第一个完整对象，
   模型在合法 JSON 后多吐字符也不会炸
 - **走 `/chat/completions` 的成功响应不带 `code` 字段**；
   带 `code == 1` 的那层信封（`{"code":1,"data":{...}}`）是给生成应用的

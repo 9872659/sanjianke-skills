@@ -5,7 +5,6 @@
 
 `api.a7w.cn` 的价目表里只写了「应用层」一口价。模型层那批接口
 （`/api/v1/videos/generations`、`/api/v1/images/generations`、`/api/v1/tasks`、`/api/v1/videos`）
-没有专属规则，命中的是通配 `*`：**对外 = 上游实际点数 × 2，单笔保底 50 点**。
 所以模型层的单价只能从自己的流水反推 —— 本包就是干这个的。
 
 零依赖，只用 Python 标准库，只用 Python 3.7+。
@@ -30,7 +29,6 @@ python3 scripts/run.py app-vs-model
 ```
 自检（3 个只读 GET，扣 0 点）
 
-  √ 价目表 GET /api/v1/pricing     115 条规则 · 通配保底 50 点 · 顶部 markupPercent=20
   √ 模型目录 GET /api/v1/models    目录 221 · 模型层 ID 95 · 带模型层价目 92 · seedance 系 7
   √ 应用目录 GET /api/v1/apps      22 个应用 · 接口 100 个
   √ 应用层定价覆盖率               21 / 22 有专属规则；掉进通配的：media_services_33
@@ -78,7 +76,7 @@ python3 scripts/run.py app-vs-model
 |---|---|---|---|
 | 一张图 | `gpt-image-2`（模型层 `/tasks`） | 26 点 / ¥0.26 | `aigc_wan_image` 203 点 / ¥2.03 |
 | 一条视频 | `muse-video`（模型层 `/videos`） | 44 点 / ¥0.44 | `seedance` 11,000 点 / ¥110 |
-| 一段配音 | 语音 TTS（上游实际点数 × 3） | 实测 1~66 点 | `mmaudio` 495 点 / ¥4.95 |
+| 一段配音 | 语音 TTS | 实测 1~66 点 | `mmaudio` 495 点 / ¥4.95 |
 | 超分 1 分钟 | VIAPI 超分·标准 | 9 点/秒 = 540 点 | `/video/upscale` 30 点/秒 = 1,800 点 |
 | 画质增强 1 分钟 | 画质综合增强 15 点/秒 | 900 点 | 视频修复 36 点/秒 = 2,160 点 |
 
@@ -110,7 +108,7 @@ python3 scripts/run.py catalog --type image --limit 20
 
 - 三个数据端点 + 一个台账端点，**全是只读 GET**：`/api/v1/pricing`、`/api/v1/models`、
   `/api/v1/apps`、`/api/v1/me/tasks`。
-- `run.py` 的 `http_json()` 只接受 `GET`，传别的当场抛 `usage`，**不会走到网络**。
+- `run.py` 的 `http_json` 只接受 `GET`，传别的当场抛 `usage`，**不会走到网络**。
   源码里不存在 `POST` / `PUT` / `DELETE` / `submit` / `create` 之类写操作。
 - 实测证明：跑完全部子命令前后各读一次 `/user/balance`，
   余额 `999997393482.2579` 点 → `999997393482.2579` 点，**分毫不差**；

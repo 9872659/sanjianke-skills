@@ -6,7 +6,6 @@
 
 ## 前置条件
 
-- **先确认两件事**：这个仓库上游已不再积极维护（新项目应看更新的 Qwen 仓库）；许可证按尺寸分档，7B / 14B / 72B 商用需申请，1.8B 是研究许可。
 - Python 3.8+、PyTorch 1.12+（建议 2.0+）、transformers 4.32+、CUDA 11.4+（GPU 场景）。
 - **足够的显存**：按尺寸选，并额外为 KV cache 留余量；上下文越长占用越高。
 - **足够的磁盘**与一条能访问 HuggingFace 或 ModelScope 的下载通路（国内优先 ModelScope）。
@@ -31,7 +30,6 @@
 - Python / PyTorch / transformers / CUDA，版本要求见上。
 - 权重与代码从 HuggingFace 或 ModelScope 获取。
 - 可选：flash-attention（提速降显存，编译较慢）、qwen.cpp（CPU 场景）、vLLM + FastChat（高性能服务）、Docker + nvidia-container-toolkit（镜像部署）。
-- 上游项目自身依赖以仓库 `requirements.txt` 与官方文档为准。
 
 ---
 

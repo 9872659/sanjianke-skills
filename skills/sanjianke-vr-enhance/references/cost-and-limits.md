@@ -67,7 +67,7 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 60 -reset_timestamps 1 part_
 
 ---
 
-## 4. 输入规格（上游限制，改不了，只能提前拦）
+## 4. 输入规格
 
 | 项 | 本档要求 | 违反时的上游错误 |
 |---|---|---|
@@ -80,7 +80,6 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 60 -reset_timestamps 1 part_
 
 ## 5. 本档成本与毛利（供运营参考）
 
-| 档位 | 售价(点/秒) | 上游成本(点/秒) | 毛利(点/秒) | 毛利率 |
 |---|---|---|---|---|
 | `upscale` | 30 | 15 | 15 | +100% |
 | `superres` | 9 | 0.67 | 8.33 | +1243% |
@@ -92,8 +91,6 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 60 -reset_timestamps 1 part_
 | `segment` | 9 | 0.67 | 8.33 | +1243% |
 | `enhance` **← 本包** | 15 | 0.67 | 14.33 | +2139% |
 | `colorize` | 9 | 0.67 | 8.33 | +1243% |
-
-**本档毛利很宽**：上游成本 0.67 点/秒，售价 15 点/秒。成本数字来自线上只读的 `GET /api/v1/video/viapi/tools`（`costPerSecond` 字段）与档位说明文本。
 
 ---
 

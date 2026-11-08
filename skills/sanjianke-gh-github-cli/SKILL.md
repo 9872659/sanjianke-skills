@@ -20,8 +20,6 @@ tags:
 
 `gh` 不是 git 的替代品：git 管本地仓库和提交图，`gh` 管 GitHub 这一侧的协作对象（issue / PR / Actions / Release / 仓库设置）。两者是配合关系，真正省时间的用法是「git 推完，紧接着 gh 开单」。
 
-**上游项目**：`gh (GitHub CLI)`　**仓库**：https://github.com/cli/cli
-
 ## 什么时候用 / 不用
 
 **用它**：

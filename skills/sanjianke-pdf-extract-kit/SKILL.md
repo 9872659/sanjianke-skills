@@ -23,8 +23,6 @@ PDF 里的表格被拍成一坨、公式认不出来、扫描页面上哪块是�
 官方明确让你去用同一个团队做的 MinerU；要自己搭文档翻译、文档问答、文档助手这类应用，
 才用它把几个模型拼起来。
 
-**上游项目**：`PDF-Extract-Kit`　**仓库**：https://github.com/opendatalab/PDF-Extract-Kit
-
 ## 零安装用法（推荐先看这个）
 
 **不需要 conda 建环境、不需要 Paddle / Ultralytics / PyMuPDF、不需要下模型权重、
@@ -160,9 +158,7 @@ git clone https://www.modelscope.cn/opendatalab/pdf-extract-kit-1.0.git
 
 ## 常用操作
 
-> **本节命令跑在克隆下来的上游仓库里。**
 > 下面的 `scripts/*.py`（`layout_detection.py` / `formula_detection.py` / `formula_recognition.py`
-> / `ocr.py` / `table_parsing.py`）与 `configs/*.yaml` 都是**上游 PDF-Extract-Kit 仓库自己的文件**，
 > 要在按上一节 `git clone` 之后、进入仓库根目录再执行。
 > 本 Skill 包自身只带 `scripts/run.py` 与 `scripts/a7w.py`（零安装路径，见开头那节）。
 

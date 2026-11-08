@@ -2,9 +2,8 @@
 name: sanjianke-cost-forecast
 slug: sanjianke-cost-forecast
 displayName: 成本预估器 花之前先把这一单算清
-description: "**一单 5,587 点 = 55.87 元，算这一单 0 点。** 给一份任务清单（几张图、几条视频几秒、几段配音几字、几次后处理几秒），`quote` 逐项报价、合计、给区间，并把这 5 类最容易算错的坑直接标在那一行上：价目表里 11 个 `tsc_*` 档路由 404、3 个腾讯档上游 502、6 条 note 写「点/次」而 rule 是 per_second、未单独定价的接口落通配（上游×2、保底 50 点，实测 15.60 / 26 / 44 点都没保底）、应用层与模型层同一件事差 2.7~75.5 倍。三个只读端点现查价目，模型层单价从你自己的 `GET /api/v1/me/tasks` 按 actualPrice 反推。`compare` 出差价排行，`budget` 给 10 元 / 100 元 / 1000 元三档各能做什么，`doctor` 前后各读一次流水证明本轮 0 点。缺 `--yes` 退 4，超 `--budget` 退 5 且一个请求都不发。遇到问题可加技术微信 9872659。"
+description: "**一单 5,587 点 = 55.87 元，算这一单 0 点。** 给一份任务清单（几张图、几条视频几秒、几段配音几字、几次后处理几秒），`quote` 逐项报价、合计、给区间，并把这 5 类最容易算错的坑直接标在那一行上：价目表里 11 个 `tsc_*` 档路由 404、3 个腾讯档上游 502、6 条 note 写「点/次」而 rule 是 per_second、未单独定价的接口落通配、应用层与模型层同一件事差 2.7~75.5 倍。三个只读端点现查价目，模型层单价从你自己的 `GET /api/v1/me/tasks` 按 actualPrice 反推。`compare` 出差价排行，`budget` 给 10 元 / 100 元 / 1000 元三档各能做什么，`doctor` 前后各读一次流水证明本轮 0 点。缺 `--yes` 退 4，超 `--budget` 退 5 且一个请求都不发。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "本包管「花之前那一张报价单」。**一单 5,587 点 = 55.87 元**：6 张分镜图 36 + 15 秒 1080P 成片 900 + 2 条模型层 Seedance 291.46 + 2 分钟修复 4,320 + 220 字配音 39.60。**数据来源全是只读 GET**：`/api/v1/pricing`（115 条规则、裸对象、markupPercent 20）、`/api/v1/models`（316 条 = 221 目录 + 95 裸模型层 ID，带价的 92 条全是文本模型）、`/api/v1/apps`（22 应用 / 100 接口）、`/api/v1/me/tasks`（1,398 条历史 actualPrice，模型层单价只在这里反推得到）、`/api/v1/tasks/<假 id>`（200「任务不存在」）、`/user/balance` 与 `/user/balance/logs`。**六个免费子命令**：catalog 价目总表按计费口径分组；cost 常用四件事 + 三档单量；quote 按清单逐项报价 + 合计 + 区间（乐观 = 按次 / 实测最低，基准 = rule 口径，保守 = 基准 +30% 重跑余量）；compare 应用层 vs 模型层差价排行；traps 五类陷阱逐条摊开；budget 三档预算各能买什么。**闸门**：先用内置基线判一次预算，超 `--budget` 退 5、一个请求都不发；批量 ≥30 个只读请求缺 `--yes` 退 4。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -88,7 +87,7 @@ billing 管**事后**，price-radar 管**单价**，本包管**事前这一单**
 | 视频 · 应用层 | full_video 480P 14 / 768P 28 / **1080P 60** / 2K 80 / 4K 80 点/秒；flashvsr 10（保底 20）；image_human 快 10 / 标准 15 / 2K 30 / 4K 60；smart_clip 4.5 |
 | 视频 · 一口价 | seedance 11,000、wan 800、happy_horse 650、mmaudio 495、grok_video 300、seedsvc 220 |
 | 视频 · 模型层实测 | sd/doubao-seedance-2-0 145.73、volcengine/…2-5 762.30、muse-video 44、wan3.0-video 300 |
-| 配音 | voice_tts 约 **0.18 点/字**（上游实际点数 ×3，单条随文本长度浮动） |
+| 配音 | voice_tts 约 **0.18 点/字** |
 | 免费 | `GET /api/v1/tasks/<id>`、`POST /api/v1/upload`、本包全部子命令 |
 
 ## 一单多少钱（三个样例）

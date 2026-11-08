@@ -89,12 +89,12 @@ const elevation = Platform.select({
 import * as Camera from 'expo-camera';
 import { Platform } from 'react-native';
 
-export async function canUseCamera() {
+export async function canUseCamera {
   if (Platform.OS === 'web') {
     // Web 上要自己判断设备有没有摄像头
-    return await Camera.isAvailableAsync();
+    return await Camera.isAvailableAsync;
   }
-  const { granted, canAskAgain } = await Camera.getCameraPermissionsAsync();
+  const { granted, canAskAgain } = await Camera.getCameraPermissionsAsync;
   return granted || canAskAgain;
 }
 ```
@@ -188,8 +188,8 @@ iOS 侧重在 `Info.plist` 的用途说明文案，通过 `ios.infoPlist` 或各
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Text, View, Button } from 'react-native';
 
-export default function ScanScreen() {
-  const [permission, requestPermission] = useCameraPermissions();
+export default function ScanScreen {
+  const [permission, requestPermission] = useCameraPermissions;
 
   if (!permission) return <View />;                    // 权限状态还在读
   if (!permission.granted) {
@@ -219,8 +219,8 @@ export default function ScanScreen() {
 要点：
 
 - **同一时刻只能有一个相机预览**。多页面时需要在该屏失焦时卸载 `CameraView`，否则会黑屏。
-- 原生上 `takePictureAsync()` 给的是 `file://` 缓存路径，**缓存会被清掉**，要留存必须自己拷到 document 目录。
-- Web 上 `takePictureAsync()` 返回的 `uri` 就是 base64，没有文件路径。
+- 原生上 `takePictureAsync` 给的是 `file://` 缓存路径，**缓存会被清掉**，要留存必须自己拷到 document 目录。
+- Web 上 `takePictureAsync` 返回的 `uri` 就是 base64，没有文件路径。
 - Web 上必须在用户手势（点击）里调用，否则浏览器静默拦截。
 - 跨域 iframe 里用相机，iframe 需要 `allow="microphone; camera;"`。
 
@@ -258,10 +258,10 @@ if (Platform.OS === 'android') {
 }
 
 // 2) 再拿权限
-const current = await Notifications.getPermissionsAsync();
+const current = await Notifications.getPermissionsAsync;
 let status = current.status;
 if (status !== 'granted') {
-  status = (await Notifications.requestPermissionsAsync()).status;
+  status = (await Notifications.requestPermissionsAsync).status;
 }
 
 // 3) 最后才拿 token
@@ -273,7 +273,7 @@ const token = status === 'granted'
 - iOS 的授权状态要看 `ios.status`，不要只看根 `status`：`PROVISIONAL`（临时授权）能发但不会响铃，`DENIED` 才需要引导去设置。
 - 前台收到通知默认不展示，要 `Notifications.setNotificationHandler({...})` 明确声明 `shouldShowBanner` / `shouldShowList`。
 - Android 上要精确时间触发定时通知，需要在 `android.permissions` 里显式加 `SCHEDULE_EXACT_ALARM`。
-- 点通知跳转页面：在根 `_layout.tsx` 里监听 `addNotificationResponseReceivedListener` 与 `getLastNotificationResponse()`，读 `content.data.url` 后 `router.push(url)`——这样通知跳转和深链走的是同一套路由。
+- 点通知跳转页面：在根 `_layout.tsx` 里监听 `addNotificationResponseReceivedListener` 与 `getLastNotificationResponse`，读 `content.data.url` 后 `router.push(url)`——这样通知跳转和深链走的是同一套路由。
 - Android 从推送冷启动时，debug 包的启动屏可能不显示（约七成概率），这是已知问题，release 包不复现；要验证就 `npx expo run:android --variant release`。
 
 ### 4.4 存储：先分敏感度，再选模块
@@ -328,7 +328,7 @@ module.exports = config;
 - 路径分三类，别混用：`Paths.cache`（可被系统清）、`Paths.document`（长期）、`Paths.appleSharedContainers`（iOS 共享容器）。
 - `new File(...)` / `new Directory(...)` 这套是同步风格类 API，**只在原生可用**；老的 `FileSystem.readAsStringAsync` 一类方法已废弃，调用会直接抛错，历史代码要用 `expo-file-system/legacy` 才能跑。
 - 上传大文件用 `fetch` from `expo/fetch`，可以直接把 `File` 当 body 或塞进 `FormData`，不用手搓 base64。
-- 下载有 `DownloadTask`，支持暂停/恢复；`savable()` 存的状态可以持久化后再 `fromSavable()` 恢复，适合做断点续传。
+- 下载有 `DownloadTask`，支持暂停/恢复；`savable` 存的状态可以持久化后再 `fromSavable` 恢复，适合做断点续传。
 
 ---
 

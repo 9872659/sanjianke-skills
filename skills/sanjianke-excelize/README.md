@@ -7,7 +7,6 @@ excelize：Go 操作 Excel 的安装、常用命令与避坑要点
 ## 前置条件
 
 - 一个 Go 工程（go modules 管理依赖）
-- Go 工具链版本满足上游要求（当前仓库 README 写的是 1.25.0 或更高）
 - 能执行 `go get github.com/xuri/excelize/v2`
 - 不需要安装 Office、不需要 CGO、不需要任何外部服务
 
@@ -19,14 +18,14 @@ excelize：Go 操作 Excel 的安装、常用命令与避坑要点
 
 | 场景 | 入口 |
 |---|---|
-| 新建一个工作簿并写入 | `excelize.NewFile()` + `SetCellValue` / `SetSheetRow` + `SaveAs` |
-| 打开已有文件读数据 | `excelize.OpenFile()` + `GetRows` |
+| 新建一个工作簿并写入 | `excelize.NewFile` + `SetCellValue` / `SetSheetRow` + `SaveAs` |
+| 打开已有文件读数据 | `excelize.OpenFile` + `GetRows` |
 | 几十万行的大表写入 | `NewStreamWriter` + 循环 `SetRow` + `Flush` |
-| 大表顺序读取 | `f.Rows(sheet)` 迭代器 + `rows.Close()` |
+| 大表顺序读取 | `f.Rows(sheet)` 迭代器 + `rows.Close` |
 | 读密码文件 | `excelize.OpenFile(name, excelize.Options{Password: "..."})` |
 | 定义单元格样式 | `NewStyle` 拿 styleID，再 `SetCellStyle` 应用 |
 
-要点：`NewFile()` 自带一张 `Sheet1`；每个文件都要 `defer f.Close()`。
+要点：`NewFile` 自带一张 `Sheet1`；每个文件都要 `defer f.Close`。
 完整示例、参数与避坑见 `SKILL.md` 和 `references/` 下两份速查。
 
 ---
@@ -45,7 +44,7 @@ excelize：Go 操作 Excel 的安装、常用命令与避坑要点
 - 不内嵌任何密钥
 - 库本身不联网，不上传文档内容
 - 打开密码保护的工作簿时，密码由调用方传入，不要写死在代码或配置里
-- 流式读写会在系统临时目录生成 `excelize-*` 文件，处理完请确保 `Close()` 已调用
+- 流式读写会在系统临时目录生成 `excelize-*` 文件，处理完请确保 `Close` 已调用
 - 处理不可信来源的 xlsx 时注意解压体积上限（`Options.UnzipSizeLimit` 默认 16GB），
   必要时按业务收紧，避免解压炸弹
 

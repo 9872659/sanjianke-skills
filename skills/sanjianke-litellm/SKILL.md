@@ -21,8 +21,6 @@ tags:
 - **Python SDK**：写在你自己的代码里，`from litellm import completion`，适合开发和单机应用。
 - **AI 网关（Proxy Server）**：独立起一个服务，对外暴露 OpenAI 兼容的 `/chat/completions`，把密钥、虚拟密钥、额度、限流、用量统计、负载均衡都收在网关侧。适合团队和多应用共用。
 
-**上游项目**：`LiteLLM`　**仓库**：https://github.com/BerriAI/litellm
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -139,7 +137,7 @@ LiteLLM: Proxy initialized with Config, Set models:
 
 **4. 用 config.yaml 定义模型别名与多部署负载均衡**
 
-`model_name` 是给外部客户端用的名字，`litellm_params.model` 才是真正传给 `litellm.completion()` 的模型串。
+`model_name` 是给外部客户端用的名字，`litellm_params.model` 才是真正传给 `litellm.completion` 的模型串。
 
 ```yaml
 model_list:

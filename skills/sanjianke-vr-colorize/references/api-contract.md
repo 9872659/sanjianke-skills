@@ -13,14 +13,11 @@
 | 中文名 | 视频校色 |
 | 提交路径 | `/api/v1/video/viapi/colorize` |
 | 售价 | **9 点/秒**（¥0.09/秒） |
-| 上游 action | `AdjustVideoColor` |
 | 单条上限 | **600 秒** |
 | 输入规格 | 色调校正（**不是黑白上色**） |
 | 典型场景 | 老片偏色修正、色调统一 |
 
 **已下线，不要做**：`interp` / `/api/v1/video/viapi/interp`（`InterpolateVideoFrame`，25 点/秒）—— 线上档位说明原文写着「视频插帧 60fps（**已下线**）」。
-
-> `colorize` 的上游 action 是 **`AdjustVideoColor`**（色调校正），**不是「黑白上色」**。有些老注释写成「黑白上色」，是错的。
 
 ---
 
@@ -265,7 +262,7 @@ GET /api/v1/video/viapi/tools
 `POST` 同路径会掉进单档处理器：`404 {"error":{"code":"unknown_tool","message":"未知的视频能力：tools"}}`。
 `GET .../tools/x` 仍正常回 `404 not_found`（查询路由还在）。
 
-→ 说明 relay 的 `tools` **GET 路由掉了**。本包因此**优雅降级**到内置档位表（单价取自 `api.a7w.cn` 在架能力），并如实打印「在线源当前不可达」。**价格与规格以线上为准。****如果这条恢复了，把 `fetch_tiers()` 的注释更新一下即可，代码无需改。**
+→ 说明 relay 的 `tools` **GET 路由掉了**。本包因此**优雅降级**到内置档位表（单价取自 `api.a7w.cn` 在架能力），并如实打印「在线源当前不可达」。**价格与规格以线上为准。****如果这条恢复了，把 `fetch_tiers` 的注释更新一下即可，代码无需改。**
 
 对照（同一时刻全部正常）：`/health` 200、`/api/v1/apps` 200、`/api/v1/me/tasks` 200、`POST /api/v1/video/viapi/colorize` 400 `url_not_allowed`（提交链路与闸门都正常）。
 

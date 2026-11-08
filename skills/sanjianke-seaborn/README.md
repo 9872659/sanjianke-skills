@@ -20,10 +20,10 @@
 
 1. 读 `SKILL.md` 的「什么时候用 / 不用」，确认需求是静态统计图；要交互图表、仪表盘就不要用这个库。
 2. 确认数据已经是 DataFrame / 向量形态，列名清晰；数据清洗交给 pandas，不要指望绘图库代劳。
-3. 先 `sns.set_theme()` 定好主题，再画具体图，避免逐图调样式。
+3. 先 `sns.set_theme` 定好主题，再画具体图，避免逐图调样式。
 4. 按图型选函数：关系图用 `scatterplot` / `lineplot`，分布用 `histplot` / `kdeplot`，分组对比用 `boxplot` / `violinplot`，相关性用 `heatmap`，两两关系用 `pairplot`。
 5. 需要单张坐标轴继续加工时，用轴级函数；需要按变量分面成一组子图时，用 `relplot` / `displot` / `catplot` 这类图级函数。
-6. 落盘用 matplotlib 的 `savefig`；在服务器或容器里不要依赖 `show()`。
+6. 落盘用 matplotlib 的 `savefig`；在服务器或容器里不要依赖 `show`。
 7. 遇到颜色不对、缺包、中文方块、返回对象不对等问题，先查「常见坑」表。
 
 函数名、参数与对象接口的完整清单以官方 API 参考页为准。

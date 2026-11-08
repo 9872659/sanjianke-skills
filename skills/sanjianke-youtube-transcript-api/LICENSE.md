@@ -29,4 +29,3 @@ SOFTWARE.
 - 项目：`youtube-transcript-api`
 - 仓库：https://github.com/jdepoix/youtube-transcript-api
 
-**不提供该项目的技术支持。** 软件本身的问题请走上游仓库的 Issues。

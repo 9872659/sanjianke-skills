@@ -2,9 +2,9 @@
 name: sanjianke-digital-host
 slug: sanjianke-digital-host
 displayName: 数字人口播台 一张图一段话一个人开口
-description: "**不用出镜、不用录音、不用剪辑 —— 一张照片加一段文案，三分钟给你一条口播视频。** 三个数字人应用收成一个入口：`talk` 文案驱动（15 点/秒）、`drive` 全驱动（10/15/30/60 点/输入秒）、`dub` 已有视频重新对口型（上游×3）。`catalog` 一屏对照三种做法，`cost` 三路算钱，`doctor` 只用四个只读 GET（apps / pricing / tasks / balance），并核对 live 速率卡。两个花钱的坑做进了默认动作：image_human 不传 mode 会「按 standard 出片、按 fast 收钱」，所以 `--mode` 必填；pic_lipsync 的档位真名是 `quality`。需要自备 API Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+description: "**不用出镜、不用录音、不用剪辑 —— 一张照片加一段文案，三分钟给你一条口播视频。** 三个数字人应用收成一个入口：`talk` 文案驱动（15 点/秒）、`drive` 全驱动（10/15/30/60 点/输入秒）、`dub` 已有视频重新对口型。`catalog` 一屏对照三种做法，`cost` 三路算钱，`doctor` 只用四个只读 GET（apps / pricing / tasks / balance），并核对 live 速率卡。两个花钱的坑做进了默认动作：image_human 不传 mode 会「按 standard 出片、按 fast 收钱」，所以 `--mode` 必填；pic_lipsync 的档位真名是 `quality`。需要自备 API Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 version: 1.0.1
-summary: "数字人口播三件套：talk（pic_lipsync 文案驱动，图 + 参考音色 + 文案）、drive（image_human 全驱动，图 + 音频，快速 10 / 标准 15 / 2K 30 / 4K 60 点/输入秒）、dub（lipsync 给已有视频重新对口型，上游实际点数 ×3）。三条线共用一套提交 + 轮询与台账。免费命令先把钱讲清楚：catalog 对照三路参数与价格，cost 分别算到点，doctor 六项自检覆盖 Key、三个 submit 端点是否已配价、两张速率卡、任务查询线与余额，全程只发四个只读 GET。两条实测口径写进了默认动作：image_human 的 schema 默认 standard、计费卡默认 fast，不传 mode 就变成按标准出片、按快速收钱，所以 --mode 必填；pic_lipsync 的档位真名是 quality，mode 只切 audio/text，且 text 模式的 audio_url 是参考音色。dub 里 1.0 折算 2.7 点/秒，2.0 / 3.0 是 13.5 点/秒。缺 --yes 退 4 并报出要花多少点，超过 --budget 退 5 且一个请求都不发。零依赖。需要自备 API Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+summary: "数字人口播三件套：talk（pic_lipsync 文案驱动，图 + 参考音色 + 文案）、drive（image_human 全驱动，图 + 音频，快速 10 / 标准 15 / 2K 30 / 4K 60 点/输入秒）、dub（lipsync 给已有视频重新对口型）。三条线共用一套提交 + 轮询与台账。免费命令先把钱讲清楚：catalog 对照三路参数与价格，cost 分别算到点，doctor 六项自检覆盖 Key、三个 submit 端点是否已配价、两张速率卡、任务查询线与余额，全程只发四个只读 GET。两条实测口径写进了默认动作：image_human 的 schema 默认 standard、计费卡默认 fast，不传 mode 就变成按标准出片、按快速收钱，所以 --mode 必填；pic_lipsync 的档位真名是 quality，mode 只切 audio/text，且 text 模式的 audio_url 是参考音色。dub 里 1.0 折算 2.7 点/秒，2.0 / 3.0 是 13.5 点/秒。缺 --yes 退 4 并报出要花多少点，超过 --budget 退 5 且一个请求都不发。零依赖。需要自备 API Key，注册见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -25,7 +25,6 @@ tags:
 |---|---|---|---|---|
 | 一张图 + 一段文案 → 人开口念 | **`talk`** | `pic_lipsync` | 图 + 参考音色 + 文案 | **15 点/秒** |
 | 一张图 + 一段录音 → 人对口型 | **`drive`** | `image_human` | 图 + 音频 + 秒数 + 档位 | **10 / 15 / 30 / 60 点/秒** |
-| 已有视频 + 新配音 → 重新对口型 | **`dub`** | `lipsync` | 视频 + 音频 + 秒数 | **上游实际 ×3** |
 
 三者一句话分清楚：**文案驱动最轻（talk），全驱动最稳可调档（drive），已有视频换口型最省（dub）。**
 

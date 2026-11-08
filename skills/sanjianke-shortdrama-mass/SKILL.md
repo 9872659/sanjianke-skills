@@ -4,7 +4,7 @@ slug: sanjianke-shortdrama-mass
 displayName: 短剧量产 · 一天 10 条日更的排产台
 description: "**一天 10 条短剧日更，从排产到交付验收一条命令：8,580 点 = 85.80 元，单条 8.58 元。** 8 个工位一张排产单：`plan` 出单、`run` / `batch` 出片、`check` 验交付清单，命名规范一次定死。口播 15 点/秒占全条 79%，秒数是唯一的大杠杆；media_services_33 的 29 个接口都没配价，每次先冻 60 点；应用层 query 按次计费（nano_banana/query 72 点/次），所以查任务只走免费的 `GET /tasks/{id}`。缺 `--yes` 退 4 报要花多少点，超 `--budget` 退 5 且一个请求都不发。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "短剧日更的难点不在拍，在「一天 10 条怎么排」。本包把 voice_tts 配音、pic_lipsync 口播、media_services_33 配乐与时间戳、full_video 成片四条线按 8 个工位重排，付费的只有 4 个。价目（1 元 = 100 点）：配音 0.18 点/字（上游 ×3）、口播 15 点/秒（上游 3 点/秒 ×5）、配乐与卡点各 60 点/条、full_video 480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒。一条 45 秒 350 字 = 858 点 = 8.58 元，一天 10 条 = 8,580 点 = 85.80 元。三条实测口径做成默认：① 口播占全条 79%，45 秒降到 30 秒一天省 2,250 点；② media_services_33 的 29 个接口都没配价，每次先冻 60 点（4 条流水各 60 冻 60 退），按 60 点/条入账；③ 应用层 query 按次计费（nano_banana/query 72 点/次），轮询只走 GET /api/v1/tasks/{id}。`plan` 与 `check` 纯本地 0 点。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
+summary: "短剧日更的难点不在拍，在「一天 10 条怎么排」。本包把 voice_tts 配音、pic_lipsync 口播、media_services_33 配乐与时间戳、full_video 成片四条线按 8 个工位重排，付费的只有 4 个。价目（1 元 = 100 点）：配音 0.18 点/字、口播 15 点/秒、配乐与卡点各 60 点/条、full_video 480P 14 / 768P 28 / 1080P 60 / 2K 80 / 4K 80 点/秒。一条 45 秒 350 字 = 858 点 = 8.58 元，一天 10 条 = 8,580 点 = 85.80 元。三条实测口径做成默认：① 口播占全条 79%，45 秒降到 30 秒一天省 2,250 点；② media_services_33 的 29 个接口都没配价，每次先冻 60 点（4 条流水各 60 冻 60 退），按 60 点/条入账；③ 应用层 query 按次计费（nano_banana/query 72 点/次），轮询只走 GET /api/v1/tasks/{id}。`plan` 与 `check` 纯本地 0 点。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -34,8 +34,8 @@ tags:
 |---|---|---|---|---|---|
 | 选题 | `topic` | 本地钩子池（12 个钩子类型） | 免费 | 0 | 0 |
 | 脚本 | `script` | 本地分镜模板（5 段时间轴） | 免费 | 0 | 0 |
-| 旁白配音 | `voice` | `voice_tts/tts_async` | 0.18 点/字（上游 ×3） | 350 字 = **63** | 630 |
-| 数字人口播 | `avatar` | `pic_lipsync/submit`（mode=text） | **15 点/秒**（上游 3 点/秒 ×5） | 45 秒 = **675** | 6,750 |
+| 旁白配音 | `voice` | `voice_tts/tts_async` | 0.18 点/字 | 350 字 = **63** | 630 |
+| 数字人口播 | `avatar` | `pic_lipsync/submit`（mode=text） | **15 点/秒** | 45 秒 = **675** | 6,750 |
 | 配乐 | `music` | `media_services_33/music_generate` | 60 点/条（未配价，按预冻口径） | **60** | 600 |
 | 卡点字幕 | `beat` | `media_services_33/music_timestamped_lyrics` | 60 点/条 | **60** | 600 |
 | 封面 / 片头 | `cover` | 本地截帧，或 `full_video/submit` | 0 点 / 14–80 点/秒 | 0 | 0 |

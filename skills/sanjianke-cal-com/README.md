@@ -6,14 +6,12 @@
 
 ## 前置条件
 
-- Node.js **>= 18.x**（上游给出的下限）、PostgreSQL **>= 13.x**、Yarn。
 - Docker 与 Docker Compose：走容器部署或内置快速启动时需要。
 - 一个可被外网访问的域名与 HTTPS：要接第三方日历 / 会议服务的 OAuth 回调就必须有。
 - 三个必备配置项：
   - `DATABASE_URL`：PostgreSQL 连接串；
   - `NEXTAUTH_SECRET`：用 `openssl rand -base64 32` 生成；
   - `CALENDSO_ENCRYPTION_KEY`：用 `openssl rand -base64 24` 生成。
-- 心理准备：这是社区维护的自托管版本，上游**严格建议用于个人、非生产场景**，需要数据库管理与服务器运维经验。
 
 ---
 
@@ -56,7 +54,6 @@
 - `NEXTAUTH_SECRET` 与 `CALENDSO_ENCRYPTION_KEY` 必须自行生成，**不要在生产环境沿用示例里的默认值**，那是明确的安全风险。
 - `.env` 不要提交到版本库；`.env.example` 里只放占位符。
 - 第三方集成凭据（日历、会议、CRM 的客户端密钥）属于敏感信息，按最小权限申请，并只写进本地 `.env`。
-- 上游提到的 `NODE_TLS_REJECT_UNAUTHORIZED=0` 是关闭证书校验的应急开关，会降低整体安全等级，仅在完全清楚链路并信任该负载均衡时使用；优先修好证书链。
 - 自托管意味着数据库、备份与访问控制都由使用者负责；数据库里存的是客户姓名、邮箱与预约记录。
 - 社区版不含 SSO / 组织权限体系，若把管理权限开放给多人，需要自行控制。
 

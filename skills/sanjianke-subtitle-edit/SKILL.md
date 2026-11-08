@@ -16,9 +16,7 @@ tags:
 
 字幕这件事的麻烦从来不是"写字"，而是"对时间"：一句话早出现 0.4 秒，观众就出戏；换了平台要转格式，几百条条目得批量过一遍；碰上内嵌在片源里的图形字幕，还得先 OCR 扒成文本。这个工具就是干这些脏活的——一个开源字幕编辑器，带波形与频谱对轴、格式互转、批量处理，以及一个可以完全无界面跑的转换命令行。
 
-它的价值有两点：一是**格式覆盖面大**（上游文档称内置 380 多种字幕格式的解析与写出，打开时自动识别）；二是**能进自动化流水线**——打包里的 `seconv` 是不需要显示器的无头命令行转换器，适合脚本化和服务器上批量跑。图形界面那一套则在 Windows / macOS / Linux 上都有对应安装包。
-
-**上游项目**：`Subtitle Edit`　**仓库**：https://github.com/SubtitleEdit/subtitleedit
+它的价值有两点：一是**格式覆盖面大**；二是**能进自动化流水线**——打包里的 `seconv` 是不需要显示器的无头命令行转换器，适合脚本化和服务器上批量跑。图形界面那一套则在 Windows / macOS / Linux 上都有对应安装包。
 
 ## 零安装用法（推荐先看这个）
 
@@ -84,23 +82,16 @@ export A7W_API_KEY=sk-xxxx                        # 环境变量
 
 - 你要的是**从零剪片子**。它是字幕编辑器，不剪视频、不调色、不做转场。
 - 只需要**把一条 srt 复制成另一条**。这种一次性小动作用文本编辑器几秒就够了，开一个带界面的字幕软件属于杀鸡用牛刀。
-- 需要**严格的云端协作与版本管理**。它是桌面单机工具（数据存本地，上游明确说明是离线应用），没有多人协同编辑这一层。
 - 团队不能接受**联网调用第三方服务**来做翻译或 OCR，又没有本地引擎可用。在线引擎需要把内容发给所选服务方，这是它的既定行为，不是配置问题。
 - 需要**编程方式精细控制每一条时间码**：`seconv` 提供的是批量规则与参数，要做逐条算法级定制应该自己写脚本处理字幕文件。
 
 ## 安装
-> 以下命令与文件名取自上游仓库 README、官方文档站与 Releases 页面；版本与资产名会变，安装前请以仓库最新 Releases 与文档为准。
-
-**1）先看系统要求**（上游 README 明确要求先确认这一项）：
 
 - **Windows**：最低 Windows 10 版本 22H2（build 19045）或更新，且保持更新。更老的 Win10 版本（2004 / 20H2 / 21H1 / 21H2）已停止支持，官方提示可能以 .NET 运行时错误 `0x80131506` 启动失败。
 - **macOS**：最低 macOS 12（Monterey），官方推荐 macOS 14（Sonoma）或更新。
 - **Linux**：用 Flatpak 包最省事（自带 mpv 与 ffmpeg）；用原生包则需要自己装 mpv 与 ffmpeg。
-- 上游说明：**发布的构建是自包含的，不需要另外安装 .NET**。
 
 **2）Windows**：从 Releases 下载 `SubtitleEdit-Windows-x64-Setup.exe`（安装版）或 `SubtitleEdit-Windows-x64.zip` 解压即用；ARM64 设备用 `SubtitleEdit-Windows-ARM64.zip`。
-
-**3）macOS**：Apple Silicon 用 `SubtitleEdit-macOS-ARM64.dmg`，Intel 用 `SubtitleEdit-macOS-x64.dmg`，拖到"应用程序"里即可（包里自带 libmpv 与 ffmpeg，不需要 Homebrew 或 MacPorts）。上游说明从 v5.1.0-rc13 起该 dmg 已签名并公证。
 
 **4）Linux（Flatpak）**：
 
@@ -116,10 +107,6 @@ flatpak run dk.nikse.subtitleedit
 ```bash
 dotnet build src/seconv/SeConv.csproj -c Release
 ```
-
-**6）包管理器**：上游 README 与官方文档中**没有**给出用 winget / choco / scoop 安装本工具的说明（那些命令出现在某个可选组件的安装说明里，不是本工具本身）。要装请走 Releases 里的安装包或 Flatpak。
-
-**7）更新**：设置里有"启动时检查更新"和"更新通道（稳定 / 稳定+测试）"；上游说明商店托管的安装（例如 Flatpak）会隐藏该选项，因为由商店统一更新。
 
 ### 模型与算力走哪
 
@@ -229,7 +216,7 @@ seconv input.srt srt --translate-to en --translate-from zh --translate-engine li
 | `seconv` 报错退出、退出码 1，提示"你是不是想用某某选项" | 参数名写错。上游说明未知选项会报错并给出最接近的正确名 | 按提示改；或先用 `seconv --help` / `seconv --help-json` 拿到准确参数表。参数支持 `:` / `=` / 空格三种分隔写法 |
 | 用 `--settings` 指向图形界面的 `Settings.json`，设置没生效 | **两者 schema 不同**：`seconv` 用自己的一套 JSON 键名，不认识的键会被忽略并给警告 | 用 `seconv dump-settings` 生成一份命令行版模板，在这份上改；不要直接复用图形界面的配置 |
 | 命令行 OCR 一跑就报找不到模型/数据库 | `seconv` **从不自动下载**引擎与模型；`nOCR` / `BinaryOCR` 的 OCR 数据库也**不随 seconv 打包** | 先在图形界面里把对应引擎与数据库准备好（OCR 数据库在数据目录的 `OCR/` 下），或用 `--ocr-db` / `--dictionary-folder` 指到已有位置；也可以先在图形界面跑通一次，再搬到命令行 |
-| 视频能显示波形与声音，但画面全黑 | 较新的 libmpv 构建需要 `vulkan-1.dll` 与 `libmpv-2.dll` 放在一起（上游第三方组件说明里点名的症状就是这个） | 按上游组件说明补齐 DLL；或换用受测的组件版本 |
+| 视频能显示波形与声音，但画面全黑 | 较新的 libmpv 构建需要 `vulkan-1.dll` 与 `libmpv-2.dll` 放在一起 | 按上游组件说明补齐 DLL；或换用受测的组件版本 |
 | 在线功能（翻译 / OCR）时好时坏或直接失败 | 这些功能把必要内容发给所选服务方；其中一部分需要 API Key，一部分有免费额度上限。上游也说明：只有需要该请求的最少数据会被直接发给你选定的服务商 | 逐个确认所选引擎是否要 Key、额度是否用完、网络是否可达；不想联网就换成 Ollama / llama.cpp / LM Studio / PaddleOCR 这类本地引擎 |
 | Google 系语音识别 v2 接不上 | 上游文档写明该 v2 接口**不接受 API Key**，需要服务账号 JSON 密钥文件 | 按上游说明改用服务账号 JSON（或走默认凭据登录流程 + 项目 ID）；嫌麻烦就换别的识别引擎 |
 | 换了第三方组件（mpv / ffmpeg 等）的另一个版本后不稳定 | 上游明确说明只对特定版本的组件做过测试，用其它版本不受支持、可能不稳定 | 用上游测试过的版本；出问题先换回受测组合再排查 |
@@ -272,7 +259,6 @@ seconv input.srt srt --translate-to en --translate-from zh --translate-engine li
 
 **覆盖**：
 
-- 字幕格式解析与写出，上游文档称覆盖 **380+ 种**字幕格式，打开时自动识别格式；常见的有 srt / vtt / ass / ssa / ttml / ebustl / scc / lrc / pac，以及广播、光盘、图像字幕与部分容器内嵌字幕轨
 - 与剪辑软件交换：Final Cut Pro XML 字幕、EDL、DaVinci Resolve 标记、Adobe Premiere 标记等
 - 时间轴校对：波形与频谱可视化、点击/拖动设入出点、镜头切换线、吸附与微调
 - 自动翻译：多种本地与在线引擎可选，保留时间轴
@@ -286,7 +272,6 @@ seconv input.srt srt --translate-to en --translate-from zh --translate-engine li
 
 - 视频剪辑、转码、调色、特效、合成；它不是剪辑软件
 - 压制与封装成片；它输出字幕与交换格式，不负责出片
-- 多人实时协作与云端版本管理；上游明确说明它是离线应用，不收集也不上传你的字幕与媒体内容
 - 字幕翻译质量的保证：翻译由所选引擎决定，工具只负责把内容送出去并接回来
 - 语音识别与 OCR 的准确率保证：取决于所选引擎、素材质量与语言包
 - 逐条算法级的自定义处理逻辑（要做请自己写脚本处理字幕文件）
@@ -296,7 +281,6 @@ seconv input.srt srt --translate-to en --translate-from zh --translate-engine li
 - **Windows**：Windows 10 22H2（build 19045）或更新；安装包自带所需运行时
 - **macOS**：macOS 12 起，推荐 macOS 14 或更新；dmg 自带 libmpv 与 ffmpeg
 - **Linux**：Flatpak 包已自带 mpv 与 ffmpeg；用原生包需自行安装 mpv 与 ffmpeg
-- 播放与音频可视化：libmpv（推荐）或 VLC（上游说明支持有限）；波形与音频提取需要 ffmpeg
 - `seconv` 单独使用：需要 .NET 运行时（无显示设备要求）
 - 从源码构建：使用 `dotnet build`，构建 `src/seconv/SeConv.csproj`
 - 可选在线功能的凭证：翻译（Google V2、Bing/Azure、DeepL、ChatGPT、Claude、Gemini、DeepSeek、Groq、OpenRouter、Mistral、Perplexity、NVIDIA、Papago、百度等）、OCR（Google Cloud Vision、Mistral OCR 等）、语音识别（Google Cloud STT v2 需服务账号 JSON）各自需要 Key 或凭据
@@ -304,13 +288,9 @@ seconv input.srt srt --translate-to en --translate-from zh --translate-engine li
 
 ## 已知限制
 
-- 上游官网页面的下载/帮助内容是脚本渲染的，抓不到可读文本；**下载请以仓库 Releases 为准**。
-- 上游 README 与文档中**没有提供** winget / choco / scoop 安装方式；本 Skill 也不据此给命令。
 - Releases 里列出的资产只有 **x64 与 ARM64**，没有 32 位构建。
 - `seconv` 的 `--settings` 与图形界面 `Settings.json` **不是同一套 schema**。
 - `seconv` 不下载引擎与模型；`nOCR` / `BinaryOCR` 数据库也不随它打包。
-- macOS 的数据目录在上游不同页面中的说法不完全一致（一处写 `~/.config/Subtitle Edit`，另一处出现 `~/Library/Application Support/...`），**以本机实际打开的目录为准**。
-- 上游只对特定版本的第三方组件做过测试，换版本可能不稳定。
 - 在线功能会把该请求所需的最少内容发给所选服务商，是否符合你的数据合规要求需要自行判断。
 - 本 Skill 不引用未核实的数字（star 数、下载量等一律不写）。
 - **零安装脚本 `scripts/run.py` 的边界**（与本地版不是一回事，别混淆）：

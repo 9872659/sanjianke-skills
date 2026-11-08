@@ -87,7 +87,7 @@ from marker.converters.pdf import PdfConverter
 from marker.models import create_model_dict
 from marker.output import text_from_rendered
 
-converter = PdfConverter(artifact_dict=create_model_dict())
+converter = PdfConverter(artifact_dict=create_model_dict)
 rendered = converter("FILEPATH")
 text, _, images = text_from_rendered(rendered)
 # markdown 输出：rendered.markdown / rendered.metadata / rendered.images
@@ -104,11 +104,11 @@ config = {"output_format": "json", "ADDITIONAL_KEY": "VALUE"}
 config_parser = ConfigParser(config)
 
 converter = PdfConverter(
-    config=config_parser.generate_config_dict(),
-    artifact_dict=create_model_dict(),
-    processor_list=config_parser.get_processors(),
-    renderer=config_parser.get_renderer(),
-    llm_service=config_parser.get_llm_service(),
+    config=config_parser.generate_config_dict,
+    artifact_dict=create_model_dict,
+    processor_list=config_parser.get_processors,
+    renderer=config_parser.get_renderer,
+    llm_service=config_parser.get_llm_service,
 )
 rendered = converter("FILEPATH")
 ```
@@ -119,7 +119,7 @@ from marker.converters.pdf import PdfConverter
 from marker.models import create_model_dict
 from marker.schema import BlockTypes
 
-converter = PdfConverter(artifact_dict=create_model_dict())
+converter = PdfConverter(artifact_dict=create_model_dict)
 document = converter.build_document("FILEPATH")
 forms = document.contained_blocks((BlockTypes.Form,))
 ```
@@ -162,7 +162,7 @@ post_data = {
     "filepath": "FILEPATH",
     # 只接受：page_range, mode, force_ocr, paginate_output, output_format
 }
-requests.post("http://localhost:8001/marker", data=json.dumps(post_data)).json()
+requests.post("http://localhost:8001/marker", data=json.dumps(post_data)).json
 ```
 
 `http://localhost:8001/docs` 有端点说明。注意：`--use_llm` 与 `--disable_ocr` **不通过**这个接口暴露；官方明确说该服务不够健壮，只适合小规模使用。

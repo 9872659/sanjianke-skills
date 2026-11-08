@@ -31,7 +31,6 @@
 - `torch`（版本需 ≥ 2.5）。
 - 使用 `device_map="auto"` 与磁盘卸载依赖 Accelerate，完全磁盘卸载对 Accelerate 版本有更高要求。
 - 具体量化方案需要额外装对应的第三方库，且对硬件与后端有各自的限制。
-- 上游文档：<https://huggingface.co/docs/transformers/index>
 
 ---
 

@@ -65,7 +65,7 @@ code == 1  才是成功   ← 不是 0 ！
 - 平台官方文档的失败示例写的是 `"code": 0`，成功示例写的是 `"code": 1`
 - 实际写错的代价是"提交失败还当成成功"，后面一路错到出图数量不对
 
-`scripts/a7w.py` 的 `_unwrap()` 就是这个口径：
+`scripts/a7w.py` 的 `_unwrap` 就是这个口径：
 
 ```python
 ok = code in (1, 200, "1", "200") or code is None
@@ -136,7 +136,7 @@ python3 scripts/run.py gen --plan plan.json --outdir ./out
 网关到上游的 `upstream timeout` / HTTP 502 **实测很频繁**，
 长异步任务的轮询也会被重置连接（`WinError 10054 远程主机强迫关闭了一个现有的连接`）。
 
-所以 `scripts/a7w.py` 的 `_request()` 对**网络类错误与 5xx** 做指数退避重试（4 次），
+所以 `scripts/a7w.py` 的 `_request` 对**网络类错误与 5xx** 做指数退避重试（4 次），
 对 4xx（业务错误）**不重试**——4xx 重试只是浪费额度。
 
 `upstream timeout` 的典型形态是提交时返回 `code: 0` 加一段上游超时消息，
@@ -165,9 +165,7 @@ python3 scripts/run.py gen --plan plan.json --outdir ./out
 | 点数不足（402） | 余额不够 | 充值；或用 `cost` 先算一趟要多少钱 |
 | HTTP 200 但 `code: 0` | 业务失败（不是网络问题） | 看 `msg`；别把 `code == 0` 当成功 |
 | `未命中可用计费规格` | `model` + `resolution` 组合不支持 | 普通 `nano-banana` 只支持 `1K`；高清档换 `nano-banana-2:official` 等 |
-| 上游 502 / `upstream timeout` | 网关抖动，很常见 | 已自动退避重试 4 次；持续失败就换模型或缩小批次 |
 | 轮询一直 `processing` | 任务卡住 | 等 `--poll-timeout` 到点；保留 `task_id` 续查 |
-| 真实像素 ≠ 请求比例 | **上游按 32 对齐**，正常现象 | 加 `--snap`；或放宽 `--ratio-tolerance` |
 | `读不出真实像素` | 下载被截断 / 不是图片 | 删掉断点记录重出（`--force`） |
 | 每张都失败 | Key 无该应用权限，或该应用不在你账号的可选范围 | `python3 scripts/run.py models` 看清单 |
 | 提示词被判不合格 | 违禁词 / 照抄示例 / 占位符 | 改提示词；确实要带违禁词才加 `--allow-prompt-hits` |
@@ -193,10 +191,9 @@ python3 scripts/run.py gen --plan plan.json --outdir ./out
 2. **`nano-banana-2` / `-pro` / `:official` 各档的实际扣费**没实测过，
    文档里的 38 / 45 / 28.03 点来自平台文档，**未经验证**。
 3. **`relay_points` 与 `frozen_points` 为什么都等于 31.2**、以及 31.2 这个数怎么来的
-   （是 24 × 1.3 的加价率还是别的口径），没有确认。
 4. **`code` 在成功响应里出现 `code: 0` 的边界**：我们实测到的失败响应确实带 `code: 0`，
    但也见过不带 `code` 字段的成功响应（走 OpenAI 兼容的 `/chat/completions` 时），
-   所以 `_unwrap()` 把 `code is None` 也当成功。这是保守处理，不是确证。
+   所以 `_unwrap` 把 `code is None` 也当成功。这是保守处理，不是确证。
 5. **并发提交的限流口径**没测过。本包是**串行**出图，没做并发。
 6. **`callback_url` 回调**没有实测过，本包没用到它。
 

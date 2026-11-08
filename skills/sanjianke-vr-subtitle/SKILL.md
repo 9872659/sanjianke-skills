@@ -37,7 +37,6 @@ tags:
 | 档位 id | `subtitle` |
 | 中文名 | **字幕擦除** |
 | 提交路径 | `POST /api/v1/video/viapi/subtitle` |
-| 上游动作 | `EraseVideoSubtitles` |
 | 单价 | **9 点/秒**（¥0.09/秒） |
 | 单条上限 | **600 秒** |
 | 素材要求 | **本网关素材**（先 `upload`） |
@@ -164,8 +163,6 @@ python3 scripts/run.py points
 | [闸门8] 确认 | 不加 `--yes` 只报价，不提交 | exit 4 |
 | → 真提交 | POST /api/v1/video/viapi/subtitle（**这一步之后才会花钱**） | — |
 
-**唯一必须花钱才能知道的事**：上游到底能不能处理这条素材。
-
 ---
 
 ## 子命令一览
@@ -223,7 +220,6 @@ python3 scripts/run.py points
 
 ## 报错 → 人话
 
-| 上游 code | 本包怎么说 |
 |---|---|
 | `empty_url` / `pixverse_empty_url` | 没给 `videoUrl` |
 | `url_not_allowed` | 这一档只收本网关素材：先 `upload <文件>`，再用返回的地址；或换 `sanjianke-vr-upscale-4k` |
@@ -266,7 +262,6 @@ GET /api/v1/video/viapi/subtitle/<taskId>
 
 - **素材入口判据以线上为准**：本档只收本网关素材（先 `upload` 拿地址）。`doctor` 会**零成本实测**这个前缀当前有没有被放行，并如实报告（400 = 未放行，502 = 已放行，两者都不扣费）。若某天未放行，改走本站素材地址，或先用 `sanjianke-vr-upscale-4k`。
 - **`info` 的在线权威源不稳定**：线上 `GET /api/v1/video/viapi/tools` 早先免鉴权可读，后来变成 401/404。本包会自动退回内置档位表（单价取自 `api.a7w.cn` 在架能力），并把「在线源当前不可达」如实打出来。**价格与规格以线上为准。**
-- **输入规格是上游限制**（官方**仅支持 MP4、≤1080P**），本包只能**提前拦**，不能改变上游行为。
 
 ---
 

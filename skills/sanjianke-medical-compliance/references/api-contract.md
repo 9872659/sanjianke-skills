@@ -45,7 +45,6 @@
 | `format` | 否 | `mp3`（默认）/ `wav` / `opus` |
 | `reference_id` | 否 | 克隆音色的 `model_id`（`clone_voice` 返回） |
 
-- 计价规则：`/api/v1/apps/voice_tts/*` → `mode: flat`、`cost: 0`、**`markupPercent: 200`**，
   即按上游真实点数 **x3**。实测 `tts_live` 33 字上游 1.98 点 → 我方 5.94 点 ≈ **0.18 点/字**。
 - 响应里读 `usage.points_cost`（或 `actual_points`）拿实际点数。
 - 同应用还有 `tts_async`（长文本异步）、`tts_live`（流式）、`clone_voice`、`list_voices`、`stt`。
@@ -65,7 +64,6 @@
 | `prompt` | 否 | 人物动作提示 |
 
 - 计价规则：`/api/v1/apps/pic_lipsync/submit` → `mode: flat`、`cost: 0`、
-  **`markupPercent: 400`**（上游 x5）、**`minPoints: 50`**（声明值，通用计费不读）。
   上游 standard 档 3 点/秒 → **15 点/秒**。
 - 提交后返回 `task_id`；查进度用 `GET /api/v1/tasks/<task_id>`（0 点）。
 - 应用层还有 `POST /api/v1/apps/pic_lipsync/query`，与 submit 同 path 计价，本包不用它轮询。
@@ -103,7 +101,7 @@
 - `url` 在域名白名单内，可以直接喂给 `pic_lipsync` 的 `image_url` / `audio_url`、`full_video` 的 `first_frame`。
 - 缺 `file` 时返回 `200 / code 1`，`msg`：「请使用 file 字段提交一个文件」——**这不扣费**，`doctor` 用它验通路。
 
-### 地址白名单（上游报错原文）
+### 地址白名单
 
 ```
 400 url_not_allowed
@@ -111,7 +109,7 @@
    或本站上传接口返回的地址（oss.gpu.likeadmin.cn/openapi/）"
 ```
 
-本包 `url_allowed()` 在本地就拦这三类之外的主机名，不合格直接退 2，把请求省下来。
+本包 `url_allowed` 在本地就拦这三类之外的主机名，不合格直接退 2，把请求省下来。
 
 ---
 
@@ -154,7 +152,6 @@
 | `music_generate_lyrics` | `prompt` | 只要歌词 |
 | `music_sounds` | `model`、`prompt` | 音效（转场、器械声） |
 
-- 价目：落到通配 `*` → `mode: flat`、`cost: 0`、`markupPercent: 100`（上游 x2）、**保底 50 点/笔**。
 - 口播配音走 `voice_tts`（按字，约 0.18 点/字）比这条线便宜，所以 `tts` 默认走 `voice_tts`。
 
 ---

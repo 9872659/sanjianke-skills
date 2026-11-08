@@ -36,7 +36,6 @@ REST 端点与请求体以 https://api.qdrant.tech/ 的 OpenAPI 规范为准；�
 - 官方客户端库：Python / JS / Rust / Go / .NET / Java 任选其一。
 - 可选：FastEmbed（本地算 embedding）、Qdrant Cloud（托管与云端推理）。
 - 可选：Qdrant Edge（设备侧进程内形态，支持 Python 与 Rust）。
-- 上游自带的 Web 控制台无需额外安装，起服务即可用。
 
 ---
 

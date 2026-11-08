@@ -18,10 +18,6 @@ tags:
 
 它的定位是「分析的 SQLite」：单进程、列式存储、向量化执行，擅长一次扫描几个 GB 的宽表做聚合；不适合当网站后端那种多人并发的业务库。
 
-**上游项目**：`duckdb`　**仓库**：https://github.com/duckdb/duckdb
-
-> 本文命令取自上游仓库 README 与官方文档站，版本号取自实测环境（Python 包 1.5.5）。参数随版本变化时，以官方文档与 `duckdb -help` 为准。
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -102,19 +98,19 @@ duckdb -c "COPY (SELECT * FROM 'in.csv' WHERE amount > 0) TO 'out.parquet' (FORM
 ```python
 import duckdb
 
-con = duckdb.connect()                      # 内存库
+con = duckdb.connect                      # 内存库
 con.execute("CREATE TABLE t AS SELECT * FROM (VALUES (1,'a'),(2,'b')) AS v(id,name)")
-print(con.sql("SELECT * FROM t WHERE id > 1").fetchall())   # [(2, 'b')]
-print(con.sql("SELECT version()").fetchall())               # [('v1.5.5',)]
-print(con.sql("DESCRIBE t").fetchall())
+print(con.sql("SELECT * FROM t WHERE id > 1").fetchall)   # [(2, 'b')]
+print(con.sql("SELECT version").fetchall)               # [('v1.5.5',)]
+print(con.sql("DESCRIBE t").fetchall)
 ```
 
-`.fetchall()` 走的是 DuckDB 自己的结果对象，**不需要** pandas 或 pyarrow。
+`.fetchall` 走的是 DuckDB 自己的结果对象，**不需要** pandas 或 pyarrow。
 
 **5. 查看与安装扩展（读 Excel、连远端等能力都在扩展里）**
 
 ```python
-print(con.sql("SELECT extension_name, installed, loaded FROM duckdb_extensions() LIMIT 3").fetchall())
+print(con.sql("SELECT extension_name, installed, loaded FROM duckdb_extensions LIMIT 3").fetchall)
 ```
 
 ```sql
@@ -137,7 +133,7 @@ duckdb -json -c "SELECT 1 AS a"
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| `Invalid Input Error: 'pandas' is required for this operation but it was not installed` | 调了 `.df()` / `fetchdf()` 这类转 DataFrame 的方法，但环境里没装 pandas；DuckDB 自己不带这个依赖 | 用 `.fetchall()` 拿原生结果，或 `pip install pandas`（要 Arrow 就再装 `pyarrow`） |
+| `Invalid Input Error: 'pandas' is required for this operation but it was not installed` | 调了 `.df` / `fetchdf` 这类转 DataFrame 的方法，但环境里没装 pandas；DuckDB 自己不带这个依赖 | 用 `.fetchall` 拿原生结果，或 `pip install pandas`（要 Arrow 就再装 `pyarrow`） |
 | `python -m duckdb` 报 `No module named duckdb.__main__` | `pip install duckdb` 只装 Python 库，CLI 是另一个独立可执行文件 | 去 https://duckdb.org/install/ 的 CLI 页签下载单文件客户端，别指望 Python 包能当命令行用 |
 | 查询结果里字段名带引号、或者 `FROM 'x.csv'` 报路径找不到 | SQL 里单引号是字符串字面量，Windows 路径里的反斜杠又容易被当转义 | 路径统一用正斜杠或双写转义；标识符要用双引号，别用单引号 |
 | 同一个 `.duckdb` 文件两边同时写，后开的那个报错或卡住 | 文件数据库是单写者模型，被一个进程持有写锁时别的进程不能同时写 | 读的场景用 `-readonly` 打开；真要并发就各自写各自的库再合并，或者走「一个写者 + 多个读者」 |
@@ -187,7 +183,7 @@ duckdb -json -c "SELECT 1 AS a"
 
 - **CLI**：Windows / macOS / Linux 的预编译单文件可执行程序，无额外运行时依赖。版本以官方安装页为准（本文写作时稳定版为 1.5.5）。
 - **Python 包**：官方要求 Python 3.9 或更新；实测 Python 3.11.9 + `duckdb` 1.5.5 可用。pip 与 conda 两种安装方式官方都支持。
-- 若要 `pip install duckdb` 后使用 `.df()` / `fetchdf()`，需要额外安装 pandas；要 Arrow 输出需要 pyarrow。
+- 若要 `pip install duckdb` 后使用 `.df` / `fetchdf`，需要额外安装 pandas；要 Arrow 输出需要 pyarrow。
 - 可以直接把 pandas / polars 的 DataFrame 或 Arrow 表当表查（官方文档明确它们是**只读**的，不能通过 `INSERT` / `UPDATE` 改）。
 - 安装扩展时需要能访问官方扩展仓库。
 - 不需要任何账号、Key 或注册。
@@ -197,7 +193,7 @@ duckdb -json -c "SELECT 1 AS a"
 1. **单机单写者**：同一数据库文件的并发写入能力有限，多进程场景要按读写分离来设计。
 2. **版本间存储格式可能不兼容**：打开旧版本创建的数据库文件时可能提示需要迁移，跨版本共用同一个库文件前先确认存储版本；CLI 提供 `-storage-version` 参数用于指定兼容版本。
 3. **扩展要联网**：核心功能开箱可用，但 Excel、远端存储等能力依赖扩展下载。
-4. **转换方法有隐式依赖**：`.df()` 依赖 pandas、`.arrow()` 依赖 pyarrow，缺了会在调用时报错而不是安装时就提示。
+4. **转换方法有隐式依赖**：`.df` 依赖 pandas、`.arrow` 依赖 pyarrow，缺了会在调用时报错而不是安装时就提示。
 5. **`SELECT *` 不等于省内存**：列存能省的是「不读的列不读」，一旦你要求返回全表全列，物化开销照付。
 
 ## 自检清单

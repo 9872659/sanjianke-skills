@@ -12,8 +12,8 @@ excelize 有两套 API。普通 API 把工作簿读进内存、可以随便改�
 ## 流式写：StreamWriter
 
 ```go
-f := excelize.NewFile()
-defer f.Close()
+f := excelize.NewFile
+defer f.Close
 
 sw, err := f.NewStreamWriter("Sheet1")
 if err != nil {
@@ -39,7 +39,7 @@ for rowID := 1; rowID <= 200000; rowID++ {
 sw.AddTable(&excelize.Table{Range: "A1:C200000", Name: "Table1", StyleName: "TableStyleMedium2"})
 
 // 4) 必须 Flush
-if err := sw.Flush(); err != nil {
+if err := sw.Flush; err != nil {
     return
 }
 f.SaveAs("big.xlsx")
@@ -55,7 +55,7 @@ f.SaveAs("big.xlsx")
 - **富文本**：该列的值可以直接放 `[]excelize.RichTextRun`。
 - **行属性**：`excelize.RowOpts{Height, Hidden, StyleID, OutlineLevel}`。
 - **合并单元格**：`sw.MergeCell(topLeft, bottomRight)`；不要与已有合并区重叠。
-- **落盘**：`Flush()` 之前数据都在缓冲里；不 Flush 等于白写。
+- **落盘**：`Flush` 之前数据都在缓冲里；不 Flush 等于白写。
 
 ## 流式读：Rows 迭代器
 
@@ -64,43 +64,43 @@ f, err := excelize.OpenFile("big.xlsx")
 if err != nil {
     return
 }
-defer f.Close()
+defer f.Close
 
 rows, err := f.Rows("Sheet1")
 if err != nil {
     return
 }
-for rows.Next() {
-    cols, err := rows.Columns()          // 可传 excelize.Options{RawCellValue: true}
+for rows.Next {
+    cols, err := rows.Columns          // 可传 excelize.Options{RawCellValue: true}
     if err != nil {
         break
     }
     // 处理一行
     _ = cols
 }
-if err := rows.Error(); err != nil {     // 迭代中途的错误在这里
+if err := rows.Error; err != nil {     // 迭代中途的错误在这里
     return
 }
-if err := rows.Close(); err != nil {     // 关闭临时文件
+if err := rows.Close; err != nil {     // 关闭临时文件
     return
 }
 ```
 
-- `Rows.Next()` 前进到下一行，`Rows.Columns()` 拿当前行的单元格字符串。
-- `Rows.GetRowOpts()` 能拿到当前行的行属性（高度、隐藏、样式 ID）。
-- `Rows.Close()` **必须**调用：工作表的 XML 若超过阈值会被解压到系统临时目录，
+- `Rows.Next` 前进到下一行，`Rows.Columns` 拿当前行的单元格字符串。
+- `Rows.GetRowOpts` 能拿到当前行的行属性（高度、隐藏、样式 ID）。
+- `Rows.Close` **必须**调用：工作表的 XML 若超过阈值会被解压到系统临时目录，
   不关就一直留在磁盘上。
-- `GetRows()` 本质就是把迭代器走完收集成二维数组，所以它不适合超大表。
+- `GetRows` 本质就是把迭代器走完收集成二维数组，所以它不适合超大表。
 
 ## 临时文件与内存阈值
 
 - `Options.UnzipXMLSizeLimit` 默认 **16MB**：打开文件时，工作表 XML 和共享字符串表
-  超过这个值就解压到系统临时目录，不再常驻内存。这也是为什么 `Close()` 不能省。
+  超过这个值就解压到系统临时目录，不再常驻内存。这也是为什么 `Close` 不能省。
 - `Options.UnzipSizeLimit` 默认 **16GB**，是解压总大小的上限，必须 ≥ `UnzipXMLSizeLimit`。
 - 想换临时目录：`Options{TmpDir: "/data/tmp"}`（流式写的缓冲落盘也走这个目录）。
 - 流式写的内存缓冲超过阈值后同样落临时文件，此时**不能再读取单元格值**。
 - 清场检查：跑完任务后看系统临时目录里有没有残留 `excelize-*` 文件；
-  有就说明某处漏了 `Close()`。
+  有就说明某处漏了 `Close`。
 
 ## 内存之外的性能开关
 

@@ -21,8 +21,6 @@ tags:
 
 它不是一个大而全的框架，而是一份**模型 + 配套脚本**的组合：仓库里同时给了网页版 Demo、命令行 Demo 和一个 FastAPI 服务端，你按需要挑一个跑。仓库的组织地址后来改过名，老资料里的链接可能还指向旧路径，同一个仓库。
 
-**上游项目**：`ChatGLM-6B`　**仓库**：https://github.com/zai-org/ChatGLM-6B
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -104,8 +102,8 @@ GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/THUDM/chatglm-6b
 from transformers import AutoTokenizer, AutoModel
 
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
-model = model.eval()
+model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half.cuda
+model = model.eval
 
 response, history = model.chat(tokenizer, "你好", history=[])
 print(response)
@@ -120,28 +118,28 @@ response, history = model.chat(tokenizer, "晚上睡不着应该怎么办", hist
 print(response)
 ```
 
-`chat()` 的返回值是 `(response, history)`：`history` 是一个列表，每一轮追加一对问答。**下一轮必须把它传回 `history=`**，否则模型每轮都是失忆状态从头开始。
+`chat` 的返回值是 `(response, history)`：`history` 是一个列表，每一轮追加一对问答。**下一轮必须把它传回 `history=`**，否则模型每轮都是失忆状态从头开始。
 
 **3. 显存不够：换量化档位**
 
 ```python
 # 用 4 或 8 bit 量化加载（目前只支持这两种）
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).quantize(8).half().cuda()
+model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).quantize(8).half.cuda
 ```
 
 要点：量化过程**需要先在内存里加载 FP16 权重**，峰值大概 13GB 内存。如果内存也不够，就直接加载已经量化好的权重仓库，INT4 版本大约只要 5.2GB 内存：
 
 ```python
-model = AutoModel.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True).half().cuda()
+model = AutoModel.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True).half.cuda
 ```
 
 **4. 没有显卡：CPU 上跑**
 
 ```python
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).float()
+model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).float
 ```
 
-注意这里是 `.float()` 而不是 `.half()`。CPU 跑完整精度大概要 32GB 内存，内存不足就换成 `chatglm-6b-int4` 配 `.float()`。
+注意这里是 `.float` 而不是 `.half`。CPU 跑完整精度大概要 32GB 内存，内存不足就换成 `chatglm-6b-int4` 配 `.float`。
 
 **5. 起一个网页界面**
 
@@ -191,7 +189,7 @@ python cli_demo.py
 |---|---|---|
 | 加载模型报 `trust_remote_code` 相关错误 | 模型实现代码是随权重仓库下发的，不在 `transformers` 包里 | `from_pretrained` 必须带 `trust_remote_code=True` |
 | 显存直接爆掉（OOM） | 默认以 FP16 加载，官方硬件表标注需要约 13GB 显存 | 换 `quantize(8)` / `quantize(4)`，或直接加载 `chatglm-6b-int4` / `chatglm-6b-int8` 权重仓库 |
-| 想量化但内存先被吃满 | `quantize()` 要先把 FP16 权重完整读进内存再压，峰值约 13GB | 直接加载官方已量化好的权重仓库，INT4 大约 5.2GB 内存 |
+| 想量化但内存先被吃满 | `quantize` 要先把 FP16 权重完整读进内存再压，峰值约 13GB | 直接加载官方已量化好的权重仓库，INT4 大约 5.2GB 内存 |
 | 对话越长显存占用越高 | 历史上下文会一起进模型，且随轮数增长 | 这是正常行为；控制轮数或主动截断 `history`。官方说明超过训练长度 2048 后性能会下降 |
 | 第 2 轮开始模型像失忆 | 没有把上一轮的 `history` 传回去 | 每轮都用 `response, history = model.chat(tokenizer, q, history=history)` 的写法 |
 | 英文提问回答质量明显差、甚至中英夹杂 | 官方「局限性」明确说明：训练时指示/回答大部分是中文，英文内容极少 | 英文场景改问中文，或换英文能力更强的模型 |
@@ -278,7 +276,7 @@ python cli_demo.py
 - [ ] 确认模型真的加载成功（能出一句回复，不是静默失败）
 - [ ] 多轮对话场景确认 `history` 在轮次之间正确传递
 - [ ] 核对显存占用是否符合预期档位
-- [ ] 记录本次用的模型仓库名（无量化/int4/int8）与精度（`.half()` / `.float()`），方便复现
+- [ ] 记录本次用的模型仓库名（无量化/int4/int8）与精度（`.half` / `.float`），方便复现
 - [ ] 走 `api.py` 的场景确认端口未被占用，并想清楚要不要暴露到公网
 
 ## 参考文件

@@ -145,7 +145,6 @@
 ```
 
 筛法：`path` 不含 `/apps/` 且 `model` 非空 → 这是模型层任务。
-`rateNote` 恒为「官方价 × 2.00（≈ +100%）」，正好对上通配规则的 `markupPercent: 100`。
 
 ### 实测样本（本机 1398 条任务里筛出来的）
 
@@ -163,12 +162,9 @@ Seedance 两档的 `reservePrice` 都是 `3000.000003`：**预冻结按 3,000 �
 
 ## 5) `GET /api/v1/pricing` —— 价目表里没有模型层
 
-结构：`{currency, markupPercent, note, site, pricing:{路径 -> 规则}}`，共 115 条规则。
 模型层命中的是通配 `*`：
 
 ```json
-"*": {"mode":"flat","cost":0,"markupPercent":100,"minPoints":50,
-      "note":"未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 - 全表**没有** `modelPricing` 键；没有任何「模型 code → 单价」的映射。

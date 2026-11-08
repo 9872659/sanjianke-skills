@@ -1,23 +1,20 @@
-# 接口契约（实测）
-
-> 来源：`GET /api/v1/gpu/apps` 返回的 69 个应用之一（`total: 69`，`markup: 1.5`）。
+# 接口契约
 
 ## 应用
 
 | 字段 | 值 |
 |---|---|
 | workflow_id | `wf_87b1e4094cdf7834addf` |
-| 标题 | 熟颜世绘 |
+| 名称 | 熟颜世绘 |
 | 类型 | 文本 |
-| 上游报价 | ¥0.01 |
-| 本站 | 1.5 点（¥0.015）|
+| **每次** | **13.5 点（0.135 元）** |
 
-## 四个端点
+## 端点
 
 ```
 GET  /api/v1/gpu/apps                        应用清单（69 个）
 GET  /api/v1/gpu/apps/<workflow_id>/schema    参数
-POST /api/v1/gpu/assets                       上传素材（免费）
+POST /api/v1/gpu/assets                       上传素材
 POST /api/v1/gpu/apps/<workflow_id>/run       提交 {"inputs":{...}}
 GET  /api/v1/gpu/workflows/execution?run_order_id=...   轮询
 ```

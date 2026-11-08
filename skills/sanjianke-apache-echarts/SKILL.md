@@ -17,8 +17,6 @@ tags:
 
 页面里要把一组数据画成能交互的图——折线、柱状、饼图、地图、关系图——不想从零写 Canvas 和坐标轴。它一个 JS 文件搞定：给一个配置对象，它负责渲染、缩放、悬浮提示、图例切换和动画。适合放进前端项目、报表页面，或者后端渲染成图片。
 
-**上游项目**：`Apache ECharts`　**仓库**：https://github.com/apache/echarts
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -105,7 +103,7 @@ const chart = echarts.init(document.getElementById('chart'), null, {
 **4. 容器尺寸变化时重绘**
 
 ```js
-window.addEventListener('resize', () => { chart.resize(); });
+window.addEventListener('resize',  => { chart.resize; });
 // 也可以指定新尺寸
 chart.resize({ width: 800, height: 500 });
 ```
@@ -136,7 +134,7 @@ echarts.use([LineChart, BarChart, GridComponent, TooltipComponent, LegendCompone
 **7. 用完释放**
 
 ```js
-chart.dispose();
+chart.dispose;
 ```
 
 ## 常见坑
@@ -144,9 +142,9 @@ chart.dispose();
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | 图表不显示，控制台也没报错 | 容器 div 没有高度。DOM 元素默认高度由内容撑开，而图表容器里没有内容 | 给容器显式设高，例如 `style="width:600px;height:400px"`，或用 CSS 类固定尺寸 |
-| 切换标签页 / 折叠面板回来图表变小或错位 | 隐藏时容器尺寸为 0，`init` 时取的尺寸就是错的 | 容器可见后再调 `chart.resize()`，或容器尺寸变化时主动 `resize` |
+| 切换标签页 / 折叠面板回来图表变小或错位 | 隐藏时容器尺寸为 0，`init` 时取的尺寸就是错的 | 容器可见后再调 `chart.resize`，或容器尺寸变化时主动 `resize` |
 | 组件不生效，比如图例、提示框、网格线全没出来 | 用了按需引入却漏注册对应组件 | 把用到的 `*Component` 和 `*Chart`、`*Renderer` 都加进 `echarts.use([...])` |
-| 同一个容器反复 `init`，报"已有实例"或图表残影 | 同一个 DOM 上重复初始化，旧实例没销毁 | 先 `echarts.getInstanceByDom(el)` 判断，或对旧实例 `dispose()` 再初始化；框架里把实例存在 ref 上并在卸载时 dispose |
+| 同一个容器反复 `init`，报"已有实例"或图表残影 | 同一个 DOM 上重复初始化，旧实例没销毁 | 先 `echarts.getInstanceByDom(el)` 判断，或对旧实例 `dispose` 再初始化；框架里把实例存在 ref 上并在卸载时 dispose |
 | 数据变了画面没变 | 只改了原数据数组，没有重新 `setOption`；或用了 `lazyUpdate` 而渲染时机还没到 | 改完数据调一次 `setOption`；注意 `lazyUpdate` 会把更新推迟到下一帧 |
 | `notMerge` 用错导致配置被清空 | 默认是合并，写 `notMerge: true` 是整体替换，没在新 option 里带的项会消失 | 只改局部就用默认合并；确实要整体换再开 `notMerge`，或改用 `replaceMerge` 精确指定 |
 | 服务端渲染出图空白 | 没走 SSR 专用入口与 `ssr: true` 初始化 | 用包里的 SSR 客户端入口（`echarts/ssr/client`）配合 `init` 的 `ssr` 选项，具体流程以官方文档为准 |
@@ -206,14 +204,13 @@ chart.dispose();
 - 地图类图表的底图数据来源与使用许可需自行核实
 - 大数据量性能与浏览器、硬件、图形复杂度强相关，没有通用的"一定能跑到多少万点"结论
 - 版本之间存在 API 与默认行为差异，跨大版本升级需查官方升级说明
-- 本包不包含该库源码，构建与调试细节以上游仓库为准
 
 ## 自检清单
 
 - 执行前：确认容器元素已有确定宽高；确认引入方式（CDN / npm）与项目构建体系匹配
 - 执行前：确认用到的图表类型、组件、渲染器都已注册（按需引入时尤其重要）
 - 执行后：图表正常渲染；缩放窗口或容器尺寸变化后画面正确
-- 执行后：组件卸载时调用了 `dispose()`，没有实例泄漏
+- 执行后：组件卸载时调用了 `dispose`，没有实例泄漏
 - 执行后：如果做了按需引入，验证打包产物里确实没打进未使用的图表类型
 
 ## 参考文件

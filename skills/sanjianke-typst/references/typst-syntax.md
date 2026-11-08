@@ -45,7 +45,7 @@
 
 #if count > 5 [数量偏多] else [数量正常]
 
-取值：#nums.at(0)、#nums.first()、#nums.last()、#nums.len()
+取值：#nums.at(0)、#nums.first、#nums.last、#nums.len
 ```
 
 - **内容块 `[ ... ]`** 是一等公民：可以当参数传，也可以当函数的返回值。
@@ -107,7 +107,7 @@ $ F_n = round(1 / sqrt(5) phi.alt^n), quad
   table.header([地区], [数量], [金额]),
   [华东], [120], [¥12,000],
   [华南], [98],  [¥9,800],
-  table.hline(),
+  table.hline,
   [合计], [218], [¥21,800],
 )
 
@@ -119,7 +119,7 @@ $ F_n = round(1 / sqrt(5) phi.alt^n), quad
 见 @fig-trend 。
 
 #outline(title: [目录], depth: 2)
-#pagebreak()
+#pagebreak
 ```
 
 - `table` 的单元格是按行依次传的，所以配合 `..数组` 展开就能用循环铺数据。
@@ -144,7 +144,7 @@ CSV 常见用法：
 #for r in rows [地区：#r.at("region")，金额：#r.at("amount") ]
 
 // 默认（数组形式）时按下标取，值都是字符串，要算数得自己转
-#let total = rows.map(r => int(r.at(1))).sum()
+#let total = rows.map(r => int(r.at(1))).sum
 合计 #total 。
 ```
 
@@ -168,7 +168,7 @@ CSV 常见用法：
 
 = 概览
 
-本文由数据文件生成，共 #csv("sales.csv").len() 条记录。
+本文由数据文件生成，共 #csv("sales.csv").len 条记录。
 
 #outline(title: [目录], depth: 2)
 
@@ -178,11 +178,11 @@ CSV 常见用法：
 #table(
   columns: 2,
   table.header([地区], [金额]),
-  ..rows.flatten(),
+  ..rows.flatten,
   stroke: none,
 )
 
-#pagebreak()
+#pagebreak
 
 = 结论
 
@@ -200,7 +200,7 @@ typst watch report.typ
 
 | 想做的事 | 常见错误 | 正确写法 |
 |---|---|---|
-| 调用函数 | 直接写 `pagebreak()` | 加 `#`：`#pagebreak()` |
+| 调用函数 | 直接写 `pagebreak` | 加 `#`：`#pagebreak` |
 | 在标记里插变量 | 写 `count` | 加 `#`：`#count` |
 | 数学里的多字母变量 | `$sqrt5$` 被当成一个标识符 | 用函数/括号：`$sqrt(5)$`；或给变量加引号 |
 | 传数组当多个参数 | 写成 `#table(nums)` | 展开：`#table(..nums)` |

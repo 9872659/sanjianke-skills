@@ -18,8 +18,6 @@ tags:
 
 它和你熟悉的那套 XMPP 体系**不兼容**，作者的目标就是做一个替代方案；它更像"可自托管的 WhatsApp / Telegram"，而不是"又一个 Slack"。单聊、群聊、频道（不限人数的只读订阅者）、语音视频通话、消息同步到多设备、服务端权限控制这些都在，但要提醒的是：官方自己把它标为 beta 质量——功能完整、大体稳定，但可能仍有 bug 或缺失特性。
 
-**上游项目**：`Tinode`　**仓库**：https://github.com/tinode/chat
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -84,7 +82,7 @@ docker run --name mongodb --network tinode-net --restart always -d mongo:latest 
 docker exec -it mongodb mongosh
 # 在 mongo shell 里执行：
 #   rs.initiate( {"_id": "rs0", "members": [ {"_id": 0, "host": "mongodb:27017"} ]} )
-#   quit()
+#   quit
 ```
 
 再起服务容器：

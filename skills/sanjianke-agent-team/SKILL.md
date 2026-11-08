@@ -174,7 +174,7 @@ def run_pipeline(requirement: str) -> dict:
     """按 SOP 顺序执行，每个角色读到前面所有产出。"""
     docs = {}
     for role in ROLES:
-        context = "\n\n".join("## %s\n%s" % (k, v) for k, v in docs.items())
+        context = "\n\n".join("## %s\n%s" % (k, v) for k, v in docs.items)
         resp = client.chat.completions.create(
             model=role["model"],
             messages=[

@@ -106,7 +106,6 @@ python3 scripts/a7w.py call voice_tts tts --body '{"text":"你好世界"}'
 
 **接口路径永远是 `/api/v1/apps/<应用代号>/<接口代号>`**，两个代号都来自接口返回的 `code` 字段。
 
-> ⚠️ **不要用平台的 `endpoint_path` 字段拼 URL** —— 它对某些应用是错的上游路径
 > （如 `seedance` 给的是 `/ant/xxx`、`smart_clip` 给的是 `/v1/clip/xxx`），照着拼打不通。
 
 ---

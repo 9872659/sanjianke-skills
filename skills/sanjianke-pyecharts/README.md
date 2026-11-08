@@ -29,21 +29,21 @@ from pyecharts.charts import Bar
 from pyecharts import options as opts
 
 bar = (
-    Bar()
+    Bar
     .add_xaxis(["衬衫", "毛衣", "领带"])
     .add_yaxis("商家A", [114, 55, 27])
     .set_global_opts(title_opts=opts.TitleOpts(title="销售情况"))
 )
 
-bar.render()              # 写出 render.html
+bar.render              # 写出 render.html
 bar.render("out/bar.html")  # 指定路径
 ```
 
 常见分支：
 
-- Notebook 里显示用 `render_notebook()`，不是 `render()`。
+- Notebook 里显示用 `render_notebook`，不是 `render`。
 - 一个页面拼多张图用 `Page`。
-- 想导成 PNG 要先 `pip install snapshot-selenium`，再用 `make_snapshot()`。
+- 想导成 PNG 要先 `pip install snapshot-selenium`，再用 `make_snapshot`。
 - 地图、组合图、时间轴都在 `pyecharts.charts` 里，换类名即可。
 
 更多操作与完整避坑清单见 `SKILL.md`。
@@ -66,7 +66,6 @@ bar.render("out/bar.html")  # 指定路径
 - 图表数据不联网，工具本身也不上报任何内容；唯一的网络行为是渲染出的 HTML 去 CDN 取 JS 资源，可以改成内嵌或本地 host 关掉。
 - 需要 Selenium 快照时，浏览器与 driver 由你自己安装，注意版本匹配；不要在生产服务器上跑不受控的浏览器进程。
 - 图表内可能包含业务数据，导出的 HTML 会把它序列化进文件；分享前确认数据可对外。
-
 
 ---
 

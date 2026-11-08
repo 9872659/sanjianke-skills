@@ -76,7 +76,7 @@ table_settings = {
 | `min_words_horizontal` | 横向 `text` 策略的同名参数（默认 1） | 同上 |
 | `intersection_tolerance` | 组合成单元格时，正交的两条边相距在此容差内才算相交 | 线明明交叉却没形成交点时**调大** |
 | `intersection_x_tolerance` / `intersection_y_tolerance` | 分轴版本 | 同上 |
-| `text_*` 前缀 | 这些设置**在从每个发现的表格里提文本时**生效。`Page.extract_text()` 的所有参数在这里都可用 | 单元格内文字粘连或断开时，调这里的容差 |
+| `text_*` 前缀 | 这些设置**在从每个发现的表格里提文本时**生效。`Page.extract_text` 的所有参数在这里都可用 | 单元格内文字粘连或断开时，调这里的容差 |
 | `text_x_tolerance` / `text_y_tolerance` | 这两个**还额外作用于表格识别本身**——用 `text` 策略时，算法找词会期望同一词内字母间距不超过这两个值 | `text` 策略把词切碎了就调大 |
 
 ## 四、调参流程（按这个顺序做，别跳步）
@@ -89,7 +89,7 @@ import pdfplumber
 with pdfplumber.open("report.pdf") as pdf:
     page = pdf.pages[0]
     im = page.to_image(resolution=150)
-    im.debug_tablefinder()          # 用默认设置
+    im.debug_tablefinder          # 用默认设置
     im.save("step0.png")
 ```
 
@@ -101,7 +101,7 @@ with pdfplumber.open("report.pdf") as pdf:
 
 ```python
 cropped = page.crop((0, 100, page.width, page.height - 80))
-cropped.to_image(resolution=150).debug_tablefinder().save("step1.png")
+cropped.to_image(resolution=150).debug_tablefinder.save("step1.png")
 ```
 
 坐标单位是 PDF 点（point），原点是**页面左上角**，`top` 向下增大。页面尺寸从 `page.width` / `page.height` 拿。
@@ -146,12 +146,12 @@ table_settings = {
 
 ## 五、从 Table 对象拿更多信息
 
-`find_tables()` 返回的是 `Table` 对象，比 `extract_tables()` 的裸二维数组信息多：
+`find_tables` 返回的是 `Table` 对象，比 `extract_tables` 的裸二维数组信息多：
 
 ```python
 with pdfplumber.open("report.pdf") as pdf:
     page = pdf.pages[0]
-    for table in page.find_tables():
+    for table in page.find_tables:
         print("位置:", table.bbox)          # 表格在页面上的边界框
         print("行列:", len(table.rows), len(table.columns))
         print("单元格:", len(table.cells))
@@ -182,7 +182,7 @@ header = None
 
 with pdfplumber.open("long-report.pdf") as pdf:
     for page in pdf.pages:
-        rows = page.extract_table()
+        rows = page.extract_table
         if not rows:
             continue
         if header is None:
@@ -225,7 +225,7 @@ table_settings = {
 
 ## 八、输出格式与下游衔接
 
-`extract_table()` 返回 `list[list[str | None]]`（行 → 单元格），`extract_tables()` 再包一层（表 → 行 → 单元格）。
+`extract_table` 返回 `list[list[str | None]]`（行 → 单元格），`extract_tables` 再包一层（表 → 行 → 单元格）。
 
 写 CSV 的最小代码：
 
@@ -237,7 +237,7 @@ with pdfplumber.open("report.pdf") as pdf, \
      open("out.csv", "w", newline="", encoding="utf-8-sig") as f:
     writer = csv.writer(f)
     for page in pdf.pages:
-        for table in page.extract_tables():
+        for table in page.extract_tables:
             writer.writerows(table)
 ```
 

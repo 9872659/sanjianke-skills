@@ -21,13 +21,13 @@ pycorrector：中文文本纠错工具箱 的安装、常用命令与避坑要�
 
 常用入口速查：
 
-- 建对象：`Corrector()`（统计模型，CPU）、`MacBertCorrector(...)`、`T5Corrector()`、`ErnieCscCorrector()` 等
+- 建对象：`Corrector`（统计模型，CPU）、`MacBertCorrector(...)`、`T5Corrector`、`ErnieCscCorrector` 等
 - 纠错：`m.correct(句子)` 返回 dict；`m.correct_batch([句子, ...])` 返回 list
 - 只检测：`m.detect(句子)`，返回错误词与起止下标
 - 自定义：`Corrector(proper_name_path=...)`、`Corrector(custom_confusion_path_or_dict=...)`
 - 换模型：`Corrector(language_model_path='...klm')`
 - 命令行：`python -m pycorrector input.txt -o out.txt -n -d`（参数以本地 `-h` 为准）
-- 附带能力：`pycorrector.traditional2simplified(...)`、`pycorrector.simplified2traditional(...)`、`EnSpellCorrector()`
+- 附带能力：`pycorrector.traditional2simplified(...)`、`pycorrector.simplified2traditional(...)`、`EnSpellCorrector`
 
 完整的六块内容（用与不用、安装、常用操作、常见坑、权限与用途、能力边界）见 `SKILL.md`。
 

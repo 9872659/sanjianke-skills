@@ -61,7 +61,6 @@ npx @vendure/create my-shop --log-level verbose
 
 ## 安全
 
-- 不内嵌任何密钥；本包只包含说明文字，不含上游项目源码。
 - 后台默认凭据 `superadmin` / `superadmin` 只用于本地开发，上线前必须改掉。
 - 数据库账号密码、第三方支付/物流密钥一律放环境变量或本地配置文件，不要提交进版本控制。
 - 管理后台与 Admin API 是对外攻击面，生产环境务必收紧访问来源、启用 HTTPS，并配合反向代理。

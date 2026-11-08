@@ -17,8 +17,6 @@ tags:
 
 它把"一堆点和线"的关系数据变成可看、可拖、可缩放的关系图：节点、连线、分组（combo）、布局算法、交互行为、主题与插件都在一套引擎里。适合做关系分析（谁和谁有联系、网络结构长什么样）、拓扑与链路图、组织与依赖关系图；不适合拿它画柱状图、折线图那类统计图表。
 
-**上游项目**：`G6`　**仓库**：https://github.com/antvis/G6
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -51,7 +49,7 @@ npm install @antv/g6
 yarn add @antv/g6
 ```
 
-**注意版本分叉**：仓库有 `v5` 与 `v4` 两套并行的大版本，API 完全不同（v4 用 `new G6.Graph({...})` 加 `graph.data()` / `graph.render()`；v5 用 `import { Graph } from '@antv/g6'` 加配置式 `data`、`layout`、`behaviors`）。npm 上的 `latest` 标签当前指向 5.x 系列。老项目升级前务必确认自己在哪一版。
+**注意版本分叉**：仓库有 `v5` 与 `v4` 两套并行的大版本，API 完全不同（v4 用 `new G6.Graph({...})` 加 `graph.data` / `graph.render`；v5 用 `import { Graph } from '@antv/g6'` 加配置式 `data`、`layout`、`behaviors`）。npm 上的 `latest` 标签当前指向 5.x 系列。老项目升级前务必确认自己在哪一版。
 
 **浏览器直接引入**：包内提供 UMD 产物（`dist/g6.min.js`），通过 `<script>` 引入后从全局命名空间取 `Graph`。具体全局变量名与产物路径以实际版本文件为准。
 
@@ -89,7 +87,7 @@ const graph = new Graph({
   behaviors: ['drag-canvas', 'zoom-canvas', 'drag-element'],
 });
 
-graph.render();
+graph.render;
 ```
 
 **2. 换布局**
@@ -102,7 +100,7 @@ const graph = new Graph({
   data,
   layout: { type: 'circular' },
 });
-graph.render();
+graph.render;
 ```
 
 **3. 用 palette 做分组配色**
@@ -121,7 +119,7 @@ const graph = new Graph({
   },
   layout: { type: 'force' },
 });
-graph.render();
+graph.render;
 ```
 
 **4. 配置交互行为**
@@ -134,7 +132,7 @@ const graph = new Graph({
   data,
   behaviors: ['drag-canvas', 'zoom-canvas', 'drag-element', 'click-select'],
 });
-graph.render();
+graph.render;
 ```
 
 **5. 更新数据并重新渲染**
@@ -146,7 +144,7 @@ graph.setData({
   nodes: [...],
   edges: [...],
 });
-graph.render();
+graph.render;
 ```
 
 在已有图上做增量更新时，先看官方文档给出的 API 与生命周期说明，别直接改原对象里的数组然后指望它自动刷新。
@@ -170,7 +168,7 @@ register('node', 'my-node', {
 **8. 销毁图实例**
 
 ```js
-graph.destroy();
+graph.destroy;
 ```
 
 单页应用里路由切换或组件卸载时必须销毁，否则画布、事件监听与布局计算会残留。
@@ -184,7 +182,7 @@ graph.destroy();
 | 节点全部堆在左上角一个点上 | 没有配置 `layout`，节点缺少初始坐标 | 配置一个布局（如 `{ type: 'force' }`），或在数据里为节点显式提供坐标 |
 | 拖拽 / 缩放没反应 | `behaviors` 没配，或配的行为名写错 | 在 `behaviors` 里按官方文档的行为名配置，例如画布拖拽、缩放、节点拖拽、点击选中 |
 | 数据更新后画面没变化 | 直接在原对象上改数组，没有走更新 API | 用 `setData` 替换数据源后再调用渲染方法；大图增量更新按官方文档的 API 处理 |
-| 页面切来切去后越来越卡 | 每次进入都新建图实例，旧的没 `destroy()` | 组件卸载 / 路由离开前调用 `graph.destroy()`，或复用同一实例并更新数据 |
+| 页面切来切去后越来越卡 | 每次进入都新建图实例，旧的没 `destroy` | 组件卸载 / 路由离开前调用 `graph.destroy`，或复用同一实例并更新数据 |
 | 大量节点时布局算很久或页面卡死 | 布局算法复杂度与节点规模相关，部分布局开销较大 | 控制节点规模、先做裁剪 / 聚合，或换更轻的布局；GPU / 并行布局需要相应的运行环境支持 |
 | 节点文字在不同机器上错位 | 字体度量差异或未等字体加载完成就渲染 | 等字体就绪后再渲染，或使用内置文本元素并留足边距 |
 | 服务端 / Node 环境渲染报错 | 默认走浏览器渲染路径 | 服务端渲染需要额外的渲染环境配置，具体按官方文档的服务端渲染方案来做 |
@@ -264,7 +262,7 @@ graph.destroy();
 - [ ] 确认所有节点都渲染出来且分布合理（不是全挤在一个点）
 - [ ] 试一遍拖拽、缩放、选中，确认 `behaviors` 生效
 - [ ] 更新数据的场景下确认画面确实刷新了
-- [ ] 组件卸载 / 路由离开时确认调用了 `destroy()`
+- [ ] 组件卸载 / 路由离开时确认调用了 `destroy`
 - [ ] 大数据量场景实测一下布局耗时与交互帧率
 - [ ] 记录实际使用的版本号，便于后续排查
 

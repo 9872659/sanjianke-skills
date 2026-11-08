@@ -43,7 +43,6 @@ python3 scripts/run.py doctor
 ```
 
 - 实测：`Qwen3.7-Max`
-- 原因：目录里有价、上游没接入
 - 处理：换 `Qwen3.7-Plus` / `Qwen3.5-Flash` 等能调的一档
 
 ### `invalid_model`（HTTP 401）
@@ -73,7 +72,6 @@ python3 scripts/run.py doctor
 ```
 
 - 实测：`gpt-5.5`
-- 原因：**上游渠道欠费，不是你的余额**（你的 `GET /user/balance` 是正常的）
 - 处理：换模型；同一个包内其他模型不受影响
 
 ### `当前暂无可用渠道` / `service_rejected`（HTTP 503）
@@ -89,13 +87,11 @@ python3 scripts/run.py doctor
 ### `list index out of range`（HTTP 400）
 
 - 实测：`LegalOne-8B`、`AutoGLM-Phone-9B-Multilingual`、`KAT-Dev`、`Sinong1.0-32B`
-- 原因：上游 Python 服务对空 `messages` 的报错，说明**模型是通的**
 - 处理：正常带 messages 调用即可；这条也是 `check` 判定「能调」的依据之一
 
 ### `Role must be in [...]` / `Empty input messages` / `messages is empty`（HTTP 400）
 
 - 实测：`kimi-k3`、`Kimi-K2.6`、`GLM-5.2`、`Qwen3.5-Flash`、`Qwen3.8-Omni-Flash`、`deepseek-chat`、`MiniMax-M3`
-- 原因：`check` 探针故意发空 `messages`，上游按参数校验拦下——**这正是我们要的「通」**
 - 处理：无需处理
 
 ### `unknown_endpoint`（HTTP 404）

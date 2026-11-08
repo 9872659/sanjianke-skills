@@ -94,7 +94,6 @@ HTTP/1.1 422
 ### 按秒价（`/api/v1/pricing` 原文）
 
 ```json
-{"mode": "per_second", "markupPercent": 1e-07,
  "resolutionRates": {"480P": 14, "768P": 28, "1080P": 60, "2K": 80, "4K": 80}}
 ```
 
@@ -125,8 +124,6 @@ HTTP/1.1 422
 - 计费口径（`/api/v1/apps/voice_tts/*` 规则原文）：
 
 ```json
-{"mode": "flat", "cost": 0, "markupPercent": 200,
- "note": "对外价 = 上游实际点数 × 3；一律按上游真实点数计费"}
 ```
 
 - 实测反推：**33 字 = 5.94 点**，即 0.18 点/字。2,000 字正文全念约 360 点（3.6 元）。
@@ -146,8 +143,6 @@ HTTP/1.1 422
 - 计费：`media_services_33` 没有专属规则，落通配：
 
 ```json
-{"mode": "flat", "cost": 0, "markupPercent": 100, "minPoints": 50,
- "note": "未单独定价的接口：对外 = 上游实际点数 × 2，单笔保底 50 点"}
 ```
 
 - 所以 `cost` 里配乐按 **50 点（下限）** 计，实际按任务详情结算。

@@ -19,10 +19,10 @@ G6：关系图可视化引擎 的安装、常用命令与避坑要点
 让 Agent 加载本 Skill 后，按下面的顺序推进：
 
 1. **先判适用性**：要画的是关系网络图才用它。统计图表、流程图、地图、纯表格都命中"不要用它"，直接换方案。
-2. **锁定大版本**：执行 `npm ls @antv/g6` 或看 `package.json`。v5 是配置式写法（`new Graph({ container, data, layout, behaviors })`），v4 是 `new G6.Graph()` + `graph.data()` + `graph.render()`，两者不能混。
+2. **锁定大版本**：执行 `npm ls @antv/g6` 或看 `package.json`。v5 是配置式写法（`new Graph({ container, data, layout, behaviors })`），v4 是 `new G6.Graph` + `graph.data` + `graph.render`，两者不能混。
 3. **准备数据与容器**：`{ nodes: [...], edges: [...] }`，节点带 `id`；容器给足宽高。
-4. **配三件事**：`layout`（布局）、`behaviors`（交互）、`node` / `edge`（样式与配色），然后 `graph.render()`。
-5. **收尾**：数据更新走 `setData` + 渲染；组件卸载时 `graph.destroy()`。
+4. **配三件事**：`layout`（布局）、`behaviors`（交互）、`node` / `edge`（样式与配色），然后 `graph.render`。
+5. **收尾**：数据更新走 `setData` + 渲染；组件卸载时 `graph.destroy`。
 
 包内的 `SKILL.md` 有完整的六块内容：什么时候用 / 不用、安装、常用操作、常见坑、权限与用途说明、能力边界。布局、行为、插件、主题的准确名称清单以所装版本对应的官方文档为准。
 

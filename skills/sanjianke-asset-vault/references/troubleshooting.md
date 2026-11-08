@@ -43,7 +43,6 @@
 
 ### 「动态」是什么，为什么不给数字
 
-`cost:0 + markupPercent>0` 的规则是**动态计价**：对外 = 上游实际点数 ×(1+markup%)，价目表不写死单价。
 `cost` 表里的「预算预留」是按规则 `minPoints`（没有就用全局通配保底 50 点）算的，**不是报价**。
 真实成交价看 `GET /api/v1/me/tasks` 的 `actualPrice`：`cost --live` 会把它排进表里（source=live）。
 
@@ -58,7 +57,6 @@
 
 ### `remove` 为什么也要钱
 
-10 个应用的 remove 是 `cost:0 + markupPercent:100`（上游 ×2）；`watermark_removal/remove` 是主业务「去水印」100 点/次。
 要**免费清理**就用 `prune`：它只删本地台账记录，不碰远端。
 
 ### `catalog` 说某应用「应用目录未登记 create」
@@ -119,8 +117,6 @@
 `release --dry-run` 会明确告诉你「这个应用的 remove 在应用目录里没有登记」。
 
 ### 清理一次扣了 100 点
-
-`watermark_removal/remove` 是去水印主业务，固定 100 点/次，失败也计（note 原文：「上游按请求 20 点，失败亦计」）。
 
 ### 我只想清本地记录
 

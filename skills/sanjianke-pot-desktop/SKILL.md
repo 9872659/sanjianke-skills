@@ -19,8 +19,6 @@ tags:
 
 真正让它比同类工具更值得推荐的是两件事：一是**多引擎并行**，同一次查询可以同时问好几个翻译/识别引擎，结果并排对比；二是**它自己开了一个本地 HTTP 接口**，别的软件、脚本或自建工作流都能直接调用它，不必再包一层 UI 自动化。
 
-**上游项目**：`pot-desktop`　**仓库**：https://github.com/pot-app/pot-desktop
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -104,8 +102,6 @@ pnpm tauri build    # 打包
 
 **1）截图 OCR / 截图翻译**：按快捷键后框选识别区域即可。若内置截图在某些桌面环境不可用（典型是 Wayland），改成「先用别的截图工具截图 + 再调用外部接口」。
 
-**2）外部调用（本地 HTTP 接口）**：pot 监听 `127.0.0.1` 上的端口，默认 `60828`，可在设置里改。接口清单（来自上游 README）：
-
 ```bash
 POST "/"                                     # 翻译指定文本（body 为待翻译文本）
 POST "/translate"                            # 翻译指定文本（同 "/"）
@@ -136,8 +132,6 @@ rm ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && \
   flameshot gui -s -p ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && \
   curl "127.0.0.1:60828/ocr_recognize?screenshot=false"
 ```
-
-**5）Wayland 下用系统快捷键替代内置快捷键**（内置快捷键在 Wayland 下不可用）：以 Hyprland 配 grim + slurp 为例，上游给的原样配置如下。
 
 ```conf
 bind = ALT, X, exec, grim -g "$(slurp)" ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl "127.0.0.1:60828/ocr_recognize?screenshot=false"
@@ -206,7 +200,6 @@ windowrulev2 = move cursor 0 0, class:(pot), title:(Translator|PopClip|Screensho
 - 多接口并行翻译、多接口文字识别
 - 识别侧：系统 OCR（Windows / macOS 自带或 Linux 上的 Tesseract）、Tesseract.js，以及百度 / 腾讯 / 火山 / 讯飞等在线 OCR 与图片翻译接口
 - 翻译侧：OpenAI、智谱 AI、Gemini Pro、Ollama（本地）、阿里 / 百度 / 彩云 / 腾讯 / 火山 / 小牛 / Google / Bing / DeepL / 有道 / 剑桥 / Yandex 等
-- 语音朗读：上游「支持接口」列表中的语音合成条目主要是 Lingva，其余能力靠插件补充，使用前以实际版本界面为准
 - 生词本导出：Anki、欧路词典、有道、扇贝
 - 插件系统（`.potext`）与外部划词工具条扩展（SnipDo / PopClip）
 - 本地 HTTP 接口，供本机其他软件与脚本调用
@@ -238,7 +231,6 @@ windowrulev2 = move cursor 0 0, class:(pot), title:(Translator|PopClip|Screensho
 - 内置截图在部分纯 Wayland 环境下不可用，需要外部截图工具配合
 - Flatpak 打包版缺托盘图标，功能可用但交互差一截
 - 多引擎并行意味着文本会同时发往多个第三方服务，隐私面比单引擎工具更大
-- 语音合成能力在上游「支持接口」列表里覆盖很薄，主要靠插件补齐
 - 本地 HTTP 接口默认无鉴权，虽然只监听本机，仍应确认端口不被其它本地程序滥用
 - 插件质量参差不齐，装第三方插件前应确认来源可信
 

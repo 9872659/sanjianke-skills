@@ -22,8 +22,6 @@ tags:
 绝大多数 RAG、语义搜索、以图搜图、推荐召回、内容去重，底层要的就是这个能力。
 它只负责"存向量、找最近邻"，不生成向量、不写提示词、不编排业务逻辑。
 
-**上游项目**：`Qdrant`　**仓库**：https://github.com/qdrant/qdrant
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -174,7 +172,7 @@ import asyncio
 import numpy as np
 from qdrant_client import AsyncQdrantClient, models
 
-async def main():
+async def main:
     client = AsyncQdrantClient(url="http://localhost:6333")
     await client.create_collection(
         collection_name="my_collection",
@@ -182,14 +180,14 @@ async def main():
     )
     await client.upsert(
         collection_name="my_collection",
-        points=[models.PointStruct(id=i, vector=np.random.rand(10).tolist()) for i in range(100)],
+        points=[models.PointStruct(id=i, vector=np.random.rand(10).tolist) for i in range(100)],
     )
     res = await client.query_points(
-        collection_name="my_collection", query=np.random.rand(10).tolist(), limit=10
+        collection_name="my_collection", query=np.random.rand(10).tolist, limit=10
     )
     print(res)
 
-asyncio.run(main())
+asyncio.run(main)
 ```
 
 ```bash
@@ -211,7 +209,7 @@ REST 形态的请求体与全部端点以 OpenAPI 规范为准：https://api.qdr
 | 循环一条条 `upsert` 上传，慢到不可接受 | 每个点一次请求，开销全在往返上 | 用 `upload_collection` 或 `upload_points` 批量上传，它们会自动分块处理 |
 | 上传报维度不符 | 向量长度与集合的 `size` 不一致，或换了 embedding 模型 | 换模型必须新建集合并重新灌数据，或按官方迁移思路处理 |
 | 装完 `fastembed-gpu` 后报依赖冲突 | `fastembed` 与 `fastembed-gpu` 互斥，只能装一个 | 只装其中一个；若之前装过 `fastembed`，官方建议在干净环境里重装 |
-| 调用了 `search()` 提示已废弃 | 现在统一用 `query_points()` | 把 `client.search(...)` 迁移到 `client.query_points(...).points` |
+| 调用了 `search` 提示已废弃 | 现在统一用 `query_points` | 把 `client.search(...)` 迁移到 `client.query_points(...).points` |
 | 用云推理报模型不可用 | 云端推理目前只在付费方案提供，且图像必须以 base64 或 URL 传入 | 升级方案，或改回本地 FastEmbed 自己算 embedding |
 | 用旧教程的 `master` 分支提 PR 被打回 | 上游开发分支是 `dev` | 从 `dev` 拉分支、向 `dev` 提 PR（以仓库贡献说明为准） |
 

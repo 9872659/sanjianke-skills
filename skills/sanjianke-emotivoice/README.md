@@ -34,7 +34,6 @@ EmotiVoice：多情感多音色语音合成 的安装、常用命令与避坑要
 - Python 3.8 及以上（PyPI 元数据声明 `>=3.8.0`）
 - PyTorch、torchaudio，按显卡驱动的 CUDA 版本匹配安装
 - numpy、numba、scipy、soundfile、yacs、g2p_en、jieba、pypinyin
-- transformers：版本敏感，按上游 README 指定版本安装
 - streamlit（网页界面）、fastapi + uvicorn + pydub + pyrubberband（OpenAI 兼容接口）
 - git-lfs（拉取 BERT 权重）；预训练权重需另行下载
 - 中文字素与数字处理相关依赖由仓库的安装清单覆盖，以仓库当前说明为准
@@ -47,7 +46,6 @@ EmotiVoice：多情感多音色语音合成 的安装、常用命令与避坑要
 - 纯本地推理不需要任何账号或 API Key，也不会上传你的文本与音频
 - 若把网页界面或 HTTP 接口暴露到公网，必须自行加鉴权与访问控制（示例命令都只绑定 `127.0.0.1`）
 - 音色克隆只使用你拥有授权的录音；用他人声音合成并对外发布可能涉及人格权与平台规则风险
-- 交互式页面另有上游单独的用户协议文件约束，商用前请自行阅读
 - 模型权重与生成的音频建议纳入版本管理之外的临时目录，避免误提交进仓库
 
 ---

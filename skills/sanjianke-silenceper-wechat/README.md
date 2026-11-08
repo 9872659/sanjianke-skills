@@ -28,8 +28,8 @@ go mod tidy
 写一个最小 `main.go`（完整可运行版本见 `SKILL.md`「常用操作」第 1 条）：
 
 ```go
-wc := wechat.NewWechat()
-memory := cache.NewMemory()
+wc := wechat.NewWechat
+memory := cache.NewMemory
 cfg := &offConfig.Config{
     AppID: "xxx", AppSecret: "xxx", Token: "xxx",
     Cache: memory,
@@ -42,10 +42,10 @@ server.SetMessageHandler(func(msg message.MixMessage) *message.Reply {
     return &message.Reply{MsgType: message.MsgTypeText, MsgData: text}
 })
 
-if err := server.Serve(); err != nil {   // 先 Serve
+if err := server.Serve; err != nil {   // 先 Serve
     return
 }
-server.Send()                            // 再 Send
+server.Send                            // 再 Send
 ```
 
 运行：
@@ -66,7 +66,7 @@ go run main.go
 - **语言与工具链**：Go（支持 Go modules）
 - **模块导入路径**：`github.com/silenceper/wechat/v2`（必须带 `/v2`）
 - **本项目的直接依赖**：HTTP 层用 resty，日志用 logrus；均由 `go mod tidy` 自动拉齐
-- **缓存后端**：Redis 或 memcache（生产环境必需，用于共享 `access_token`）；`cache.NewMemory()` 仅供本地调试
+- **缓存后端**：Redis 或 memcache（生产环境必需，用于共享 `access_token`）；`cache.NewMemory` 仅供本地调试
 - **回调地址**：接收消息需要公网可达的 HTTP 地址；本地开发需内网穿透工具
 - **平台侧依赖**：微信公众号 / 小程序 / 商户号 / 企业微信的可用主体与所需权限，以及 IP 白名单配置
 - 各模块支持的具体接口范围以官方文档站与仓库 `doc/api` 目录为准

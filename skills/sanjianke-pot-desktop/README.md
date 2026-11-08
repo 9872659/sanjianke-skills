@@ -54,7 +54,6 @@ curl "127.0.0.1:60828/ocr_recognize?screenshot=false"
 
 ## 依赖
 
-- 上游产品本体（Tauri 桌面应用，托盘常驻）
 - Windows：WebView2 运行时；插件另需 VC++ 可再发行组件包
 - macOS：辅助功能与屏幕录制权限；首次打开需处理隔离属性
 - Linux：GTK / WebKit2Gtk / 托盘指示器 / librsvg 等系统库（源码构建时由官方命令一次性补齐）

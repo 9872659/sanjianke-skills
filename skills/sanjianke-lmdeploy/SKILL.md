@@ -18,8 +18,6 @@ tags:
 
 它和「自己用 transformers 写个 loop」的区别，不在能不能跑，而在**吞吐**：连续批处理、分块 KV Cache、张量并行、高性能 CUDA 算子这些是它的默认配置，官方给出的对比数据是请求吞吐可达 vLLM 的 1.8 倍；4bit 量化的推理性能是 FP16 的 2.4 倍。代价是它对 GPU 架构、CUDA 版本、引擎选型都有明确要求，装错了不会「降级运行」，而是直接报错。
 
-**上游项目**：`LMDeploy`　**仓库**：https://github.com/InternLM/lmdeploy
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -37,7 +35,6 @@ tags:
 - **要训练或微调模型**。它只做压缩、部署、服务，训练请换训练框架。
 - **没有 NVIDIA GPU 或不打算用 GPU 推理**。它的优化全部围绕 GPU（另有一条昇腾路径），CPU 推理不是它的目标。
 - **要的是多模型路由、鉴权、配额、计费这一整套网关能力**。它提供的分发服务偏「把多个模型实例聚起来」，企业级网关能力不在范围内。
-- **模型架构很新、官方支持矩阵里没有**。TurboMind 与 PyTorch 两个引擎的支持范围不同，两边都没有的模型跑不起来，得等上游适配或换 PyTorch 引擎里更通用的路径。
 - **只是想要一个「量化算法实现」**。它的量化模块主要服务自己的 TurboMind 引擎（官方明确：量化模块只支持 AWQ 算法，但可以推理 AWQ 与 GPTQ 两类 4bit 模型）；要别的量化方案请用对应的量化工具链。
 
 ## 安装
@@ -144,7 +141,7 @@ lmdeploy serve api_server internlm/internlm2_5-7b-chat
 from openai import OpenAI
 
 client = OpenAI(api_key='YOUR_API_KEY', base_url="http://0.0.0.0:23333/v1")
-model_name = client.models.list().data[0].id
+model_name = client.models.list.data[0].id
 resp = client.chat.completions.create(
     model=model_name,
     messages=[{"role": "user", "content": "provide three suggestions about time management"}],
@@ -305,7 +302,6 @@ print(response)
 - 4bit AWQ / GPTQ 推理对 GPU 架构有要求（Volta sm70、Turing sm75、Ampere sm80/86、Ada sm89 等，以官方文档当前列表为准）。
 - KV Cache int4 / int8 量化支持的架构范围更宽（Volta sm70 及以上），TurboQuant 另要求 PyTorch 引擎、非 MLA 架构、`head_dim` 为 2 的幂。
 - 模型权重来源：Hugging Face 默认，或 ModelScope / openMind Hub；受控仓库需要 Token。
-- VLM 模型需要额外安装对应上游视觉组件的依赖。
 - Docker 方式需要 Docker 与可用的 `--gpus all`。
 
 ## 已知限制
@@ -328,7 +324,6 @@ print(response)
 - [ ] 量化时 `--work-dir` 带上了模型名，方便自动匹配 chat template。
 - [ ] 用量化模型推理 / 起服务时，`--model-format` 或 `TurbomindEngineConfig(model_format=...)` 已显式声明。
 - [ ] 量化过程 OOM 时按官方处方调整：降 `--calib-seqlen`、提高 `--calib-samples`、`--batch-size 1`。
-- [ ] VLM 场景已确认上游视觉依赖单独装好。
 - [ ] 部署前用 `lmdeploy chat` 与 `lmdeploy check_env` 快速验证模型、模板与环境。
 - [ ] 上线前压测：关注吞吐、`finish_reason` 是否频繁出现 `length`、长会话是否被截断。
 

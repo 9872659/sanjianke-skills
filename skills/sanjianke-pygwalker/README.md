@@ -10,7 +10,6 @@
 - 数据已经在 Python 里读进来了：`pandas` DataFrame、`polars` 或 `pyarrow` 表。
 - 需要有前端渲染能力的宿主环境：Jupyter Notebook / JupyterLab / Jupyter Lite、Colab、Kaggle、Databricks Notebook、VS Code 的 Jupyter 扩展，或一个 Streamlit 应用。
 - 用 Streamlit 的话，除了 `pygwalker` 还要装 `streamlit` 本身。
-- 想用云端计算或云端分享能力，需要自备上游站点的 token（通过 `pygwalker config` 写入或实例化时传入）。
 
 ---
 
@@ -38,7 +37,7 @@ walker = pyg.walk(df)
 
 - `spec_path`：本地文件路径，用来加载和保存图表状态。
 - `computation`：查询在哪算。`"browser"` 纯前端、`"kernel"` 本地内核（DuckDB）、`"cloud"` 云端；不写则自动选择。
-- `walk()` 返回的 `Walker` 对象可以 `show()`、`to_html()`、`to_code()`，也能直接交给 Streamlit 的 `StreamlitRenderer`。
+- `walk` 返回的 `Walker` 对象可以 `show`、`to_html`、`to_code`，也能直接交给 Streamlit 的 `StreamlitRenderer`。
 
 Streamlit 集成要点：把创建 renderer 的函数用 `@st.cache_resource` 缓存起来，否则每次交互都会重建。完整示例与更多操作见 `SKILL.md`。
 

@@ -18,8 +18,6 @@ tags:
 
 它的核心价值是**覆盖面 × 统一入口**：持续预训练、指令微调、奖励建模、PPO / DPO / KTO / ORPO 这些训练范式，LoRA / QLoRA / 全参 / Freeze 这些资源档位，都在同一套配置体系里；还配了一个图形界面（LLaMA Board）给不想碰命令行的人用。
 
-**上游项目**：`LLaMA-Factory`　**仓库**：https://github.com/hiyouga/LlamaFactory
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -108,7 +106,7 @@ Windows 上需要**手动装 GPU 版 PyTorch**：
 ```bash
 pip uninstall torch torchvision torchaudio
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
-python -c "import torch; print(torch.cuda.is_available())"
+python -c "import torch; print(torch.cuda.is_available)"
 ```
 
 输出 `True` 才算装对。另外 bitsandbytes 在 Windows 上要单独处理，官方给了几种方式：
@@ -232,7 +230,7 @@ DeepSpeed、FSDP + QLoRA（官方给出 2×24GB 微调 70B 的方案）等配置
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | `pip install -e .` 装完，一跑就报缺依赖 | 官方安装命令是两步：`pip install -e .` 之后还要 `pip install -r requirements/metrics.txt`；deepspeed 也是独立的可选依赖组 | 按需补装：`pip install -e . && pip install -r requirements/metrics.txt -r requirements/deepspeed.txt`；特定功能再看 `examples/requirements/` |
-| Windows 上训练极慢，或者报 CUDA 不可用 | 默认拿到的可能是 CPU 版 PyTorch | 卸掉重装 CUDA 版并验证：`python -c "import torch; print(torch.cuda.is_available())"` 要输出 `True` |
+| Windows 上训练极慢，或者报 CUDA 不可用 | 默认拿到的可能是 CPU 版 PyTorch | 卸掉重装 CUDA 版并验证：`python -c "import torch; print(torch.cuda.is_available)"` 要输出 `True` |
 | Windows 上报 `Can't pickle local object` | 数据加载的多进程在 Windows 上有额外限制 | 官方给的做法是把 `dataloader_num_workers` 设为 `0` |
 | Windows 上装不上 bitsandbytes | 上游 wheel 对 Windows 支持有限 | 按官方给的几种方式试：`pip install bitsandbytes` / `uv pip install bitsandbytes --no-deps` / 指定的 Windows wheel |
 | 自己的数据集一直提示找不到 | 数据集没有登记，框架不知道这个名字指向哪个文件 | 更新 `data/dataset_info.json` 注册数据集，格式细节对照 `data/README.md` |
@@ -307,7 +305,7 @@ DeepSpeed、FSDP + QLoRA（官方给出 2×24GB 微调 70B 的方案）等配置
 - [ ] Python 版本 ≥ 3.11，且已激活目标虚拟环境。
 - [ ] 安装走了两步：`pip install -e .` 与按需的 `pip install -r requirements/...`。
 - [ ] 先查官方显存表，确认选定档位（全参 / LoRA / QLoRA）放得下当前显卡。
-- [ ] Windows 用户：确认 `torch.cuda.is_available()` 为 `True`，bitsandbytes 已按官方方式装好。
+- [ ] Windows 用户：确认 `torch.cuda.is_available` 为 `True`，bitsandbytes 已按官方方式装好。
 - [ ] 数据集已登记进 `data/dataset_info.json`，格式对照 `data/README.md`。
 - [ ] YAML 里选对了该模型的 template，别照抄别的模型的配置。
 - [ ] 下载慢就切 `USE_MODELSCOPE_HUB=1` / `USE_OPENMIND_HUB=1`。

@@ -22,8 +22,6 @@ OpenAI 兼容接口和原生接口；关键在于它用语法后端（默认 XGr
 除了结构化输出，它的另外两张牌是前缀缓存（RadixAttention）和调度效率，适合「同一段长
 系统提示词被成千上万次请求复用」的场景，比如批量抽取、批量打标、批量判题。
 
-**上游项目**：`SGLang`　**仓库**：https://github.com/sgl-project/sglang
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -142,7 +140,7 @@ resp = client.chat.completions.create(
     max_tokens=128,
     response_format={
         "type": "json_schema",
-        "json_schema": {"name": "foo", "schema": CapitalInfo.model_json_schema()},
+        "json_schema": {"name": "foo", "schema": CapitalInfo.model_json_schema},
     },
 )
 info = CapitalInfo.model_validate_json(resp.choices[0].message.content)
@@ -181,7 +179,7 @@ r = requests.post(
         "sampling_params": {"temperature": 0, "max_new_tokens": 32},
     },
 )
-print(r.json())
+print(r.json)
 
 # 6. 离线批量：不起 HTTP 服务，直接在进程里跑，适合离线打标
 import sglang as sgl
@@ -192,7 +190,7 @@ outputs = llm.generate(
     ["Give me the capital of France in JSON format."],
     {"temperature": 0.1, "top_p": 0.95, "json_schema": '{"type":"object"}'},
 )
-llm.shutdown()
+llm.shutdown
 ```
 
 `json_schema` / `regex` / `ebnf` 三个约束参数**一次请求只能给一个**；细节以官方 structured

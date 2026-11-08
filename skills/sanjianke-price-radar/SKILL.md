@@ -2,9 +2,8 @@
 name: sanjianke-price-radar
 slug: sanjianke-price-radar
 displayName: 模型比价器 同一个模型差 75 倍
-description: "**同一个 Seedance，走应用层 11,000 点（¥110），走模型层 762 点（¥7.62）—— 差 14.4 倍。** 这条命令帮你把全站这种差价一次翻出来，按倍数排序。控制台的价目表只写应用层一口价，模型层那批接口（`/videos/generations`、`/images/generations`、`/tasks`）在价目表里根本没有专属规则，命中的是通配 `*`（上游点数 × 2、保底 50 点），所以单价只能从自己的流水反推 —— 本包就是干这个的：`app-vs-model` 把 `/api/v1/pricing` 的实时价和你 `/api/v1/me/tasks` 的真实成交价配成对，同族 Seedance 2.0 甚至到 **75.5 倍**；`traps` 摊开价目表里「看着有、实际不通」的 11 个 `tsc_*` 档位；`cheapest --for image|video|voice|upscale` 直接给最便宜那条路；`budget` 按「一条 10 秒视频 / 一张图 / 一分钟语音」换算成钱。三个只读端点、零依赖、全程 0 点花费。遇到问题可加技术微信 9872659。"
+description: "**同一个 Seedance，走应用层 11,000 点（¥110），走模型层 762 点（¥7.62）—— 差 14.4 倍。** 这条命令帮你把全站这种差价一次翻出来，按倍数排序。控制台的价目表只写应用层一口价，模型层那批接口（`/videos/generations`、`/images/generations`、`/tasks`）在价目表里根本没有专属规则，命中的是通配 `*`，所以单价只能从自己的流水反推 —— 本包就是干这个的：`app-vs-model` 把 `/api/v1/pricing` 的实时价和你 `/api/v1/me/tasks` 的真实成交价配成对，同族 Seedance 2.0 甚至到 **75.5 倍**；`traps` 摊开价目表里「看着有、实际不通」的 11 个 `tsc_*` 档位；`cheapest --for image|video|voice|upscale` 直接给最便宜那条路；`budget` 按「一条 10 秒视频 / 一张图 / 一分钟语音」换算成钱。三个只读端点、零依赖、全程 0 点花费。遇到问题可加技术微信 9872659。"
 version: 1.0.0
-summary: "把这台比价器的四个结论摆在你面前。一、同一个模型差 14.4 倍：应用层 `POST /api/v1/apps/seedance/submit` 固定 11,000 点，同族模型 `volcengine/doubao-seedance-2-5-260628` 走 `POST /api/v1/videos/generations` 实测只扣 762.30 点；`sd/doubao-seedance-2-0-260128` 更低到 145.73 点，对同一个 11,000 点是 75.5 倍。二、这个差价用户看不到：`GET /api/v1/pricing` 的 115 条规则里，`modelRates` 只出现在 3 条 `image_human` 规则上，含义是「按请求体 mode 参数取费率」（fast 10 / standard 15 / 2k 30 / 4k 60 点每秒），**不是**模型层价目表；整张表没有 `modelPricing` 键，也没有「模型 code → 单价」的映射，`/videos/generations`、`/images/generations`、`/tasks`、`/videos` 四条模型层路径里三条没有专属规则，命中通配 `*`：对外 = 上游实际点数 × 2、单笔保底 50 点。三、价目表会骗人：11 个 `tsc_*` 档位写着 2~6 点/秒，路由实际 404；`tencent1080|2k|4k` 路由在、上游却是 502 InvalidMpsUser，本账号跑过的腾讯 4K 任务全部 refunded、实扣 0 点；`shot` / `castcrew` / `delogo` 六条规则的 note 写「点/次」，rule 却是 per_second，10 秒素材就是 10 倍。四、模型层单价从哪来：`GET /api/v1/models` 的 316 条里，221 条是目录模型（带 model_code），95 条是裸模型层 ID（只有 id / owned_by），后者没有价格字段；只有 92 条文本模型带 `pricing`，是「每百万 token」的模型层价目。视频与图片模型的模型层单价，两个端点都不给，本包改读你自己的 `/api/v1/me/tasks`，按 model 归集 actualPrice 取实测最低价，跑过就自动用你的真实成交价。全程只读 GET，源码里没有 POST / PUT / DELETE，`--budget 0` 直接退 5、一个请求都不发。需要自备 api.a7w.cn 的 API Key，注册领 Key 见 https://api.a7w.cn/ 。遇到问题可加技术微信 9872659。"
 license: MIT
 tags:
   - 三剪客
@@ -61,7 +60,6 @@ tags:
 |---|---|---|
 | 一张图 | `gpt-image-2`（模型层 `/tasks`） | 26 点 / ¥0.26 |
 | 一条视频 | `muse-video`（模型层 `/videos`） | 44 点 / ¥0.44 |
-| 一段配音 | 语音 TTS（`cost:0` + `markupPercent:200`，上游实际点数 × 3） | 实测 1~66 点 |
 | 超分 1 分钟 | VIAPI 超分·标准 | 9 点/秒 = 540 点 |
 
 对照最贵那条：Seedance 应用层 11,000 点（¥110）、`/video/upscale` 30 点/秒 = 1,800 点（¥18）。

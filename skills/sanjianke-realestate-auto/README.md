@@ -83,8 +83,8 @@
 | 工序 | 接口 | 单价 |
 |---|---|---|
 | 出图 | `POST /api/v1/images/generations` | **6 点/张**（尺寸与格式同价，按实际返回张数计） |
-| 口播 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字**（上游真实点数 x 3） |
-| 配乐 | `POST /api/v1/apps/media_services_33/music_generate` | **50 点起/首**（上游 x 2，保底 50） |
+| 口播 | `POST /api/v1/apps/voice_tts/tts` | 约 **0.18 点/字** |
+| 配乐 | `POST /api/v1/apps/media_services_33/music_generate` | **50 点起/首** |
 | 成片 | `POST /api/v1/apps/full_video/submit` | 480P 14 / 768P 28 / **1080P 60** / 2K 80 / 4K 80 点/秒 |
 | 查进度 | `GET /api/v1/tasks/<task_id>` | **0 点** |
 | 传图 | `POST /api/v1/upload` | **0 点** |

@@ -20,8 +20,6 @@ tags:
 
 它的接口风格很统一：转化类走 `/forms/chromium/*` 和 `/forms/libreoffice/convert`，PDF 后处理走 `/forms/pdfengines/*`（合并、拆分、旋转、水印、加密、元数据、书签、PDF/A）。而且这些后处理能力可以和转换写在**同一个请求**里，省掉一次上传下载。默认监听 `3000` 端口，**默认没有任何鉴权**，这是它最需要你留意的设计前提。
 
-**上游项目**：`Gotenberg`　**仓库**：https://github.com/gotenberg/gotenberg
-
 ## 权限与用途说明
 
 | 能力 | 是否申请 | 用途 |
@@ -46,7 +44,6 @@ tags:
 - 「转完顺手压一下体积」——同一个请求里带 `optimizeImages=true`。
 - 「要归档，得是 PDF/A」——同一个请求里带 `pdfa=PDF/A-3b`。
 - 「量很大，不想每次同步等」——Webhook 异步模式。
-
 
 **不该用**：
 

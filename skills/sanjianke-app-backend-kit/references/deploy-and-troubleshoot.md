@@ -128,9 +128,9 @@ Postgres 的连接数上限是有限的，而每个后端连接都占内存，**
 ```sql
 show max_connections;
 select count(*), state from pg_stat_activity group by state;
-select pid, usename, application_name, state, now() - state_change as idle_for
+select pid, usename, application_name, state, now - state_change as idle_for
 from pg_stat_activity
-where state = 'idle' and now() - state_change > interval '10 minutes'
+where state = 'idle' and now - state_change > interval '10 minutes'
 order by idle_for desc;
 ```
 
@@ -295,7 +295,7 @@ comm -23 /tmp/keys.new /tmp/keys.old     # 新版本新增、我还没配的键
 | 接口 42501 | 该表的 GRANT | 角色没有表级授权 —— **这是授权问题，不是策略问题** |
 | 接口不报错但返回空数组 | 策略 + 模拟身份实跑 | 策略过滤掉了全部行，或表根本没策略 |
 | 能查到别人的数据 | 漏权检查清单**全部 9 条** | 表没开 RLS、视图绕过 RLS、授权给太宽 |
-| 列表页很慢、越大越慢 | `explain analyze` | 策略列无索引、`auth.uid()` 未包 `(select ...)`、未写 `to`、连接方向反了 |
+| 列表页很慢、越大越慢 | `explain analyze` | 策略列无索引、`auth.uid` 未包 `(select ...)`、未写 `to`、连接方向反了 |
 | 写入偶尔失败且报错莫名 | 客户端连接串 | 用了事务模式端口但开着预编译语句缓存 |
 | 实时连接连不上 / 立刻断开 | 浏览器控制台 + 网关配置 | key 未带在查询参数、网关 CORS、WebSocket 路由被拦 |
 | 邮件收不到 / 链接指向 localhost | `.env` 的地址类变量 + 邮件服务 | `SITE_URL` / `API_EXTERNAL_URL` 错、SMTP 未配、本地环境要去 Mailpit 看 |

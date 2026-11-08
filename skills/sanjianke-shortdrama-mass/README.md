@@ -24,8 +24,8 @@
 
 | 工位 | 走哪条线 | 单价 | 一条 45 秒 / 350 字 |
 |---|---|---|---|
-| 旁白配音 | `voice_tts/tts_async` | 0.18 点/字（上游实际点数 ×3） | 63 点 |
-| 数字人口播 | `pic_lipsync/submit`（mode=text） | **15 点/秒**（上游 3 点/秒 ×5） | 675 点 |
+| 旁白配音 | `voice_tts/tts_async` | 0.18 点/字 | 63 点 |
+| 数字人口播 | `pic_lipsync/submit`（mode=text） | **15 点/秒** | 675 点 |
 | 配乐 | `media_services_33/music_generate` | 60 点/条（未配价，按预冻口径） | 60 点 |
 | 卡点字幕 | `media_services_33/music_timestamped_lyrics` | 60 点/条 | 60 点 |
 | 封面 / 片头 | 本地截帧 或 `full_video/submit` | 0 点 / 480P 14 · 768P 28 · 1080P 60 · 2K 80 · 4K 80 点/秒 | 0 点 |

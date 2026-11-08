@@ -24,8 +24,6 @@ tags:
 1. 官方明说这些是**演示协议特性与 SDK 用法的参考实现，不是生产级方案**。要上生产，请自己评估安全需求、自行加固。
 2. 官方也明说，找**更多** MCP 服务器请去 MCP Registry，这个仓库只维护「MCP 指导组自己维护的那一小批参考服务器」。
 
-**上游项目**：`MCP Servers`　**仓库**：https://github.com/modelcontextprotocol/servers
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -280,7 +278,6 @@ npm run start:streamableHttp     # 或 npm run start:sse
 - Git 服务器官方标注处于早期开发阶段，工具集可能变动。
 - Filesystem 服务器的目录授权行为依赖客户端是否支持 Roots；不支持 Roots 的客户端只能靠命令行参数固定目录。
 - Fetch 服务器能访问本地与内网地址，官方明确警告安全风险。
-- 上游会调整工具集、包名与配置写法。执行前以各服务器目录下的 README 与官方文档当前内容为准；本 Skill 不声明 star 数、发布日期或版本号。
 
 ## 自检清单
 

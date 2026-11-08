@@ -112,8 +112,6 @@ pacman -S mingw-w64-x86_64-tesseract-data-eng
 sudo snap install --channel=edge tesseract
 ```
 
-**Docker**：上游不提供官方镜像。容器场景请基于发行版包自己写 Dockerfile（`apt install tesseract-ocr tesseract-ocr-chi-sim` 即可），具体以官方文档与实际版本为准。
-
 **源码编译**：依赖 Leptonica（以及 zlib / libpng / libtiff），步骤以官方 Compiling 文档为准，不要照抄旧文章。
 
 ### 装完立刻自检
@@ -287,7 +285,7 @@ tesseract --print-parameters
 
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
-| 拿 PDF 直接喂进去，报错、卡住或只出一页 | **tesseract 不读 PDF**，它只接受 Leptonica 能打开的图片（上游 README 明说 Leptonica 用来开图片、"not documents like pdf"） | 先栅格化：`pdftoppm -r 300 -png input.pdf page`，再逐页识别。多页 PDF 必须自己循环或走清单文件拼合 |
+| 拿 PDF 直接喂进去，报错、卡住或只出一页 | **tesseract 不读 PDF**，它只接受 Leptonica 能打开的图片 | 先栅格化：`pdftoppm -r 300 -png input.pdf page`，再逐页识别。多页 PDF 必须自己循环或走清单文件拼合 |
 | 输出空白，或准确率低到没法用 | 图片 DPI 低于 300、文字太小、被裁得太紧没有白边、倾斜、噪声/透印 | `--dpi 300` 显式声明分辨率；给图加 10px 白边；先做去噪/纠偏/二值化。用 `get.images` 看它处理后的图 |
 | `Error opening data file .../eng.traineddata` | 语言数据没装，或 `TESSDATA_PREFIX` 指错了层级——它要指向 `tessdata` 的**父目录** | 优先用 `--tessdata-dir <path>` 显式指定，比环境变量可靠；用 `tesseract --list-langs` 确认到底能看见哪些语言 |
 | 中文完全认不出，出来一堆乱码拉丁字母 | 只装了引擎没装 `chi_sim` 语言包；或写成了 `chs` / `zh` 这种不存在的码 | `tesseract --list-langs` 看有没有 `chi_sim`；没有就装 `tesseract-ocr-chi-sim` |

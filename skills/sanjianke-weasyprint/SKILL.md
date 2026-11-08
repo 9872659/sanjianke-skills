@@ -21,8 +21,6 @@ tags:
 它和浏览器「打印成 PDF」的区别在于**可控**：跑在服务端、可以脚本化、可以用 `@page` 精确控制
 纸张尺寸与边距、可以生成 PDF/A-3u 这种归档标准文件。适合「模板 + 数据 → 批量出 PDF」这类活。
 
-**上游项目**：`WeasyPrint`　**仓库**：https://github.com/Kozea/WeasyPrint
-
 ## 什么时候用 / 不用
 
 **用它**：
@@ -164,7 +162,7 @@ HTML("report.html").write_pdf(
 )
 ```
 
-`write_pdf()` 不传 `target` 时返回 PDF 字节串，可以直接落库或走 HTTP 响应。
+`write_pdf` 不传 `target` 时返回 PDF 字节串，可以直接落库或走 HTTP 响应。
 
 **4. `@font-face` 自定义字体必须用 FontConfiguration**
 
@@ -172,7 +170,7 @@ HTML("report.html").write_pdf(
 from weasyprint import HTML, CSS
 from weasyprint.text.fonts import FontConfiguration
 
-font_config = FontConfiguration()
+font_config = FontConfiguration
 html = HTML(string="<h1>The title</h1>")
 css = CSS(string="""
     @font-face { font-family: Gentium; src: url(fonts/Gentium.otf); }
@@ -203,7 +201,7 @@ HTML(string="<p>document</p>").write_pdf("document.pdf", pdf_variant="pdf/a-3u")
 from jinja2 import Template
 from weasyprint import HTML
 
-html = Template(open("invoice.html", encoding="utf-8").read()).render(
+html = Template(open("invoice.html", encoding="utf-8").read).render(
     items=[{"name": "A", "price": 10}, {"name": "B", "price": 20}],
 )
 HTML(string=html, base_url=".").write_pdf("invoice.pdf")   # base_url 决定相对路径基准
@@ -237,7 +235,7 @@ for i in range(10):
 import logging
 logger = logging.getLogger("weasyprint")
 logger.setLevel(logging.WARNING)
-logger.addHandler(logging.StreamHandler())
+logger.addHandler(logging.StreamHandler)
 ```
 
 命令行加 `--verbose` / `--debug` 可以看到渲染进度。
@@ -255,7 +253,7 @@ logger.addHandler(logging.StreamHandler())
 | 几百个文件批量跑很慢 | 每次启动都要初始化字体与引擎 | 用长驻 Python 进程复用同一个进程渲染多份，官方也是这么建议的 |
 | 装了新版本后老模板样式错位 | 官方版本策略：版本号变化**会改变渲染结果** | 锁定版本号，升级前用样本回归对比 |
 | 表格多页渲染异常慢 | 官方明确说表格（尤其跨页表格）是性能瓶颈 | 能用块级布局就别用表格；大表考虑拆页 |
-| `@font-face` 不生效 | 没传 `FontConfiguration` | 建 `FontConfiguration()` 对象，并在 CSS 与 `write_pdf` 两边都传同一个 |
+| `@font-face` 不生效 | 没传 `FontConfiguration` | 建 `FontConfiguration` 对象，并在 CSS 与 `write_pdf` 两边都传同一个 |
 | PDF/A 校验不过 | 文档用了 PDF/A 不允许的特性（透明、未嵌字体、无色彩空间） | 优先用 `pdf/a-3u`；带图时加 `image-rendering: crisp-edges` |
 | PDF/UA 校验不过 | 缺 `<title>` 或 `<html>` 上没有 `lang` | 补上 `<title>` 与 `lang`，并用语义化 HTML 结构 |
 
@@ -284,12 +282,12 @@ logger.addHandler(logging.StreamHandler())
 
 - HTML + CSS 排版并导出 PDF，支持分页、页眉页脚、页码计数、分页控制
 - 文档尺寸与边距通过 `@page` 精确控制（不是命令行参数）
-- 目录书签与内部 / 外部链接（可从标题层级自动生成书签，`make_bookmark_tree()` 可读）
+- 目录书签与内部 / 外部链接（可从标题层级自动生成书签，`make_bookmark_tree` 可读）
 - 标准 PDF 变体：PDF/A 系列、PDF/UA 系列、PDF/X 系列
 - 可填写的 PDF 表单（`--pdf-forms` / `pdf_forms=True`）
 - 文件附件、自定义元数据（标题 / 作者 / 关键词 / 创建与修改时间）
 - 图片优化与缓存（`optimize_images`、`jpeg_quality`、`dpi`、`cache` / `--cache-folder`）
-- 单文档内页级操作：`render()` 拿到 `Document`，`copy()` 取页子集，分奇偶页输出
+- 单文档内页级操作：`render` 拿到 `Document`，`copy` 取页子集，分奇偶页输出
 
 **不覆盖**：
 

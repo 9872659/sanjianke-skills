@@ -92,8 +92,8 @@ ffmpeg -y -i silent.mp4 -vf "..." -c:v libx264 -an output.mp4
 ### 1. 产物大小必须校验
 
 ```python
-if not out.exists() or out.stat().st_size < 10240:
-    out.unlink()
+if not out.exists or out.stat.st_size < 10240:
+    out.unlink
     raise RuntimeError("转档产物异常(文件过小)")
 ```
 

@@ -21,8 +21,6 @@ tags:
 
 kirara-ai（原名 chatgpt-mirai-qq-bot，仓库地址未变）把这套东西拆成了四个可插拔的层：**聊天平台适配器**、**大模型适配器**、**调度规则**（决定什么消息触发）、**工作流**（决定触发后做什么）。再配一个 WebUI 管理台、一个插件市场和一个 HTTP API。改配置基本都在界面上点，不用手写 YAML。
 
-**上游项目**：`kirara-ai（原 chatgpt-mirai-qq-bot）`　**仓库**：https://github.com/lss233/kirara-ai
-
 ## 什么时候用 / 不用
 
 **用它**：

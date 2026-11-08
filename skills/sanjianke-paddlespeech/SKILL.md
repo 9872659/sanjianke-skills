@@ -23,12 +23,9 @@ tags:
 > 拿到后填进环境变量 `A7W_API_KEY`，或直接传给 `--key` 参数。
 > **请勿使用他人提供的 Key** —— 用量与费用都记在 Key 所属账号上。
 
-
 一个项目里同时要文字转语音、语音转文字，可能还要判断一段音频是什么声音、对比两段录音是不是同一个人说的——通常这意味着装四五个不同的库、记四套 API。PaddleSpeech 想省掉这一步：它把语音识别、语音合成、声音分类、声纹提取、标点恢复、英译中语音翻译这些任务收在同一个工具箱里，命令行、Python API、服务端三种形态都能用，预训练模型也一并给好。
 
 对做内容的人来说，它最实用的两点是：**中文场景的能力比较齐**（中文文本前端做了文本归一化、多音字与变调处理），以及**同一条命令既能本地跑也能起服务**，从单机脚本到给别人调接口，不用换工具。
-
-**上游项目**：`PaddleSpeech`　**仓库**：https://github.com/PaddlePaddle/PaddleSpeech
 
 ## 零安装用法（推荐先看这个）
 
@@ -80,7 +77,6 @@ export A7W_API_KEY=sk-xxxx                        # 环境变量
 **不要用它**：
 
 - **只想转写一段很长的英文播客**。这类需求用专门的 Whisper 系工具更直接；PaddleSpeech 的优势在中文与多任务覆盖，不在长英文音频的极致速度。
-- **环境是 Windows 且要装全套**。上游明确建议在 Linux 上安装，Windows 虽然支持但依赖问题明显更多，语音翻译功能在 Windows 上直接不可用。
 - **机器上没有 GPU 却要跑训练或大批量推理**。CPU 能推理，但训练和大批量任务的耗时不可接受。
 - **只想要一个云 API、不想管依赖**。它是自托管工具，环境需要你自己维护。
 - **要做实时语音通话级别的超低延迟交互**。它的流式服务端能做到边说边出，但不等于电话级实时链路。
@@ -112,7 +108,7 @@ pip install paddlespeech
 ```
 
 ```bash
-# 方式二：源码编译（上游推荐）
+# 方式二：源码编译
 git clone https://github.com/PaddlePaddle/PaddleSpeech.git
 cd PaddleSpeech
 pip install pytest-runner
@@ -125,8 +121,6 @@ pip install -e . --use-pep517
 ### 3. 系统依赖
 
 - `gcc >= 4.8.5`
-- 部分示例（尤其是语音翻译）依赖 kaldi 相关工具，上游说明这类预编译工具只在 Ubuntu 上支持
-- 上游另有一份专门的安装文档，覆盖 conda 环境、librosa 依赖、gcc 问题、kaldi 安装等；装不上时看那份文档，比在这里猜更快
 
 安装过程踩坑时，上游指到对应仓库的 Issue 区找同类问题；具体版本号与依赖要求以官方安装文档的当前内容为准。
 
@@ -160,7 +154,7 @@ paddlespeech asr --lang zh --input zh.wav
 ```python
 from paddlespeech.cli.asr.infer import ASRExecutor
 
-asr = ASRExecutor()
+asr = ASRExecutor
 result = asr(audio_file="zh.wav")
 print(result)
 ```
@@ -174,7 +168,7 @@ paddlespeech tts --input "这里换成你要合成的文本" --output output.wav
 ```python
 from paddlespeech.cli.tts.infer import TTSExecutor
 
-tts = TTSExecutor()
+tts = TTSExecutor
 tts(text="这里换成你要合成的文本", output="output.wav")
 ```
 
@@ -187,7 +181,7 @@ paddlespeech cls --input zh.wav
 ```python
 from paddlespeech.cli.cls.infer import CLSExecutor
 
-cls = CLSExecutor()
+cls = CLSExecutor
 result = cls(audio_file="zh.wav")
 print(result)
 ```
@@ -201,7 +195,7 @@ paddlespeech vector --task spk --input zh.wav
 ```python
 from paddlespeech.cli.vector import VectorExecutor
 
-vec = VectorExecutor()
+vec = VectorExecutor
 result = vec(audio_file="zh.wav")
 print(result)
 ```
@@ -310,15 +304,12 @@ paddlespeech_client vector --task score --server_ip 127.0.0.1 --port 8090 --enro
 - 语音翻译只在 Ubuntu 上支持，且方向是英译中。
 - 不保证低延迟电话级实时交互；流式服务端的能力边界以仓库内对应 demo 说明为准。
 - 不判定内容合规：识别与合成结果的使用风险由使用者承担。
-- 不承诺在所有平台组合上表现一致；上游把 Linux 列为推荐平台。
 
 ## 依赖条件
 
-- Python >= 3.8，上游**强烈建议在 Linux 上安装**。
 - 系统：`gcc >= 4.8.5`。
 - 必须先单独安装 PaddlePaddle（CPU 版或匹配 CUDA 的 GPU 版），版本以 PaddlePaddle 官方安装页面为准。
 - 安装 PaddleSpeech 前先装 `pytest-runner`。
-- 支持的操作系统按上游声明为 Linux（推荐）、Windows、macOS。
 - 首次运行需要联网下载预训练模型。
 - 输入音频要求 16k 采样率 wav。
 - 部分功能（语音翻译）依赖 kaldi 相关预编译工具，仅 Ubuntu 支持。
@@ -330,7 +321,6 @@ paddlespeech_client vector --task score --server_ip 127.0.0.1 --port 8090 --enro
 - 依赖链长（PaddlePaddle + 系统库 + 可选 kaldi），安装本身就是主要成本，官方也为此单独维护了一份安装文档。
 - 服务端功能受配置文件里的 `engine_list` 控制，不是起一个服务就什么任务都能调。
 - 各任务的可用模型与效果差异较大，需要按任务挑检查点，默认模型不一定是最优解。
-- 上游仓库持续演进，CLI 子命令、参数与示例配方可能随版本调整；执行前请以 `paddlespeech help`、`paddlespeech_server help`、`paddlespeech_client help` 与仓库文档的当前内容为准。
 - 具体版本号、发布日期与 star 数请以仓库页面实时信息为准，此处不做断言。
 
 ## 自检清单

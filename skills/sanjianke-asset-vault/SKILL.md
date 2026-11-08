@@ -40,12 +40,9 @@ tags:
 | watermark_removal | 动态 ×2 | **100 点/次** | remove |
 | seedance | **11,000 点/次** | 动态 ×2 | create |
 
-上传是这套流程里唯一的免费写接口：`/api/v1/upload` 的规则是 `{"mode":"flat","cost":0,"markupPercent":0}`，返回地址最长 24 小时。
-
 ## 三条别人不会告诉你的
 
 ### 一、`remove` 清理不是免费动作
-10 个应用的 remove 是 `cost:0 + markupPercent:100`，意思是「按上游实际点数 ×2」——价目表不写死单价，清一次才知道多少钱。
 `watermark_removal/remove` 更特殊：它是这个应用的**主业务**「去水印 / 分享链解析」，固定 **100 点/次**。
 所以本包把「本地清台账」和「远端清理」分成两条命令：`prune` 免费只动本地，`release` 计费且必须 `--yes`。
 

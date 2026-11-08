@@ -75,7 +75,7 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 30 -reset_timestamps 1 part_
 
 ---
 
-## 4. 输入规格（上游限制，改不了，只能提前拦）
+## 4. 输入规格
 
 | 档位 | 规格 | 违反时的上游错误 |
 |---|---|---|
@@ -101,7 +101,6 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 30 -reset_timestamps 1 part_
 
 ## 5. 成本与毛利（供运营参考）
 
-| 档位 | 售价(点/秒) | 上游成本(点/秒) | 毛利(点/秒) | 毛利率 |
 |---|---|---|---|---|
 | `upscale` | 30 | 15 | 15 | +100% |
 | `superres` | 9 | 0.67 | 8.33 | +1243% |
@@ -116,10 +115,8 @@ ffmpeg -i long.mp4 -c copy -f segment -segment_time 30 -reset_timestamps 1 part_
 
 **两个值得注意的点**
 
-1. **`portrait`（人像增强）上游成本是 0**，线上档位说明原文写着「公测免费」。
    售价 18 点/秒是**纯毛利**，而且它有输入门槛（<1920×1080）。
    对外推广时它是**性价比最高的一档** —— 适合做"先让用户跑通"的那一档。
-2. **`cartoon` 与 `upscale` 的毛利率最低（+100%）**：它们的上游成本明显高于其它档位
    （12 与 15 点/秒）。要提毛利只能调价，不能靠量。
 
 > 成本数字来自线上只读的 `GET /api/v1/video/viapi/tools`（`costPerSecond` 字段）
